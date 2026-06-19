@@ -1,0 +1,994 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Dashboard Sprint S12 — Fenasbac TI</title>
+<link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@300;400;600;700&family=IBM+Plex+Mono:wght@400&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0D1117;--bg2:#161B22;--bg3:#21262D;--bord:#30363D;
+  --text:#E6EDF3;--muted:#8B949E;
+  --blue:#0225EB;--cyan:#02FFFF;--dark:#002060;
+  --green:#2EA043;--yellow:#D29922;--red:#F85149;--purple:#8957E5;
+  --gray:#484F58;--font:'Exo 2',sans-serif;--mono:'IBM Plex Mono',monospace;
+  --day:22px;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{background:var(--bg);color:var(--text);font-family:var(--font);font-size:13px;}
+
+.hdr{background:var(--dark);padding:12px 24px;display:flex;align-items:center;justify-content:space-between;border-bottom:2px solid var(--blue);}
+.hdr-brand{font-size:10px;color:var(--cyan);font-weight:700;letter-spacing:1.5px;text-transform:uppercase;}
+.hdr-title{font-size:17px;font-weight:700;color:#fff;margin-top:2px;}
+.hdr-sub{font-size:10px;color:rgba(255,255,255,.5);margin-top:1px;}
+.hdr-badge{background:var(--bg3);border:1px solid var(--bord);border-radius:20px;padding:4px 12px;font-size:10px;color:var(--muted);}
+
+.alert-bar{background:#0D1117;border-bottom:1px solid #30363D;padding:9px 24px;display:flex;align-items:center;gap:20px;flex-wrap:wrap;}
+.golive-label{font-size:9px;color:#8B949E;text-transform:uppercase;letter-spacing:.8px;}
+.golive-date{font-size:19px;font-weight:700;color:#02FFFF;font-family:var(--mono);letter-spacing:2px;}
+.golive-sub{font-size:9px;color:#8B949E;}
+.golive-line{width:2px;height:38px;background:linear-gradient(to bottom,#0225EB,#02FFFF);border-radius:2px;margin:0 8px;}
+.alert-item{display:flex;align-items:center;gap:10px;}
+.alert-badge{font-size:9px;padding:2px 8px;border-radius:10px;font-weight:700;}
+.alert-badge.red{background:rgba(248,81,73,.15);color:var(--red);border:1px solid rgba(248,81,73,.3);}
+.alert-badge.yellow{background:rgba(210,153,34,.15);color:var(--yellow);border:1px solid rgba(210,153,34,.3);}
+.alert-text{font-size:10px;color:var(--muted);}
+
+.tabs{display:flex;background:var(--bg2);border-bottom:1px solid var(--bord);padding:0 24px;}
+.tab{padding:10px 18px;cursor:pointer;color:var(--muted);font-size:13px;font-weight:500;border-bottom:3px solid transparent;transition:all .15s;white-space:nowrap;display:flex;align-items:center;gap:6px;}
+.tab.active{color:var(--blue);border-bottom-color:var(--blue);}
+.tab:hover:not(.active){color:var(--text);}
+.panel{display:none;}.panel.active{display:block;}
+
+.kpi-strip{display:flex;gap:10px;padding:16px 24px;flex-wrap:wrap;}
+.kpi{background:var(--bg2);border:1px solid var(--bord);border-radius:8px;padding:12px 18px;flex:1;min-width:100px;}
+.kpi-val{font-size:26px;font-weight:700;color:var(--cyan);font-family:var(--mono);}
+.kpi-label{font-size:9px;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;margin-top:2px;}
+.kpi.ok .kpi-val{color:var(--green);}.kpi.warn .kpi-val{color:var(--yellow);}.kpi.danger .kpi-val{color:var(--red);}
+
+/* PROJECTS */
+.proj-view{padding:0 24px 24px;}
+.cat-group{margin-bottom:24px;}
+.cat-title{font-size:11px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.8px;margin-bottom:10px;display:flex;align-items:center;gap:8px;}
+.cat-count{background:var(--bg3);border-radius:10px;padding:1px 7px;font-size:10px;font-weight:600;color:var(--text);}
+.proj-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:10px;}
+.proj-card{background:var(--bg2);border:1px solid var(--bord);border-radius:8px;padding:12px;cursor:pointer;transition:border-color .15s,background .15s;position:relative;overflow:hidden;}
+.proj-card:hover,.proj-card.selected{border-color:var(--blue);background:#1a2030;}
+.proj-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;border-radius:2px 2px 0 0;}
+.proj-key{font-size:10px;font-weight:700;letter-spacing:.5px;}
+.proj-name{font-size:11px;color:var(--muted);margin-top:1px;margin-bottom:8px;}
+.proj-stats{display:flex;gap:8px;align-items:center;flex-wrap:wrap;}
+.pstat{font-size:10px;color:var(--muted);display:flex;align-items:center;gap:3px;}
+.pstat-dot{width:6px;height:6px;border-radius:50%;}
+
+/* DETAIL PANEL */
+.detail-panel{position:fixed;right:-400px;top:0;bottom:0;width:380px;background:#161B22;border-left:1px solid #30363D;z-index:100;transition:right .25s ease;display:flex;flex-direction:column;box-shadow:-8px 0 32px rgba(0,0,0,.6);}
+.detail-panel.open{right:0;}
+.dp-hdr{padding:14px 16px 12px;border-bottom:1px solid #30363D;display:flex;align-items:center;justify-content:space-between;}
+.dp-proj{font-size:11px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;}
+.dp-sub{font-size:10px;color:#8B949E;margin-top:2px;}
+.dp-close{background:none;border:none;color:#8B949E;cursor:pointer;font-size:18px;padding:2px 6px;}
+.dp-close:hover{color:#E6EDF3;}
+.dp-body{flex:1;overflow-y:auto;padding:14px;}
+.dp-kpis{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:14px;}
+.dp-kpi{background:#21262D;border-radius:6px;padding:8px 10px;}
+.dp-kpi-val{font-size:18px;font-weight:700;font-family:var(--mono);}
+.dp-kpi-label{font-size:9px;color:#8B949E;text-transform:uppercase;letter-spacing:.4px;margin-top:1px;}
+.dp-sec{margin-bottom:12px;}
+.dp-sec-title{font-size:9px;font-weight:600;color:#8B949E;text-transform:uppercase;letter-spacing:.8px;margin-bottom:6px;padding-bottom:4px;border-bottom:1px solid #30363D;}
+.dp-issue{display:flex;align-items:flex-start;gap:7px;padding:5px 6px;border-radius:4px;margin-bottom:2px;}
+.dp-issue:hover{background:#21262D;}
+.dp-dot{width:7px;height:7px;border-radius:50%;flex-shrink:0;margin-top:3px;}
+.dp-key{font-family:var(--mono);font-size:9px;color:#8B949E;flex-shrink:0;width:80px;}
+.dp-sum{font-size:10px;line-height:1.4;flex:1;}
+
+/* SDESK */
+.sdesk-view{padding:0 24px 24px;}
+.sdesk-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:20px;}
+.sdesk-card{background:var(--bg2);border:1px solid var(--bord);border-radius:8px;overflow:hidden;}
+.sdesk-hdr{padding:10px 14px;border-bottom:1px solid var(--bord);display:flex;align-items:center;justify-content:space-between;}
+.sdesk-title{font-size:12px;font-weight:700;}
+.sdesk-badge{font-size:10px;font-weight:700;padding:2px 8px;border-radius:10px;}
+.sdesk-badge.green{background:rgba(46,160,67,.15);color:var(--green);}
+.sdesk-badge.yellow{background:rgba(210,153,34,.15);color:var(--yellow);}
+.sdesk-body{padding:12px 14px;}
+.floor-row{display:flex;align-items:center;justify-content:space-between;padding:8px 0;border-bottom:1px solid rgba(48,54,61,.4);}
+.floor-row:last-child{border-bottom:none;}
+.floor-name{font-size:12px;font-weight:600;}
+.floor-areas{font-size:10px;color:var(--muted);margin-top:2px;}
+.floor-stats{display:flex;gap:14px;align-items:center;}
+.fstat{text-align:center;}
+.fstat-val{font-size:16px;font-weight:700;font-family:var(--mono);}
+.fstat-label{font-size:8px;color:var(--muted);text-transform:uppercase;}
+.floor-taxa{font-size:13px;font-weight:700;padding:3px 10px;border-radius:12px;}
+.floor-taxa.full{background:rgba(46,160,67,.15);color:var(--green);}
+.floor-taxa.partial{background:rgba(210,153,34,.15);color:var(--yellow);}
+.sdesk-tickets{background:var(--bg2);border:1px solid var(--bord);border-radius:8px;overflow:hidden;}
+.sdesk-tickets-hdr{padding:10px 14px;border-bottom:1px solid var(--bord);font-size:12px;font-weight:700;}
+.ticket-row{display:flex;align-items:center;gap:10px;padding:8px 14px;border-bottom:1px solid rgba(48,54,61,.3);}
+.ticket-row:last-child{border-bottom:none;}
+.ticket-key{font-family:var(--mono);font-size:10px;color:var(--muted);width:90px;flex-shrink:0;}
+.ticket-sum{flex:1;font-size:11px;}
+.ticket-badge{font-size:9px;font-weight:700;padding:2px 7px;border-radius:8px;white-space:nowrap;}
+.ticket-badge.done{background:rgba(46,160,67,.15);color:var(--green);}
+.ticket-badge.open{background:rgba(210,153,34,.15);color:var(--yellow);}
+.ticket-badge.critical{background:rgba(248,81,73,.15);color:var(--red);}
+
+/* GANTT */
+.gantt-wrap{overflow-x:auto;padding:0 24px 24px;}
+.toolbar{display:flex;gap:6px;padding:0 24px 10px;flex-wrap:wrap;align-items:center;}
+.fbtn{background:var(--bg3);border:1px solid var(--bord);color:var(--muted);padding:4px 10px;border-radius:14px;cursor:pointer;font-size:11px;transition:all .15s;}
+.fbtn.active,.fbtn:hover{background:var(--blue);color:#fff;border-color:var(--blue);}
+.today-btn{background:var(--dark);border:1px solid var(--blue);color:var(--cyan);padding:4px 10px;border-radius:14px;cursor:pointer;font-size:11px;margin-left:auto;}
+.g-hdr{display:flex;position:sticky;top:0;z-index:10;background:var(--bg);border-bottom:1px solid var(--bord);}
+.g-lbl-col{width:320px;min-width:320px;padding:5px 10px;font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;position:sticky;left:0;background:var(--bg);z-index:11;border-right:1px solid var(--bord);}
+.g-days{display:flex;}
+.d-cell{width:var(--day);min-width:var(--day);text-align:center;font-size:9px;color:var(--muted);padding:3px 0;border-right:1px solid rgba(48,54,61,.4);}
+.d-cell.wknd{background:rgba(255,255,255,.015);}.d-cell.today-d{background:rgba(248,81,73,.15);color:var(--red);font-weight:600;}
+.g-row{display:flex;border-bottom:1px solid rgba(48,54,61,.3);transition:background .1s;}
+.g-row:hover{background:rgba(255,255,255,.025);}
+.g-row.hidden{display:none!important;}
+.row-lbl{width:320px;min-width:320px;padding:3px 10px;display:flex;align-items:center;gap:6px;position:sticky;left:0;background:var(--bg);z-index:5;border-right:1px solid var(--bord);cursor:pointer;}
+.row-lbl:hover{background:#1a2030;}
+.expand-icon{font-size:9px;color:var(--muted);flex-shrink:0;width:10px;}
+.rkey{font-family:var(--mono);font-size:9px;color:var(--muted);flex-shrink:0;}
+.rtitle{font-size:10px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;flex:1;}
+.row-tl{position:relative;flex:1;height:26px;}
+.dbg{position:absolute;top:0;bottom:0;}
+.dbg.wknd{background:rgba(255,255,255,.012);}
+.dbg.s12sprint{background:rgba(2,37,235,.05);}
+.dbg.s13sprint{background:rgba(46,160,67,.04);}
+.dbg.today-col{background:rgba(248,81,73,.08);}
+.bar{position:absolute;height:12px;border-radius:2px;top:7px;opacity:.9;min-width:3px;cursor:pointer;}
+.bar{background:var(--blue);opacity:.9;}
+/* color is set inline by sprint — status shown via opacity */
+.ref-line{position:absolute;top:0;bottom:0;width:2px;z-index:8;}
+.ref-today{background:var(--red);opacity:.7;}.ref-end{background:var(--purple);opacity:.6;}
+.grp-row{display:flex;background:rgba(2,32,96,.35);cursor:pointer;border-bottom:1px solid rgba(48,54,61,.5);}
+.grp-row:hover{background:rgba(2,32,96,.55);}
+.grp-lbl{width:320px;min-width:320px;padding:6px 10px;display:flex;align-items:center;gap:8px;position:sticky;left:0;background:rgba(2,32,96,.35);z-index:5;border-right:1px solid var(--bord);}
+.grp-lbl:hover{background:rgba(2,32,96,.55);}
+.grp-name{font-size:11px;font-weight:700;flex:1;}
+.grp-badges{display:flex;gap:4px;align-items:center;}
+.gbadge{font-size:8px;font-weight:700;padding:1px 5px;border-radius:8px;}
+.grp-tl{position:relative;flex:1;height:28px;background:rgba(2,32,96,.2);}
+.task-rows{display:none;}.task-rows.open{display:block;}
+.task-row{display:flex;border-bottom:1px solid rgba(48,54,61,.2);background:rgba(0,0,0,.15);align-items:center;}
+.task-row:hover{background:rgba(255,255,255,.02);}
+.task-lbl{width:320px;min-width:320px;padding:3px 10px 3px 26px;display:flex;align-items:center;gap:6px;position:sticky;left:0;background:rgba(13,17,23,.9);z-index:5;border-right:1px solid var(--bord);}
+.task-dot{width:6px;height:6px;border-radius:50%;flex-shrink:0;}
+.task-key{font-family:var(--mono);font-size:8px;color:var(--muted);flex-shrink:0;width:72px;}
+.task-sum{font-size:9px;flex:1;color:#C0C8D4;line-height:1.3;}
+.task-tl{position:relative;flex:1;min-height:22px;}
+.task-bar{position:absolute;height:8px;border-radius:2px;top:50%;transform:translateY(-50%);opacity:.85;min-width:2px;}
+/* task bar colors set inline */
+.g-tooltip{position:fixed;background:#21262D;border:1px solid #30363D;border-radius:6px;padding:8px 10px;font-size:10px;color:#E6EDF3;pointer-events:none;z-index:200;max-width:260px;display:none;line-height:1.5;box-shadow:0 4px 16px rgba(0,0,0,.5);}
+.legend{display:flex;gap:12px;padding:0 24px 10px;flex-wrap:wrap;}
+.leg-item{display:flex;align-items:center;gap:5px;font-size:10px;color:var(--muted);}
+.leg-dot{width:10px;height:10px;border-radius:2px;}
+
+.footer{background:var(--dark);padding:10px 24px;font-size:10px;color:var(--muted);border-top:1px solid var(--bord);display:flex;justify-content:space-between;}
+</style>
+</head>
+<body>
+
+<div class="hdr">
+  <div>
+    <div class="hdr-brand">Fenasbac TI</div>
+    <div class="hdr-title">Dashboard · Sprint S12</div>
+    <div class="hdr-sub">fenasbac-tech.atlassian.net · S12: 08/06–19/06/2026 &nbsp;·&nbsp; S13: 22/06–03/07/2026 &nbsp;·&nbsp; Apenas projetos com atividade no período</div>
+  </div>
+  <div class="hdr-badge">162 issues · 12 projetos · 26 SDesk</div>
+</div>
+
+<div class="alert-bar">
+  <div class="alert-item">
+    <div>
+      <div class="golive-label">Clube F — Go-live</div>
+      <div class="golive-date">15 JUN 2026</div>
+      <div class="golive-sub">Plataforma em operação · adesões das regionais desde 11/06</div>
+    </div>
+  </div>
+  <div class="golive-line"></div>
+  <div class="alert-item">
+    <span class="alert-badge red">⚠ CRÍTICO</span>
+    <span class="alert-text">Fenasbac.br — Remediação OWASP (2 críticos, 6 altos) · due 26/06</span>
+  </div>
+  <div class="alert-item">
+    <span class="alert-badge yellow">⚠ Bloqueio</span>
+    <span class="alert-text">Strapi — Aguarda validação Nexus v2 (Inovação + Comunicação) · 3 semanas</span>
+  </div>
+  <div class="alert-item">
+    <span class="alert-badge yellow">⚠ 22/06</span>
+    <span class="alert-text">Nordpass · PROC-213 vence na abertura da S13</span>
+  </div>
+</div>
+
+<div class="tabs">
+  <div class="tab active" onclick="showTab('projetos')">🗂 Projetos</div>
+  <div class="tab" onclick="showTab('gantt')">📅 Gantt</div>
+  <div class="tab" onclick="showTab('sdesk')">🎫 SDesk</div>
+</div>
+
+<!-- KPIs -->
+<div class="kpi-strip">
+  <div class="kpi warn"><div class="kpi-val">162</div><div class="kpi-label">Issues Sprint</div></div>
+  <div class="kpi ok"><div class="kpi-val">90</div><div class="kpi-label">Concluídas</div></div>
+  <div class="kpi"><div class="kpi-val">4</div><div class="kpi-label">Em andamento</div></div>
+  <div class="kpi warn"><div class="kpi-val">72</div><div class="kpi-label">Em aberto</div></div>
+  <div class="kpi ok"><div class="kpi-val">56%</div><div class="kpi-label">Taxa conclusão</div></div>
+  <div class="kpi ok"><div class="kpi-val">45</div><div class="kpi-label">FENASBR concluídos</div></div>
+  <div class="kpi danger"><div class="kpi-val">15</div><div class="kpi-label">Remediações OWASP</div></div>
+</div>
+
+<!-- PROJETOS PANEL -->
+<div id="panel-projetos" class="panel active">
+<div class="proj-view">
+
+  <div class="cat-group">
+    <div class="cat-title">🚀 Produto Digital <span class="cat-count">4</span></div>
+    <div class="proj-grid">
+
+      <div class="proj-card" style="border-top-color:#0225EB" onclick="openDetail('FENASBR')">
+        <div class="proj-key" style="color:#0225EB">FENASBR</div>
+        <div class="proj-name">Site Fenasbac.br · Clube F</div>
+        <div class="proj-stats">
+          <div class="pstat"><div class="pstat-dot" style="background:#2EA043"></div>45</div>
+          <div class="pstat"><div class="pstat-dot" style="background:#F85149"></div>15 OWASP · 7 análise</div>
+        </div>
+      </div>
+
+      <div class="proj-card" style="border-top-color:#8957E5" onclick="openDetail('CONECTA')">
+        <div class="proj-key" style="color:#8957E5">CONECTA</div>
+        <div class="proj-name">Fenasbac Conecta · Dashboards</div>
+        <div class="proj-stats">
+          <div class="pstat"><div class="pstat-dot" style="background:#2EA043"></div>13</div>
+          <div class="pstat"><div class="pstat-dot" style="background:#0225EB"></div>1 and. · 8 pend.</div>
+        </div>
+      </div>
+
+      <div class="proj-card" style="border-top-color:#02FFFF" onclick="openDetail('FENASHUB')">
+        <div class="proj-key" style="color:#02FFFF">FENASHUB</div>
+        <div class="proj-name">Fenasbac Hub · Dashboard</div>
+        <div class="proj-stats">
+          <div class="pstat"><div class="pstat-dot" style="background:#2EA043"></div>3 concluídos</div>
+        </div>
+      </div>
+
+      <div class="proj-card" style="border-top-color:#D29922" onclick="openDetail('GEP')">
+        <div class="proj-key" style="color:#D29922">GEP</div>
+        <div class="proj-name">Plataforma GEP</div>
+        <div class="proj-stats">
+          <div class="pstat"><div class="pstat-dot" style="background:#2EA043"></div>3</div>
+          <div class="pstat"><div class="pstat-dot" style="background:#0225EB"></div>1 and.</div>
+          <div class="pstat"><div class="pstat-dot" style="background:#484F58"></div>2 pend.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="cat-group">
+    <div class="cat-title">⚙️ Plataformas e API <span class="cat-count">3</span></div>
+    <div class="proj-grid">
+
+      <div class="proj-card" style="border-top-color:#2EA043" onclick="openDetail('SISFENAS')">
+        <div class="proj-key" style="color:#2EA043">SISFENAS</div>
+        <div class="proj-name">API SisFenasbac</div>
+        <div class="proj-stats">
+          <div class="pstat"><div class="pstat-dot" style="background:#2EA043"></div>5 concluídos</div>
+        </div>
+      </div>
+
+      <div class="proj-card" style="border-top-color:#F85149" onclick="openDetail('STRAPI')">
+        <div class="proj-key" style="color:#F85149">STRAPI</div>
+        <div class="proj-name">CMS · Aguarda Nexus v2</div>
+        <div class="proj-stats">
+          <div class="pstat"><div class="pstat-dot" style="background:#2EA043"></div>1 ok</div>
+          <div class="pstat"><div class="pstat-dot" style="background:#484F58"></div>17 bloq.</div>
+        </div>
+      </div>
+
+      <div class="proj-card" style="border-top-color:#2EA043" onclick="openDetail('FSYNC')">
+        <div class="proj-key" style="color:#2EA043">FSYNC</div>
+        <div class="proj-name">FenaSync · RDStation</div>
+        <div class="proj-stats">
+          <div class="pstat"><div class="pstat-dot" style="background:#2EA043"></div>2 concluídos</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="cat-group">
+    <div class="cat-title">🔧 Operacional / Interno <span class="cat-count">3</span></div>
+    <div class="proj-grid">
+
+      <div class="proj-card" style="border-top-color:#8957E5" onclick="openDetail('FAUTH')">
+        <div class="proj-key" style="color:#8957E5">FAUTH</div>
+        <div class="proj-name">Fenasbac Auth</div>
+        <div class="proj-stats">
+          <div class="pstat"><div class="pstat-dot" style="background:#2EA043"></div>1</div>
+          <div class="pstat"><div class="pstat-dot" style="background:#484F58"></div>2 pend.</div>
+        </div>
+      </div>
+
+      <div class="proj-card" style="border-top-color:#02FFFF" onclick="openDetail('TECH')">
+        <div class="proj-key" style="color:#02FFFF">TECH</div>
+        <div class="proj-name">TechOps · Infraestrutura</div>
+        <div class="proj-stats">
+          <div class="pstat"><div class="pstat-dot" style="background:#2EA043"></div>6</div>
+          <div class="pstat"><div class="pstat-dot" style="background:#0225EB"></div>1 and. · 2 pend.</div>
+        </div>
+      </div>
+
+      <div class="proj-card" style="border-top-color:#8957E5" onclick="openDetail('PROC')">
+        <div class="proj-key" style="color:#8957E5">PROC</div>
+        <div class="proj-name">Processos · Governança</div>
+        <div class="proj-stats">
+          <div class="pstat"><div class="pstat-dot" style="background:#2EA043"></div>7</div>
+          <div class="pstat"><div class="pstat-dot" style="background:#0225EB"></div>2 and.</div>
+          <div class="pstat"><div class="pstat-dot" style="background:#484F58"></div>8 pend.</div>
+        </div>
+      </div>
+
+      <div class="proj-card" style="border-top-color:#D29922" onclick="openDetail('SDESK')">
+        <div class="proj-key" style="color:#D29922">SDESK</div>
+        <div class="proj-name">Service Desk · 26 chamados</div>
+        <div class="proj-stats">
+          <div class="pstat"><div class="pstat-dot" style="background:#2EA043"></div>14 resolvidos</div>
+          <div class="pstat"><div class="pstat-dot" style="background:#484F58"></div>12 abertos</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+</div><!-- /projetos -->
+
+<!-- GANTT PANEL -->
+<div id="panel-gantt" class="panel">
+<div class="toolbar">
+  <button class="fbtn active" onclick="ganttFilter('open',this)">Em aberto</button>
+  <button class="fbtn" onclick="ganttFilter('prog',this)">Em andamento</button>
+  <button class="fbtn" onclick="ganttFilter('all',this)">Todos</button>
+  <button class="fbtn" id="btn-expand" onclick="toggleAll()">▶ Expandir todos</button>
+  <button class="today-btn" onclick="scrollToToday()">Hoje ▶</button>
+</div>
+<div class="legend">
+  <div class="leg-item"><div class="leg-dot" style="background:#0225EB;opacity:1"></div>S12 · Concluído <span style="color:#484F58;margin-left:2px">✓</span></div>
+  <div class="leg-item"><div class="leg-dot" style="background:#0225EB;opacity:.85"></div>S12 · Em andamento <span style="color:#484F58;margin-left:2px">↻</span></div>
+  <div class="leg-item"><div class="leg-dot" style="background:#0225EB;opacity:.4"></div>S12 · Pendente <span style="color:#484F58;margin-left:2px">·</span></div>
+  <div class="leg-item" style="margin-left:12px"><div class="leg-dot" style="background:#00D964;opacity:1"></div>S13 · Concluído</div>
+  <div class="leg-item"><div class="leg-dot" style="background:#00D964;opacity:.9"></div>S13 · Em andamento</div>
+  <div class="leg-item"><div class="leg-dot" style="background:#00D964;opacity:.75"></div>S13 · Pendente</div>
+</div>
+<div class="gantt-wrap" id="gantt-container"></div>
+<div class="g-tooltip" id="g-tooltip"></div>
+</div><!-- /gantt -->
+
+<!-- SDESK PANEL -->
+<div id="panel-sdesk" class="panel">
+<div class="sdesk-view">
+  <div class="kpi-strip" style="padding-left:0;padding-right:0;">
+    <div class="kpi"><div class="kpi-val">26</div><div class="kpi-label">Total chamados S12</div></div>
+    <div class="kpi ok"><div class="kpi-val">14</div><div class="kpi-label">Resolvidos</div></div>
+    <div class="kpi warn"><div class="kpi-val">12</div><div class="kpi-label">Em aberto</div></div>
+    <div class="kpi ok"><div class="kpi-val">54%</div><div class="kpi-label">Taxa resolução</div></div>
+  </div>
+
+  <div style="font-size:12px;font-weight:700;margin-bottom:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;">Taxa de Adesão por Andar</div>
+  <div class="sdesk-grid">
+    <div class="sdesk-card">
+      <div class="sdesk-hdr">
+        <div>
+          <div class="sdesk-title">Fenasbac</div>
+          <div style="font-size:10px;color:var(--muted)">Financeiro · Consórcio · Secretaria · Operações</div>
+        </div>
+        <span class="sdesk-badge green">100% resolvidos</span>
+      </div>
+      <div class="sdesk-body">
+        <div class="floor-row">
+          <div><div class="floor-name" style="color:var(--green)">Financeiro</div></div>
+          <div class="floor-stats">
+            <div class="fstat"><div class="fstat-val" style="color:var(--cyan)">3</div><div class="fstat-label">chamados</div></div>
+            <div class="fstat"><div class="fstat-val" style="color:var(--green)">3</div><div class="fstat-label">resolvidos</div></div>
+          </div>
+        </div>
+        <div class="floor-row">
+          <div><div class="floor-name" style="color:var(--green)">Secretaria / Operações</div></div>
+          <div class="floor-stats">
+            <div class="fstat"><div class="fstat-val" style="color:var(--cyan)">3</div><div class="fstat-label">chamados</div></div>
+            <div class="fstat"><div class="fstat-val" style="color:var(--green)">3</div><div class="fstat-label">resolvidos</div></div>
+          </div>
+        </div>
+        <div class="floor-row">
+          <div><div class="floor-name" style="color:var(--green)">Consórcio</div></div>
+          <div class="floor-stats">
+            <div class="fstat"><div class="fstat-val" style="color:var(--cyan)">1</div><div class="fstat-label">chamados</div></div>
+            <div class="fstat"><div class="fstat-val" style="color:var(--green)">1</div><div class="fstat-label">resolvidos</div></div>
+          </div>
+        </div>
+        <div class="floor-row">
+          <div><div class="floor-name" style="color:var(--green)">Jurídico</div></div>
+          <div class="floor-stats">
+            <div class="fstat"><div class="fstat-val" style="color:var(--cyan)">1</div><div class="fstat-label">chamados</div></div>
+            <div class="fstat"><div class="fstat-val" style="color:var(--green)">1</div><div class="fstat-label">resolvidos</div></div>
+          </div>
+        </div>
+        <div style="margin-top:12px;padding:8px;background:rgba(46,160,67,.08);border-radius:6px;border:1px solid rgba(46,160,67,.2);">
+          <div style="font-size:11px;font-weight:700;color:var(--green)">8 chamados · 100% de resolução</div>
+          <div style="font-size:10px;color:var(--muted);margin-top:2px;">Adesão consolidada ao canal formal de suporte</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="sdesk-card">
+      <div class="sdesk-hdr">
+        <div>
+          <div class="sdesk-title">Fenasbac Inovação</div>
+          <div style="font-size:10px;color:var(--muted)">Consultoria · Inovação · Comunicação</div>
+        </div>
+        <span class="sdesk-badge yellow">35% resolvidos</span>
+      </div>
+      <div class="sdesk-body">
+        <div class="floor-row">
+          <div><div class="floor-name">Consultoria</div></div>
+          <div class="floor-stats">
+            <div class="fstat"><div class="fstat-val" style="color:var(--cyan)">8</div><div class="fstat-label">chamados</div></div>
+            <div class="fstat"><div class="fstat-val" style="color:var(--green)">2</div><div class="fstat-label">resolvidos</div></div>
+            <div class="fstat"><div class="fstat-val" style="color:var(--yellow)">6</div><div class="fstat-label">abertos</div></div>
+          </div>
+        </div>
+        <div class="floor-row">
+          <div><div class="floor-name">Inovação</div></div>
+          <div class="floor-stats">
+            <div class="fstat"><div class="fstat-val" style="color:var(--cyan)">5</div><div class="fstat-label">chamados</div></div>
+            <div class="fstat"><div class="fstat-val" style="color:var(--green)">2</div><div class="fstat-label">resolvidos</div></div>
+            <div class="fstat"><div class="fstat-val" style="color:var(--yellow)">3</div><div class="fstat-label">abertos</div></div>
+          </div>
+        </div>
+        <div class="floor-row">
+          <div><div class="floor-name">Comunicação</div></div>
+          <div class="floor-stats">
+            <div class="fstat"><div class="fstat-val" style="color:var(--cyan)">4</div><div class="fstat-label">chamados</div></div>
+            <div class="fstat"><div class="fstat-val" style="color:var(--green)">2</div><div class="fstat-label">resolvidos</div></div>
+            <div class="fstat"><div class="fstat-val" style="color:var(--yellow)">2</div><div class="fstat-label">abertos</div></div>
+          </div>
+        </div>
+        <div style="margin-top:12px;padding:8px;background:rgba(210,153,34,.08);border-radius:6px;border:1px solid rgba(210,153,34,.2);">
+          <div style="font-size:11px;font-weight:700;color:var(--yellow)">17 chamados · tickets técnicos de maior complexidade</div>
+          <div style="font-size:10px;color:var(--muted);margin-top:2px;">Abertos refletem escopo técnico, não atraso de atendimento</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="sdesk-tickets">
+    <div class="sdesk-tickets-hdr">Chamados em aberto — prioridade S13</div>
+    <div class="ticket-row">
+      <div class="ticket-key">SDESK-169</div>
+      <div class="ticket-sum">Notebook lento — travamentos em Slack, Meet e Miro</div>
+      <span class="ticket-badge open">Infraestrutura</span>
+    </div>
+    <div class="ticket-row">
+      <div class="ticket-key">SDESK-146</div>
+      <div class="ticket-sum">Preparar equipamentos do novo colaborador (SP)</div>
+      <span class="ticket-badge open">Onboarding</span>
+    </div>
+    <div class="ticket-row">
+      <div class="ticket-key">SDESK-141</div>
+      <div class="ticket-sum">Onboarding novo colaborador — acessos e configurações</div>
+      <span class="ticket-badge open">Onboarding</span>
+    </div>
+    <div class="ticket-row">
+      <div class="ticket-key">SDESK-164</div>
+      <div class="ticket-sum">Ajustar dashboard conselheiros GEP — remover notas individuais</div>
+      <span class="ticket-badge open">GEP</span>
+    </div>
+    <div class="ticket-row">
+      <div class="ticket-key">SDESK-138</div>
+      <div class="ticket-sum">Guest users Microsoft Teams não funcionando (bloqueio Microsoft)</div>
+      <span class="ticket-badge open">TI Interna</span>
+    </div>
+  </div>
+</div>
+</div><!-- /sdesk -->
+
+<!-- DETAIL PANEL -->
+<div class="detail-panel" id="detail-panel">
+  <div class="dp-hdr">
+    <div>
+      <div class="dp-proj" id="dp-proj-key"></div>
+      <div class="dp-sub" id="dp-proj-name"></div>
+    </div>
+    <button class="dp-close" onclick="closeDetail()">✕</button>
+  </div>
+  <div class="dp-body" id="dp-body"></div>
+</div>
+
+<div class="footer">
+  <span>Dashboard S12 · Fenasbac TI · 19/06/2026</span>
+  <span>Fontes: Jira S12 · PROC · SDESK (08 a 19/06) · Gmail · Slack</span>
+</div>
+
+<script>
+// ─── TAB CONTROL ──────────────────────────────────────────────────────────────
+function showTab(id){
+  document.querySelectorAll('.tab').forEach((t,i)=>{
+    const ids=['projetos','gantt','sdesk'];
+    t.classList.toggle('active',ids[i]===id);
+  });
+  document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
+  document.getElementById('panel-'+id).classList.add('active');
+  if(id==='gantt'&&!ganttBuilt) buildGantt();
+}
+
+// ─── PROJECT DETAIL DATA ───────────────────────────────────────────────────────
+const projectData = {
+  FENASBR:{
+    name:'Site Fenasbac.br',
+    color:'#0225EB',
+    kpis:{done:35,prog:0,pend:15,total:50},
+    sections:[
+      {title:'✅ Concluídos — Lançamento Clube F (35)',color:'#2EA043',issues:[
+        {key:'FENASBR-187',sum:'Ajustes Pós-Homologação — Clube F (épico)'},
+        {key:'FENASBR-179',sum:'Ajustes no Fluxo de Cadastro – Clube F (épico)'},
+        {key:'FENASBR-174',sum:'Substituir e-mail de boas-vindas Urbis por fluxo próprio'},
+        {key:'FENASBR-173',sum:'[C03] Criar formulário de solicitação para usuários não encontrados'},
+        {key:'FENASBR-172',sum:'[C02] Bloquear ativação e exibir fluxo de regularização'},
+        {key:'FENASBR-171',sum:'[C02] Implementar validação de divergência de e-mail'},
+        {key:'FENASBR-170',sum:'[C01] Modal de adesão e API de aceites do Clube F'},
+        {key:'FENASBR-200',sum:'[CRÍTICO 04] Sessão autenticada não reconhecida na tela de identificação'},
+        {key:'FENASBR-190',sum:'[CRÍTICO 03] Erro 400 malformed no login via Google com conta ASBAC'},
+        {key:'FENASBR-188',sum:'[CRÍTICO 01] Usuário não avança após preencher CPF — sem feedback'},
+        {key:'FENASBR-207',sum:'Verificar vulnerabilidades do site'},
+        {key:'FENASBR-203',sum:'Filtrar TAG Site Fenasbac no DOCs e criar página /docs'},
+        {key:'FENASBR-202',sum:'Ajuste no site para aceitar situação funcional'},
+        {key:'FENASBR-203',sum:'E-mail de entrada no Clube F'},
+      ]},
+      {title:'🔴 Pendentes — Remediação OWASP (15 · due 26/06)',color:'#F85149',issues:[
+        {key:'FENASBR-217',sum:'[CRÍTICO] SEV-04 — OTP brute-forçável e account takeover via identity/v'},
+        {key:'FENASBR-218',sum:'[CRÍTICO] SEV-05 — SSRF e open proxy em /api/download'},
+        {key:'FENASBR-219',sum:'[ALTO] SEV-06 a SEV-16 — Remediação dos achados de severidade Alta'},
+        {key:'FENASBR-222',sum:'[ALTO] SEV-07 — XSS armazenado em templates de e-mail internos'},
+        {key:'FENASBR-224',sum:'[ALTO] SEV-09 — Bucket S3 de documentos PGAFI público → privado'},
+        {key:'FENASBR-225',sum:'[ALTO] SEV-10 — Rate limit e reCAPTCHA nas rotas de envio de e-mail'},
+        {key:'FENASBR-226',sum:'[ALTO] SEV-11 — E-mail bombing via validation/email/send sem auth'},
+        {key:'FENASBR-228',sum:'[ALTO] SEV-13 — Proteção CSRF em rotas POST/PUT'},
+        {key:'FENASBR-220',sum:'[MÉDIO/BAIXO] SEV-17 a 26 — Cabeçalhos, logs, OTP store, middleware'},
+      ]},
+    ]
+  },
+  CONECTA:{
+    name:'Fenasbac Conecta',color:'#8957E5',
+    kpis:{done:1,prog:5,pend:0,total:6},
+    sections:[
+      {title:'✅ Concluído',color:'#2EA043',issues:[
+        {key:'CONECTA-65',sum:'Analisar e integrar base de dados da ASBAC Salvador'},
+      ]},
+      {title:'🔵 Em andamento — Dashboards pós-lançamento Clube F',color:'#0225EB',issues:[
+        {key:'CONECTA-53',sum:'[ASBAC] Dashboard — Visão por regional'},
+        {key:'CONECTA-55',sum:'[Admin] Completude de Dados — % CPF, email, telefone, categoria'},
+        {key:'CONECTA-58',sum:'[ASBAC] Indicadores de Pessoas por período'},
+        {key:'CONECTA-59',sum:'[ASBAC] Completude de Dados por regional'},
+        {key:'CONECTA-60',sum:'[ASBAC] Clube F — taxa de adesão por regional'},
+      ]},
+    ]
+  },
+  FENASHUB:{
+    name:'Fenasbac Hub',color:'#02FFFF',
+    kpis:{done:3,prog:0,pend:0,total:3},
+    sections:[
+      {title:'✅ Concluídos',color:'#2EA043',issues:[
+        {key:'FENASHUB-15',sum:'Dashboard — página inicial do sistema'},
+        {key:'FENASHUB-16',sum:'Métricas do Dashboard — total pessoas, organizações, por área'},
+        {key:'FENASHUB-26',sum:'Verificar roles — acesso restrito a admin_global'},
+      ]},
+    ]
+  },
+  GEP:{
+    name:'Plataforma GEP',color:'#D29922',
+    kpis:{done:3,prog:1,pend:2,total:6},
+    sections:[
+      {title:'✅ Concluídos',color:'#2EA043',issues:[
+        {key:'GEP-70',sum:'Documentos GEP disponibilizados para download em PDF'},
+        {key:'GEP-71',sum:'Acesso dashboard conselheiros liberado para Consultoria'},
+        {key:'GEP-72',sum:'Redirecionamento botão Acesse → Panorama 2025'},
+      ]},
+      {title:'🔵 Em andamento',color:'#0225EB',issues:[
+        {key:'GEP-73',sum:'Exclusão cadastro Central Sicoper'},
+      ]},
+      {title:'⬜ Pendentes',color:'#484F58',issues:[
+        {key:'SDESK-164',sum:'Ajustar dashboard conselheiros — remover notas individuais por pergunta'},
+        {key:'SDESK-165',sum:'Trocar documento campo Panorama'},
+      ]},
+    ]
+  },
+  SISFENAS:{
+    name:'API SisFenasbac',color:'#2EA043',
+    kpis:{done:5,prog:0,pend:0,total:5},
+    sections:[
+      {title:'✅ Concluídos — 5 entregas técnicas',color:'#2EA043',issues:[
+        {key:'SISFENAS-27',sum:'Ativar módulo de segurança'},
+        {key:'SISFENAS-28',sum:'Inserir campos de criação em cad_pessoa'},
+        {key:'SISFENAS-29',sum:'Inserir campos de atualização de status de associação'},
+        {key:'SISFENAS-30',sum:'Salvar histórico de importações — criar tabela'},
+        {key:'SISFENAS-25',sum:'Normalização de matrículas sem vírgula — corrigida em prod 17/06'},
+      ]},
+    ]
+  },
+  STRAPI:{
+    name:'CMS Strapi',color:'#F85149',
+    kpis:{done:1,prog:0,pend:17,total:18},
+    sections:[
+      {title:'✅ Concluído',color:'#2EA043',issues:[
+        {key:'STRAPI-35',sum:'Atualizar Política de Privacidade — Fenasbac.io'},
+      ]},
+      {title:'⬜ Bloqueados — Aguardam validação Nexus v2 (Inovação + Comunicação)',color:'#484F58',issues:[
+        {key:'STRAPI-27 a 34',sum:'PPv dos 9 sites de programas — aguarda validação do Next B2'},
+        {key:'STRAPI-13/19 a 25',sum:'Adequação estrutural Strapi para sites de programas — Nexus, Next, Impact, Lift'},
+      ]},
+    ]
+  },
+  FSYNC:{
+    name:'FenaSync',color:'#2EA043',
+    kpis:{done:2,prog:0,pend:0,total:2},
+    sections:[
+      {title:'✅ Concluídos — Integração RDStation',color:'#2EA043',issues:[
+        {key:'FSYNC-13',sum:'Serviço RDStation — integração concluída'},
+        {key:'FSYNC-18',sum:'Sync RDStation — débito técnico encerrado'},
+      ]},
+    ]
+  },
+  TECH:{
+    name:'TechOps · Infraestrutura',color:'#02FFFF',
+    kpis:{done:6,prog:1,pend:0,total:7},
+    sections:[
+      {title:'✅ Concluídos',color:'#2EA043',issues:[
+        {key:'TECH-45',sum:'Licenças Microsoft adquiridas e atribuídas'},
+        {key:'TECH-46',sum:'Cadastro de ativos da Camilla no Jira Assets'},
+        {key:'TECH-47',sum:'Análise declaração de privacidade Mercado Pago/Livre — conformidade ANPD'},
+        {key:'TECH-48',sum:'Cotação viagem FEBRABAN TECH 2026 — aprovação registrada'},
+        {key:'TECH-49',sum:'Compra Alexa Echo Show 8 para sorteio'},
+        {key:'TECH-51',sum:'Avaliação de experiência — colaborador infraestrutura'},
+      ]},
+      {title:'🔵 Em andamento',color:'#0225EB',issues:[
+        {key:'TECH-50',sum:'Etiquetagem dos ativos de TI — 7º andar'},
+      ]},
+    ]
+  },
+  PROC:{
+    name:'Processos · Governança',color:'#8957E5',
+    kpis:{done:7,prog:2,pend:8,total:17},
+    sections:[
+      {title:'✅ Concluídos',color:'#2EA043',issues:[
+        {key:'PROC-196',sum:'Coordenação e governança da implantação Clube F (Urbis) — épico'},
+        {key:'PROC-206',sum:'Coordenar preparação para go-live'},
+        {key:'PROC-211',sum:'Compartilhar Proposta de Estruturação Operacional da TI com a diretoria'},
+        {key:'PROC-218',sum:'Relatório executivo das integrações com as ASBACs'},
+        {key:'PROC-220',sum:'Checklist e guia de onboarding de TI para novos colaboradores'},
+        {key:'PROC-222',sum:'Compras FEBRABAN TECH 2026'},
+        {key:'PROC-228',sum:'Avaliação formal de período de experiência'},
+      ]},
+      {title:'🔵 Em andamento',color:'#0225EB',issues:[
+        {key:'PROC-217',sum:'Reunião formalização fluxo PGAFI / SisFenasbac — due 23/06 ⚠'},
+        {key:'PROC-219',sum:'Documentação da jornada do usuário Clube F — due 26/06'},
+      ]},
+      {title:'⬜ Pendentes',color:'#484F58',issues:[
+        {key:'PROC-213',sum:'Nordpass — implementação nas demais diretorias — due 22/06 ⚠'},
+        {key:'PROC-221',sum:'Revisar base de contratos no Airtable — due 26/06'},
+        {key:'PROC-227',sum:'Padrão de nomenclatura e inventário de domínios — due jul/26'},
+        {key:'PROC-229',sum:'Refatoração da Intranet Fenasbac — due 10/07'},
+        {key:'PROC-164',sum:'Estruturação do fluxo de demandas de sites TI+MKT — épico, due jul/26'},
+        {key:'PROC-173',sum:'Alinhar fluxo com áreas demandantes — due jul/26'},
+        {key:'PROC-174',sum:'Formalizar e publicar fluxo como padrão oficial — due jul/26'},
+        {key:'PROC-216',sum:'Checklist de migração e publicação do site Nexus — due jul/26'},
+      ]},
+    ]
+  },
+  SDESK:{
+    name:'Service Desk',color:'#D29922',
+    kpis:{done:14,prog:0,pend:12,total:26},
+    sections:[
+      {title:'✅ Resolvidos (14)',color:'#2EA043',issues:[
+        {key:'SDESK-167',sum:'Rejeições BACEN — matrículas com vírgula corrigidas em prod (17/06)'},
+        {key:'SDESK-168',sum:'Remover tabelas consórcios Sicredi do site — resolvido no mesmo dia'},
+        {key:'SDESK-166',sum:'Inserir aba Diálogos no site do GEP'},
+        {key:'SDESK-158',sum:'Criar canal Slack lift-learning-vert-ifood'},
+        {key:'SDESK-160/161/162',sum:'3 alertas de vírus tratados — Financeiro, Secretaria, Operações'},
+        {key:'SDESK-156',sum:'Atualizar Política de Privacidade Fenasbac.io'},
+        {key:'SDESK-157',sum:'Ajuste módulo GEP — embed RD Station'},
+        {key:'SDESK-154',sum:'Ajuste arquivo contratos'},
+        {key:'SDESK-140',sum:'Compra Alexa Echo Show 8 (sorteio)'},
+        {key:'SDESK-139',sum:'Nordpass — redefinição de senha'},
+        {key:'SDESK-135',sum:'Formulários patrocinadores Fenasbac.io'},
+        {key:'SDESK-133',sum:'Instalação Office — financeiro'},
+      ]},
+      {title:'⬜ Em aberto (12)',color:'#D29922',issues:[
+        {key:'SDESK-169',sum:'Notebook lento — Slack, Meet, Miro travando (prioridade S13)'},
+        {key:'SDESK-146',sum:'Preparar equipamentos novo colaborador SP (onboarding)'},
+        {key:'SDESK-141',sum:'Onboarding — acessos e configurações'},
+        {key:'SDESK-164',sum:'Ajustar dashboard conselheiros GEP — notas por pergunta'},
+        {key:'SDESK-165',sum:'Trocar documento campo Panorama GEP'},
+        {key:'SDESK-138',sum:'Guest users Microsoft Teams — bloqueio externo (Microsoft)'},
+        {key:'SDESK-126',sum:'Refinamento formulário Fenasbac ID'},
+        {key:'SDESK-163',sum:'JFF — comparação base Airtable com Luma'},
+        {key:'SDESK-159',sum:'Exclusão cadastro Central Sicoper no GEP'},
+        {key:'SDESK-153',sum:'Trocar e-mail redirecionamento Clube F'},
+        {key:'SDESK-155',sum:'Documentos GEP disponíveis em PDF'},
+        {key:'SDESK-170',sum:'Ajuste Blog — redirecionamento para fenasbac.io'},
+      ]},
+    ]
+  },
+};
+
+function openDetail(proj){
+  const d=projectData[proj];
+  if(!d) return;
+  document.getElementById('dp-proj-key').textContent=proj;
+  document.getElementById('dp-proj-name').textContent=d.name;
+  let html=`<div class="dp-kpis">
+    <div class="dp-kpi"><div class="dp-kpi-val" style="color:#2EA043">${d.kpis.done}</div><div class="dp-kpi-label">Concluídos</div></div>
+    <div class="dp-kpi"><div class="dp-kpi-val" style="color:#0225EB">${d.kpis.prog}</div><div class="dp-kpi-label">Andamento</div></div>
+    <div class="dp-kpi"><div class="dp-kpi-val" style="color:#484F58">${d.kpis.pend}</div><div class="dp-kpi-label">Pendentes</div></div>
+  </div>`;
+  d.sections.forEach(s=>{
+    html+=`<div class="dp-sec"><div class="dp-sec-title">${s.title}</div>`;
+    s.issues.forEach(i=>{
+      html+=`<div class="dp-issue"><div class="dp-dot" style="background:${s.color}"></div><div class="dp-key">${i.key}</div><div class="dp-sum">${i.sum}</div></div>`;
+    });
+    html+=`</div>`;
+  });
+  document.getElementById('dp-body').innerHTML=html;
+  document.getElementById('detail-panel').classList.add('open');
+  document.querySelectorAll('.proj-card').forEach(c=>c.classList.remove('selected'));
+}
+function closeDetail(){document.getElementById('detail-panel').classList.remove('open');}
+
+// ─── GANTT ────────────────────────────────────────────────────────────────────
+let ganttBuilt=false;
+let currentFilter='open';
+let allExpanded=false;
+
+// Sprint S12: Jun 08 – Jun 19 | Sprint S13: Jun 22 – Jul 03
+// Show Jun 01 – Jul 10 (40 days)
+const GANTT_START = new Date('2026-06-01');
+const GANTT_END   = new Date('2026-07-10');
+const TODAY       = new Date('2026-06-19');
+const S12_START   = new Date('2026-06-08');
+const S12_END     = new Date('2026-06-19');
+const S13_START   = new Date('2026-06-22');
+const S13_END     = new Date('2026-07-03');
+
+function daysBetween(a,b){return Math.round((b-a)/(86400000));}
+const TOTAL_DAYS=daysBetween(GANTT_START,GANTT_END)+1;
+const DAY_W=22;
+
+const ganttProjects=[
+  {key:'FENASBR',name:'Site Fenasbac.br',color:'#0225EB',tasks:[
+    {key:'FENASBR-213',sum:'Remediação OWASP — épico (15 items · 2 críticos)',status:'prog',start:'2026-06-15',end:'2026-06-26'},
+    {key:'FENASBR-187',sum:'Ajustes Pós-Homologação Clube F',status:'done',start:'2026-06-08',end:'2026-06-12'},
+    {key:'FENASBR-179',sum:'Fluxo de Cadastro Clube F',status:'done',start:'2026-06-08',end:'2026-06-10'},
+  ]},
+  {key:'CONECTA',name:'Fenasbac Conecta',color:'#8957E5',tasks:[
+    {key:'CONECTA-53',sum:'Dashboard Regional — visão por ASBAC',status:'prog',start:'2026-06-16',end:'2026-06-26'},
+    {key:'CONECTA-55',sum:'Dashboard Admin — completude de dados',status:'prog',start:'2026-06-16',end:'2026-06-26'},
+    {key:'CONECTA-58/59/60',sum:'Indicadores ASBAC — pessoas, completude, Clube F',status:'prog',start:'2026-06-16',end:'2026-06-26'},
+    {key:'CONECTA-65',sum:'Integração base ASBAC Salvador',status:'done',start:'2026-06-16',end:'2026-06-19'},
+  ]},
+  {key:'SISFENAS',name:'API SisFenasbac',color:'#2EA043',tasks:[
+    {key:'SISFENAS-27',sum:'Ativar módulo de segurança',status:'done',start:'2026-06-15',end:'2026-06-16'},
+    {key:'SISFENAS-28/29/30',sum:'Campos cad_pessoa + histórico importações',status:'done',start:'2026-06-16',end:'2026-06-17'},
+    {key:'SISFENAS-25',sum:'Normalização matrículas — rejeições BACEN',status:'done',start:'2026-06-15',end:'2026-06-17'},
+  ]},
+  {key:'FENASHUB',name:'Fenasbac Hub',color:'#02FFFF',tasks:[
+    {key:'FENASHUB-15/16',sum:'Dashboard + Métricas entregues',status:'done',start:'2026-06-08',end:'2026-06-19'},
+    {key:'FENASHUB-26',sum:'Verificação de roles de acesso',status:'done',start:'2026-06-08',end:'2026-06-19'},
+  ]},
+  {key:'FSYNC',name:'FenaSync',color:'#2EA043',tasks:[
+    {key:'FSYNC-13/18',sum:'Integração RDStation — Serviço e Sync',status:'done',start:'2026-06-08',end:'2026-06-15'},
+  ]},
+  {key:'GEP',name:'Plataforma GEP',color:'#D29922',tasks:[
+    {key:'GEP-70/71/72',sum:'PDF, conselheiros, Panorama — concluídos',status:'done',start:'2026-06-08',end:'2026-06-17'},
+    {key:'GEP-73',sum:'Exclusão cadastro Central Sicoper',status:'prog',start:'2026-06-15',end:'2026-06-22'},
+  ]},
+  {key:'STRAPI',name:'CMS Strapi',color:'#F85149',tasks:[
+    {key:'STRAPI-35',sum:'Política de Privacidade Fenasbac.io',status:'done',start:'2026-06-10',end:'2026-06-19'},
+    {key:'STRAPI-27 a 34',sum:'PPv 9 sites de programas — BLOQUEADO (Nexus v2)',status:'pend',start:'2026-06-22',end:'2026-07-03'},
+    {key:'STRAPI-13/19 a 25',sum:'Adequação estrutural Strapi programas — BLOQUEADO',status:'pend',start:'2026-06-22',end:'2026-07-10'},
+  ]},
+  {key:'PROC',name:'Processos · Governança',color:'#8957E5',tasks:[
+    {key:'PROC-196/206',sum:'Governança go-live Clube F — encerrado',status:'done',start:'2026-06-08',end:'2026-06-15'},
+    {key:'PROC-211/218/220/222/228',sum:'5 entregas de governança — encerradas',status:'done',start:'2026-06-08',end:'2026-06-18'},
+    {key:'PROC-213',sum:'Nordpass — implementação diretorias',status:'pend',start:'2026-06-19',end:'2026-06-22'},
+    {key:'PROC-217',sum:'Reunião formalização PGAFI/SisFenasbac',status:'prog',start:'2026-06-19',end:'2026-06-23'},
+    {key:'PROC-219/221',sum:'Jornada usuário Clube F + Contratos Airtable',status:'prog',start:'2026-06-19',end:'2026-06-26'},
+    {key:'PROC-227/229',sum:'Nomenclatura domínios + Intranet Fenasbac',status:'pend',start:'2026-06-22',end:'2026-07-10'},
+  ]},
+  {key:'TECH',name:'TechOps · Infraestrutura',color:'#02FFFF',tasks:[
+    {key:'TECH-45 a 49/51',sum:'Licenças, ativos, privacidade, FEBRABAN — encerrados',status:'done',start:'2026-06-08',end:'2026-06-18'},
+    {key:'TECH-50',sum:'Etiquetagem ativos 7º andar',status:'prog',start:'2026-06-15',end:'2026-06-22'},
+  ]},
+];
+
+function dateToX(d){
+  const date=new Date(d+'T00:00:00');
+  return daysBetween(GANTT_START,date)*DAY_W;
+}
+function statusClass(s){return s==='done'?'done':s==='prog'?'prog':'pend';}
+
+function buildGantt(){
+  ganttBuilt=true;
+  const container=document.getElementById('gantt-container');
+  const todayX=daysBetween(GANTT_START,TODAY)*DAY_W;
+  const s12StartX=daysBetween(GANTT_START,S12_START)*DAY_W;
+  const s12EndX=daysBetween(GANTT_START,S12_END)*DAY_W+DAY_W;
+  const s13StartX=daysBetween(GANTT_START,S13_START)*DAY_W;
+  const s13EndX=daysBetween(GANTT_START,S13_END)*DAY_W+DAY_W;
+  const totalW=TOTAL_DAYS*DAY_W;
+
+  // Sprint band labels row
+  let sprintBands=`<div style="position:absolute;top:0;left:${s12StartX}px;width:${s12EndX-s12StartX}px;height:100%;background:rgba(2,37,235,0.07);border-left:2px solid rgba(2,37,235,0.5);border-right:2px solid rgba(2,37,235,0.5);pointer-events:none;z-index:1"></div>`;
+  sprintBands+=`<div style="position:absolute;top:0;left:${s13StartX}px;width:${s13EndX-s13StartX}px;height:100%;background:rgba(46,160,67,0.07);border-left:2px solid rgba(46,160,67,0.5);border-right:2px solid rgba(46,160,67,0.5);pointer-events:none;z-index:1"></div>`;
+  sprintBands+=`<div style="position:absolute;top:0;left:${todayX}px;width:2px;height:100%;background:rgba(248,81,73,0.7);z-index:2"></div>`;
+
+  // Sprint label header row
+  let sprintLabelRow=`<div style="display:flex;border-bottom:1px solid #30363D;">
+    <div style="width:320px;min-width:320px;height:22px;background:#0D1117;border-right:1px solid #30363D;position:sticky;left:0;z-index:11;"></div>
+    <div style="position:relative;flex:1;height:22px;overflow:hidden;">
+      <div style="position:absolute;left:${s12StartX}px;width:${s12EndX-s12StartX}px;height:22px;background:rgba(2,37,235,0.2);border-left:3px solid #0225EB;border-right:3px solid #0225EB;display:flex;align-items:center;justify-content:center;">
+        <span style="font-size:9px;font-weight:700;color:#4D8BFF;letter-spacing:.5px;text-shadow:0 0 8px rgba(2,37,235,0.5)">◀ S12 · 08–19 JUN ▶</span>
+      </div>
+      <div style="position:absolute;left:${s13StartX}px;width:${s13EndX-s13StartX}px;height:22px;background:rgba(0,217,100,0.15);border-left:3px solid #00D964;border-right:3px solid #00D964;display:flex;align-items:center;justify-content:center;">
+        <span style="font-size:9px;font-weight:700;color:#00D964;letter-spacing:.5px;text-shadow:0 0 8px rgba(0,217,100,0.4)">◀ S13 · 22 JUN–03 JUL ▶</span>
+      </div>
+      <div style="position:absolute;left:${todayX-1}px;width:2px;height:22px;background:rgba(248,81,73,0.7)"></div>
+    </div>
+  </div>`;
+
+  // Day headers
+  let days='';
+  let cur=new Date(GANTT_START);
+  for(let i=0;i<TOTAL_DAYS;i++){
+    const isWknd=cur.getDay()===0||cur.getDay()===6;
+    const isToday=cur.toDateString()===TODAY.toDateString();
+    const isS12=cur>=S12_START&&cur<=S12_END;
+    const isS13=cur>=S13_START&&cur<=S13_END;
+    const lbl=cur.getDate();
+    let bg='';
+    if(isS12) bg='background:rgba(2,37,235,0.06);';
+    else if(isS13) bg='background:rgba(0,217,100,0.07);';
+    else if(isWknd) bg='background:rgba(255,255,255,0.01);';
+    if(isToday) bg='background:rgba(248,81,73,0.12);';
+    days+=`<div class="d-cell${isToday?' today-d':''}" style="${bg}${isToday?'color:#F85149;font-weight:700;':''}">${isToday?'•':lbl}</div>`;
+    cur.setDate(cur.getDate()+1);
+  }
+
+  let html=`<div style="overflow-x:auto">
+  <div style="min-width:${320+totalW}px;position:relative;">
+  ${sprintLabelRow}
+  <div class="g-hdr">
+    <div class="g-lbl-col">Projeto / Entrega</div>
+    <div class="g-days" style="position:relative;">${days}</div>
+  </div>
+  <div style="position:absolute;top:44px;left:320px;width:${totalW}px;bottom:0;pointer-events:none;z-index:1;">
+    <div style="position:absolute;top:0;left:${s12StartX}px;width:${s12EndX-s12StartX}px;bottom:0;background:rgba(2,37,235,0.07);border-left:2px solid rgba(2,37,235,0.4);border-right:2px solid rgba(2,37,235,0.4);"></div>
+    <div style="position:absolute;top:0;left:${s13StartX}px;width:${s13EndX-s13StartX}px;bottom:0;background:rgba(0,217,100,0.06);border-left:2px solid rgba(0,217,100,0.5);border-right:2px solid rgba(0,217,100,0.5);"></div>
+    <div style="position:absolute;top:0;left:${todayX}px;width:2px;bottom:0;background:rgba(248,81,73,0.5);"></div>
+  </div>`;
+
+  ganttProjects.forEach(proj=>{
+    const allTasks=proj.tasks;
+    const doneCnt=allTasks.filter(t=>t.status==='done').length;
+    const progCnt=allTasks.filter(t=>t.status==='prog').length;
+
+    // Background for group row
+    let grpBg='';
+    allTasks.forEach(t=>{
+      const x=dateToX(t.start);
+      const w=Math.max(dateToX(t.end)-x+DAY_W,3);
+      const taskStart=new Date(t.start+'T00:00:00');
+      const taskEnd=new Date(t.end+'T00:00:00');
+      const inS13=taskStart<=S13_END&&taskEnd>=S13_START&&!(taskStart<=S12_END&&taskEnd>=S12_START);
+      const barCol=inS13?'#00D964':'#0225EB';
+      const op=t.status==='done'?'.8':t.status==='prog'?'.65':'.45';
+      grpBg+=`<div style="position:absolute;top:8px;left:${x}px;width:${w}px;height:12px;border-radius:2px;background:${barCol};opacity:${op}"></div>`;
+    });
+
+    html+=`<div class="grp-row" onclick="toggleGrp('${proj.key}')">
+      <div class="grp-lbl">
+        <span style="font-size:9px;color:var(--muted);width:10px" id="icon-${proj.key}">▶</span>
+        <span class="grp-name" style="color:${proj.color}">${proj.key}</span>
+        <span style="font-size:10px;color:var(--muted)">${proj.name}</span>
+        <div class="grp-badges">
+          ${doneCnt?`<span class="gbadge" style="background:rgba(2,37,235,.15);color:#4D8BFF">${doneCnt}✓</span>`:''}
+          ${progCnt?`<span class="gbadge" style="background:rgba(0,217,100,.15);color:#00D964">${progCnt}↻</span>`:''}
+        </div>
+      </div>
+      <div class="grp-tl" style="position:relative;flex:1;height:28px">${grpBg}
+
+      </div>
+    </div>
+    <div class="task-rows" id="tasks-${proj.key}">`;
+
+    allTasks.forEach(t=>{
+      const x=dateToX(t.start);
+      const w=Math.max(dateToX(t.end)-x+DAY_W,3);
+      // Color = sprint, opacity = status
+      const taskStart=new Date(t.start+'T00:00:00');
+      const taskEnd=new Date(t.end+'T00:00:00');
+      const inS12only=taskStart<=S12_END&&taskEnd>=S12_START&&!(taskStart>=S13_START);
+      const inS13only=taskStart>=S13_START;
+      const crosses=taskStart<=S12_END&&taskEnd>=S13_START;
+      let barColor,dotColor;
+      if(crosses){barColor='linear-gradient(90deg,#0225EB,#00D964)';dotColor='#0225EB';}
+      else if(inS13only){barColor='#00D964';dotColor='#00D964';}
+      else{barColor='#0225EB';dotColor='#0225EB';}
+      const opacity=t.status==='done'?'1':t.status==='prog'?'0.85':'0.7';
+      const statusIcon=t.status==='done'?'✓':t.status==='prog'?'↻':'—';
+      const statusColor=t.status==='done'?'#00D964':t.status==='prog'?'#02FFFF':'#8B949E';
+      html+=`<div class="task-row" data-status="${t.status}">
+        <div class="task-lbl">
+          <div class="task-dot" style="background:${dotColor};opacity:${opacity}"></div>
+          <div class="task-key">${t.key}</div>
+          <div class="task-sum">${t.sum}</div>
+          <span style="font-size:9px;font-weight:700;color:${statusColor};flex-shrink:0;padding:0 4px">${statusIcon}</span>
+        </div>
+        <div class="task-tl" style="position:relative;min-height:24px">
+          <div style="position:absolute;left:${x}px;width:${w}px;height:10px;border-radius:3px;top:50%;transform:translateY(-50%);background:${barColor};opacity:${opacity};"></div>
+        </div>
+      </div>`;
+    });
+
+    html+=`</div>`;
+  });
+
+  html+=`</div></div>`;
+  container.innerHTML=html;
+
+}
+
+function toggleGrp(key){
+  const el=document.getElementById('tasks-'+key);
+  const icon=document.getElementById('icon-'+key);
+  const isOpen=el.classList.contains('open');
+  el.classList.toggle('open',!isOpen);
+  icon.textContent=isOpen?'▶':'▼';
+  applyGanttFilter(currentFilter);
+}
+
+function ganttFilter(f,btn){
+  currentFilter=f;
+  document.querySelectorAll('.fbtn').forEach(b=>b.classList.remove('active'));
+  if(btn) btn.classList.add('active');
+  applyGanttFilter(f);
+}
+
+function applyGanttFilter(f){
+  document.querySelectorAll('.task-row').forEach(r=>{
+    const s=r.dataset.status;
+    if(f==='open') r.classList.toggle('hidden',s==='done');
+    else if(f==='prog') r.classList.toggle('hidden',s!=='prog');
+    else r.classList.remove('hidden');
+  });
+}
+
+function toggleAll(){
+  allExpanded=!allExpanded;
+  ganttProjects.forEach(p=>{
+    const el=document.getElementById('tasks-'+p.key);
+    const icon=document.getElementById('icon-'+p.key);
+    if(!el) return;
+    el.classList.toggle('open',allExpanded);
+    icon.textContent=allExpanded?'▼':'▶';
+  });
+  if(allExpanded) applyGanttFilter(currentFilter);
+  document.getElementById('btn-expand').textContent=allExpanded?'▼ Recolher todos':'▶ Expandir todos';
+}
+
+function scrollToToday(){
+  const el=document.querySelector('.today-d');
+  if(el) el.scrollIntoView({behavior:'smooth',inline:'center'});
+}
+</script>
+</body>
+</html>
