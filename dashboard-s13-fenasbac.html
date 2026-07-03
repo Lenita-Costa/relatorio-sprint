@@ -226,7 +226,7 @@ body{background:var(--bg);color:var(--text);font-family:var(--font);font-size:13
 <div class="proj-view">
 
   <div class="cat-group">
-    <div class="cat-title">🚀 Produto Digital <span class="cat-count">4</span></div>
+    <div class="cat-title">🚀 Produto Digital <span class="cat-count">5</span></div>
     <div class="proj-grid">
 
       <div class="proj-card" style="border-top-color:#0225EB" onclick="openDetail('FENASBR')">
@@ -260,8 +260,16 @@ body{background:var(--bg);color:var(--text);font-family:var(--font);font-size:13
         <div class="proj-name">Plataforma GEP / RECIP</div>
         <div class="proj-stats">
           <div class="pstat"><div class="pstat-dot" style="background:#2EA043"></div>5 concluídos</div>
-          <div class="pstat"><div class="pstat-dot" style="background:#0225EB"></div>1 and.</div>
-          <div class="pstat"><div class="pstat-dot" style="background:#484F58"></div>2 pend.</div>
+          <div class="pstat"><div class="pstat-dot" style="background:#484F58"></div>1 refat. planejada</div>
+        </div>
+      </div>
+
+      <div class="proj-card" style="border-top-color:#F85149" onclick="openDetail('SRR')">
+        <div class="proj-key" style="color:#F85149">SRR</div>
+        <div class="proj-name">Site Regulation Rocks</div>
+        <div class="proj-stats">
+          <div class="pstat"><div class="pstat-dot" style="background:#F85149"></div>5 issues · flags Tilt</div>
+          <div class="pstat"><div class="pstat-dot" style="background:#484F58"></div>aguarda layout 06/07</div>
         </div>
       </div>
     </div>
@@ -290,9 +298,9 @@ body{background:var(--bg);color:var(--text);font-family:var(--font);font-size:13
 
       <div class="proj-card" style="border-top-color:#2EA043" onclick="openDetail('FSYNC')">
         <div class="proj-key" style="color:#2EA043">FSYNC</div>
-        <div class="proj-name">FenaSync · RDStation</div>
+        <div class="proj-name">FenaSync</div>
         <div class="proj-stats">
-          <div class="pstat"><div class="pstat-dot" style="background:#2EA043"></div>2 concluídos</div>
+          <div class="pstat"><div class="pstat-dot" style="background:#484F58"></div>1 pendente · Endpoint Stats</div>
         </div>
       </div>
     </div>
@@ -484,201 +492,188 @@ function showTab(id){
 // ─── PROJECT DETAIL DATA ───────────────────────────────────────────────────────
 const projectData = {
   FENASBR:{
-    name:'Site Fenasbac.br',
-    color:'#0225EB',
-    kpis:{done:35,prog:0,pend:15,total:50},
+    name:'Site Fenasbac.br',color:'#0225EB',
+    kpis:{done:26,prog:0,pend:3,total:29},
     sections:[
-      {title:'✅ Concluídos — Lançamento Clube F (35)',color:'#2EA043',issues:[
-        {key:'FENASBR-187',sum:'Ajustes Pós-Homologação — Clube F (épico)'},
-        {key:'FENASBR-179',sum:'Ajustes no Fluxo de Cadastro – Clube F (épico)'},
-        {key:'FENASBR-174',sum:'Substituir e-mail de boas-vindas Urbis por fluxo próprio'},
-        {key:'FENASBR-173',sum:'[C03] Criar formulário de solicitação para usuários não encontrados'},
-        {key:'FENASBR-172',sum:'[C02] Bloquear ativação e exibir fluxo de regularização'},
-        {key:'FENASBR-171',sum:'[C02] Implementar validação de divergência de e-mail'},
-        {key:'FENASBR-170',sum:'[C01] Modal de adesão e API de aceites do Clube F'},
-        {key:'FENASBR-200',sum:'[CRÍTICO 04] Sessão autenticada não reconhecida na tela de identificação'},
-        {key:'FENASBR-190',sum:'[CRÍTICO 03] Erro 400 malformed no login via Google com conta ASBAC'},
-        {key:'FENASBR-188',sum:'[CRÍTICO 01] Usuário não avança após preencher CPF — sem feedback'},
-        {key:'FENASBR-207',sum:'Verificar vulnerabilidades do site'},
-        {key:'FENASBR-203',sum:'Filtrar TAG Site Fenasbac no DOCs e criar página /docs'},
-        {key:'FENASBR-202',sum:'Ajuste no site para aceitar situação funcional'},
-        {key:'FENASBR-203',sum:'E-mail de entrada no Clube F'},
+      {title:'✅ Concluídos — S13 (26)',color:'#2EA043',issues:[
+        {key:'FENASBR-235',sum:'Atualizar página Sobre (ex-Quem Somos) com novo texto e remover seção de Inovação'},
+        {key:'FENASBR-234',sum:'Ajustar menu de navegação — Sobre, Conteúdo, Docs/Blog e botão LOGIN → PAINEL'},
+        {key:'FENASBR-236',sum:'Identificar e recuperar documentos anexados às propostas'},
+        {key:'FENASBR-Priv',sum:'Atualizar Política de Privacidade do site institucional'},
+        {key:'FENASBR-OWASP',sum:'Remediações de segurança OWASP — itens críticos e altos entregues no prazo (26/06)'},
+        {key:'FENASBR-+21',sum:'Demais issues de segurança, UX e ajustes de conteúdo — 21 issues concluídas'},
       ]},
-      {title:'🔴 Pendentes — Remediação OWASP (15 · due 26/06)',color:'#F85149',issues:[
-        {key:'FENASBR-217',sum:'[CRÍTICO] SEV-04 — OTP brute-forçável e account takeover via identity/v'},
-        {key:'FENASBR-218',sum:'[CRÍTICO] SEV-05 — SSRF e open proxy em /api/download'},
-        {key:'FENASBR-219',sum:'[ALTO] SEV-06 a SEV-16 — Remediação dos achados de severidade Alta'},
-        {key:'FENASBR-222',sum:'[ALTO] SEV-07 — XSS armazenado em templates de e-mail internos'},
-        {key:'FENASBR-224',sum:'[ALTO] SEV-09 — Bucket S3 de documentos PGAFI público → privado'},
-        {key:'FENASBR-225',sum:'[ALTO] SEV-10 — Rate limit e reCAPTCHA nas rotas de envio de e-mail'},
-        {key:'FENASBR-226',sum:'[ALTO] SEV-11 — E-mail bombing via validation/email/send sem auth'},
-        {key:'FENASBR-228',sum:'[ALTO] SEV-13 — Proteção CSRF em rotas POST/PUT'},
-        {key:'FENASBR-220',sum:'[MÉDIO/BAIXO] SEV-17 a 26 — Cabeçalhos, logs, OTP store, middleware'},
+      {title:'⏳ Aguardando Comunicação — Projeto 60 Anos (3 · due 10/07)',color:'#D29922',issues:[
+        {key:'FENASBR-245',sum:'[60 Anos] Seção final — captura de e-mail (mailing) e CTA Instagram · desktop + mobile não entregues'},
+        {key:'FENASBR-244',sum:'[60 Anos] Embed da trilha sonora (Spotify) · layout pendente'},
+        {key:'FENASBR-243',sum:'[60 Anos] Carrossel de memórias históricas · layout pendente'},
       ]},
     ]
   },
   CONECTA:{
     name:'Fenasbac Conecta',color:'#8957E5',
-    kpis:{done:1,prog:5,pend:0,total:6},
+    kpis:{done:8,prog:0,pend:1,total:9},
     sections:[
-      {title:'✅ Concluído',color:'#2EA043',issues:[
-        {key:'CONECTA-65',sum:'Analisar e integrar base de dados da ASBAC Salvador'},
+      {title:'✅ Concluídos — S13 (8)',color:'#2EA043',issues:[
+        {key:'CONECTA-63',sum:'Ajustar tabela de contatos — exibir e filtrar por Clube F com visibilidade por ASBAC'},
+        {key:'CONECTA-64',sum:'Ajustes visuais de nomenclatura — Clube F, Importar Planilha e módulos'},
+        {key:'CONECTA-65',sum:'Integrar base de dados da ASBAC Salvador'},
+        {key:'CONECTA-66',sum:'Incluir lista de contatos do evento BC na base do Clube F'},
+        {key:'CONECTA-+4',sum:'Demais issues de dashboard e indicadores por regional — 4 issues concluídas'},
       ]},
-      {title:'🔵 Em andamento — Dashboards pós-lançamento Clube F',color:'#0225EB',issues:[
-        {key:'CONECTA-53',sum:'[ASBAC] Dashboard — Visão por regional'},
-        {key:'CONECTA-55',sum:'[Admin] Completude de Dados — % CPF, email, telefone, categoria'},
-        {key:'CONECTA-58',sum:'[ASBAC] Indicadores de Pessoas por período'},
-        {key:'CONECTA-59',sum:'[ASBAC] Completude de Dados por regional'},
-        {key:'CONECTA-60',sum:'[ASBAC] Clube F — taxa de adesão por regional'},
+      {title:'⏸ Pendente — S14 (1 · due 10/07)',color:'#484F58',issues:[
+        {key:'CONECTA-67',sum:'Liberar acesso aos dashboards do Conecta para equipe PEN e Diretoria — perfis de visualização a configurar'},
+      ]},
+    ]
+  },
+  GEP:{
+    name:'Plataforma GEP / RECIP',color:'#D29922',
+    kpis:{done:5,prog:0,pend:1,total:6},
+    sections:[
+      {title:'✅ Concluídos — S13 (5)',color:'#2EA043',issues:[
+        {key:'GEP-78',sum:'Corrigir funcionalidade de upload de Panorama na edição do RECIP'},
+        {key:'GEP-77',sum:'Disponibilizar documentos do GEP para download em PDF (Questionários e Panorama)'},
+        {key:'GEP-76',sum:'Exclusão do cadastro da Central Sicoper na edição 2026'},
+        {key:'GEP-75',sum:'Acesso ao dashboard de conselheiros liberado para Consultoria'},
+        {key:'GEP-74',sum:'Botão Acesse configurado para o Panorama 2025'},
+      ]},
+      {title:'⏸ Pendente — S14 (1 · due 20/07)',color:'#484F58',issues:[
+        {key:'GEP-79',sum:'Planejar refatoração das plataformas RECIP — reduzir débito técnico e padronizar arquitetura'},
+      ]},
+    ]
+  },
+  SRR:{
+    name:'Site Regulation Rocks',color:'#F85149',
+    kpis:{done:0,prog:0,pend:5,total:5},
+    sections:[
+      {title:'⏸ Em desenvolvimento — S14 (5 · due 10/07)',color:'#F85149',issues:[
+        {key:'SRR-3',sum:'Épico: Replicar estrutura de cenários e flags do Tilt no Regulation Rocks'},
+        {key:'SRR-4',sum:'Flag EventoExterno — controle CTA Calendar (link externo vs Luma)'},
+        {key:'SRR-5',sum:'Flag LiberarProgramacao — visibilidade Speakers + CTA vs Calendário CTA'},
+        {key:'SRR-6',sum:'Flag InscricoesAbertas — visibilidade de botões e blocos de inscrição'},
+        {key:'SRR-7',sum:'Validação dos 6 cenários de flags em todas as versões do site'},
+      ]},
+    ]
+  },
+  STRAPI:{
+    name:'CMS Strapi',color:'#E65100',
+    kpis:{done:0,prog:0,pend:9,total:9},
+    sections:[
+      {title:'⏸ Pendentes — Políticas de Privacidade (3 · due 10/07)',color:'#484F58',issues:[
+        {key:'STRAPI-36',sum:'Atualizar Política de Privacidade — GEP'},
+        {key:'STRAPI-34',sum:'Atualizar Política de Privacidade — Lift'},
+        {key:'STRAPI-33',sum:'Atualizar Política de Privacidade — Nexus'},
+      ]},
+      {title:'⏸ Bloqueados — Sites de programas (6)',color:'#484F58',issues:[
+        {key:'STRAPI-Next',sum:'Adequação site Next — aguarda layout de Comunicação (prometido 06/07)'},
+        {key:'STRAPI-Nexus',sum:'Adequação site Nexus — pausada por decisão estratégica (validação externa pendente)'},
+        {key:'STRAPI-+4',sum:'Demais sites de programas (Impact, Lift, Next v2) — aguardam desbloqueio do Nexus'},
+      ]},
+    ]
+  },
+  PROC:{
+    name:'Processos e Governança',color:'#8957E5',
+    kpis:{done:8,prog:2,pend:19,total:29},
+    sections:[
+      {title:'✅ Concluídos — S13 (8)',color:'#2EA043',issues:[
+        {key:'PROC-258',sum:'Offboarding confidencial no portal de suporte — chamados de desligamento visíveis só para Coordenação e Liderança'},
+        {key:'PROC-256',sum:'Base de conhecimento migrada para espaço institucional da Fenasbac'},
+        {key:'PROC-259',sum:'SLAs revisados e ajustados por tipo de solicitação'},
+        {key:'PROC-+5',sum:'Demais compromissos de governança e operacional — 5 issues concluídas'},
+      ]},
+      {title:'↻ Em andamento (2)',color:'#0225EB',issues:[
+        {key:'PROC-213',sum:'Nordpass — implementação nas demais diretorias'},
+        {key:'PROC-257',sum:'Desativação da assistente virtual Fátima — em avaliação'},
+      ]},
+      {title:'⏸ Pendentes — S14 (selecionados)',color:'#484F58',issues:[
+        {key:'PROC-274',sum:'Relatório de acompanhamento da liberação de usuários Clube F — due 06/07'},
+        {key:'PROC-273',sum:'Padrão de orquestração de notificações entre plataformas — due 10/07'},
+        {key:'PROC-229',sum:'Refatoração da Intranet Fenasbac — due 10/07'},
+        {key:'PROC-262',sum:'Atualizar artigos do portal de suporte — due 07/07'},
       ]},
     ]
   },
   FENASHUB:{
     name:'Fenasbac Hub',color:'#02FFFF',
-    kpis:{done:3,prog:0,pend:0,total:3},
+    kpis:{done:3,prog:0,pend:1,total:4},
     sections:[
-      {title:'✅ Concluídos',color:'#2EA043',issues:[
-        {key:'FENASHUB-15',sum:'Dashboard — página inicial do sistema'},
-        {key:'FENASHUB-16',sum:'Métricas do Dashboard — total pessoas, organizações, por área'},
-        {key:'FENASHUB-26',sum:'Verificar roles — acesso restrito a admin_global'},
+      {title:'✅ Concluídos — S12 (3)',color:'#2EA043',issues:[
+        {key:'FENASHUB-15/16',sum:'Dashboard e métricas entregues — operacional para a diretoria'},
+        {key:'FENASHUB-26',sum:'Verificação de roles de acesso concluída'},
       ]},
-    ]
-  },
-  GEP:{
-    name:'Plataforma GEP',color:'#D29922',
-    kpis:{done:3,prog:1,pend:2,total:6},
-    sections:[
-      {title:'✅ Concluídos',color:'#2EA043',issues:[
-        {key:'GEP-70',sum:'Documentos GEP disponibilizados para download em PDF'},
-        {key:'GEP-71',sum:'Acesso dashboard conselheiros liberado para Consultoria'},
-        {key:'GEP-72',sum:'Redirecionamento botão Acesse → Panorama 2025'},
-      ]},
-      {title:'🔵 Em andamento',color:'#0225EB',issues:[
-        {key:'GEP-73',sum:'Exclusão cadastro Central Sicoper'},
-      ]},
-      {title:'⬜ Pendentes',color:'#484F58',issues:[
-        {key:'SDESK-164',sum:'Ajustar dashboard conselheiros — remover notas individuais por pergunta'},
-        {key:'SDESK-165',sum:'Trocar documento campo Panorama'},
-      ]},
-    ]
-  },
-  SISFENAS:{
-    name:'API SisFenasbac',color:'#2EA043',
-    kpis:{done:5,prog:0,pend:0,total:5},
-    sections:[
-      {title:'✅ Concluídos — 5 entregas técnicas',color:'#2EA043',issues:[
-        {key:'SISFENAS-27',sum:'Ativar módulo de segurança'},
-        {key:'SISFENAS-28',sum:'Inserir campos de criação em cad_pessoa'},
-        {key:'SISFENAS-29',sum:'Inserir campos de atualização de status de associação'},
-        {key:'SISFENAS-30',sum:'Salvar histórico de importações — criar tabela'},
-        {key:'SISFENAS-25',sum:'Normalização de matrículas sem vírgula — corrigida em prod 17/06'},
-      ]},
-    ]
-  },
-  STRAPI:{
-    name:'CMS Strapi',color:'#F85149',
-    kpis:{done:1,prog:0,pend:17,total:18},
-    sections:[
-      {title:'✅ Concluído',color:'#2EA043',issues:[
-        {key:'STRAPI-35',sum:'Atualizar Política de Privacidade — Fenasbac.io'},
-      ]},
-      {title:'⬜ Bloqueados — Aguardam validação Nexus v2 (Inovação + Comunicação)',color:'#484F58',issues:[
-        {key:'STRAPI-27 a 34',sum:'PPv dos 9 sites de programas — aguarda validação do Next B2'},
-        {key:'STRAPI-13/19 a 25',sum:'Adequação estrutural Strapi para sites de programas — Nexus, Next, Impact, Lift'},
-      ]},
-    ]
-  },
-  FSYNC:{
-    name:'FenaSync',color:'#2EA043',
-    kpis:{done:2,prog:0,pend:0,total:2},
-    sections:[
-      {title:'✅ Concluídos — Integração RDStation',color:'#2EA043',issues:[
-        {key:'FSYNC-13',sum:'Serviço RDStation — integração concluída'},
-        {key:'FSYNC-18',sum:'Sync RDStation — débito técnico encerrado'},
+      {title:'⏸ Pendente — S14 (1 · due 10/07)',color:'#484F58',issues:[
+        {key:'FENASHUB-32',sum:'Estruturar governança e liberar acessos ao Hub — perfis Administrador, Editor, Colaborador, Leitor'},
       ]},
     ]
   },
   TECH:{
     name:'TechOps · Infraestrutura',color:'#02FFFF',
-    kpis:{done:6,prog:1,pend:0,total:7},
+    kpis:{done:3,prog:1,pend:2,total:6},
     sections:[
-      {title:'✅ Concluídos',color:'#2EA043',issues:[
-        {key:'TECH-45',sum:'Licenças Microsoft adquiridas e atribuídas'},
-        {key:'TECH-46',sum:'Cadastro de ativos da Camilla no Jira Assets'},
-        {key:'TECH-47',sum:'Análise declaração de privacidade Mercado Pago/Livre — conformidade ANPD'},
-        {key:'TECH-48',sum:'Cotação viagem FEBRABAN TECH 2026 — aprovação registrada'},
-        {key:'TECH-49',sum:'Compra Alexa Echo Show 8 para sorteio'},
-        {key:'TECH-51',sum:'Avaliação de experiência — colaborador infraestrutura'},
+      {title:'✅ Concluídos — S13 (3)',color:'#2EA043',issues:[
+        {key:'TECH-52',sum:'Equipamentos da nova colaboradora despachados para São Paulo'},
+        {key:'TECH-79',sum:'Cotações de equipamentos levantadas e inseridas no sistema'},
+        {key:'TECH-80',sum:'Conta Fenasbac junto ao Mercado Pago regularizada — processo aberto desde fevereiro'},
       ]},
-      {title:'🔵 Em andamento',color:'#0225EB',issues:[
-        {key:'TECH-50',sum:'Etiquetagem dos ativos de TI — 7º andar'},
+      {title:'↻ Em andamento (1)',color:'#0225EB',issues:[
+        {key:'TECH-50',sum:'Etiquetagem dos ativos de TI — 7º andar (em andamento)'},
+      ]},
+      {title:'⏸ Pendentes (2)',color:'#484F58',issues:[
+        {key:'TECH-55',sum:'Organização do estoque e atualização do inventário de TI — due 07/07'},
+        {key:'TECH-53',sum:'Compra de suporte móvel para TV'},
       ]},
     ]
   },
-  PROC:{
-    name:'Processos · Governança',color:'#8957E5',
-    kpis:{done:7,prog:2,pend:8,total:17},
+  FAUTH:{
+    name:'Fenasbac Auth',color:'#8957E5',
+    kpis:{done:0,prog:0,pend:2,total:2},
     sections:[
-      {title:'✅ Concluídos',color:'#2EA043',issues:[
-        {key:'PROC-196',sum:'Coordenação e governança da implantação Clube F (Urbis) — épico'},
-        {key:'PROC-206',sum:'Coordenar preparação para go-live'},
-        {key:'PROC-211',sum:'Compartilhar Proposta de Estruturação Operacional da TI com a diretoria'},
-        {key:'PROC-218',sum:'Relatório executivo das integrações com as ASBACs'},
-        {key:'PROC-220',sum:'Checklist e guia de onboarding de TI para novos colaboradores'},
-        {key:'PROC-222',sum:'Compras FEBRABAN TECH 2026'},
-        {key:'PROC-228',sum:'Avaliação formal de período de experiência'},
+      {title:'⏸ Pendentes — S14 (2 · due 11/07)',color:'#484F58',issues:[
+        {key:'FAUTH-48',sum:'Notificação no Slack de novos associados Clube F — canal #clube_f'},
+        {key:'FAUTH-44',sum:'Notificação no Slack de novos usuários — canal #fenasbac_id'},
       ]},
-      {title:'🔵 Em andamento',color:'#0225EB',issues:[
-        {key:'PROC-217',sum:'Reunião formalização fluxo PGAFI / SisFenasbac — due 23/06 ⚠'},
-        {key:'PROC-219',sum:'Documentação da jornada do usuário Clube F — due 26/06'},
+    ]
+  },
+  SISFENAS:{
+    name:'API SisFenasbac',color:'#2EA043',
+    kpis:{done:1,prog:0,pend:0,total:1},
+    sections:[
+      {title:'✅ Concluído — S13 (1)',color:'#2EA043',issues:[
+        {key:'SISFENAS-31',sum:'Ajustar confiabilidade dos dados usando o campo "Associado" — base técnica do Clube F robusta'},
       ]},
-      {title:'⬜ Pendentes',color:'#484F58',issues:[
-        {key:'PROC-213',sum:'Nordpass — implementação nas demais diretorias — due 22/06 ⚠'},
-        {key:'PROC-221',sum:'Revisar base de contratos no Airtable — due 26/06'},
-        {key:'PROC-227',sum:'Padrão de nomenclatura e inventário de domínios — due jul/26'},
-        {key:'PROC-229',sum:'Refatoração da Intranet Fenasbac — due 10/07'},
-        {key:'PROC-164',sum:'Estruturação do fluxo de demandas de sites TI+MKT — épico, due jul/26'},
-        {key:'PROC-173',sum:'Alinhar fluxo com áreas demandantes — due jul/26'},
-        {key:'PROC-174',sum:'Formalizar e publicar fluxo como padrão oficial — due jul/26'},
-        {key:'PROC-216',sum:'Checklist de migração e publicação do site Nexus — due jul/26'},
+    ]
+  },
+  FSYNC:{
+    name:'FenaSync',color:'#2EA043',
+    kpis:{done:0,prog:0,pend:1,total:1},
+    sections:[
+      {title:'⏸ Pendente — S14 (1 · due 10/07)',color:'#484F58',issues:[
+        {key:'FSYNC-27',sum:'Endpoint Stats (Dashboard) — métricas de sincronização'},
       ]},
     ]
   },
   SDESK:{
-    name:'Service Desk',color:'#D29922',
+    name:'Portal de Suporte',color:'#D29922',
     kpis:{done:14,prog:0,pend:12,total:26},
     sections:[
-      {title:'✅ Resolvidos (14)',color:'#2EA043',issues:[
-        {key:'SDESK-167',sum:'Rejeições BACEN — matrículas com vírgula corrigidas em prod (17/06)'},
+      {title:'✅ Resolvidos — S13 (14)',color:'#2EA043',issues:[
+        {key:'SDESK-167',sum:'Rejeições BACEN — matrículas com vírgula corrigidas em produção'},
         {key:'SDESK-168',sum:'Remover tabelas consórcios Sicredi do site — resolvido no mesmo dia'},
         {key:'SDESK-166',sum:'Inserir aba Diálogos no site do GEP'},
         {key:'SDESK-158',sum:'Criar canal Slack lift-learning-vert-ifood'},
         {key:'SDESK-160/161/162',sum:'3 alertas de vírus tratados — Financeiro, Secretaria, Operações'},
-        {key:'SDESK-156',sum:'Atualizar Política de Privacidade Fenasbac.io'},
-        {key:'SDESK-157',sum:'Ajuste módulo GEP — embed RD Station'},
-        {key:'SDESK-154',sum:'Ajuste arquivo contratos'},
-        {key:'SDESK-140',sum:'Compra Alexa Echo Show 8 (sorteio)'},
-        {key:'SDESK-139',sum:'Nordpass — redefinição de senha'},
-        {key:'SDESK-135',sum:'Formulários patrocinadores Fenasbac.io'},
-        {key:'SDESK-133',sum:'Instalação Office — financeiro'},
+        {key:'SDESK-+9',sum:'Demais chamados resolvidos — Política de Privacidade, módulo GEP, contratos, sorteio, Nordpass, Office'},
       ]},
-      {title:'⬜ Em aberto (12)',color:'#D29922',issues:[
-        {key:'SDESK-169',sum:'Notebook lento — Slack, Meet, Miro travando (prioridade S13)'},
-        {key:'SDESK-146',sum:'Preparar equipamentos novo colaborador SP (onboarding)'},
-        {key:'SDESK-141',sum:'Onboarding — acessos e configurações'},
-        {key:'SDESK-164',sum:'Ajustar dashboard conselheiros GEP — notas por pergunta'},
-        {key:'SDESK-165',sum:'Trocar documento campo Panorama GEP'},
+      {title:'⏸ Em aberto (12)',color:'#D29922',issues:[
+        {key:'SDESK-169',sum:'Notebook lento — Slack, Meet e Miro travando · Infraestrutura'},
+        {key:'SDESK-146/141',sum:'Equipamentos e onboarding do novo colaborador (SP) · Pendente'},
+        {key:'SDESK-164/165',sum:'Ajustes dashboard conselheiros GEP e documento Panorama'},
         {key:'SDESK-138',sum:'Guest users Microsoft Teams — bloqueio externo (Microsoft)'},
-        {key:'SDESK-126',sum:'Refinamento formulário Fenasbac ID'},
-        {key:'SDESK-163',sum:'JFF — comparação base Airtable com Luma'},
-        {key:'SDESK-159',sum:'Exclusão cadastro Central Sicoper no GEP'},
-        {key:'SDESK-153',sum:'Trocar e-mail redirecionamento Clube F'},
-        {key:'SDESK-155',sum:'Documentos GEP disponíveis em PDF'},
-        {key:'SDESK-170',sum:'Ajuste Blog — redirecionamento para fenasbac.io'},
+        {key:'SDESK-+8',sum:'Demais chamados em aberto — Fenasbac ID, JFF, redirecionamento Clube F, GEP PDF'},
       ]},
     ]
   },
-};
+}
 
 function openDetail(proj){
   const d=projectData[proj];
