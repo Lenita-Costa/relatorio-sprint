@@ -176,6 +176,33 @@ body{background:var(--bg);color:var(--text);font-family:var(--font);font-size:13
 .leg-dot{width:10px;height:10px;border-radius:2px;}
 
 .footer{background:var(--dark);padding:10px 24px;font-size:10px;color:var(--muted);border-top:1px solid var(--bord);display:flex;justify-content:space-between;}
+
+/* ===== RESPONSIVO / MOBILE ===== */
+@media (max-width:640px){
+  body{font-size:12px;}
+  .hdr{flex-wrap:wrap;gap:8px;padding:12px 14px;}
+  .hdr-title{font-size:15px;}
+  .hdr-sub{font-size:9px;}
+  .hdr-badge{font-size:9px;padding:3px 10px;}
+  .welcome-bar{flex-wrap:wrap;gap:10px;padding:10px 14px;}
+  .welcome-tag{margin-left:0;order:3;}
+  .alert-bar{padding:9px 14px;gap:12px;}
+  .tabs{padding:0 8px;overflow-x:auto;-webkit-overflow-scrolling:touch;}
+  .tab{padding:10px 12px;font-size:12px;}
+  .kpi-strip{padding:12px 14px;gap:8px;}
+  .kpi{min-width:calc(50% - 4px);padding:10px 12px;}
+  .proj-view{padding:0 14px 20px;}
+  .proj-grid{grid-template-columns:1fr 1fr;}
+  .detail-panel{width:100%;right:-100%;}
+  .sdesk-view{padding:0 14px 20px;}
+  .sdesk-grid{grid-template-columns:1fr;gap:10px;}
+  .floor-row{flex-direction:column;align-items:flex-start;gap:6px;}
+  .floor-stats{gap:18px;}
+  .ticket-key{width:auto;}
+  .toolbar,.legend,.gantt-wrap{padding-left:14px;padding-right:14px;}
+  .g-lbl-col,.row-lbl,.grp-lbl,.task-lbl{width:180px;min-width:180px;}
+  .footer{flex-direction:column;gap:4px;padding:10px 14px;}
+}
 </style>
 </head>
 <body>
