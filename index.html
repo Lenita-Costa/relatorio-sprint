@@ -176,7 +176,7 @@ body{background:var(--bg);color:var(--text);font-family:var(--font);font-size:13
   <div>
     <div class="hdr-brand">Fenasbac TI</div>
     <div class="hdr-title">Dashboard · Sprint S14</div>
-    <div class="hdr-sub">fenasbac-tech.atlassian.net &nbsp;·&nbsp; S14: 07/07–18/07/2026 &nbsp;·&nbsp; Próxima: S15 · 21/07–01/08/2026</div>
+    <div class="hdr-sub">fenasbac-tech.atlassian.net &nbsp;·&nbsp; S14: 07/07–18/07/2026 &nbsp;·&nbsp; Próxima: S15 · 20/07–31/07/2026</div>
   </div>
   <div class="hdr-badge">63 issues · S14 · 18/07/2026</div>
 </div>
@@ -729,8 +729,8 @@ const ganttProjects=[
 // ─── GANTT RENDER ───────────────────────────────────────────
 const S14_START = new Date('2026-07-07');
 const S14_END   = new Date('2026-07-18');
-const S15_START = new Date('2026-07-21');
-const S15_END   = new Date('2026-08-01');
+const S15_START = new Date('2026-07-20');
+const S15_END   = new Date('2026-07-31');
 
 function dateToX(d){ return daysBetween(GANTT_START, new Date(d)) * DAY_W; }
 
@@ -780,7 +780,7 @@ function renderGantt(){
   // Sprint bands
   const bands = [
     {s:S14_START,e:S14_END,label:'◀ S14 · 07–18 JUL ▶',color:'rgba(2,37,235,.06)',border:'#0225EB'},
-    {s:S15_START,e:S15_END,label:'◀ S15 · 21 JUL–01 AGO ▶',color:'rgba(0,217,100,.05)',border:'#00D964'}
+    {s:S15_START,e:S15_END,label:'◀ S15 · 20 JUL–31 JUL ▶',color:'rgba(0,217,100,.05)',border:'#00D964'}
   ];
   html += '<div style="position:relative;height:24px;margin-left:340px;">';
   bands.forEach(b=>{
