@@ -22,6 +22,14 @@ body{background:var(--bg);color:var(--text);font-family:var(--font);font-size:13
 .hdr-title{font-size:17px;font-weight:700;color:#fff;margin-top:2px;}
 .hdr-sub{font-size:10px;color:rgba(255,255,255,.5);margin-top:1px;}
 .hdr-badge{background:var(--bg3);border:1px solid var(--bord);border-radius:20px;padding:4px 12px;font-size:10px;color:var(--muted);}
+.welcome-bar{display:flex;align-items:center;gap:14px;padding:11px 24px;background:linear-gradient(90deg,rgba(2,255,255,.10),rgba(2,37,235,.08) 60%,transparent);border-bottom:1px solid var(--bord);border-left:3px solid var(--cyan);}
+.welcome-wave{font-size:22px;animation:wave 2.2s ease-in-out infinite;transform-origin:70% 70%;}
+@keyframes wave{0%,60%,100%{transform:rotate(0deg)}10%{transform:rotate(14deg)}20%{transform:rotate(-8deg)}30%{transform:rotate(14deg)}40%{transform:rotate(-4deg)}50%{transform:rotate(10deg)}}
+.welcome-txt{line-height:1.35;}
+.welcome-title{font-size:13px;font-weight:700;color:#fff;}
+.welcome-title b{color:var(--cyan);}
+.welcome-sub{font-size:10.5px;color:rgba(255,255,255,.6);margin-top:1px;}
+.welcome-tag{margin-left:auto;background:rgba(2,255,255,.12);border:1px solid rgba(2,255,255,.35);color:var(--cyan);border-radius:20px;padding:4px 12px;font-size:10px;font-weight:700;letter-spacing:.5px;white-space:nowrap;}
 
 .alert-bar{background:#0D1117;border-bottom:1px solid #30363D;padding:9px 24px;display:flex;align-items:center;gap:20px;flex-wrap:wrap;}
 .golive-label{font-size:9px;color:#8B949E;text-transform:uppercase;letter-spacing:.8px;}
@@ -179,6 +187,15 @@ body{background:var(--bg);color:var(--text);font-family:var(--font);font-size:13
     <div class="hdr-sub">fenasbac-tech.atlassian.net &nbsp;·&nbsp; S14: 07/07–18/07/2026 &nbsp;·&nbsp; Próxima: S15 · 20/07–31/07/2026</div>
   </div>
   <div class="hdr-badge">63 issues · S14 · 18/07/2026</div>
+</div>
+
+<div class="welcome-bar">
+  <div class="welcome-wave">👋</div>
+  <div class="welcome-txt">
+    <div class="welcome-title">Bem-vindo de volta, <b>Rodrigoh</b>!</div>
+    <div class="welcome-sub">Direto das férias para a nossa reunião estratégica — aqui está o resumo da Sprint S14 para começarmos alinhados.</div>
+  </div>
+  <div class="welcome-tag">DIRETORIA · 20 JUL</div>
 </div>
 
 <div class="alert-bar">
