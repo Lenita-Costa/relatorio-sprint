@@ -15,7 +15,8 @@
   --day:22px;
 }
 *{box-sizing:border-box;margin:0;padding:0;}
-body{background:var(--bg);color:var(--text);font-family:var(--font);font-size:13px;overflow-x:hidden;}
+html{background:#080B0F;}
+body{background:var(--bg);color:var(--text);font-family:var(--font);font-size:13px;overflow-x:hidden;max-width:1400px;margin:0 auto;box-shadow:0 0 0 1px var(--bord),0 0 40px rgba(0,0,0,.4);min-height:100vh;}
 .hdr{background:var(--dark);padding:12px 24px;display:flex;align-items:center;justify-content:space-between;border-bottom:2px solid var(--blue);}
 .hdr-brand{font-size:10px;color:var(--cyan);font-weight:700;letter-spacing:1.5px;text-transform:uppercase;}
 .hdr-title{font-size:17px;font-weight:700;color:#fff;margin-top:2px;}
@@ -142,20 +143,35 @@ body{background:var(--bg);color:var(--text);font-family:var(--font);font-size:13
 .expand-icon{font-size:9px;color:var(--muted);flex-shrink:0;width:10px;}
 .g-tooltip{position:fixed;background:#21262D;border:1px solid #30363D;border-radius:6px;padding:8px 10px;font-size:10px;color:#E6EDF3;pointer-events:none;z-index:200;max-width:260px;display:none;line-height:1.5;box-shadow:0 4px 16px rgba(0,0,0,.5);}
 .footer{background:var(--dark);padding:10px 24px;font-size:10px;color:var(--muted);border-top:1px solid var(--bord);display:flex;justify-content:space-between;}
+/* tablets — reduz o respiro lateral de 24px */
+@media(max-width:1024px){
+  .hdr,.tabs,.footer{padding-left:18px;padding-right:18px;}
+  .kpi-strip{padding-left:18px;padding-right:18px;}
+  .proj-view{padding:0 18px 20px;}
+  .team-view{padding:0 18px 20px;}
+  .grid-2{padding-left:18px !important;padding-right:18px !important;}
+  .toolbar,.gantt-wrap,.gantt-legend{padding-left:18px !important;padding-right:18px !important;}
+  #sdesk-areas{padding-left:18px !important;padding-right:18px !important;}
+  .sla-marco{margin-left:18px !important;margin-right:18px !important;}
+}
 @media(max-width:768px){
   /* header */
-  .hdr{flex-wrap:wrap;gap:8px;padding:10px 14px;}
+  .hdr{flex-wrap:wrap;gap:6px;padding:10px 14px;}
+  .hdr-title{font-size:15px;}
+  .hdr-sub{font-size:9px;line-height:1.4;}
   .hdr-badge{align-self:flex-start;}
   /* tabs */
   .tabs{padding:0 8px;overflow-x:auto;scrollbar-width:none;-webkit-overflow-scrolling:touch;}
   .tabs::-webkit-scrollbar{display:none;}
-  .tab{padding:10px 12px;font-size:12px;flex-shrink:0;}
+  .tab{padding:9px 12px;font-size:12px;flex-shrink:0;}
   /* kpis */
-  .kpi-strip{padding:10px 14px;gap:6px;}
-  .kpi{padding:10px 12px;min-width:calc(50% - 4px);flex:none;}
+  .kpi-strip{padding:12px 14px;gap:8px;}
+  .kpi{padding:9px 11px;min-width:calc(50% - 4px);flex:none;}
+  .kpi-val{font-size:21px;}
   /* grids */
-  .grid-2{grid-template-columns:1fr !important;padding-left:14px !important;padding-right:14px !important;}
+  .grid-2{grid-template-columns:1fr !important;gap:10px;padding-left:14px !important;padding-right:14px !important;}
   .proj-view,.team-view{padding:0 14px 16px;}
+  .proj-grid{gap:8px;}
   .team-grid{grid-template-columns:1fr;}
   /* sdesk */
   #sdesk-areas{padding:0 14px 20px !important;}
@@ -163,17 +179,24 @@ body{background:var(--bg);color:var(--text);font-family:var(--font);font-size:13
   /* marco SLA */
   .sla-marco{margin-left:14px !important;margin-right:14px !important;}
   /* gantt */
-  .gantt-wrap{padding-left:14px;padding-right:14px;}
-  .toolbar{padding:0 14px 10px;}
+  .gantt-wrap{padding-left:14px !important;padding-right:14px !important;}
+  .toolbar{padding:0 14px 10px !important;}
   .gantt-legend{padding-left:14px !important;padding-right:14px !important;flex-wrap:wrap;}
   .m-lbl-col,.g-lbl-col,.grp-lbl,.task-lbl{width:150px;min-width:150px;}
   /* painel detalhe */
   .detail-panel{width:100%;right:-100%;}
   /* footer */
-  .footer{flex-direction:column;gap:4px;padding:10px 14px;}
+  .footer{flex-direction:column;gap:4px;padding:10px 14px;text-align:center;}
 }
 @media(max-width:480px){
+  .hdr,.tabs,.footer,.kpi-strip{padding-left:12px;padding-right:12px;}
+  .proj-view,.team-view{padding:0 12px 14px;}
+  .grid-2{padding-left:12px !important;padding-right:12px !important;}
+  #sdesk-areas{padding-left:12px !important;padding-right:12px !important;}
+  .sla-marco{margin-left:12px !important;margin-right:12px !important;}
+  .gantt-wrap,.toolbar,.gantt-legend{padding-left:12px !important;padding-right:12px !important;}
   .kpi{min-width:calc(50% - 4px);}
+  .kpi-val{font-size:19px;}
   .proj-grid{grid-template-columns:1fr 1fr;}
   .m-lbl-col,.g-lbl-col,.grp-lbl,.task-lbl{width:120px;min-width:120px;}
 }
