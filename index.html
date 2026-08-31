@@ -115,6 +115,13 @@ body{background:var(--bg);color:var(--text);font-family:var(--font);font-size:13
 .evo-intro h4{font-size:11px;font-weight:700;color:var(--cyan);text-transform:uppercase;letter-spacing:.8px;margin-bottom:5px;}
 .evo-intro p{font-size:11px;color:#C0C8D4;line-height:1.6;margin-bottom:6px;}
 .evo-intro p:last-child{margin-bottom:0;color:var(--muted);font-size:10px;}
+.evo-obs{margin-top:15px;padding-top:14px;border-top:1px solid var(--bord);}
+.evo-obs-card{margin:0 24px 16px;background:var(--bg2);border:1px solid var(--bord);border-radius:8px;padding:15px 17px;}
+.evo-obs-card .evo-obs{margin-top:0;padding-top:0;border-top:none;}
+.evo-obs-hd{font-size:10px;font-weight:700;color:var(--cyan);text-transform:uppercase;letter-spacing:.8px;margin-bottom:9px;}
+.evo-obs p{font-size:11px;color:#C0C8D4;line-height:1.65;margin:0 0 8px;}
+.evo-obs p b{color:var(--text);font-weight:700;}
+.evo-obs .acao{font-size:11px;color:#E6EDF3;line-height:1.6;background:rgba(2,255,255,.06);border-left:2px solid var(--cyan);padding:8px 12px;border-radius:0 5px 5px 0;margin:0;}
 .dv-row{display:flex;align-items:center;gap:9px;margin-bottom:8px;}
 .dv-name{width:74px;font-size:10px;font-weight:600;text-align:right;flex-shrink:0;}
 .dv-track{flex:1;min-width:70px;position:relative;height:15px;background:var(--bg3);border-radius:3px;}
@@ -296,6 +303,7 @@ body{background:var(--bg);color:var(--text);font-family:var(--font);font-size:13
   </div>
 </div>
 <div class="evo-grid" id="evo-tiles"></div>
+<div class="evo-obs-card"><div class="evo-obs" id="evo-obs-kpi"></div></div>
 <div class="grid-2" style="padding:0 24px 16px;">
   <div class="evo-card" id="evo-dumbbell"></div>
   <div class="evo-card" id="evo-s18"></div>
@@ -805,6 +813,68 @@ function sparkline(vals,titulos){
     +'<polyline points="'+line+'" fill="none" stroke="'+EVO_MUTED+'" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" opacity=".75"/>'+dots+'</svg>';
 }
 
+// ---- leitura dos gráficos: texto montado a partir dos números, para não
+// ---- descolar dos dados quando a sprint virar ----
+function lista(a){return a.length<2?(a[0]||''):a.slice(0,-1).join(', ')+' e '+a[a.length-1];}
+function obsBox(titulo,paras,acao){
+  return '<div class="evo-obs-hd">'+titulo+'</div>'+paras.map(t=>'<p>'+t+'</p>').join('')
+    +'<p class="acao">'+acao+'</p>';
+}
+
+function leituraIndicadores(cur,prev,serie){
+  const dEnt=cur.done-prev.done, dEsc=cur.issues-prev.issues;
+  const tx=s=>Math.round(s.done/s.issues*100), dTx=tx(cur)-tx(prev);
+  const pEnt=Math.round(dEnt/prev.done*100), pEsc=Math.round(dEsc/prev.issues*100);
+  const carry=s=>s.issues-s.done, cPct=Math.round(carry(cur)/cur.issues*100);
+  let seq=0;for(let i=serie.length-1;i>0;i--){if(carry(serie[i])>carry(serie[i-1]))seq++;else break;}
+  const ritmo = pEnt>=pEsc
+    ? 'As entregas cresceram <b>'+pEnt+'%</b> ('+prev.done+' → '+cur.done+') contra <b>'+pEsc+'%</b> de crescimento do escopo ('+prev.issues+' → '+cur.issues+'): o time acompanhou o aumento e ganhou '+Math.abs(dTx)+'pp de taxa.'
+    : 'O escopo cresceu <b>'+pEsc+'%</b> ('+prev.issues+' → '+cur.issues+') contra <b>'+pEnt+'%</b> de crescimento das entregas ('+prev.done+' → '+cur.done+'), e a taxa '+(dTx>=0?'subiu':'caiu')+' '+Math.abs(dTx)+'pp.';
+  const fila = dEsc>dEnt
+    ? 'Só que em números absolutos o escopo entrou em <b>'+(dEsc/Math.max(1,dEnt)).toFixed(1).replace('.',',')+'x</b> o ritmo das entregas (+'+dEsc+' contra +'+dEnt+'), então o carry-over foi de '+carry(prev)+' para <b>'+carry(cur)+'</b> — '+cPct+'% de tudo que estava na '+cur.id+'.'
+    : 'O carry-over ficou em <b>'+carry(cur)+'</b> ('+cPct+'% do escopo da '+cur.id+'), contra '+carry(prev)+' na '+prev.id+'.';
+  const hist = seq>=2 ? ' Ele sobe há '+seq+' sprints seguidas ('+serie.map(carry).join(' → ')+').' : '';
+  const acao = dEsc>dEnt
+    ? '→ Melhorar a taxa não está reduzindo a fila. Enquanto o escopo entrar mais rápido do que a capacidade de fechar, o acumulado cresce mesmo com o time indo melhor — a alavanca da '+SPRINT_NOVA.id+' é limitar a entrada, não cobrar mais throughput.'
+    : '→ A fila parou de crescer. Vale manter o teto de escopo que produziu esse resultado.';
+  return obsBox('Leitura',[ritmo,fila+hist],acao);
+}
+
+function leituraFrentes(cur,prev,pa,pb){
+  const comuns=Object.keys(pb).filter(f=>pa[f]), novas=Object.keys(pb).filter(f=>!pa[f]), saiu=Object.keys(pa).filter(f=>!pb[f]);
+  const soma=(o,ks)=>ks.reduce((t,k)=>t+o[k][0],0);
+  const baseA=soma(pa,comuns), baseB=soma(pb,comuns), gNovas=soma(pb,novas), pSaiu=soma(pa,saiu);
+  const fechadas=novas.filter(f=>pb[f][1]>0&&pb[f][0]===pb[f][1]);
+  const abertas=Object.entries(pb).map(([f,v])=>[f,v[1]-v[0]]).filter(x=>x[1]>0).sort((x,y)=>y[1]-x[1]);
+  const tot=abertas.reduce((t,x)=>t+x[1],0), top=abertas.slice(0,3);
+  const topSum=top.reduce((t,x)=>t+x[1],0);
+  const decomp='Das <b>'+(cur.done-prev.done>0?'+':'')+(cur.done-prev.done)+'</b> entregas em relação à '+prev.id
+    +', <b>+'+gNovas+'</b> vieram de frentes que só existem na '+cur.id+' ('+lista(novas.filter(f=>pb[f][0]>0))+')'
+    +(pSaiu?' e <b>−'+pSaiu+'</b> saíram junto com frentes encerradas ('+lista(saiu)+')':'')
+    +'. As '+comuns.length+' frentes presentes nas duas sprints somaram '+baseB+' contra '+baseA+' — avanço real de <b>'+(baseB-baseA>0?'+':'')+(baseB-baseA)+'</b>.';
+  const parado='O que ficou parado está concentrado: '+top.map(x=>'<b>'+x[0]+'</b> ('+x[1]+')').join(', ')
+    +' respondem por '+Math.round(topSum/tot*100)+'% das '+tot+' issues em aberto.';
+  const acao=fechadas.length
+    ? '→ O salto veio de frentes que abriram e fecharam dentro da sprint ('+lista(fechadas.map(f=>f+' '+pb[f][0]+'/'+pb[f][1]))+'). As frentes de esteira longa quase não se moveram, e são elas que vão definir a '+SPRINT_NOVA.id+' — vale tratá-las com meta própria em vez de diluí-las no total.'
+    : '→ O avanço se distribuiu entre as frentes que já vinham correndo. Vale checar se as maiores têm capacidade dedicada na '+SPRINT_NOVA.id+'.';
+  return obsBox('Leitura',[decomp,parado],acao);
+}
+
+function leituraS18(sel,cur,serie){
+  const porProj={};sel.forEach(i=>porProj[i.project]=(porProj[i.project]||0)+1);
+  const ord=Object.entries(porProj).sort((a,b)=>b[1]-a[1]);
+  const top=ord.slice(0,2), topSum=top.reduce((t,x)=>t+x[1],0);
+  const hist=serie.map(s=>s.done), media=Math.round(hist.reduce((a,b)=>a+b,0)/hist.length);
+  const carga='A '+SPRINT_NOVA.id+' começa com <b>'+sel.length+' issues herdadas</b>, antes de entrar qualquer escopo novo. Nas últimas '
+    +hist.length+' sprints o time fechou '+lista(hist.map(String))+' — média de <b>'+media+'</b>. A herança sozinha já está '
+    +(sel.length>media?'acima':'abaixo')+' desse patamar.';
+  const conc=top.length>1?'<b>'+top[0][0]+'</b> ('+top[0][1]+') e <b>'+top[1][0]+'</b> ('+top[1][1]+') concentram '+topSum+' das '+sel.length+' ('+Math.round(topSum/sel.length*100)+'%).':'';
+  const acao=sel.length>media
+    ? '→ Antes de aceitar escopo novo, a '+SPRINT_NOVA.id+' já está cheia. Entrar sem teto definido repete o padrão da '+cur.id+' e empurra a fila de novo para a sprint seguinte.'
+    : '→ Há folga sobre a média histórica; dá para absorver escopo novo sem inflar a fila.';
+  return obsBox('Leitura',[carga,conc].filter(Boolean),acao);
+}
+
 function buildEvolucao(){
   const host=document.getElementById('evo-tiles');
   if(!host||host.children.length)return;
@@ -825,6 +895,7 @@ function buildEvolucao(){
       +sparkline(vals,SPRINTS.map(sp=>sp.id+': '+m.get(sp)+(m.suf||'')));
     host.appendChild(tile);
   });
+  document.getElementById('evo-obs-kpi').innerHTML=leituraIndicadores(cur,prev,SPRINTS);
 
   // --- barra divergente: evolucao de entregas por frente ---
   // A barra mede entregas concluidas (numero absoluto). Delta de TAXA por frente
@@ -859,7 +930,8 @@ function buildEvolucao(){
         +'<div class="dv-detail">'+nEnt+' · '+nTaxa+(r.tag?'<span class="dv-tag">'+r.tag+'</span>':'')+'</div>'
         +'</div>';
     }).join('')
-    +'<div class="dv-scale"><span>−'+maxAbs+' entregas</span><span>0</span><span>+'+maxAbs+'</span></div>';
+    +'<div class="dv-scale"><span>−'+maxAbs+' entregas</span><span>0</span><span>+'+maxAbs+'</span></div>'
+    +'<div class="evo-obs">'+leituraFrentes(cur,prev,pa,pb)+'</div>';
 
   // --- carga que entra na sprint nova ---
   const box=document.getElementById('evo-s18');
@@ -882,7 +954,8 @@ function buildEvolucao(){
         +'<div style="flex:1;background:var(--bg3);border-radius:3px;height:16px;overflow:hidden;">'
         +'<div style="height:100%;width:'+Math.round(n/maxN*100)+'%;background:'+EVO_ACCENT+';opacity:.55;border-radius:3px;"></div></div>'
         +'<div style="font-size:10px;color:var(--muted);width:22px;text-align:right;flex-shrink:0;font-variant-numeric:tabular-nums;">'+n+'</div></div>';
-    }).join('');
+    }).join('')
+    +'<div class="evo-obs">'+leituraS18(sel,cur,SPRINTS)+'</div>';
 }
 
 // ===== KPIs derivados dos dados (nada de número fixo no HTML) =====
