@@ -1,0 +1,865 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Dashboard Sprint S16 — Fenasbac TI</title>
+<link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@300;400;600;700&family=IBM+Plex+Mono:wght@400&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0D1117;--bg2:#161B22;--bg3:#21262D;--bord:#30363D;
+  --text:#E6EDF3;--muted:#8B949E;
+  --blue:#0225EB;--cyan:#02FFFF;--dark:#002060;
+  --green:#2EA043;--yellow:#D29922;--red:#F85149;--purple:#8957E5;
+  --gray:#484F58;--font:'Exo 2',sans-serif;--mono:'IBM Plex Mono',monospace;
+  --day:22px;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+html{background:#080B0F;}
+body{background:var(--bg);color:var(--text);font-family:var(--font);font-size:13px;overflow-x:hidden;max-width:1400px;margin:0 auto;box-shadow:0 0 0 1px var(--bord),0 0 40px rgba(0,0,0,.4);min-height:100vh;}
+.hdr{background:var(--dark);padding:12px 24px;display:flex;align-items:center;justify-content:space-between;border-bottom:2px solid var(--blue);}
+.hdr-brand{font-size:10px;color:var(--cyan);font-weight:700;letter-spacing:1.5px;text-transform:uppercase;}
+.hdr-title{font-size:17px;font-weight:700;color:#fff;margin-top:2px;}
+.hdr-sub{font-size:10px;color:rgba(255,255,255,.5);margin-top:1px;}
+.hdr-badge{background:var(--bg3);border:1px solid var(--bord);border-radius:20px;padding:4px 12px;font-size:10px;color:var(--muted);}
+.tabs{display:flex;background:var(--bg2);border-bottom:1px solid var(--bord);padding:0 24px;}
+.tab{padding:10px 18px;cursor:pointer;color:var(--muted);font-size:13px;font-weight:500;border-bottom:3px solid transparent;transition:all .15s;white-space:nowrap;}
+.tab.active{color:var(--blue);border-bottom-color:var(--blue);}
+.tab:hover:not(.active){color:var(--text);}
+.panel{display:none;}.panel.active{display:block;}
+.kpi-strip{display:flex;gap:10px;padding:16px 24px;flex-wrap:wrap;}
+.kpi{background:var(--bg2);border:1px solid var(--bord);border-radius:8px;padding:12px 18px;flex:1;min-width:100px;}
+.kpi-val{font-size:26px;font-weight:700;color:var(--cyan);font-family:var(--mono);}
+.kpi-label{font-size:9px;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;margin-top:2px;}
+.kpi.ok .kpi-val{color:var(--green);}.kpi.warn .kpi-val{color:var(--yellow);}.kpi.danger .kpi-val{color:var(--red);}
+
+/* PROJETOS */
+.proj-view{padding:0 24px 24px;}
+.cat-group{margin-bottom:24px;}
+.cat-title{font-size:11px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.8px;margin-bottom:10px;display:flex;align-items:center;gap:8px;}
+.cat-count{background:var(--bg3);border-radius:10px;padding:1px 7px;font-size:10px;font-weight:600;color:var(--text);}
+.proj-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:10px;}
+.proj-card{background:var(--bg2);border:1px solid var(--bord);border-radius:8px;padding:12px;cursor:pointer;transition:border-color .15s,background .15s;position:relative;overflow:hidden;}
+.proj-card:hover{border-color:var(--blue);background:#1a2030;}
+.proj-key{font-size:10px;font-weight:700;letter-spacing:.5px;}
+.proj-name{font-size:11px;color:var(--muted);margin-top:1px;margin-bottom:8px;}
+.no-issues{font-size:10px;color:var(--gray);font-style:italic;}
+
+/* SDESK */
+.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:12px;padding:0 24px 24px;}
+.dp-issue{display:flex;align-items:flex-start;gap:7px;padding:5px 6px;border-radius:4px;margin-bottom:2px;}
+.dp-issue:hover{background:var(--bg3);}
+.dp-dot{width:7px;height:7px;border-radius:50%;flex-shrink:0;margin-top:3px;}
+.dp-key{font-family:var(--mono);font-size:9px;color:var(--muted);flex-shrink:0;width:80px;}
+.dp-sum{font-size:10px;line-height:1.4;flex:1;}
+.dp-owner{font-size:9px;color:var(--muted);flex-shrink:0;margin-top:1px;}
+.sla-badge{font-size:8px;font-weight:700;padding:1px 5px;border-radius:8px;margin-left:4px;}
+
+/* DETAIL PANEL */
+.detail-panel{position:fixed;right:-400px;top:0;bottom:0;width:380px;background:#161B22;border-left:1px solid #30363D;z-index:100;transition:right .25s ease;display:flex;flex-direction:column;box-shadow:-8px 0 32px rgba(0,0,0,.6);}
+.detail-panel.open{right:0;}
+.dp-hdr{padding:14px 16px 12px;border-bottom:1px solid #30363D;display:flex;align-items:center;justify-content:space-between;}
+.dp-proj{font-size:11px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;}
+.dp-sub{font-size:10px;color:#8B949E;margin-top:2px;}
+.dp-close{background:none;border:none;color:#8B949E;cursor:pointer;font-size:18px;padding:2px 6px;}
+.dp-close:hover{color:#E6EDF3;}
+.dp-body{flex:1;overflow-y:auto;padding:14px;}
+.dp-kpis{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:14px;}
+.dp-kpi{background:#21262D;border-radius:6px;padding:8px 10px;}
+.dp-kpi-val{font-size:20px;font-weight:700;font-family:var(--mono);}
+.dp-kpi-label{font-size:9px;color:#8B949E;text-transform:uppercase;letter-spacing:.4px;margin-top:1px;}
+.dp-sec{margin-bottom:12px;}
+.dp-sec-title{font-size:9px;font-weight:600;color:#8B949E;text-transform:uppercase;letter-spacing:.8px;margin-bottom:6px;padding-bottom:4px;border-bottom:1px solid #30363D;}
+
+/* TEAM */
+.team-view{padding:0 24px 24px;}
+.team-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:12px;}
+.member-card{background:var(--bg2);border:1px solid var(--bord);border-radius:8px;overflow:hidden;}
+.member-hdr{padding:12px 14px;display:flex;align-items:center;gap:10px;border-bottom:1px solid var(--bord);}
+.member-av{width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;flex-shrink:0;}
+.member-name{font-size:13px;font-weight:600;}
+.member-role{font-size:10px;color:var(--muted);}
+.member-stats{display:flex;gap:0;border-bottom:1px solid var(--bord);}
+.mstat{flex:1;padding:8px;text-align:center;border-right:1px solid var(--bord);}
+.mstat:last-child{border-right:none;}
+.mstat-val{font-size:16px;font-weight:700;font-family:var(--mono);}
+.mstat-label{font-size:8px;color:var(--muted);text-transform:uppercase;letter-spacing:.4px;margin-top:1px;}
+.member-issues{padding:8px;max-height:200px;overflow-y:auto;}
+.m-issue{display:flex;align-items:center;gap:6px;padding:4px 5px;border-radius:4px;margin-bottom:2px;font-size:10px;}
+.m-issue:hover{background:var(--bg3);}
+.m-dot{width:6px;height:6px;border-radius:50%;flex-shrink:0;}
+.m-key{font-family:var(--mono);font-size:9px;color:var(--muted);flex-shrink:0;width:68px;}
+.m-sum{flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.m-bar-wrap{padding:0 14px 12px;}
+.m-bar-track{background:var(--bg3);border-radius:3px;height:4px;}
+.m-bar-fill{height:4px;border-radius:3px;}
+
+/* GANTT */
+.gantt-wrap{overflow-x:auto;padding:0 24px 24px;}
+#gantt-container{width:max-content;min-width:100%;}
+.toolbar{display:flex;gap:6px;padding:0 24px 10px;flex-wrap:wrap;align-items:center;}
+.fbtn{background:var(--bg3);border:1px solid var(--bord);color:var(--muted);padding:4px 10px;border-radius:14px;cursor:pointer;font-size:11px;transition:all .15s;}
+.fbtn.active,.fbtn:hover{background:var(--blue);color:#fff;border-color:var(--blue);}
+.today-btn{background:var(--dark);border:1px solid var(--blue);color:var(--cyan);padding:4px 10px;border-radius:14px;cursor:pointer;font-size:11px;margin-left:auto;}
+.m-hdr{display:flex;border-bottom:1px solid var(--bord);}
+.m-lbl-col{width:280px;min-width:280px;position:sticky;left:0;background:var(--bg);z-index:11;border-right:1px solid var(--bord);}
+.m-cell{background:var(--bg2);text-align:center;font-size:10px;font-weight:600;color:var(--cyan);padding:4px 0;border-right:1px solid var(--bord);flex-shrink:0;}
+.g-hdr{display:flex;position:sticky;top:0;z-index:10;background:var(--bg);border-bottom:1px solid var(--bord);}
+.g-lbl-col{width:280px;min-width:280px;padding:5px 10px;font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;position:sticky;left:0;background:var(--bg);z-index:11;border-right:1px solid var(--bord);}
+.g-days{display:flex;flex-shrink:0;}
+.d-cell{width:var(--day);min-width:var(--day);text-align:center;font-size:9px;color:var(--muted);padding:3px 0;border-right:1px solid rgba(48,54,61,.4);}
+.d-cell.wknd{background:rgba(255,255,255,.015);}.d-cell.today-d{background:rgba(248,81,73,.15);color:var(--red);font-weight:600;}
+.g-row{display:flex;border-bottom:1px solid rgba(48,54,61,.3);transition:background .1s;}
+.g-row:hover{background:rgba(255,255,255,.025);}
+.grp-row{display:flex;background:rgba(2,32,96,.35);cursor:pointer;border-bottom:1px solid rgba(48,54,61,.5);}
+.grp-row:hover{background:rgba(2,32,96,.55);}
+.grp-lbl{width:280px;min-width:280px;padding:6px 10px;display:flex;align-items:center;gap:8px;position:sticky;left:0;background:rgba(2,32,96,.35);z-index:5;border-right:1px solid var(--bord);}
+.grp-name{font-size:11px;font-weight:700;flex:1;}
+.grp-badges{display:flex;gap:4px;align-items:center;}
+.gbadge{font-size:8px;font-weight:700;padding:1px 5px;border-radius:8px;}
+.grp-tl{position:relative;flex:none;height:28px;background:rgba(2,32,96,.2);}
+.grp-summary{position:absolute;top:8px;left:8px;display:flex;gap:6px;}
+.gs-seg{height:12px;border-radius:2px;min-width:3px;}
+.task-rows{display:none;}
+.task-rows.open{display:block;}
+.task-row{display:flex;border-bottom:1px solid rgba(48,54,61,.2);background:rgba(0,0,0,.15);align-items:center;}
+.task-row:hover{background:rgba(255,255,255,.02);}
+.task-lbl{width:280px;min-width:280px;padding:3px 10px 3px 22px;display:flex;align-items:center;gap:6px;position:sticky;left:0;background:rgba(13,17,23,.9);z-index:5;border-right:1px solid var(--bord);}
+.task-dot{width:6px;height:6px;border-radius:50%;flex-shrink:0;}
+.task-key{font-family:var(--mono);font-size:8px;color:var(--muted);flex-shrink:0;width:72px;}
+.task-sum{font-size:9px;flex:1;color:#C0C8D4;line-height:1.3;}
+.task-tl{position:relative;flex:none;min-height:22px;}
+.task-bar{position:absolute;height:8px;border-radius:2px;top:50%;transform:translateY(-50%);opacity:.85;min-width:2px;}
+.task-bar.done{background:var(--green);}.task-bar.prog{background:var(--blue);}.task-bar.pend{background:var(--gray);}
+.task-bar.carry{background:linear-gradient(90deg,var(--blue),var(--purple));}
+.dbg{position:absolute;top:0;bottom:0;}
+.dbg.wknd{background:rgba(255,255,255,.012);}.dbg.sprint{background:rgba(2,37,235,.05);}
+.dbg.today-col{background:rgba(248,81,73,.08);}
+.ref-line{position:absolute;top:0;bottom:0;width:2px;z-index:8;}
+.ref-today{background:var(--red);opacity:.7;}.ref-end{background:var(--purple);opacity:.6;}
+.bar{position:absolute;height:12px;border-radius:2px;top:7px;opacity:.9;min-width:3px;cursor:pointer;}
+.bar.done{background:var(--green);}.bar.prog{background:var(--blue);}.bar.pend{background:var(--gray);}
+.bar.carry{background:linear-gradient(90deg,var(--blue),var(--purple));}
+.expand-icon{font-size:9px;color:var(--muted);flex-shrink:0;width:10px;}
+.g-tooltip{position:fixed;background:#21262D;border:1px solid #30363D;border-radius:6px;padding:8px 10px;font-size:10px;color:#E6EDF3;pointer-events:none;z-index:200;max-width:260px;display:none;line-height:1.5;box-shadow:0 4px 16px rgba(0,0,0,.5);}
+.footer{background:var(--dark);padding:10px 24px;font-size:10px;color:var(--muted);border-top:1px solid var(--bord);display:flex;justify-content:space-between;}
+/* tablets — reduz o respiro lateral de 24px */
+@media(max-width:1024px){
+  .hdr,.tabs,.footer{padding-left:18px;padding-right:18px;}
+  .kpi-strip{padding-left:18px;padding-right:18px;}
+  .proj-view{padding:0 18px 20px;}
+  .team-view{padding:0 18px 20px;}
+  .grid-2{padding-left:18px !important;padding-right:18px !important;}
+  .toolbar,.gantt-wrap,.gantt-legend{padding-left:18px !important;padding-right:18px !important;}
+  #sdesk-areas{padding-left:18px !important;padding-right:18px !important;}
+  .sla-marco{margin-left:18px !important;margin-right:18px !important;}
+}
+@media(max-width:768px){
+  /* header */
+  .hdr{flex-wrap:wrap;gap:6px;padding:10px 14px;}
+  .hdr-title{font-size:15px;}
+  .hdr-sub{font-size:9px;line-height:1.4;}
+  .hdr-badge{align-self:flex-start;}
+  /* tabs */
+  .tabs{padding:0 8px;overflow-x:auto;scrollbar-width:none;-webkit-overflow-scrolling:touch;}
+  .tabs::-webkit-scrollbar{display:none;}
+  .tab{padding:9px 12px;font-size:12px;flex-shrink:0;}
+  /* kpis */
+  .kpi-strip{padding:12px 14px;gap:8px;}
+  .kpi{padding:9px 11px;min-width:calc(50% - 4px);flex:none;}
+  .kpi-val{font-size:21px;}
+  /* grids */
+  .grid-2{grid-template-columns:1fr !important;gap:10px;padding-left:14px !important;padding-right:14px !important;}
+  .proj-view,.team-view{padding:0 14px 16px;}
+  .proj-grid{gap:8px;}
+  .team-grid{grid-template-columns:1fr;}
+  /* sdesk */
+  #sdesk-areas{padding:0 14px 20px !important;}
+  .sdesk-area-body{grid-template-columns:1fr !important;}
+  /* marco SLA */
+  .sla-marco{margin-left:14px !important;margin-right:14px !important;}
+  /* gantt */
+  .gantt-wrap{padding-left:14px !important;padding-right:14px !important;}
+  .toolbar{padding:0 14px 10px !important;}
+  .gantt-legend{padding-left:14px !important;padding-right:14px !important;flex-wrap:wrap;}
+  .m-lbl-col,.g-lbl-col,.grp-lbl,.task-lbl{width:150px;min-width:150px;}
+  /* painel detalhe */
+  .detail-panel{width:100%;right:-100%;}
+  /* footer */
+  .footer{flex-direction:column;gap:4px;padding:10px 14px;text-align:center;}
+}
+@media(max-width:480px){
+  .hdr,.tabs,.footer,.kpi-strip{padding-left:12px;padding-right:12px;}
+  .proj-view,.team-view{padding:0 12px 14px;}
+  .grid-2{padding-left:12px !important;padding-right:12px !important;}
+  #sdesk-areas{padding-left:12px !important;padding-right:12px !important;}
+  .sla-marco{margin-left:12px !important;margin-right:12px !important;}
+  .gantt-wrap,.toolbar,.gantt-legend{padding-left:12px !important;padding-right:12px !important;}
+  .kpi{min-width:calc(50% - 4px);}
+  .kpi-val{font-size:19px;}
+  .proj-grid{grid-template-columns:1fr 1fr;}
+  .m-lbl-col,.g-lbl-col,.grp-lbl,.task-lbl{width:120px;min-width:120px;}
+}
+</style>
+</head>
+<body>
+
+<div class="hdr">
+  <div>
+    <div class="hdr-brand">Fenasbac TI</div>
+    <div class="hdr-title">Dashboard · Sprint S16</div>
+    <div class="hdr-sub">fenasbac-tech.atlassian.net · S16 encerrada: 04/08–14/08/2026 &nbsp;·&nbsp; S17 em andamento: 18/08–29/08/2026</div>
+  </div>
+  <div class="hdr-badge">52 itens · 10 projetos</div>
+</div>
+
+<div class="tabs">
+  <div class="tab active" onclick="showTab('projetos')">🗂 Projetos</div>
+  <div class="tab" onclick="showTab('time')">👥 Time</div>
+  <div class="tab" onclick="showTab('gantt')">📅 Gantt</div>
+  <div class="tab" onclick="showTab('sdesk')">🎫 SDesk</div>
+</div>
+
+<!-- PROJETOS -->
+<div class="panel active" id="panel-projetos">
+<div class="kpi-strip">
+  <div class="kpi ok"><div class="kpi-val" id="kpi-done">—</div><div class="kpi-label">Concluídos S16</div></div>
+  <div class="kpi warn"><div class="kpi-val" id="kpi-taxa">—</div><div class="kpi-label">Taxa geral</div></div>
+  <div class="kpi warn"><div class="kpi-val" id="kpi-carry">—</div><div class="kpi-label">Carry-over S17</div></div>
+  <div class="kpi ok"><div class="kpi-val" id="kpi-projs">—</div><div class="kpi-label">Projetos</div></div>
+</div>
+<div class="grid-2" style="padding:0 24px 16px;">
+  <div style="background:var(--bg2);border:1px solid var(--bord);border-radius:8px;padding:16px;">
+    <div style="font-size:12px;font-weight:600;color:var(--cyan);text-transform:uppercase;letter-spacing:.8px;margin-bottom:14px;">Distribuição de Status S16</div>
+    <div style="display:flex;align-items:center;gap:24px;justify-content:center;">
+      <canvas id="donut" width="150" height="150"></canvas>
+      <div id="donut-legend" style="display:flex;flex-direction:column;gap:10px;"></div>
+    </div>
+  </div>
+  <div style="background:var(--bg2);border:1px solid var(--bord);border-radius:8px;padding:16px;">
+    <div style="font-size:12px;font-weight:600;color:var(--cyan);text-transform:uppercase;letter-spacing:.8px;margin-bottom:14px;">Entregas por Projeto</div>
+    <div id="taxa-chart"></div>
+  </div>
+</div>
+<div class="proj-view" id="proj-view"></div>
+</div>
+
+<!-- TIME -->
+<div class="panel" id="panel-time">
+<div class="kpi-strip">
+  <div class="kpi ok"><div class="kpi-val">52</div><div class="kpi-label">Concluídos</div></div>
+  <div class="kpi ok"><div class="kpi-val">5</div><div class="kpi-label">Membros ativos</div></div>
+</div>
+<div class="team-view" id="team-view"></div>
+</div>
+
+<!-- GANTT -->
+<div class="panel" id="panel-gantt">
+<div class="kpi-strip" style="padding-bottom:8px;">
+  <div class="kpi ok"><div class="kpi-val">52</div><div class="kpi-label">Concluídos</div></div>
+  <div class="kpi"><div class="kpi-val">04/08</div><div class="kpi-label">Início S16</div></div>
+  <div class="kpi"><div class="kpi-val">14/08</div><div class="kpi-label">Fim S16</div></div>
+  <div class="kpi warn"><div class="kpi-val">18/08</div><div class="kpi-label">Início S17</div></div>
+</div>
+<div class="toolbar">
+  <button class="fbtn active" onclick="setF('all',this)">Todos</button>
+  <button class="fbtn" onclick="setF('done',this)">✓ Concluídos</button>
+  <button class="fbtn" onclick="setF('carry',this)">→ S17</button>
+  <button class="fbtn" onclick="expandAll()">⊞ Expandir</button>
+  <button class="fbtn" onclick="collapseAll()">⊟ Recolher</button>
+  <button class="today-btn" onclick="scrollToToday()">📍 Hoje</button>
+</div>
+<div class="gantt-legend" style="display:flex;gap:16px;padding:0 24px 8px;font-size:10px;color:var(--muted);align-items:center;flex-wrap:wrap;">
+  <span style="display:flex;align-items:center;gap:5px;"><span style="width:20px;height:3px;background:rgba(2,37,235,.4);display:inline-block;border-radius:2px;"></span>Sprint S16 (04/08–14/08)</span>
+  <span style="display:flex;align-items:center;gap:5px;"><span style="width:2px;height:12px;background:#F85149;opacity:.7;display:inline-block;"></span>Hoje</span>
+  <span style="display:flex;align-items:center;gap:5px;"><span style="width:2px;height:12px;background:#8957E5;opacity:.6;display:inline-block;"></span>Fim S16</span>
+  <span style="display:flex;align-items:center;gap:5px;"><span style="width:20px;height:3px;background:#2EA043;opacity:.5;display:inline-block;border-radius:2px;"></span>Barra = concluído</span>
+  <span style="display:flex;align-items:center;gap:5px;"><span style="width:20px;height:3px;background:linear-gradient(90deg,#0225EB,#8957E5);display:inline-block;border-radius:2px;"></span>Carry-over S17</span>
+</div>
+<div class="gantt-wrap" id="gantt-wrap"><div id="gantt-container"></div></div>
+</div>
+
+<!-- SDESK -->
+<div class="panel" id="panel-sdesk">
+<div class="kpi-strip">
+  <div class="kpi"><div class="kpi-val">23</div><div class="kpi-label">Chamados</div></div>
+  <div class="kpi ok"><div class="kpi-val">78%</div><div class="kpi-label">SLA Resolução</div></div>
+  <div class="kpi ok"><div class="kpi-val">91%</div><div class="kpi-label">SLA 1ª Resposta</div></div>
+  <div class="kpi"><div class="kpi-val">18</div><div class="kpi-label">Dentro do prazo</div></div>
+  <div class="kpi warn"><div class="kpi-val">5</div><div class="kpi-label">Estouraram</div></div>
+  <div class="kpi"><div class="kpi-val">10</div><div class="kpi-label">Pendentes</div></div>
+</div>
+
+<!-- Marco SLA -->
+<div class="sla-marco" style="margin:0 24px 16px;background:rgba(2,37,235,.12);border:1px solid rgba(2,37,235,.35);border-left:3px solid var(--blue);border-radius:8px;padding:12px 16px;display:flex;align-items:flex-start;gap:12px;">
+  <div style="font-size:20px;flex-shrink:0;margin-top:1px;">🏁</div>
+  <div>
+    <div style="font-size:11px;font-weight:700;color:var(--cyan);text-transform:uppercase;letter-spacing:.8px;margin-bottom:4px;">SLA — leitura real por trilha (campo do JSM)</div>
+    <div style="font-size:11px;color:#C0C8D4;line-height:1.55;">Agora o cumprimento de SLA é lido direto dos campos oficiais do JSM (<span style="font-family:var(--mono);font-size:10px;color:var(--cyan);">customfield_10577</span> e <span style="font-family:var(--mono);font-size:10px;color:var(--cyan);">customfield_10610</span>), apurado em horário comercial. <strong style="color:var(--text);">Não é mais cálculo manual.</strong> Metas por trilha: Solicitação de TI 4h/24h, Comunicação Digital 4h/56h, e incidente na régua global 4h/24h. Os estouros de resolução concentram-se em chamados abertos há mais tempo, alguns bloqueados ou aguardando terceiros, o que reforça a necessidade de um status que pause o SLA nesses casos.</div>
+  </div>
+</div>
+
+<div id="sdesk-trilhas" style="padding:0 24px 4px;">
+  <div style="font-size:12px;font-weight:600;color:var(--cyan);text-transform:uppercase;letter-spacing:.8px;margin-bottom:10px;">SLA por trilha — cumprimento real (lido do JSM, horário comercial)</div>
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:10px;">
+    <div style="background:var(--bg2);border:1px solid var(--bord);border-left:3px solid #D29922;border-radius:8px;padding:12px 14px;">
+      <div style="font-size:12px;font-weight:700;color:var(--text);">Solicitação de TI <span style="font-size:9px;color:var(--muted);font-weight:400;">meta 4h / 24h</span></div>
+      <div style="font-size:22px;font-weight:700;font-family:var(--mono);color:#D29922;margin-top:4px;">73%<span style="font-size:11px;color:var(--muted);font-family:var(--font);font-weight:400;"> resolução no prazo</span></div>
+      <div style="font-size:10px;color:var(--muted);margin-top:3px;">15 chamados · 11 no prazo · 4 estouraram · 1ª resposta 100%</div>
+      <div style="font-size:10px;color:#C0C8D4;margin-top:6px;line-height:1.4;">Os estouros são chamados abertos há mais de 24h, alguns bloqueados ou aguardando terceiros.</div>
+    </div>
+    <div style="background:var(--bg2);border:1px solid var(--bord);border-left:3px solid #2EA043;border-radius:8px;padding:12px 14px;">
+      <div style="font-size:12px;font-weight:700;color:var(--text);">Comunicação Digital <span style="font-size:9px;color:var(--muted);font-weight:400;">meta 4h / 56h</span></div>
+      <div style="font-size:22px;font-weight:700;font-family:var(--mono);color:#2EA043;margin-top:4px;">86%<span style="font-size:11px;color:var(--muted);font-family:var(--font);font-weight:400;"> resolução no prazo</span></div>
+      <div style="font-size:10px;color:var(--muted);margin-top:3px;">7 chamados · 6 no prazo · 1 estourou · 1ª resposta 71%</div>
+      <div style="font-size:10px;color:#C0C8D4;margin-top:6px;line-height:1.4;">Meta de resolução mais folgada (56h) por depender de conteúdo. A primeira resposta é o ponto a melhorar.</div>
+    </div>
+    <div style="background:var(--bg2);border:1px solid var(--bord);border-left:3px solid #2EA043;border-radius:8px;padding:12px 14px;">
+      <div style="font-size:12px;font-weight:700;color:var(--text);">Reportar incidente <span style="font-size:9px;color:var(--muted);font-weight:400;">meta 4h / 24h</span></div>
+      <div style="font-size:22px;font-weight:700;font-family:var(--mono);color:#2EA043;margin-top:4px;">100%<span style="font-size:11px;color:var(--muted);font-family:var(--font);font-weight:400;"> no prazo</span></div>
+      <div style="font-size:10px;color:var(--muted);margin-top:3px;">1 chamado · resolvido em 3h42 úteis</div>
+      <div style="font-size:10px;color:#C0C8D4;margin-top:6px;line-height:1.4;">Segue a régua global 4h/24h (decisão de unificar o prazo de incidente).</div>
+    </div>
+  </div>
+  <div style="font-size:10px;color:var(--muted);margin-top:10px;font-style:italic;">Total: 78% das resoluções e 91% das primeiras respostas dentro do SLA. Lido direto dos campos oficiais do JSM. Abaixo, os chamados por área.</div>
+</div>
+<div id="sdesk-areas" style="padding:0 24px 24px;display:flex;flex-direction:column;gap:14px;"></div>
+</div>
+
+<!-- DETAIL PANEL -->
+<div class="detail-panel" id="detail-panel">
+  <div class="dp-hdr">
+    <div>
+      <div class="dp-proj" id="dp-proj-name">—</div>
+      <div class="dp-sub" id="dp-proj-sub">Clique em um projeto</div>
+    </div>
+    <button class="dp-close" onclick="closePanel()">✕</button>
+  </div>
+  <div class="dp-body">
+    <div class="dp-kpis" id="dp-kpis"></div>
+    <div class="dp-sec" id="dp-done-sec"><div class="dp-sec-title">✅ Concluídos</div><div id="dp-done-list"></div></div>
+    <div class="dp-sec" id="dp-open-sec"><div class="dp-sec-title">⏳ Carry-over / Em andamento</div><div id="dp-open-list"></div></div>
+  </div>
+</div>
+
+<div class="g-tooltip" id="g-tooltip"></div>
+
+<div class="footer">
+  <span>SBS Quadra 02, Bloco A, Ed. Casa de São Paulo, 7º andar — Brasília/DF</span>
+  <span>Fenasbac TI · Sprint S16 · 17/08/2026 · Jira + Slack + Gmail</span>
+</div>
+
+<script>
+const ISSUES=[
+  {key:"SISFENAS-34",project:"SISFENAS",status:"Pendente",assignee:"Tech Lead",summary:"Migrar API para novo Railway",created:"2026-08-03",due:"2026-08-28"},
+  {key:"ENG-17",project:"ENG",status:"Concluído",assignee:"Infra / Suporte N1",summary:"Finalizar e garantir funcionamento do Fenasbac Backup Manager",created:"2026-07-17",due:"2026-08-07"},
+  {key:"ENG-12",project:"ENG",status:"Pendente",assignee:"Conteúdo",summary:"Migrar NEXT para o monorepo",created:"2026-08-14",due:"2026-08-14"},
+  {key:"ENG-11",project:"ENG",status:"Pendente",assignee:"Conteúdo",summary:"Migrar LIFT para o monorepo",created:"2026-08-14",due:"2026-08-14"},
+  {key:"ENG-10",project:"ENG",status:"Pendente",assignee:"Conteúdo",summary:"Migrar Nexus CVM para o monorepo",created:"2026-08-14",due:"2026-08-14"},
+  {key:"ENG-9",project:"ENG",status:"Pendente",assignee:"Conteúdo",summary:"Migrar 3F para o monorepo",created:"2026-08-14",due:"2026-08-14"},
+  {key:"ENG-8",project:"ENG",status:"Pendente",assignee:"Conteúdo",summary:"Migrar Regulation Rocks para o monorepo",created:"2026-08-14",due:"2026-08-14"},
+  {key:"ENG-7",project:"ENG",status:"Pendente",assignee:"Conteúdo",summary:"Migrar TILT para o monorepo",created:"2026-08-14",due:"2026-08-14"},
+  {key:"ENG-6",project:"ENG",status:"Pendente",assignee:"Conteúdo",summary:"Migrar SYNCOOP para o monorepo",created:"2026-08-14",due:"2026-08-14"},
+  {key:"ENG-5",project:"ENG",status:"Pendente",assignee:"Conteúdo",summary:"Migrar Blog para o monorepo",created:"2026-08-14",due:"2026-08-14"},
+  {key:"ENG-4",project:"ENG",status:"Pendente",assignee:"Conteúdo",summary:"Migrar GEP para o monorepo",created:"2026-08-14",due:"2026-08-14"},
+  {key:"ENG-3",project:"ENG",status:"Pendente",assignee:"Conteúdo",summary:"Migrar Docs para o monorepo",created:"2026-08-14",due:"2026-08-14"},
+  {key:"ENG-2",project:"ENG",status:"Pendente",assignee:"Conteúdo",summary:"Migrar fenasbac.io para o monorepo",created:"2026-08-14",due:"2026-08-14"},
+  {key:"ENG-1",project:"ENG",status:"Pendente",assignee:"Conteúdo",summary:"Migrar todos os sites .io para o novo monorepo",created:"2026-08-03",due:"2026-08-03"},
+  {key:"FENASHUB-47",project:"FENASHUB",status:"Concluído",assignee:"Desenvolvimento",summary:"Validar variáveis de ambiente e publicar o deploy do Fenasbac Hub",created:"2026-07-28",due:"2026-08-07"},
+  {key:"CONECTA-81",project:"CONECTA",status:"Em andamento",assignee:"Coordenação",summary:"Evolução do Conecta — apresentação ao diretor e próximos passos da expansão",created:"2026-08-03",due:"2026-08-31"},
+  {key:"CONECTA-79",project:"CONECTA",status:"Concluído",assignee:"Desenvolvimento",summary:"Validar o desenho da politica de acordo com as regras da aplicação",created:"2026-08-03",due:"2026-08-07"},
+  {key:"GEP-87",project:"GEP",status:"Concluído",assignee:"Desenvolvimento",summary:"Ajustar para versão 24 do node em todo ecossistema",created:"2026-08-10",due:"2026-08-14"},
+  {key:"GEP-86",project:"GEP",status:"Pendente",assignee:"Desenvolvimento",summary:"Apresentar proposta de redesenho",created:"2026-08-03",due:"2026-08-31"},
+  {key:"PORTAL-2",project:"PORTAL",status:"Em andamento",assignee:"Infra / Suporte N1",summary:"Análise inicial da Intranet – navegar, inspecionar e registrar observações",created:"2026-07-08",due:"2026-08-28"},
+  {key:"PROC-319",project:"PROC",status:"Concluído",assignee:"Coordenação",summary:"Criar e formalizar o Termo de Uso e Responsabilidade dos Equipamentos",created:"2026-08-06",due:"2026-08-14"},
+  {key:"PROC-317",project:"PROC",status:"Pendente",assignee:"Coordenação",summary:"Apresentar proposta para a Diretoria - Política de acesso FenasHub",created:"2026-08-03",due:"2026-08-31"},
+  {key:"PROC-313",project:"PROC",status:"Concluído",assignee:"Coordenação",summary:"Agendar reunião de trabalho - COO",created:"2026-07-31",due:"2026-08-07"},
+  {key:"PROC-312",project:"PROC",status:"Concluído",assignee:"Tech Lead",summary:"Avaliar proposta de melhorias para a plataforma GEP",created:"2026-07-24",due:"2026-08-28"},
+  {key:"PROC-277",project:"PROC",status:"Pendente",assignee:"Coordenação",summary:"Definir prazo-alvo de retorno da ASBAC e um ponto focal por regional para as con",created:"2026-07-08",due:"2026-08-21"},
+  {key:"PROC-272",project:"PROC",status:"Pendente",assignee:"Coordenação",summary:"[Fase 2] Encerrar etapa e registrar pendências",created:"2026-07-01",due:"2026-07-01"},
+  {key:"PROC-271",project:"PROC",status:"Pendente",assignee:"Coordenação",summary:"[Fase 2] Suporte assistido (primeiros dias)",created:"2026-07-01",due:"2026-07-01"},
+  {key:"PROC-270",project:"PROC",status:"Pendente",assignee:"Coordenação",summary:"[Fase 2] Treinamento rápido de utilização",created:"2026-07-01",due:"2026-07-01"},
+  {key:"PROC-269",project:"PROC",status:"Pendente",assignee:"Coordenação",summary:"[Fase 2] Migrar senhas para os cofres",created:"2026-07-01",due:"2026-07-01"},
+  {key:"PROC-268",project:"PROC",status:"Pendente",assignee:"Coordenação",summary:"[Fase 2] Onboarding e ativação de MFA dos usuários",created:"2026-07-01",due:"2026-07-01"},
+  {key:"PROC-267",project:"PROC",status:"Pendente",assignee:"Coordenação",summary:"[Fase 2] Enviar convites aos participantes",created:"2026-07-01",due:"2026-07-01"},
+  {key:"PROC-266",project:"PROC",status:"Pendente",assignee:"Coordenação",summary:"[Fase 2] Organizar permissões (menor privilégio)",created:"2026-07-01",due:"2026-07-01"},
+  {key:"PROC-265",project:"PROC",status:"Pendente",assignee:"Coordenação",summary:"[Fase 2] Preparar cofres e grupos compartilhados",created:"2026-07-01",due:"2026-07-01"},
+  {key:"PROC-264",project:"PROC",status:"Pendente",assignee:"Coordenação",summary:"[Fase 2] Validar e ativar licenças NordPass",created:"2026-07-01",due:"2026-07-01"},
+  {key:"PROC-263",project:"PROC",status:"Pendente",assignee:"Coordenação",summary:"[Fase 2] Definir participantes e ordem das áreas",created:"2026-07-01",due:"2026-07-01"},
+  {key:"PROC-213",project:"PROC",status:"Em andamento",assignee:"Coordenação",summary:"Criar o fluxo de implementação do gerenciador de senhas nas demais diretorias - ",created:"2026-05-22",due:"2026-05-22"},
+  {key:"ETI-15",project:"ETI",status:"Em andamento",assignee:"Coordenação",summary:"[ETI] P08 · Dashboards operacionais (indicadores Jira)",created:"2026-06-24",due:"2026-08-31"},
+  {key:"ETI-14",project:"ETI",status:"Em andamento",assignee:"Coordenação",summary:"[ETI] P09 · Ciclos formais de report",created:"2026-06-24",due:"2026-09-30"},
+  {key:"ETI-21",project:"ETI",status:"Concluído",assignee:"Coordenação",summary:"[ETI] P02 · Definição de papéis e fluxo entre frentes",created:"2026-06-24",due:"2026-08-31"},
+  {key:"ETI-20",project:"ETI",status:"Concluído",assignee:"Coordenação",summary:"[ETI] P05 · Fluxo formal de entrada de demandas (PEM mínimo)",created:"2026-06-24",due:"2026-08-31"},
+  {key:"ETI-19",project:"ETI",status:"Concluído",assignee:"Coordenação",summary:"[ETI] P06 · Triagem e priorização por impacto/esforço",created:"2026-06-24",due:"2026-08-31"},
+  {key:"ETI-18",project:"ETI",status:"Concluído",assignee:"Coordenação",summary:"[ETI] P03 · Consolidação do Slack unificado",created:"2026-06-24",due:"2026-08-31"},
+  {key:"ETI-8",project:"ETI",status:"Concluído",assignee:"Coordenação",summary:"[ETI] P17 · Padronização de processos de publicação digital",created:"2026-06-24",due:"2026-08-31"},
+  {key:"SRR-9",project:"SRR",status:"Pendente",assignee:"Conteúdo",summary:"Handover da gestão de conteúdo para Comunicação",created:"2026-07-19",due:"2026-08-31"},
+  {key:"STRAPI-39",project:"STRAPI",status:"Concluído",assignee:"Infra / Suporte N1",summary:"Liberar acesso ao DOCS - InA",created:"2026-08-03",due:"2026-08-13"},
+  {key:"STRAPI-38",project:"STRAPI",status:"Pendente",assignee:"Conteúdo",summary:"Desenhar Strapi Programas — Começando por Next",created:"2026-07-17",due:"2026-08-21"},
+  {key:"STRAPI-25",project:"STRAPI",status:"Pendente",assignee:"Tech Lead",summary:"[Lift][Strapi] Estruturação de conteúdo e integração com CMS",created:"2026-05-03",due:"2026-05-03"},
+  {key:"STRAPI-24",project:"STRAPI",status:"Pendente",assignee:"Tech Lead",summary:"[Impact][Strapi] Adequação da estrutura e componentes",created:"2026-05-03",due:"2026-05-03"},
+  {key:"STRAPI-23",project:"STRAPI",status:"Pendente",assignee:"Tech Lead",summary:"[Nexus][Strapi] Estruturação de conteúdo e integração",created:"2026-05-03",due:"2026-05-03"},
+  {key:"STRAPI-19",project:"STRAPI",status:"Pendente",assignee:"Tech Lead",summary:"[Next][Strapi] Ajustes de estrutura e integração",created:"2026-05-03",due:"2026-05-03"},
+  {key:"TECH-114",project:"TECH",status:"Concluído",assignee:"Infra / Suporte N1",summary:"Configurar e disponibilizar ramais para colaboradores pendentes",created:"2026-08-04",due:"2026-08-04"},
+  {key:"TECH-107",project:"TECH",status:"Concluído",assignee:"Coordenação",summary:"Criar conta Google Workspace e Gmail — Andressa",created:"2026-08-04",due:"2026-08-14"},
+  {key:"TECH-104",project:"TECH",status:"Concluído",assignee:"Infra / Suporte N1",summary:"Enviar a cotação dos equipamentos para pagamento",created:"2026-08-04",due:"2026-08-14"},
+  {key:"TECH-103",project:"TECH",status:"Concluído",assignee:"Infra / Suporte N1",summary:"Cotar os equipamentos da Andressa",created:"2026-08-04",due:"2026-08-14"},
+  {key:"TECH-102",project:"TECH",status:"Pendente",assignee:"Infra / Suporte N1",summary:"Onboarding TI — Andressa Berigo",created:"2026-08-04",due:"2026-08-14"},
+  {key:"TECH-101",project:"TECH",status:"Concluído",assignee:"Infra / Suporte N1",summary:"Garantir o funcionamento da VPN e VNC com resiliência",created:"2026-08-03",due:"2026-08-07"},
+  {key:"TECH-100",project:"TECH",status:"Concluído",assignee:"Infra / Suporte N1",summary:"Retirar MFA das contas MS",created:"2026-08-03",due:"2026-08-07"},
+  {key:"TECH-99",project:"TECH",status:"Concluído",assignee:"Infra / Suporte N1",summary:"Ajustar estrutura para reunião NUC no segundo andar",created:"2026-08-03",due:"2026-08-07"},
+  {key:"TECH-98",project:"TECH",status:"Concluído",assignee:"Infra / Suporte N1",summary:"Realizar onboarding de TI — Renan (segurança, sistemas e boas práticas)",created:"2026-07-24",due:"2026-08-31"},
+  {key:"TECH-97",project:"TECH",status:"Concluído",assignee:"Coordenação",summary:"Solicitar novo Chip — Renan (chip do Victor vai para Camilla)",created:"2026-07-24",due:"2026-08-31"},
+  {key:"TECH-95",project:"TECH",status:"Concluído",assignee:"Infra / Suporte N1",summary:"Configurar softwares e acessos — Renan",created:"2026-07-24",due:"2026-08-31"},
+  {key:"TECH-92",project:"TECH",status:"Concluído",assignee:"Infra / Suporte N1",summary:"Preparar e configurar equipamentos — Renan (Victor)",created:"2026-07-24",due:"2026-08-31"},
+];
+
+const PROJ_META={
+  "PROC":{name:"Processos",color:"#FF69B4",cat:"Operacional / Interno"},
+  "ENG":{name:"Engenharia",color:"#7C5CFC",cat:"Operacional / Interno"},
+  "FENASHUB":{name:"Fenasbac Hub",color:"#00C7FF",cat:"Produtos"},
+  "TECH":{name:"TechOps",color:"#8B949E",cat:"Operacional / Interno"},
+  "SDESK":{name:"SDesk",color:"#00C7FF",cat:"Operacional / Interno"},
+  "STRAPI":{name:"Strapi CMS",color:"#FF8C00",cat:"Conteúdo / Sites"},
+  "FENASBR":{name:"Site Fenasbac.br",color:"#FF6B6B",cat:"Conteúdo / Sites"},
+  "SRR":{name:"Regulation Rocks",color:"#00C7FF",cat:"Conteúdo / Sites"},
+  "GEP":{name:"Plataforma GEP",color:"#2EA043",cat:"Produtos"},
+  "CONECTA":{name:"Fenasbac Conecta",color:"#00C7FF",cat:"Produtos"},
+  "ETI":{name:"Roadmap ETI",color:"#7C5CFC",cat:"Operacional / Interno"},
+  "FAUTH":{name:"Fenasbac Auth",color:"#8957E5",cat:"Produtos"},
+  "SISFENAS":{name:"API SisFenasbac",color:"#2EA043",cat:"Produtos"},
+  "SYNCOOP":{name:"Syncoop",color:"#2EA043",cat:"Conteúdo / Sites"},
+  "PORTAL":{name:"Portal TI",color:"#7C5CFC",cat:"Operacional / Interno"},
+};
+const PROJ_ORDER=["PROC","ENG","TECH","ETI","STRAPI","CONECTA","GEP","FENASHUB","SISFENAS","PORTAL","SRR"];
+const CATS=["Operacional / Interno","Produtos","Conteúdo / Sites"];
+
+const SDESK_ISSUES=[
+  {key:"SDESK-251",status:"Concluído",area:"Comunicação / Sites",trilha:"Comunicação Digital",summary:"Ajustes no site do Blockchain Rio",dias:6,outlier:true},
+  {key:"SDESK-252",status:"Concluído",area:"Comunicação / Sites",trilha:"Solicitação de TI",summary:"Fechar modais clicando fora",dias:1},
+  {key:"SDESK-253",status:"Em andamento",area:"Comunicação / Sites",trilha:"Solicitação de TI",summary:"Resolver o fallback do menu do fenasbac.io"},
+  {key:"SDESK-254",status:"Concluído",area:"TI Interno / Infra",trilha:"Solicitação de TI",summary:"Ajuste de credenciais para acessar o Strapi",dias:0},
+  {key:"SDESK-255",status:"Concluído",area:"Financeiro",trilha:"Solicitação de TI",summary:"Sistema não salva em Excel arquivos para a seguradora",dias:0},
+  {key:"SDESK-256",status:"Pendente",area:"Comunicação / Sites",trilha:"Comunicação Digital",summary:"Alteração de componente nos sites"},
+  {key:"SDESK-257",status:"Concluído",area:"Comunicação / Sites",trilha:"Comunicação Digital",summary:"Informação sobre download LEAP no Docs",dias:12,outlier:true},
+  {key:"SDESK-258",status:"Concluído",area:"Financeiro",trilha:"Solicitação de TI",summary:"Atualização da base de teste (data base 31.07)",dias:4},
+  {key:"SDESK-259",status:"Concluído",area:"TI Interno / Infra",trilha:"Solicitação de TI",summary:"Suporte para impressora",dias:0},
+  {key:"SDESK-260",status:"Concluído",area:"Financeiro",trilha:"Reportar incidente",summary:"Erro ao enviar solicitação de empréstimo (PGAFI)",dias:5},
+  {key:"SDESK-261",status:"Pendente",area:"TI Interno / Infra",trilha:"Solicitação de TI",summary:"Compra de teclado — Setor Financeiro"},
+  {key:"SDESK-262",status:"Em andamento",area:"Eventos / Certificados",trilha:"Solicitação de TI",summary:"Testar emissão automática de certificado de curso"},
+  {key:"SDESK-263",status:"Pendente",area:"Consultoria / GEP",trilha:"Comunicação Digital",summary:"Demonstração prática do sistema"},
+  {key:"SDESK-264",status:"Em andamento",area:"Consultoria / GEP",trilha:"Comunicação Digital",summary:"Banner de infográfico para GEP"},
+  {key:"SDESK-265",status:"Concluído",area:"Consultoria / GEP",trilha:"Solicitação de TI",summary:"Acesso / cadastro de usuário",dias:0},
+  {key:"SDESK-266",status:"Concluído",area:"Comunicação / Sites",trilha:"Solicitação de TI",summary:"Alterar data de pré-inscrição (Batch #10)",dias:1},
+  {key:"SDESK-267",status:"Concluído",area:"Consultoria / GEP",trilha:"Solicitação de TI",summary:"Portal do GEP sem acesso aos dados",dias:0},
+  {key:"SDESK-268",status:"Em andamento",area:"TI Interno / Infra",trilha:"Solicitação de TI",summary:"Abrir canal no Slack para o projeto CPQD"},
+  {key:"SDESK-269",status:"Concluído",area:"Financeiro",trilha:"Solicitação de TI",summary:"Problemas para salvar boleto no download",dias:3},
+  {key:"SDESK-270",status:"Em andamento",area:"Comunicação / Sites",trilha:"Comunicação Digital",summary:"Cadastros Fenasbac ID para o Clube F"},
+  {key:"SDESK-271",status:"Concluído",area:"TI Interno / Infra",trilha:"Solicitação de TI",summary:"Sem acesso à área de homologação do SISFenasbac",dias:1},
+  {key:"SDESK-272",status:"Pendente",area:"TI Interno / Infra",trilha:"Solicitação de TI",summary:"Cancelamento de e-mail corporativo"},
+  {key:"SDESK-273",status:"Pendente",area:"Comunicação / Sites",trilha:"Comunicação Digital",summary:"Aprimorar granularidade de perfil no Docs"},
+];
+
+const STATUS_COLOR={'Concluído':'#2EA043','Concluída':'#2EA043','Em andamento':'#0225EB','Em análise':'#D29922','Tarefas pendentes':'#484F58','Pendente':'#484F58','default':'#484F58'};
+function isDone(s){return s==='Concluído'||s==='Concluída';}
+function isProg(s){return s==='Em andamento';}
+function dotColor(s){return STATUS_COLOR[s]||STATUS_COLOR.default;}
+
+function showTab(t){
+  ['projetos','time','gantt','sdesk'].forEach((id,i)=>{
+    document.querySelectorAll('.tab')[i].classList.toggle('active',id===t);
+    document.getElementById('panel-'+id).classList.toggle('active',id===t);
+  });
+  if(t==='time')setTimeout(buildTeam,50);
+  if(t==='gantt')setTimeout(scrollToToday,80);
+}
+
+// projStats
+const projStats={};
+ISSUES.forEach(i=>{
+  if(!projStats[i.project])projStats[i.project]={done:0,prog:0,pend:0,total:0,issues:[]};
+  const p=projStats[i.project]; p.total++; p.issues.push(i);
+  if(isDone(i.status))p.done++;
+  else if(isProg(i.status))p.prog++;
+  else p.pend++;
+});
+
+// BUILD PROJECTS
+function buildProjects(){
+  const view=document.getElementById('proj-view');if(!view)return;
+  CATS.forEach(cat=>{
+    const projs=PROJ_ORDER.filter(p=>PROJ_META[p]&&PROJ_META[p].cat===cat&&projStats[p]);
+    if(!projs.length)return;
+    const grp=document.createElement('div');grp.className='cat-group';
+    grp.innerHTML=`<div class="cat-title">${cat}<span class="cat-count">${projs.length}</span></div>`;
+    const grid=document.createElement('div');grid.className='proj-grid';
+    projs.forEach(key=>{
+      const meta=PROJ_META[key]||{name:key,color:'#8B949E'};
+      const st=projStats[key]||{done:0,prog:0,pend:0,total:0};
+      const taxa=st.total?Math.round(st.done/st.total*100):0;
+      const card=document.createElement('div');card.className='proj-card';
+      card.innerHTML=`<div style="position:absolute;top:0;left:0;right:0;height:3px;background:${meta.color};border-radius:3px 3px 0 0;"></div>
+        <div class="proj-key" style="color:${meta.color}">${key}</div>
+        <div class="proj-name">${meta.name}</div>
+        <div style="display:flex;flex-wrap:wrap;gap:4px;margin-top:8px;">
+          ${st.done?`<span style="background:rgba(46,160,67,.15);padding:2px 7px;border-radius:10px;font-size:10px;font-weight:600;color:#2EA043;">${st.done} ✓</span>`:''}
+          ${st.prog?`<span style="background:rgba(2,37,235,.15);padding:2px 7px;border-radius:10px;font-size:10px;font-weight:600;color:#6699FF;">${st.prog} ↻</span>`:''}
+          ${st.pend?`<span style="background:rgba(72,72,88,.25);padding:2px 7px;border-radius:10px;font-size:10px;font-weight:600;color:#8B949E;">${st.pend} ⏸</span>`:''}
+        </div>
+        <div style="font-size:9px;color:#484F58;margin-top:4px;">${st.total} issues · ${taxa}%</div>`;
+      card.onclick=()=>openPanel(key);
+      grid.appendChild(card);
+    });
+    grp.appendChild(grid);view.appendChild(grp);
+  });
+}
+
+// TEAM
+const MEMBERS=[
+  {id:"Coordenação",role:"Coordenação de TI",color:"#0225EB",initials:"CT"},
+  {id:"Tech Lead",role:"Tech Lead",color:"#D29922",initials:"TL"},
+  {id:"Desenvolvimento",role:"Dev Full-Stack",color:"#2EA043",initials:"DF"},
+  {id:"Conteúdo",role:"Conteúdo / Front",color:"#8957E5",initials:"CF"},
+  {id:"Infra / Suporte N1",role:"Infra e Suporte",color:"#484F58",initials:"IS"},
+];
+function buildTeam(){
+  const view=document.getElementById('team-view');if(!view||view.children.length)return;
+  const grid=document.createElement('div');grid.className='team-grid';
+  MEMBERS.forEach(m=>{
+    const issues=ISSUES.filter(i=>i.assignee===m.id);
+    const done=issues.filter(i=>isDone(i.status));
+    const open=issues.filter(i=>!isDone(i.status));
+    const taxa=issues.length?Math.round(done.length/issues.length*100):0;
+    const card=document.createElement('div');card.className='member-card';
+    card.innerHTML=`<div class="member-hdr">
+        <div class="member-av" style="background:${m.color}">${m.initials}</div>
+        <div><div class="member-name">${m.id}</div><div class="member-role">${m.role}</div></div>
+      </div>
+      <div class="member-stats">
+        <div class="mstat"><div class="mstat-val" style="color:#2EA043">${done.length}</div><div class="mstat-label">Concluídos</div></div>
+        <div class="mstat"><div class="mstat-val" style="color:#484F58">${open.length}</div><div class="mstat-label">Carry-over</div></div>
+        <div class="mstat"><div class="mstat-val" style="color:${taxa>=60?'#2EA043':taxa>=30?'#D29922':'#F85149'}">${taxa}%</div><div class="mstat-label">Taxa</div></div>
+      </div>
+      <div class="m-bar-wrap"><div class="m-bar-track"><div class="m-bar-fill" style="width:${taxa}%;background:${taxa>=60?'#2EA043':taxa>=30?'#D29922':'#F85149'}"></div></div></div>
+      <div class="member-issues">${issues.map(i=>`<div class="m-issue">
+        <div class="m-dot" style="background:${dotColor(i.status)}"></div>
+        <div class="m-key">${i.key}</div>
+        <div class="m-sum" title="${i.summary}">${i.summary}</div>
+      </div>`).join('')}</div>`;
+    grid.appendChild(card);
+  });
+  view.appendChild(grid);
+}
+
+// SDESK
+function buildSdesk(){
+  const container=document.getElementById('sdesk-areas');
+  if(!container)return;
+  const AREAS=[
+    {id:'Financeiro',    color:'#2EA043', meta:'4/4 · 100%',  pct:100},
+    {id:'Consultoria / GEP', color:'#D29922', meta:'2/4 · 50%', pct:50},
+    {id:'Comunicação / Sites', color:'#D29922', meta:'4/8 · 50%', pct:50},
+    {id:'TI Interno / Infra',  color:'#D29922', meta:'3/6 · 50%', pct:50},
+    {id:'Eventos / Certificados', color:'#F85149', meta:'0/1 · 0%', pct:0},
+  ];
+  AREAS.forEach(area=>{
+    const issues=SDESK_ISSUES.filter(i=>i.area===area.id);
+    const done=issues.filter(i=>isDone(i.status));
+    const open=issues.filter(i=>!isDone(i.status));
+    const pct=area.pct;
+    const barColor=pct===100?'#2EA043':pct>=60?'#D29922':'#F85149';
+
+    const wrap=document.createElement('div');
+    wrap.style.cssText='background:var(--bg2);border:1px solid var(--bord);border-radius:8px;overflow:hidden;';
+
+    // header da área
+    const hdr=document.createElement('div');
+    hdr.style.cssText='padding:10px 14px;display:flex;align-items:center;gap:10px;border-bottom:1px solid var(--bord);cursor:pointer;';
+    hdr.innerHTML=`
+      <div style="width:8px;height:8px;border-radius:50%;background:${barColor};flex-shrink:0;"></div>
+      <div style="font-size:11px;font-weight:700;color:var(--text);flex:1;">${area.id}</div>
+      <div style="font-size:10px;color:${barColor};font-weight:700;font-family:var(--mono);">${area.meta}</div>
+      <div style="width:80px;height:5px;background:var(--bg3);border-radius:3px;overflow:hidden;flex-shrink:0;">
+        <div style="height:100%;width:${pct}%;background:${barColor};border-radius:3px;"></div>
+      </div>
+      <span style="font-size:9px;color:var(--muted);margin-left:4px;" class="area-toggle">▼</span>`;
+
+    // body
+    const body=document.createElement('div');
+    body.style.cssText='padding:8px 14px;display:grid;grid-template-columns:1fr 1fr;gap:0 12px;';body.className='sdesk-area-body';
+
+    function issueRow(i){
+      const sla=isDone(i.status)?(
+        i.outlier?`<span style="background:#F85149;color:#fff;font-size:8px;padding:1px 5px;border-radius:8px;font-weight:700;margin-left:3px;">${i.dias}d ⚠</span>`:
+        i.dias===0?`<span style="background:#2EA043;color:#fff;font-size:8px;padding:1px 5px;border-radius:8px;font-weight:700;margin-left:3px;">< 1d</span>`:
+        `<span style="font-size:9px;color:var(--muted);margin-left:4px;">${i.dias}d</span>`
+      ):'';
+      const dot=isDone(i.status)?'#2EA043':i.status==='Em andamento'?'#0225EB':'#484F58';
+      return`<div class="dp-issue" style="opacity:${isDone(i.status)?1:.65};">
+        <div class="dp-dot" style="background:${dot}"></div>
+        <div class="dp-key">${i.key}${sla}</div>
+        <div class="dp-sum">${i.summary}</div>
+      </div>`;
+    }
+
+    // colunas: concluídos | pendentes
+    const colDone=document.createElement('div');
+    if(done.length){
+      colDone.innerHTML=`<div style="font-size:9px;color:var(--muted);text-transform:uppercase;letter-spacing:.6px;padding:4px 6px 6px;border-bottom:1px solid var(--bord);margin-bottom:4px;">✅ ${done.length} resolvidos</div>`+done.map(issueRow).join('');
+    }
+    const colOpen=document.createElement('div');
+    if(open.length){
+      colOpen.innerHTML=`<div style="font-size:9px;color:var(--muted);text-transform:uppercase;letter-spacing:.6px;padding:4px 6px 6px;border-bottom:1px solid var(--bord);margin-bottom:4px;">⏳ ${open.length} pendentes</div>`+open.map(issueRow).join('');
+    } else {
+      colOpen.innerHTML='<div style="font-size:10px;color:var(--gray);font-style:italic;padding:8px 6px;">Sem pendências</div>';
+    }
+
+    body.appendChild(colDone);
+    body.appendChild(colOpen);
+
+    // toggle
+    let expanded=true;
+    hdr.onclick=()=>{
+      expanded=!expanded;
+      body.style.display=expanded?'grid':'none';
+      hdr.querySelector('.area-toggle').textContent=expanded?'▼':'▶';
+    };
+
+    wrap.appendChild(hdr);
+    wrap.appendChild(body);
+    container.appendChild(wrap);
+  });
+}
+
+// DETAIL PANEL
+function openPanel(proj){
+  const panel=document.getElementById('detail-panel');if(!panel)return;
+  const st=projStats[proj];if(!st)return;
+  const meta=PROJ_META[proj]||{name:proj,color:'#8B949E'};
+  const done=st.issues.filter(i=>isDone(i.status));
+  const open=st.issues.filter(i=>!isDone(i.status));
+  document.getElementById('dp-proj-name').textContent=proj+' — '+(meta.name||'');
+  document.getElementById('dp-proj-name').style.color=meta.color||'#02FFFF';
+  document.getElementById('dp-proj-sub').textContent=st.total+' issues';
+  document.getElementById('dp-kpis').innerHTML=`
+    <div class="dp-kpi"><div class="dp-kpi-val" style="color:#2EA043">${done.length}</div><div class="dp-kpi-label">Concluídos</div></div>
+    <div class="dp-kpi"><div class="dp-kpi-val" style="color:#484F58">${open.length}</div><div class="dp-kpi-label">Carry-over</div></div>`;
+  function rl(cid,sid,list){
+    const sec=document.getElementById(sid);const el=document.getElementById(cid);if(!sec||!el)return;
+    if(!list.length){sec.style.display='none';return;}
+    sec.style.display='block';
+    el.innerHTML=list.map(i=>`<div class="dp-issue"><div class="dp-dot" style="background:${dotColor(i.status)}"></div><div class="dp-key">${i.key}</div><div class="dp-sum">${i.summary}</div></div>`).join('');
+  }
+  rl('dp-done-list','dp-done-sec',done);
+  rl('dp-open-list','dp-open-sec',open);
+  panel.classList.add('open');
+}
+function closePanel(){document.getElementById('detail-panel')?.classList.remove('open');}
+
+// TOOLTIP
+let _tt=null;
+function getTT(){if(!_tt)_tt=document.getElementById('g-tooltip');return _tt;}
+function showTT(e,issue){const t=getTT();if(!t)return;t.innerHTML=`<div style="font-family:var(--mono);font-size:9px;color:#8B949E;margin-bottom:3px">${issue.key}</div><div style="font-size:11px;font-weight:600;margin-bottom:4px;line-height:1.3">${issue.summary}</div><div style="color:#8B949E">${issue.status} · ${issue.assignee}</div>`;t.style.display='block';posTT(e);}
+function posTT(e){const t=getTT();if(!t)return;const x=e.clientX+14,y=e.clientY+14,w=t.offsetWidth||200,h=t.offsetHeight||60;t.style.left=(x+w>window.innerWidth?x-w-28:x)+'px';t.style.top=(y+h>window.innerHeight?y-h-28:y)+'px';}
+function hideTT(){const t=getTT();if(t)t.style.display='none';}
+
+// GANTT
+const SPRINT_START=new Date('2026-08-04'),SPRINT_END=new Date('2026-08-14');
+const TODAY=new Date('2026-08-17'),DAY_W=22;
+function addDays(d,n){const r=new Date(d);r.setDate(r.getDate()+n);return r;}
+function diffDays(a,b){return Math.round((b-a)/86400000);}
+function dateStr(d){return d.toISOString().slice(0,10);}
+const VIEW_START=addDays(SPRINT_START,-3),VIEW_END=addDays(SPRINT_END,25);
+const TOTAL_DAYS=diffDays(VIEW_START,VIEW_END)+1;
+let activeFilter='all';
+const expandState={};
+
+function setF(f,btn){activeFilter=f;document.querySelectorAll('.fbtn').forEach(b=>b.classList.remove('active'));btn.classList.add('active');applyFilter();}
+function applyFilter(){
+  document.querySelectorAll('[data-grp]').forEach(grp=>{
+    const proj=grp.dataset.grp;
+    const tasks=document.querySelectorAll(`[data-task-proj="${proj}"] .task-row`);
+    let any=false;
+    tasks.forEach(tr=>{
+      const s=tr.dataset.status;
+      let show=true;
+      if(activeFilter==='done')show=isDone(s);
+      else if(activeFilter==='carry')show=!isDone(s);
+      tr.style.display=show?'':'none';
+      if(show)any=true;
+    });
+    grp.style.display=(activeFilter==='all'||any)?'':'none';
+    const tw=document.querySelector(`[data-task-proj="${proj}"]`);
+    if(tw)tw.style.display=grp.style.display;
+  });
+}
+function expandAll(){document.querySelectorAll('.task-rows').forEach(t=>t.classList.add('open'));}
+function collapseAll(){document.querySelectorAll('.task-rows').forEach(t=>t.classList.remove('open'));}
+function scrollToToday(){const w=document.getElementById('gantt-wrap');if(w)w.scrollLeft=(diffDays(VIEW_START,TODAY)*DAY_W)-220;}
+
+function buildGantt(){
+  const container=document.getElementById('gantt-container');if(!container)return;
+  const days=[];
+  for(let i=0;i<TOTAL_DAYS;i++){
+    const d=addDays(VIEW_START,i);const dow=d.getDay();
+    days.push({date:d,ds:dateStr(d),wknd:dow===0||dow===6,sprint:d>=SPRINT_START&&d<=SPRINT_END,today:dateStr(d)===dateStr(TODAY),n:d.getDate(),m:d.getMonth()});
+  }
+  // month header
+  const mRow=document.createElement('div');mRow.className='m-hdr';
+  const mlc=document.createElement('div');mlc.className='m-lbl-col';mRow.appendChild(mlc);
+  const months={};days.forEach(d=>{const k=d.date.getFullYear()+'-'+d.m;if(!months[k])months[k]={count:0,name:d.date.toLocaleString('pt-BR',{month:'short'}).toUpperCase()};months[k].count++;});
+  Object.values(months).forEach(m=>{const el=document.createElement('div');el.className='m-cell';el.style.width=(m.count*DAY_W)+'px';el.textContent=m.name;mRow.appendChild(el);});
+  container.appendChild(mRow);
+  // day header
+  const dHdr=document.createElement('div');dHdr.className='g-hdr';
+  const dlc=document.createElement('div');dlc.className='g-lbl-col';dlc.textContent='Projeto / Issue';dHdr.appendChild(dlc);
+  const dDiv=document.createElement('div');dDiv.className='g-days';
+  days.forEach(d=>{const el=document.createElement('div');el.className='d-cell'+(d.wknd?' wknd':'')+(d.today?' today-d':'');el.textContent=d.n;dDiv.appendChild(el);});
+  dHdr.appendChild(dDiv);container.appendChild(dHdr);
+
+  const groups={};
+  PROJ_ORDER.forEach(p=>{const items=ISSUES.filter(i=>i.project===p);if(items.length)groups[p]=items;});
+
+  Object.entries(groups).forEach(([proj,items])=>{
+    const meta=PROJ_META[proj]||{name:proj,color:'#8B949E'};
+    const st=projStats[proj]||{done:0,prog:0,pend:0,total:0};
+    expandState[proj]=false;
+    const grpRow=document.createElement('div');grpRow.className='grp-row';grpRow.dataset.grp=proj;
+    const grpLbl=document.createElement('div');grpLbl.className='grp-lbl';
+    grpLbl.innerHTML=`<span class="expand-icon" id="exp-${proj}">▶</span>
+      <span class="grp-name" style="color:${meta.color}">${proj}</span>
+      <span style="font-size:9px;color:#8B949E;">${meta.name||''}</span>
+      <div class="grp-badges">
+        <span class="gbadge" style="background:#2EA04330;color:#2EA043">${st.done}✓</span>
+        ${st.prog?`<span class="gbadge" style="background:#0225EB30;color:#6699FF">${st.prog}↻</span>`:''}
+        ${st.pend?`<span class="gbadge" style="background:#48485830;color:#8B949E">${st.pend}⏸</span>`:''}
+      </div>`;
+    const grpTl=document.createElement('div');grpTl.className='grp-tl';grpTl.style.width=(TOTAL_DAYS*DAY_W)+'px';
+    const sumDiv=document.createElement('div');sumDiv.className='grp-summary';
+    [[st.done,'#2EA043'],[st.prog,'#0225EB'],[st.pend,'#484F58']].forEach(([n,c])=>{if(n>0){const seg=document.createElement('div');seg.className='gs-seg';seg.style.background=c;seg.style.width=(n*12)+'px';sumDiv.appendChild(seg);}});
+    grpTl.appendChild(sumDiv);
+    grpRow.appendChild(grpLbl);grpRow.appendChild(grpTl);
+
+    const taskRows=document.createElement('div');taskRows.className='task-rows';taskRows.dataset.taskProj=proj;
+
+    items.forEach(issue=>{
+      const tr=document.createElement('div');tr.className='task-row';tr.dataset.status=issue.status;
+      const tl=document.createElement('div');tl.className='task-lbl';
+      tl.innerHTML=`<div class="task-dot" style="background:${dotColor(issue.status)}"></div>
+        <div class="task-key">${issue.key}</div>
+        <div class="task-sum" title="${issue.summary}">${issue.summary}</div>`;
+      const ttl=document.createElement('div');ttl.className='task-tl';ttl.style.width=(TOTAL_DAYS*DAY_W)+'px';
+      // bg
+      days.forEach((d,i)=>{if(d.wknd||d.sprint||d.today){const bg=document.createElement('div');bg.className='dbg'+(d.today?' today-col':d.sprint?' sprint':' wknd');bg.style.left=(i*DAY_W)+'px';bg.style.width=DAY_W+'px';ttl.appendChild(bg);}});
+      // ref lines
+      const r1=document.createElement('div');r1.className='ref-line ref-today';r1.style.left=(diffDays(VIEW_START,TODAY)*DAY_W)+'px';ttl.appendChild(r1);
+      const r2=document.createElement('div');r2.className='ref-line ref-end';r2.style.left=(diffDays(VIEW_START,SPRINT_END)*DAY_W)+'px';ttl.appendChild(r2);
+      // bar
+      const start=new Date(issue.created),end=new Date(issue.due);
+      const bs=Math.max(0,diffDays(VIEW_START,start));
+      const be=diffDays(VIEW_START,end);
+      const bw=Math.max(2,(be-bs+1))*DAY_W;
+      const bar=document.createElement('div');bar.className='task-bar';
+      const carry=!isDone(issue.status)&&end>SPRINT_END;
+      if(carry)bar.className+=' carry';
+      else if(isDone(issue.status))bar.className+=' done';
+      else if(isProg(issue.status))bar.className+=' prog';
+      else bar.className+=' pend';
+      bar.style.left=(bs*DAY_W)+'px';bar.style.width=bw+'px';
+      bar.addEventListener('mouseenter',e=>showTT(e,issue));
+      bar.addEventListener('mousemove',e=>posTT(e));
+      bar.addEventListener('mouseleave',hideTT);
+      ttl.appendChild(bar);
+      tr.appendChild(tl);tr.appendChild(ttl);
+      taskRows.appendChild(tr);
+    });
+
+    grpRow.onclick=()=>{
+      expandState[proj]=!expandState[proj];
+      taskRows.classList.toggle('open',expandState[proj]);
+      const icon=document.getElementById('exp-'+proj);
+      if(icon)icon.textContent=expandState[proj]?'▼':'▶';
+    };
+    container.appendChild(grpRow);
+    container.appendChild(taskRows);
+  });
+}
+
+// DONUT — calculado dos dados reais
+(function(){
+  const c=document.getElementById('donut');if(!c)return;
+  const ctx=c.getContext('2d');
+  const total=ISSUES.length;
+  const nDone=ISSUES.filter(i=>isDone(i.status)).length;
+  const nProg=ISSUES.filter(i=>isProg(i.status)).length;
+  const nPend=total-nDone-nProg;
+  const pct=Math.round(nDone/total*100);
+  const slices=[nDone,nProg,nPend];
+  const colors=['#2EA043','#0225EB','#484F58'];
+  const labels=['Concluídos','Em andamento','Pendentes'];
+  let start=-Math.PI/2;
+  slices.forEach((v,i)=>{
+    if(!v)return;
+    const angle=(v/total)*2*Math.PI;
+    ctx.beginPath();ctx.moveTo(75,75);ctx.arc(75,75,65,start,start+angle);
+    ctx.fillStyle=colors[i];ctx.fill();start+=angle;
+  });
+  ctx.beginPath();ctx.arc(75,75,38,0,2*Math.PI);ctx.fillStyle='#161B22';ctx.fill();
+  ctx.fillStyle='#02FFFF';ctx.font='bold 13px "Exo 2"';ctx.textAlign='center';ctx.textBaseline='middle';
+  ctx.fillText(pct+'%',75,72);
+  ctx.fillStyle='#8B949E';ctx.font='9px "Exo 2"';ctx.fillText(total+' issues',75,86);
+  // legenda
+  const leg=document.getElementById('donut-legend');
+  if(leg)[[nDone,'#2EA043',labels[0]],[nProg,'#0225EB',labels[1]],[nPend,'#484F58',labels[2]]].forEach(([n,col,lbl])=>{
+    if(!n)return;
+    const pctN=Math.round(n/total*100);
+    leg.innerHTML+=`<div style="display:flex;align-items:center;gap:8px;font-size:12px;">
+      <div style="width:12px;height:12px;border-radius:2px;background:${col};flex-shrink:0;"></div>
+      ${lbl}: <strong style="color:#E6EDF3;margin-left:4px;">${n}</strong>
+      <span style="color:var(--muted);">(${pctN}%)</span></div>`;
+  });
+})();
+
+// TAXA POR PROJETO
+(function(){
+  const tc=document.getElementById('taxa-chart');if(!tc)return;
+  PROJ_ORDER.filter(p=>projStats[p]).forEach(proj=>{
+    const d=projStats[proj];
+    const pct=Math.round(d.done/d.total*100);
+    const color=PROJ_META[proj]?.color||'#484F58';
+    const barColor=pct>=60?'#2EA043':pct>=30?'#D29922':'#F85149';
+    const row=document.createElement('div');
+    row.style.cssText='display:flex;align-items:center;gap:8px;margin-bottom:7px;';
+    row.innerHTML=`<div style="width:75px;font-size:10px;font-weight:600;color:${color};text-align:right;flex-shrink:0;">${proj}</div>
+      <div style="flex:1;background:var(--bg3);border-radius:3px;height:18px;overflow:hidden;">
+        <div style="height:100%;width:${pct}%;background:${barColor};border-radius:3px;display:flex;align-items:center;padding:0 6px;font-size:9px;font-weight:700;color:#fff;min-width:20px;">${pct}%</div>
+      </div>
+      <div style="font-size:10px;color:var(--muted);flex-shrink:0;width:36px;text-align:right;">${d.done}/${d.total}</div>`;
+    tc.appendChild(row);
+  });
+})();
+
+// preencher KPIs reais
+(function(){
+  const total=ISSUES.length;
+  const nDone=ISSUES.filter(i=>isDone(i.status)).length;
+  const nCarry=total-nDone;
+  const nProjs=new Set(ISSUES.map(i=>i.project)).size;
+  const pct=Math.round(nDone/total*100);
+  const el=(id,v)=>{const e=document.getElementById(id);if(e)e.textContent=v;};
+  el('kpi-done',nDone);
+  el('kpi-taxa',pct+'%');
+  el('kpi-carry',nCarry);
+  el('kpi-projs',nProjs);
+  // colorir taxa
+  const kt=document.getElementById('kpi-taxa');
+  if(kt)kt.closest('.kpi').className='kpi '+(pct>=80?'ok':pct>=50?'warn':'danger');
+})();
+buildProjects();
+buildSdesk();
+buildGantt();
+setTimeout(scrollToToday,100);
+</script>
+</body>
+</html>
