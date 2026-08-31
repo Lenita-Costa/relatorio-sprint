@@ -111,14 +111,20 @@ body{background:var(--bg);color:var(--text);font-family:var(--font);font-size:13
 .evo-card-sub{font-size:10px;color:var(--muted);margin-bottom:16px;line-height:1.5;}
 .evo-legend{display:flex;gap:14px;font-size:10px;color:var(--muted);align-items:center;margin-bottom:14px;flex-wrap:wrap;}
 .evo-legend i{width:9px;height:9px;border-radius:50%;display:inline-block;margin-right:5px;vertical-align:-1px;}
-.db-row{display:flex;align-items:center;gap:10px;margin-bottom:11px;}
-.db-name{width:124px;font-size:10px;color:#C0C8D4;text-align:right;flex-shrink:0;line-height:1.25;}
-.db-track{flex:1;position:relative;height:14px;margin:0 6px;}
-.db-grid{position:absolute;top:0;bottom:0;width:1px;background:rgba(48,54,61,.55);}
-.db-line{position:absolute;top:50%;height:2px;background:#484F58;transform:translateY(-50%);border-radius:2px;}
-.db-dot{position:absolute;top:50%;width:9px;height:9px;border-radius:50%;transform:translate(-50%,-50%);box-shadow:0 0 0 2px var(--bg2);}
-.db-val{font-size:10px;font-family:var(--mono);color:var(--muted);width:92px;text-align:right;flex-shrink:0;font-variant-numeric:tabular-nums;}
-.db-scale{display:flex;justify-content:space-between;font-size:9px;color:var(--gray);font-family:var(--mono);margin-left:140px;margin-right:108px;margin-top:2px;}
+.evo-intro{margin:0 24px 16px;background:rgba(2,37,235,.12);border:1px solid rgba(2,37,235,.35);border-left:3px solid var(--blue);border-radius:8px;padding:13px 16px;display:flex;gap:12px;align-items:flex-start;}
+.evo-intro h4{font-size:11px;font-weight:700;color:var(--cyan);text-transform:uppercase;letter-spacing:.8px;margin-bottom:5px;}
+.evo-intro p{font-size:11px;color:#C0C8D4;line-height:1.6;margin-bottom:6px;}
+.evo-intro p:last-child{margin-bottom:0;color:var(--muted);font-size:10px;}
+.dv-row{display:flex;align-items:center;gap:9px;margin-bottom:8px;}
+.dv-name{width:74px;font-size:10px;font-weight:600;text-align:right;flex-shrink:0;}
+.dv-track{flex:1;min-width:70px;position:relative;height:15px;background:var(--bg3);border-radius:3px;}
+.dv-zero{position:absolute;left:50%;top:-3px;bottom:-3px;width:1px;background:#484F58;}
+.dv-bar{position:absolute;top:2px;bottom:2px;border-radius:2px;}
+.dv-delta{width:28px;font-size:11px;font-weight:700;text-align:right;flex-shrink:0;font-family:var(--mono);font-variant-numeric:tabular-nums;}
+.dv-detail{width:154px;flex-shrink:1;min-width:0;overflow:hidden;white-space:nowrap;font-size:9px;color:var(--muted);font-family:var(--mono);}
+.dv-tag{font-size:8px;padding:1px 5px;border-radius:6px;background:var(--bg3);color:var(--muted);margin-left:5px;font-family:var(--font);}
+.dv-scale{display:grid;grid-template-columns:1fr 1fr 1fr;font-size:9px;color:var(--gray);margin:6px 200px 0 83px;}
+.dv-scale span:nth-child(2){text-align:center;}.dv-scale span:last-child{text-align:right;}
 .s18-chip{display:inline-flex;align-items:center;gap:6px;background:var(--bg3);border:1px solid var(--bord);border-radius:14px;padding:4px 11px;font-size:11px;color:#C0C8D4;}
 .s18-chip b{color:var(--text);font-weight:700;}
 .fbtn{background:var(--bg3);border:1px solid var(--bord);color:var(--muted);padding:4px 10px;border-radius:14px;cursor:pointer;font-size:11px;transition:all .15s;}
@@ -225,6 +231,15 @@ body{background:var(--bg);color:var(--text);font-family:var(--font);font-size:13
   .proj-grid{grid-template-columns:1fr 1fr;}
   .m-lbl-col,.g-lbl-col,.grp-lbl,.task-lbl{width:120px;min-width:120px;}
 }
+/* Evolução: o gráfico por frente precisa de largura — solta os dois cards
+   em coluna antes do breakpoint geral, e some com o detalhe no celular
+   (o valor continua no title da barra) */
+@media(max-width:1200px){#panel-evolucao .grid-2{grid-template-columns:1fr !important;}}
+@media(max-width:560px){
+  .dv-detail{display:none;}
+  .dv-name{width:60px;}
+  .dv-scale{margin:6px 37px 0 69px;}
+}
 </style>
 </head>
 <body>
@@ -272,6 +287,14 @@ body{background:var(--bg);color:var(--text);font-family:var(--font);font-size:13
 
 <!-- EVOLUCAO -->
 <div class="panel" id="panel-evolucao">
+<div class="evo-intro">
+  <div style="font-size:20px;flex-shrink:0;margin-top:1px;">📈</div>
+  <div>
+    <h4>O que esta aba mostra</h4>
+    <p>Compara a <strong style="color:var(--text);">sprint que acabou de fechar</strong> com a <strong style="color:var(--text);">anterior</strong>, para responder se o time evoluiu — e antecipa a carga que atravessa para a <strong style="color:var(--text);">sprint que inicia</strong>. Os cartões no topo trazem cada indicador com a variação em relação à sprint passada e a tendência das últimas três. O gráfico por frente mostra onde as entregas cresceram ou caíram. O último bloco é o que já entra na sprint nova.</p>
+    <p>Os números da sprint fechada são calculados dos dados desta própria página; os das sprints anteriores vêm dos dashboards daquelas sprints.</p>
+  </div>
+</div>
 <div class="evo-grid" id="evo-tiles"></div>
 <div class="grid-2" style="padding:0 24px 16px;">
   <div class="evo-card" id="evo-dumbbell"></div>
@@ -737,23 +760,24 @@ function hideTT(){const t=getTT();if(t)t.style.display='none';}
 // Sprints encerradas: agregados extraídos dos dashboards das próprias sprints
 // (dashboard-s15/s16). A sprint corrente é calculada de ISSUES/SDESK_ISSUES.
 const SPRINT_HISTORY=[
-  {id:"S15",periodo:"21/07–01/08",issues:61,done:52,projetos:12,sdesk:30,sdeskDone:22,sdeskEstouro:2,membros:{"Coordenação":[20,22],"Tech Lead":[2,4],"Desenvolvimento":[10,10],"Conteúdo":[2,4],"Infra / Suporte N1":[18,20]}},
-  {id:"S16",periodo:"04/08–14/08",issues:62,done:24,projetos:11,sdesk:23,sdeskDone:13,sdeskEstouro:2,membros:{"Coordenação":[9,25],"Tech Lead":[1,6],"Desenvolvimento":[3,4],"Conteúdo":[0,14],"Infra / Suporte N1":[11,13]}},
+  {id:"S15",periodo:"21/07–01/08",issues:61,done:52,projetos:12,sdesk:30,sdeskDone:22,sdeskEstouro:2,porProjeto:{"SISFENAS":[1,1],"FAUTH":[1,1],"CONECTA":[4,4],"GEP":[6,7],"PORTAL":[0,1],"PROC":[15,20],"ETI":[4,4],"FENASBR":[0,1],"SRR":[1,2],"SYNCOOP":[1,1],"STRAPI":[8,8],"TECH":[11,11]}},
+  {id:"S16",periodo:"04/08–14/08",issues:62,done:24,projetos:11,sdesk:23,sdeskDone:13,sdeskEstouro:2,porProjeto:{"SISFENAS":[0,1],"ENG":[1,13],"FENASHUB":[1,1],"CONECTA":[1,2],"GEP":[1,2],"PORTAL":[0,1],"PROC":[3,16],"ETI":[5,7],"SRR":[0,1],"STRAPI":[1,6],"TECH":[11,12]}},
 ];
 const SPRINT_ATUAL={id:"S17",periodo:"17/08–31/08"};
 const SPRINT_NOVA={id:"S18",periodo:"31/08–14/09"};
 
+// [concluídas, total] por frente
+function porProjetoDe(lista){
+  const o={};
+  lista.forEach(i=>{o[i.project]=o[i.project]||[0,0];o[i.project][1]++;if(isDone(i.status))o[i.project][0]++;});
+  return o;
+}
 function sprintCorrente(){
-  const membros={};
-  MEMBERS.forEach(m=>{
-    const mine=ISSUES.filter(i=>i.assignee===m.id);
-    if(mine.length)membros[m.id]=[mine.filter(i=>isDone(i.status)).length,mine.length];
-  });
-  return {id:SPRINT_ATUAL.id,periodo:SPRINT_ATUAL.periodo,
+  return {id:SPRINT_ATUAL.id,periodo:SPRINT_ATUAL.periodo,porProjeto:porProjetoDe(ISSUES),
     issues:ISSUES.length,done:ISSUES.filter(i=>isDone(i.status)).length,
     projetos:new Set(ISSUES.map(i=>i.project)).size,
     sdesk:SDESK_ISSUES.length,sdeskDone:SDESK_ISSUES.filter(i=>isDone(i.status)).length,
-    sdeskEstouro:SDESK_ISSUES.filter(i=>i.outlier).length,membros};
+    sdeskEstouro:SDESK_ISSUES.filter(i=>i.outlier).length};
 }
 const SPRINTS=[...SPRINT_HISTORY,sprintCorrente()];
 
@@ -802,29 +826,40 @@ function buildEvolucao(){
     host.appendChild(tile);
   });
 
-  // --- dumbbell: taxa por pessoa, sprint anterior -> sprint fechada ---
+  // --- barra divergente: evolucao de entregas por frente ---
+  // A barra mede entregas concluidas (numero absoluto). Delta de TAXA por frente
+  // nao serve de indicador aqui: metade das frentes tem 1 ou 2 issues na sprint,
+  // onde uma issue vira 50pp ou 100pp de variacao.
   const db=document.getElementById('evo-dumbbell');
-  const nomes=Object.keys(cur.membros).filter(n=>prev.membros[n]);
-  const linhas=nomes.map(n=>{
-    const [da,ta]=prev.membros[n], [db2,tb]=cur.membros[n];
-    return {n,a:Math.round(da/ta*100),b:Math.round(db2/tb*100),ra:da+'/'+ta,rb:db2+'/'+tb};
-  }).sort((x,y)=>(y.b-y.a)-(x.b-x.a));
-  db.innerHTML='<div class="evo-card-title">Taxa de conclusão por pessoa</div>'
-    +'<div class="evo-card-sub">'+prev.id+' ('+prev.periodo+') → '+cur.id+' ('+cur.periodo+'). Ordenado da maior evolução para a maior queda.</div>'
-    +'<div class="evo-legend"><span><i style="background:'+EVO_MUTED+'"></i>'+prev.id+'</span>'
-    +'<span><i style="background:'+EVO_ACCENT+'"></i>'+cur.id+'</span></div>'
-    +linhas.map(l=>{
-      const lo=Math.min(l.a,l.b),hi=Math.max(l.a,l.b);
-      return '<div class="db-row"><div class="db-name">'+l.n+'</div>'
-        +'<div class="db-track">'
-        +'<div class="db-grid" style="left:0"></div><div class="db-grid" style="left:50%"></div><div class="db-grid" style="left:100%"></div>'
-        +'<div class="db-line" style="left:'+lo+'%;width:'+(hi-lo)+'%"></div>'
-        +'<div class="db-dot" style="left:'+l.a+'%;background:'+EVO_MUTED+'" title="'+prev.id+': '+l.ra+'"></div>'
-        +'<div class="db-dot" style="left:'+l.b+'%;background:'+EVO_ACCENT+'" title="'+cur.id+': '+l.rb+'"></div>'
-        +'</div>'
-        +'<div class="db-val">'+l.a+'% → '+l.b+'%</div></div>';
+  const pa=prev.porProjeto||{}, pb=cur.porProjeto||{};
+  const taxa=v=>v?Math.round(v[0]/v[1]*100)+'%':'—';
+  const frentes=[...new Set([...Object.keys(pa),...Object.keys(pb)])].map(f=>{
+    const a=pa[f],b=pb[f];
+    return {f,a,b,d:(b?b[0]:0)-(a?a[0]:0),tag:!a?'nova':(!b?'encerrada':'')};
+  }).sort((x,y)=>y.d-x.d||x.f.localeCompare(y.f));
+  const maxAbs=Math.max(1,...frentes.map(r=>Math.abs(r.d)));
+  db.innerHTML='<div class="evo-card-title">Entregas por frente · '+prev.id+' → '+cur.id+'</div>'
+    +'<div class="evo-card-sub">Variação no número de issues concluídas por frente. Escolhi entregas em vez de taxa porque metade das frentes tem 1 ou 2 issues na sprint, e ali uma única issue já vira 50 ou 100 pontos de variação. A taxa aparece ao lado de cada barra: uma frente pode entregar mais e mesmo assim ver a taxa cair, quando o escopo cresce mais rápido que a entrega.</div>'
+    +'<div class="evo-legend"><span><i style="background:'+EVO_ACCENT+'"></i>entregou mais que na '+prev.id+'</span>'
+    +'<span><i style="background:#F85149"></i>entregou menos</span></div>'
+    +frentes.map(r=>{
+      const cor=r.d>0?EVO_ACCENT:r.d<0?'#F85149':'#484F58';
+      const w=Math.abs(r.d)/maxAbs*50;
+      const barra=r.d===0
+        ? '<div class="dv-bar" style="left:calc(50% - 1.5px);width:3px;background:#484F58;"></div>'
+        : (r.d>0?'<div class="dv-bar" style="left:50%;width:'+w+'%;background:'+cor+';opacity:.8"></div>'
+                :'<div class="dv-bar" style="right:50%;width:'+w+'%;background:'+cor+';opacity:.8"></div>');
+      const raz=v=>v?v[0]+'/'+v[1]:'—';
+      const nEnt=raz(r.a)+' → '+raz(r.b);
+      const nTaxa=taxa(r.a)+'→'+taxa(r.b);
+      return '<div class="dv-row">'
+        +'<div class="dv-name" style="color:'+((PROJ_META[r.f]||{}).color||'#8B949E')+'">'+r.f+'</div>'
+        +'<div class="dv-track" title="'+r.f+': '+nEnt+' concluídas/total · taxa '+nTaxa+'"><div class="dv-zero"></div>'+barra+'</div>'
+        +'<div class="dv-delta" style="color:'+(r.d===0?'var(--muted)':cor)+'">'+(r.d>0?'+':'')+r.d+'</div>'
+        +'<div class="dv-detail">'+nEnt+' · '+nTaxa+(r.tag?'<span class="dv-tag">'+r.tag+'</span>':'')+'</div>'
+        +'</div>';
     }).join('')
-    +'<div class="db-scale"><span>0%</span><span>50%</span><span>100%</span></div>';
+    +'<div class="dv-scale"><span>−'+maxAbs+' entregas</span><span>0</span><span>+'+maxAbs+'</span></div>';
 
   // --- carga que entra na sprint nova ---
   const box=document.getElementById('evo-s18');
