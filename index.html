@@ -793,7 +793,7 @@ const SPRINTS=[...SPRINT_HISTORY,sprintCorrente()];
 
 // direcao: 'bom' = subir é bom, 'ruim' = subir é ruim, 'neutro' = sem juízo de valor
 const EVO_METRICS=[
-  {label:"Taxa de conclusão",get:s=>Math.round(s.done/s.issues*100),suf:"%",dsuf:"pp",dir:"bom"},
+  {label:"Taxa de conclusão",get:s=>Math.round(s.done/s.issues*100),suf:"%",dsuf:" pontos",dir:"bom"},
   {label:"Entregas",         get:s=>s.done,                                        dir:"bom"},
   {label:"Escopo da sprint", get:s=>s.issues,                                       dir:"neutro"},
   {label:"Carry-over",       get:s=>s.issues-s.done,                                dir:"ruim"},
@@ -876,14 +876,14 @@ function leituraIndicadores(cur,prev,serie){
   const carry=s=>s.issues-s.done, cPct=Math.round(carry(cur)/cur.issues*100);
   let seq=0;for(let i=serie.length-1;i>0;i--){if(carry(serie[i])>carry(serie[i-1]))seq++;else break;}
   const ritmo = pEnt>=pEsc
-    ? 'As entregas cresceram <b>'+pEnt+'%</b> ('+prev.done+' → '+cur.done+') contra <b>'+pEsc+'%</b> de crescimento do escopo ('+prev.issues+' → '+cur.issues+'): o time acompanhou o aumento e ganhou '+Math.abs(dTx)+'pp de taxa.'
-    : 'O escopo cresceu <b>'+pEsc+'%</b> ('+prev.issues+' → '+cur.issues+') contra <b>'+pEnt+'%</b> de crescimento das entregas ('+prev.done+' → '+cur.done+'), e a taxa '+(dTx>=0?'subiu':'caiu')+' '+Math.abs(dTx)+'pp.';
+    ? 'As entregas cresceram <b>'+pEnt+'%</b> ('+prev.done+' → '+cur.done+') contra <b>'+pEsc+'%</b> de crescimento do escopo ('+prev.issues+' → '+cur.issues+'): o time acompanhou o aumento e ganhou '+Math.abs(dTx)+' pontos percentuais de taxa.'
+    : 'O escopo cresceu <b>'+pEsc+'%</b> ('+prev.issues+' → '+cur.issues+') contra <b>'+pEnt+'%</b> de crescimento das entregas ('+prev.done+' → '+cur.done+'), e a taxa '+(dTx>=0?'subiu':'caiu')+' '+Math.abs(dTx)+' pontos percentuais.';
   const fila = dEsc>dEnt
     ? 'Só que em números absolutos o escopo entrou em <b>'+(dEsc/Math.max(1,dEnt)).toFixed(1).replace('.',',')+'x</b> o ritmo das entregas (+'+dEsc+' contra +'+dEnt+'), então o carry-over foi de '+carry(prev)+' para <b>'+carry(cur)+'</b> — '+cPct+'% de tudo que estava na '+cur.id+'.'
     : 'O carry-over ficou em <b>'+carry(cur)+'</b> ('+cPct+'% do escopo da '+cur.id+'), contra '+carry(prev)+' na '+prev.id+'.';
   const hist = seq>=2 ? ' Ele sobe há '+seq+' sprints seguidas ('+serie.map(carry).join(' → ')+').' : '';
   const acao = dEsc>dEnt
-    ? '→ Melhorar a taxa não está reduzindo a fila. Enquanto o escopo entrar mais rápido do que a capacidade de fechar, o acumulado cresce mesmo com o time indo melhor — a alavanca da '+SPRINT_NOVA.id+' é limitar a entrada, não cobrar mais throughput.'
+    ? '→ Melhorar a taxa não está reduzindo a fila. Enquanto o escopo entrar mais rápido do que a capacidade de fechar, o acumulado cresce mesmo com o time indo melhor — a alavanca da '+SPRINT_NOVA.id+' é limitar a entrada, não cobrar mais rendimento.'
     : '→ A fila parou de crescer. Vale manter o teto de escopo que produziu esse resultado.';
   return obsBox('Leitura',[ritmo,fila+hist],acao);
 }
@@ -948,7 +948,7 @@ function buildEvolucao(){
   // --- barra divergente: evolucao de entregas por frente ---
   // A barra mede entregas concluidas (numero absoluto). Delta de TAXA por frente
   // nao serve de indicador aqui: metade das frentes tem 1 ou 2 issues na sprint,
-  // onde uma issue vira 50pp ou 100pp de variacao.
+  // onde uma issue vira 50 ou 100 pontos percentuais de variacao.
   const db=document.getElementById('evo-dumbbell');
   const pa=prev.porProjeto||{}, pb=cur.porProjeto||{};
   const taxa=v=>v?Math.round(v[0]/v[1]*100)+'%':'—';
