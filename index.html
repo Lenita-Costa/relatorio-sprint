@@ -283,10 +283,12 @@ body{background:var(--bg);color:var(--text);font-family:var(--font);font-size:13
       <canvas id="donut" width="150" height="150"></canvas>
       <div id="donut-legend" style="display:flex;flex-direction:column;gap:10px;"></div>
     </div>
+    <div class="evo-obs" id="desc-status"></div>
   </div>
   <div style="background:var(--bg2);border:1px solid var(--bord);border-radius:8px;padding:16px;">
     <div style="font-size:12px;font-weight:600;color:var(--cyan);text-transform:uppercase;letter-spacing:.8px;margin-bottom:14px;">Entregas por Projeto</div>
     <div id="taxa-chart"></div>
+    <div class="evo-obs" id="desc-taxa"></div>
   </div>
 </div>
 <div class="proj-view" id="proj-view"></div>
@@ -816,6 +818,43 @@ function sparkline(vals,titulos){
 // ---- leitura dos gráficos: texto montado a partir dos números, para não
 // ---- descolar dos dados quando a sprint virar ----
 function lista(a){return a.length<2?(a[0]||''):a.slice(0,-1).join(', ')+' e '+a[a.length-1];}
+
+// ---- descrição dos dois gráficos da aba Projetos: explica o que cada um
+// ---- mede e como lê-lo, sem interpretar o resultado da sprint ----
+function descBox(paras,nota){
+  return '<div class="evo-obs-hd">Sobre este gráfico</div>'
+    +paras.map(t=>'<p>'+t+'</p>').join('')+'<p class="acao">'+nota+'</p>';
+}
+
+function descricaoStatus(){
+  const tot=ISSUES.length;
+  const nD=ISSUES.filter(i=>isDone(i.status)).length;
+  const nP=ISSUES.filter(i=>isProg(i.status)).length;
+  const nZ=tot-nD-nP;
+  const a='Classifica as <b>'+tot+'</b> issues do escopo da '+SPRINT_ATUAL.id+' ('+SPRINT_ATUAL.periodo+') '
+    +'em três estados, conforme o campo de status no board na data de extração: '
+    +'<b>concluídas</b> ('+nD+'), <b>em andamento</b> ('+nP+') e <b>pendentes</b> ('+nZ+' — as que ainda não foram iniciadas).';
+  const b='Cada fatia conta issues, não esforço: itens de tamanhos bem diferentes pesam igual na rosca. '
+    +'E o grupo de pendentes é heterogêneo — reúne tanto itens que seguem para a '+SPRINT_NOVA.id
+    +' quanto itens que entraram no board já perto do fim da sprint.';
+  return descBox([a,b],'→ É uma fotografia da situação no fechamento da '+SPRINT_ATUAL.id
+    +', não uma medida de ritmo. A comparação entre sprints está na aba Evolução.');
+}
+
+function descricaoProjetos(){
+  const arr=PROJ_ORDER.filter(f=>projStats[f]).map(f=>projStats[f].total);
+  const min=Math.min.apply(null,arr), max=Math.max.apply(null,arr);
+  const peq=arr.filter(t=>t<=3).length;
+  const a='Cada barra é a razão entre issues concluídas e issues totais daquela frente na '+SPRINT_ATUAL.id
+    +'; o par à direita mostra <b>concluídas/total</b>. As cores seguem faixas fixas: '
+    +'verde a partir de 60%, amarelo entre 30% e 59%, vermelho abaixo de 30%.';
+  const b='As '+arr.length+' frentes têm escopos de tamanhos bem diferentes — de <b>'+min+'</b> a <b>'+max+'</b> issues'
+    +(peq?', e <b>'+peq+'</b> delas têm até 3 issues':'')+'. '
+    +'Em frentes pequenas a porcentagem anda em saltos grandes: com 2 issues, cada uma vale 50 pontos percentuais, '
+    +'então 0% ou 100% ali dizem pouco.';
+  return descBox([a,b],'→ As barras não são comparáveis entre si sem olhar o volume ao lado: '
+    +'a porcentagem responde "quanto do escopo desta frente foi fechado", e não "qual frente rendeu mais".');
+}
 function obsBox(titulo,paras,acao){
   return '<div class="evo-obs-hd">'+titulo+'</div>'+paras.map(t=>'<p>'+t+'</p>').join('')
     +'<p class="acao">'+acao+'</p>';
@@ -1193,6 +1232,10 @@ function buildGantt(){
   if(kt)kt.closest('.kpi').className='kpi '+(pct>=80?'ok':pct>=50?'warn':'danger');
 })();
 (function(){const e=document.getElementById('kpi-s18-count');if(e)e.textContent=ISSUES.filter(inS18).length;})();
+(function(){
+  const a=document.getElementById('desc-status');if(a)a.innerHTML=descricaoStatus();
+  const b=document.getElementById('desc-taxa');if(b)b.innerHTML=descricaoProjetos();
+})();
 buildProjects();
 buildSdesk();
 buildGantt();
