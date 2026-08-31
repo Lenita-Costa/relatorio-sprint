@@ -108,7 +108,7 @@ body{background:var(--bg);color:var(--text);font-family:var(--font);font-size:13
 .g-lbl-col{width:280px;min-width:280px;padding:5px 10px;font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;position:sticky;left:0;background:var(--bg);z-index:11;border-right:1px solid var(--bord);}
 .g-days{display:flex;flex-shrink:0;}
 .d-cell{width:var(--day);min-width:var(--day);text-align:center;font-size:9px;color:var(--muted);padding:3px 0;border-right:1px solid rgba(48,54,61,.4);}
-.d-cell.wknd{background:rgba(255,255,255,.015);}.d-cell.today-d{background:rgba(248,81,73,.15);color:var(--red);font-weight:600;}
+.d-cell.wknd{background:rgba(255,255,255,.015);}.d-cell.s18-d{color:var(--purple);}.d-cell.today-d{background:rgba(248,81,73,.15);color:var(--red);font-weight:600;}
 .g-row{display:flex;border-bottom:1px solid rgba(48,54,61,.3);transition:background .1s;}
 .g-row:hover{background:rgba(255,255,255,.025);}
 .grp-row{display:flex;background:rgba(2,32,96,.35);cursor:pointer;border-bottom:1px solid rgba(48,54,61,.5);}
@@ -135,8 +135,10 @@ body{background:var(--bg);color:var(--text);font-family:var(--font);font-size:13
 .dbg{position:absolute;top:0;bottom:0;}
 .dbg.wknd{background:rgba(255,255,255,.012);}.dbg.sprint{background:rgba(2,37,235,.05);}
 .dbg.today-col{background:rgba(248,81,73,.08);}
+.dbg.s18{background:rgba(137,87,229,.07);}
 .ref-line{position:absolute;top:0;bottom:0;width:2px;z-index:8;}
 .ref-today{background:var(--red);opacity:.7;}.ref-end{background:var(--purple);opacity:.6;}
+.ref-s18{background:var(--cyan);opacity:.55;}
 .bar{position:absolute;height:12px;border-radius:2px;top:7px;opacity:.9;min-width:3px;cursor:pointer;}
 .bar.done{background:var(--green);}.bar.prog{background:var(--blue);}.bar.pend{background:var(--gray);}
 .bar.carry{background:linear-gradient(90deg,var(--blue),var(--purple));}
@@ -260,11 +262,14 @@ body{background:var(--bg);color:var(--text);font-family:var(--font);font-size:13
   <div class="kpi"><div class="kpi-val">17/08</div><div class="kpi-label">Início S17</div></div>
   <div class="kpi"><div class="kpi-val">31/08</div><div class="kpi-label">Fim S17</div></div>
   <div class="kpi warn"><div class="kpi-val">31/08</div><div class="kpi-label">Início S18</div></div>
+  <div class="kpi warn"><div class="kpi-val">14/09</div><div class="kpi-label">Fim S18</div></div>
+  <div class="kpi"><div class="kpi-val" id="kpi-s18-count">–</div><div class="kpi-label">Issues na S18</div></div>
 </div>
 <div class="toolbar">
   <button class="fbtn active" onclick="setF('all',this)">Todos</button>
   <button class="fbtn" onclick="setF('done',this)">✓ Concluídos</button>
-  <button class="fbtn" onclick="setF('carry',this)">→ S17</button>
+  <button class="fbtn" onclick="setF('carry',this)">→ Não concluídos</button>
+  <button class="fbtn" onclick="setF('s18',this)" title="Mostra as issues cuja janela (criação → entrega) cruza a Sprint S18, de 31/08 a 14/09. Issues já concluídas dentro da S17 ficam de fora.">🚀 S18 (31/08–14/09)</button>
   <button class="fbtn" onclick="expandAll()">⊞ Expandir</button>
   <button class="fbtn" onclick="collapseAll()">⊟ Recolher</button>
   <button class="today-btn" onclick="scrollToToday()">📍 Hoje</button>
@@ -273,6 +278,8 @@ body{background:var(--bg);color:var(--text);font-family:var(--font);font-size:13
   <span style="display:flex;align-items:center;gap:5px;"><span style="width:20px;height:3px;background:rgba(2,37,235,.4);display:inline-block;border-radius:2px;"></span>Sprint S17 (17/08–31/08)</span>
   <span style="display:flex;align-items:center;gap:5px;"><span style="width:2px;height:12px;background:#F85149;opacity:.7;display:inline-block;"></span>Hoje</span>
   <span style="display:flex;align-items:center;gap:5px;"><span style="width:2px;height:12px;background:#8957E5;opacity:.6;display:inline-block;"></span>Fim S17</span>
+  <span style="display:flex;align-items:center;gap:5px;"><span style="width:20px;height:3px;background:rgba(137,87,229,.35);display:inline-block;border-radius:2px;"></span>Sprint S18 (31/08–14/09)</span>
+  <span style="display:flex;align-items:center;gap:5px;"><span style="width:2px;height:12px;background:#02FFFF;opacity:.55;display:inline-block;"></span>Fim S18</span>
   <span style="display:flex;align-items:center;gap:5px;"><span style="width:20px;height:3px;background:#2EA043;opacity:.5;display:inline-block;border-radius:2px;"></span>Barra = concluído</span>
   <span style="display:flex;align-items:center;gap:5px;"><span style="width:20px;height:3px;background:linear-gradient(90deg,#0225EB,#8957E5);display:inline-block;border-radius:2px;"></span>Carry-over S18</span>
 </div>
@@ -691,12 +698,24 @@ function posTT(e){const t=getTT();if(!t)return;const x=e.clientX+14,y=e.clientY+
 function hideTT(){const t=getTT();if(t)t.style.display='none';}
 
 // GANTT
-const SPRINT_START=new Date('2026-08-04'),SPRINT_END=new Date('2026-08-14');
-const TODAY=new Date('2026-08-17'),DAY_W=22;
+// parse 'YYYY-MM-DD' no fuso local (evita o deslocamento de 1 dia do parse UTC)
+function pd(s){const[y,m,d]=String(s).split('-').map(Number);return new Date(y,m-1,d);}
+const SPRINT_START=pd('2026-08-17'),SPRINT_END=pd('2026-08-31');   // S17
+const S18_START=pd('2026-08-31'),S18_END=pd('2026-09-14');         // S18
+const TODAY=pd('2026-08-31'),DAY_W=22;
 function addDays(d,n){const r=new Date(d);r.setDate(r.getDate()+n);return r;}
 function diffDays(a,b){return Math.round((b-a)/86400000);}
-function dateStr(d){return d.toISOString().slice(0,10);}
-const VIEW_START=addDays(SPRINT_START,-3),VIEW_END=addDays(SPRINT_END,25);
+function pad2(n){return String(n).padStart(2,'0');}
+function dateStr(d){return d.getFullYear()+'-'+pad2(d.getMonth()+1)+'-'+pad2(d.getDate());}
+const VIEW_START=addDays(SPRINT_START,-3),VIEW_END=addDays(S18_END,11);
+// uma issue "entra na S18" se seu intervalo cruza 31/08–14/09 e ela não foi
+// encerrada ainda dentro da S17
+function inS18(i){
+  const s=pd(i.created),e=pd(i.due);
+  if(e<S18_START||s>S18_END)return false;
+  if(isDone(i.status)&&e<=SPRINT_END)return false;
+  return true;
+}
 const TOTAL_DAYS=diffDays(VIEW_START,VIEW_END)+1;
 let activeFilter='all';
 const expandState={};
@@ -712,12 +731,19 @@ function applyFilter(){
       let show=true;
       if(activeFilter==='done')show=isDone(s);
       else if(activeFilter==='carry')show=!isDone(s);
+      else if(activeFilter==='s18')show=tr.dataset.s18==='1';
       tr.style.display=show?'':'none';
       if(show)any=true;
     });
     grp.style.display=(activeFilter==='all'||any)?'':'none';
     const tw=document.querySelector(`[data-task-proj="${proj}"]`);
-    if(tw)tw.style.display=grp.style.display;
+    if(tw){
+      tw.style.display=grp.style.display;
+      const open=activeFilter==='all'?!!expandState[proj]:any;
+      tw.classList.toggle('open',open);
+      const icon=document.getElementById('exp-'+proj);
+      if(icon)icon.textContent=open?'▼':'▶';
+    }
   });
 }
 function expandAll(){document.querySelectorAll('.task-rows').forEach(t=>t.classList.add('open'));}
@@ -729,7 +755,7 @@ function buildGantt(){
   const days=[];
   for(let i=0;i<TOTAL_DAYS;i++){
     const d=addDays(VIEW_START,i);const dow=d.getDay();
-    days.push({date:d,ds:dateStr(d),wknd:dow===0||dow===6,sprint:d>=SPRINT_START&&d<=SPRINT_END,today:dateStr(d)===dateStr(TODAY),n:d.getDate(),m:d.getMonth()});
+    days.push({date:d,ds:dateStr(d),wknd:dow===0||dow===6,sprint:d>=SPRINT_START&&d<=SPRINT_END,s18:d>=S18_START&&d<=S18_END,today:dateStr(d)===dateStr(TODAY),n:d.getDate(),m:d.getMonth()});
   }
   // month header
   const mRow=document.createElement('div');mRow.className='m-hdr';
@@ -741,7 +767,7 @@ function buildGantt(){
   const dHdr=document.createElement('div');dHdr.className='g-hdr';
   const dlc=document.createElement('div');dlc.className='g-lbl-col';dlc.textContent='Projeto / Issue';dHdr.appendChild(dlc);
   const dDiv=document.createElement('div');dDiv.className='g-days';
-  days.forEach(d=>{const el=document.createElement('div');el.className='d-cell'+(d.wknd?' wknd':'')+(d.today?' today-d':'');el.textContent=d.n;dDiv.appendChild(el);});
+  days.forEach(d=>{const el=document.createElement('div');el.className='d-cell'+(d.wknd?' wknd':'')+(d.s18?' s18-d':'')+(d.today?' today-d':'');el.textContent=d.n;dDiv.appendChild(el);});
   dHdr.appendChild(dDiv);container.appendChild(dHdr);
 
   const groups={};
@@ -770,19 +796,20 @@ function buildGantt(){
     const taskRows=document.createElement('div');taskRows.className='task-rows';taskRows.dataset.taskProj=proj;
 
     items.forEach(issue=>{
-      const tr=document.createElement('div');tr.className='task-row';tr.dataset.status=issue.status;
+      const tr=document.createElement('div');tr.className='task-row';tr.dataset.status=issue.status;tr.dataset.s18=inS18(issue)?'1':'0';
       const tl=document.createElement('div');tl.className='task-lbl';
       tl.innerHTML=`<div class="task-dot" style="background:${dotColor(issue.status)}"></div>
         <div class="task-key">${issue.key}</div>
         <div class="task-sum" title="${issue.summary}">${issue.summary}</div>`;
       const ttl=document.createElement('div');ttl.className='task-tl';ttl.style.width=(TOTAL_DAYS*DAY_W)+'px';
       // bg
-      days.forEach((d,i)=>{if(d.wknd||d.sprint||d.today){const bg=document.createElement('div');bg.className='dbg'+(d.today?' today-col':d.sprint?' sprint':' wknd');bg.style.left=(i*DAY_W)+'px';bg.style.width=DAY_W+'px';ttl.appendChild(bg);}});
+      days.forEach((d,i)=>{if(d.wknd||d.sprint||d.s18||d.today){const bg=document.createElement('div');bg.className='dbg'+(d.today?' today-col':d.sprint?' sprint':d.s18?' s18':' wknd');bg.style.left=(i*DAY_W)+'px';bg.style.width=DAY_W+'px';ttl.appendChild(bg);}});
       // ref lines
       const r1=document.createElement('div');r1.className='ref-line ref-today';r1.style.left=(diffDays(VIEW_START,TODAY)*DAY_W)+'px';ttl.appendChild(r1);
       const r2=document.createElement('div');r2.className='ref-line ref-end';r2.style.left=(diffDays(VIEW_START,SPRINT_END)*DAY_W)+'px';ttl.appendChild(r2);
+      const r3=document.createElement('div');r3.className='ref-line ref-s18';r3.style.left=(diffDays(VIEW_START,S18_END)*DAY_W)+'px';ttl.appendChild(r3);
       // bar
-      const start=new Date(issue.created),end=new Date(issue.due);
+      const start=pd(issue.created),end=pd(issue.due);
       const bs=Math.max(0,diffDays(VIEW_START,start));
       const be=diffDays(VIEW_START,end);
       const bw=Math.max(2,(be-bs+1))*DAY_W;
@@ -882,6 +909,7 @@ function buildGantt(){
   const kt=document.getElementById('kpi-taxa');
   if(kt)kt.closest('.kpi').className='kpi '+(pct>=80?'ok':pct>=50?'warn':'danger');
 })();
+(function(){const e=document.getElementById('kpi-s18-count');if(e)e.textContent=ISSUES.filter(inS18).length;})();
 buildProjects();
 buildSdesk();
 buildGantt();
