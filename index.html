@@ -283,12 +283,10 @@ body{background:var(--bg);color:var(--text);font-family:var(--font);font-size:13
       <canvas id="donut" width="150" height="150"></canvas>
       <div id="donut-legend" style="display:flex;flex-direction:column;gap:10px;"></div>
     </div>
-    <div class="evo-obs" id="obs-status"></div>
   </div>
   <div style="background:var(--bg2);border:1px solid var(--bord);border-radius:8px;padding:16px;">
     <div style="font-size:12px;font-weight:600;color:var(--cyan);text-transform:uppercase;letter-spacing:.8px;margin-bottom:14px;">Entregas por Projeto</div>
     <div id="taxa-chart"></div>
-    <div class="evo-obs" id="obs-taxa"></div>
   </div>
 </div>
 <div class="proj-view" id="proj-view"></div>
@@ -815,52 +813,6 @@ function sparkline(vals,titulos){
     +'<polyline points="'+line+'" fill="none" stroke="'+EVO_MUTED+'" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" opacity=".75"/>'+dots+'</svg>';
 }
 
-// ---- leitura dos dois gráficos da aba Projetos ----
-function leituraStatus(){
-  const tot=ISSUES.length;
-  const nD=ISSUES.filter(i=>isDone(i.status)).length;
-  const nP=ISSUES.filter(i=>isProg(i.status)).length;
-  const nZ=tot-nD-nP;
-  const pctZ=Math.round(nZ/tot*100), pctP=Math.round(nP/tot*100);
-  const conv=nD+nP?Math.round(nD/(nD+nP)*100):0;
-  const a=nZ>=nD
-    ? '<b>'+nZ+'</b> das '+tot+' issues ('+pctZ+'%) terminaram a sprint sem nunca terem sido iniciadas — é o maior grupo do gráfico, maior que o de concluídas.'
-    : 'As pendentes que nunca começaram são <b>'+nZ+'</b> de '+tot+' ('+pctZ+'%).';
-  const b='Em compensação só <b>'+nP+'</b> ficaram em andamento ('+pctP+'%): de tudo que o time chegou a pegar, <b>'+conv+'%</b> foi até o fim.';
-  const acao=nZ>=nD
-    ? '→ O gargalo não é trabalho começado e não terminado — esse fluxo está saudável. É escopo planejado acima do que cabe na sprint: metade nunca chega a ser puxada. O ajuste é no dimensionamento do planning, não na execução.'
-    : '→ O volume em andamento merece atenção: trabalho começado e não fechado é o que vira carry-over com menos previsibilidade.';
-  return obsBox('Leitura',[a,b],acao);
-}
-
-function leituraProjetos(){
-  const tot=ISSUES.length;
-  const arr=PROJ_ORDER.filter(f=>projStats[f]).map(f=>{
-    const v=projStats[f];return {f,d:v.done,t:v.total,ab:v.total-v.done,pct:Math.round(v.done/v.total*100)};
-  });
-  const totAb=arr.reduce((s,x)=>s+x.ab,0);
-  // as frentes que seguram a fila: maior volume em aberto ate cobrir 2/3 do total
-  const arrasta=[];let acc=0;
-  for(const x of arr.filter(y=>y.ab>0).sort((a,b)=>b.ab-a.ab)){
-    arrasta.push(x);acc+=x.ab;if(acc>=totAb*2/3)break;
-  }
-  const aD=arrasta.reduce((s,x)=>s+x.d,0), aT=arrasta.reduce((s,x)=>s+x.t,0);
-  const cheias=arr.filter(x=>x.pct===100);           // 100% => 0 abertas, nunca colidem com arrasta
-  const cT=cheias.reduce((s,x)=>s+x.t,0);
-  const geral=Math.round(ISSUES.filter(i=>isDone(i.status)).length/tot*100);
-  const nomes=n=>lista(n.slice(0,4).map(x=>x.f))+(n.length>4?' e outras '+(n.length-4):'');
-  const a='A taxa geral de <b>'+geral+'%</b> é a média de dois grupos opostos. '+nomes(arrasta)
-    +' concentram <b>'+aT+' das '+tot+'</b> issues ('+Math.round(aT/tot*100)+'% do escopo) e entregaram '+aD+' — <b>'+Math.round(aD/aT*100)+'%</b>. '
-    +'Sozinhas respondem por '+acc+' das '+totAb+' issues em aberto ('+Math.round(acc/totAb*100)+'%).';
-  const b=cheias.length
-    ? 'Do outro lado, '+lista(cheias.slice(0,4).map(x=>x.f+' '+x.d+'/'+x.t))+(cheias.length>4?' e outras '+(cheias.length-4):'')
-      +' fecharam todo o escopo, mas somam '+cT+' issues — '+Math.round(cT/tot*100)+'% da sprint.'
-    : 'Nenhuma frente fechou 100% do próprio escopo nesta sprint.';
-  const acao='→ A taxa geral diz pouco sozinha: '+nomes(arrasta)+' decidem o resultado da sprint e pedem acompanhamento próprio, com meta separada. '
-    +'E cuidado ao ler as barras curtas: frentes com 1 ou 2 issues aparecem como 0% ou 100% sem que isso signifique desempenho.';
-  return obsBox('Leitura',[a,b],acao);
-}
-
 // ---- leitura dos gráficos: texto montado a partir dos números, para não
 // ---- descolar dos dados quando a sprint virar ----
 function lista(a){return a.length<2?(a[0]||''):a.slice(0,-1).join(', ')+' e '+a[a.length-1];}
@@ -1241,10 +1193,6 @@ function buildGantt(){
   if(kt)kt.closest('.kpi').className='kpi '+(pct>=80?'ok':pct>=50?'warn':'danger');
 })();
 (function(){const e=document.getElementById('kpi-s18-count');if(e)e.textContent=ISSUES.filter(inS18).length;})();
-(function(){
-  const a=document.getElementById('obs-status');if(a)a.innerHTML=leituraStatus();
-  const b=document.getElementById('obs-taxa');if(b)b.innerHTML=leituraProjetos();
-})();
 buildProjects();
 buildSdesk();
 buildGantt();
