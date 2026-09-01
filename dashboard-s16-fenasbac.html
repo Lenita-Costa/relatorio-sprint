@@ -283,7 +283,7 @@ body{background:var(--bg);color:var(--text);font-family:var(--font);font-size:13
 <div class="panel" id="panel-sdesk">
 <div class="kpi-strip">
   <div class="kpi"><div class="kpi-val">23</div><div class="kpi-label">Chamados</div></div>
-  <div class="kpi ok"><div class="kpi-val">78%</div><div class="kpi-label">SLA Resolução</div></div>
+  <div class="kpi ok"><div class="kpi-val">59%</div><div class="kpi-label">SLA Resolução</div></div>
   <div class="kpi ok"><div class="kpi-val">91%</div><div class="kpi-label">SLA 1ª Resposta</div></div>
   <div class="kpi"><div class="kpi-val">18</div><div class="kpi-label">Dentro do prazo</div></div>
   <div class="kpi warn"><div class="kpi-val">5</div><div class="kpi-label">Estouraram</div></div>
@@ -302,27 +302,28 @@ body{background:var(--bg);color:var(--text);font-family:var(--font);font-size:13
 <div id="sdesk-trilhas" style="padding:0 24px 4px;">
   <div style="font-size:12px;font-weight:600;color:var(--cyan);text-transform:uppercase;letter-spacing:.8px;margin-bottom:10px;">SLA por trilha — cumprimento real (lido do JSM, horário comercial)</div>
   <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:10px;">
-    <div style="background:var(--bg2);border:1px solid var(--bord);border-left:3px solid #D29922;border-radius:8px;padding:12px 14px;">
+    <div style="background:var(--bg2);border:1px solid var(--bord);border-left:3px solid #F85149;border-radius:8px;padding:12px 14px;">
       <div style="font-size:12px;font-weight:700;color:var(--text);">Solicitação de TI <span style="font-size:9px;color:var(--muted);font-weight:400;">meta 4h / 24h</span></div>
-      <div style="font-size:22px;font-weight:700;font-family:var(--mono);color:#D29922;margin-top:4px;">73%<span style="font-size:11px;color:var(--muted);font-family:var(--font);font-weight:400;"> resolução no prazo</span></div>
-      <div style="font-size:10px;color:var(--muted);margin-top:3px;">15 chamados · 11 no prazo · 4 estouraram · 1ª resposta 100%</div>
-      <div style="font-size:10px;color:#C0C8D4;margin-top:6px;line-height:1.4;">Os estouros são chamados abertos há mais de 24h, alguns bloqueados ou aguardando terceiros.</div>
+      <div style="font-size:22px;font-weight:700;font-family:var(--mono);color:#F85149;margin-top:4px;">67%<span style="font-size:11px;color:var(--muted);font-family:var(--font);font-weight:400;"> resolução no prazo</span></div>
+      <div style="font-size:10px;color:var(--muted);margin-top:3px;">15 recebidos · 10 no prazo · 5 estouros · 1ª resposta 100%</div>
+      <div style="font-size:10px;color:#C0C8D4;margin-top:6px;line-height:1.4;">Os 5 estouros passaram das 24h úteis; parte estava bloqueada ou aguardando terceiros, caso que o novo status Bloqueado passa a proteger a partir do S17.</div>
     </div>
-    <div style="background:var(--bg2);border:1px solid var(--bord);border-left:3px solid #2EA043;border-radius:8px;padding:12px 14px;">
+    <div style="background:var(--bg2);border:1px solid var(--bord);border-left:3px solid #F85149;border-radius:8px;padding:12px 14px;">
       <div style="font-size:12px;font-weight:700;color:var(--text);">Comunicação Digital <span style="font-size:9px;color:var(--muted);font-weight:400;">meta 4h / 56h</span></div>
-      <div style="font-size:22px;font-weight:700;font-family:var(--mono);color:#2EA043;margin-top:4px;">86%<span style="font-size:11px;color:var(--muted);font-family:var(--font);font-weight:400;"> resolução no prazo</span></div>
-      <div style="font-size:10px;color:var(--muted);margin-top:3px;">7 chamados · 6 no prazo · 1 estourou · 1ª resposta 71%</div>
-      <div style="font-size:10px;color:#C0C8D4;margin-top:6px;line-height:1.4;">Meta de resolução mais folgada (56h) por depender de conteúdo. A primeira resposta é o ponto a melhorar.</div>
+      <div style="font-size:22px;font-weight:700;font-family:var(--mono);color:#F85149;margin-top:4px;">33%<span style="font-size:11px;color:var(--muted);font-family:var(--font);font-weight:400;"> resolução no prazo</span></div>
+      <div style="font-size:10px;color:var(--muted);margin-top:3px;">7 recebidos · 2 no prazo · 4 estouros · 1 em curso · 1ª resposta 71%</div>
+      <div style="font-size:10px;color:#C0C8D4;margin-top:6px;line-height:1.4;">Apesar da meta mais folgada (56h), é a frente mais crítica da sprint: 4 dos 6 chamados com veredito estouraram, por dependerem de conteúdo das áreas. A primeira resposta também é ponto de melhoria.</div>
     </div>
     <div style="background:var(--bg2);border:1px solid var(--bord);border-left:3px solid #2EA043;border-radius:8px;padding:12px 14px;">
       <div style="font-size:12px;font-weight:700;color:var(--text);">Reportar incidente <span style="font-size:9px;color:var(--muted);font-weight:400;">meta 4h / 24h</span></div>
       <div style="font-size:22px;font-weight:700;font-family:var(--mono);color:#2EA043;margin-top:4px;">100%<span style="font-size:11px;color:var(--muted);font-family:var(--font);font-weight:400;"> no prazo</span></div>
-      <div style="font-size:10px;color:var(--muted);margin-top:3px;">1 chamado · resolvido em 3h42 úteis</div>
+      <div style="font-size:10px;color:var(--muted);margin-top:3px;">1 recebido · 1 no prazo · resolvido em 3h42 úteis</div>
       <div style="font-size:10px;color:#C0C8D4;margin-top:6px;line-height:1.4;">Segue a régua global 4h/24h (decisão de unificar o prazo de incidente).</div>
     </div>
   </div>
-  <div style="font-size:10px;color:var(--muted);margin-top:10px;font-style:italic;">Total: 78% das resoluções e 91% das primeiras respostas dentro do SLA. Lido direto dos campos oficiais do JSM. Abaixo, os chamados por área.</div>
+  <div style="font-size:10px;color:var(--muted);margin-top:10px;font-style:italic;">Total: 59% das resoluções (13 de 22 chamados com veredito) e 91% das primeiras respostas (21 de 23) dentro do SLA. Lido da régua global do JSM. Os 5 estouros de resolução incluem chamados que venceram a meta e seguiam abertos no fim da sprint. Abaixo, os chamados por área.</div>
 </div>
+<div style="margin:0 24px 16px;background:#161B22;border:1px solid #2A3140;border-left:3px solid #8B94A7;border-radius:8px;padding:12px 14px;font-size:10.5px;color:#AEB8CC;line-height:1.55;"><b style="color:#D3DBEA;">Régua de apuração (revisada em 01/09/2026).</b> Base: coorte da sprint — os 23 chamados abertos entre 04 e 14/08. Cada chamado recebe um veredito na régua global do JSM (<span style="font-family:var(--mono);color:#02FFFF;">customfield_10577</span> e <span style="font-family:var(--mono);color:#02FFFF;">customfield_10610</span>): <b style="color:#D3DBEA;">no prazo</b>, <b style="color:#D3DBEA;">estouro</b> (meta vencida, concluído ou não) ou <b style="color:#D3DBEA;">em curso</b> (aberto e dentro da meta). O índice usa apenas os chamados com veredito. Cores dos cartões: verde a partir de 85%, âmbar entre 70% e 84%, vermelho abaixo de 70% — limiar provisório, enquanto a revisão das metas de SLA não fecha. A versão original desta sprint publicava 78% de resolução por tratar os chamados ainda abertos como se estivessem no prazo; na régua atual o número é 59%. A 1ª resposta permanece em 91%. Mesma régua usada no S17 e no panorama mensal de agosto.</div>
 <div id="sdesk-areas" style="padding:0 24px 24px;display:flex;flex-direction:column;gap:14px;"></div>
 </div>
 
@@ -346,7 +347,7 @@ body{background:var(--bg);color:var(--text);font-family:var(--font);font-size:13
 
 <div class="footer">
   <span>SBS Quadra 02, Bloco A, Ed. Casa de São Paulo, 7º andar — Brasília/DF</span>
-  <span>Fenasbac TI · Sprint S16 · 17/08/2026 · Jira + Slack + Gmail</span>
+  <span>Fenasbac TI · Sprint S16 · 17/08/2026 · SLA reapurado em 01/09/2026 · Jira + Slack + Gmail</span>
 </div>
 
 <script>
