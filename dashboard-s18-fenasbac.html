@@ -106,6 +106,10 @@ body{background:var(--bg);color:var(--text);font-family:var(--font);font-size:14
 .evo-delta{font-size:12px;font-weight:600;margin-top:6px;display:flex;align-items:baseline;gap:5px;}
 .evo-delta span.evo-vs{color:var(--muted);font-weight:400;font-size:11px;}
 .evo-spark{margin-top:9px;display:block;width:100%;height:auto;}
+.evo-spark-wrap{position:relative;}
+.evo-spark-eixo{position:relative;height:14px;margin-top:3px;}
+.evo-spark-eixo span{position:absolute;top:0;font-family:var(--mono);font-size:10px;line-height:14px;color:var(--muted);white-space:nowrap;}
+.evo-spark-eixo span.cmp{color:var(--text);font-weight:700;}
 .evo-card{background:var(--bg2);border:1px solid var(--bord);border-radius:8px;padding:16px;}
 .evo-card-title{font-size:13px;font-weight:600;color:var(--cyan);text-transform:uppercase;letter-spacing:.8px;margin-bottom:4px;}
 .evo-card-sub{font-size:11px;color:var(--muted);margin-bottom:16px;line-height:1.5;}
@@ -786,17 +790,31 @@ const EVO_METRICS=[
 
 const EVO_ACCENT="#02FFFF", EVO_MUTED="#8B949E";
 
-function sparkline(vals,titulos){
+function sparkline(vals,titulos,ids){
   const w=150,h=30,pad=5;
   const min=Math.min(...vals),max=Math.max(...vals),rng=(max-min)||1;
   const pts=vals.map((v,i)=>[pad+i*((w-2*pad)/(vals.length-1)),h-pad-((v-min)/rng)*(h-2*pad)]);
   const line=pts.map(p=>p[0].toFixed(1)+','+p[1].toFixed(1)).join(' ');
+  // os dois ultimos pontos sao os que a comparacao usa: o atual cheio no
+  // destaque, o anterior como anel — mesma serie, ponto de referencia.
+  const iCur=pts.length-1, iPrev=pts.length-2;
   const dots=pts.map((p,i)=>{
-    const last=i===pts.length-1;
-    return '<circle cx="'+p[0].toFixed(1)+'" cy="'+p[1].toFixed(1)+'" r="'+(last?3.5:2.5)+'" fill="'+(last?EVO_ACCENT:EVO_MUTED)+'"><title>'+titulos[i]+'</title></circle>';
+    const cur=i===iCur, prev=i===iPrev;
+    const pinta = cur  ? 'fill="'+EVO_ACCENT+'"'
+                : prev ? 'fill="var(--bg2)" stroke="'+EVO_ACCENT+'" stroke-width="1.6"'
+                :        'fill="'+EVO_MUTED+'"';
+    return '<circle cx="'+p[0].toFixed(1)+'" cy="'+p[1].toFixed(1)+'" r="'+(cur||prev?3.5:2.5)+'" '+pinta+'><title>'+titulos[i]+'</title></circle>';
   }).join('');
-  return '<svg class="evo-spark" viewBox="0 0 '+w+' '+h+'" role="img" aria-label="Tendência '+titulos.join(', ')+'">'
+  const svg='<svg class="evo-spark" viewBox="0 0 '+w+' '+h+'" role="img" aria-label="Tendência '+titulos.join(', ')+'">'
     +'<polyline points="'+line+'" fill="none" stroke="'+EVO_MUTED+'" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" opacity=".75"/>'+dots+'</svg>';
+  // nomear a sprint de cada ponto: sem isso a identidade so existe no hover
+  if(!ids) return svg;
+  const eixo=ids.map((id,i)=>{
+    const x=(pad+i*((w-2*pad)/(Math.max(1,ids.length-1))))/w*100;
+    const pos = i===0 ? 'left:0;' : (i===ids.length-1 ? 'right:0;' : 'left:'+x.toFixed(2)+'%;transform:translateX(-50%);');
+    return '<span class="'+(i>=ids.length-2?'cmp':'')+'" style="'+pos+'">'+id+'</span>';
+  }).join('');
+  return '<div class="evo-spark-wrap">'+svg+'<div class="evo-spark-eixo">'+eixo+'</div></div>';
 }
 
 // ---- leitura dos gráficos: texto montado a partir dos números, para não
@@ -929,7 +947,7 @@ function buildEvolucao(){
       +'<div class="evo-value">'+v+(m.suf||'')+'</div>'
       +'<div class="evo-delta" style="color:'+cor+'">'+seta+' '+(d>0?'+':'')+d+(m.dsuf||'')
       +' <span class="evo-vs">vs '+prev.id+' ('+p+(m.suf||'')+')</span></div>'
-      +sparkline(vals,SPRINTS.map(sp=>sp.id+': '+m.get(sp)+(m.suf||'')));
+      +sparkline(vals,SPRINTS.map(sp=>sp.id+': '+m.get(sp)+(m.suf||'')),SPRINTS.map(sp=>sp.id));
     host.appendChild(tile);
   });
   document.getElementById('evo-obs-kpi').innerHTML=leituraIndicadores(cur,prev,SPRINTS);
