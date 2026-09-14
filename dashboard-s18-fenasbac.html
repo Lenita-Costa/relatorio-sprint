@@ -330,7 +330,7 @@ body{background:var(--bg);color:var(--text);font-family:var(--font);font-size:14
   <div class="kpi"><div class="kpi-val">14/09</div><div class="kpi-label">Fim S18</div></div>
   <div class="kpi warn"><div class="kpi-val">14/09</div><div class="kpi-label">Início S19</div></div>
   <div class="kpi warn"><div class="kpi-val">28/09</div><div class="kpi-label">Fim S19</div></div>
-  <div class="kpi"><div class="kpi-val" id="kpi-s19-count">–</div><div class="kpi-label">Issues na S19</div></div>
+  <div class="kpi"><div class="kpi-val" id="kpi-s19-count">–</div><div class="kpi-label">Issues cruzando a S19</div></div>
 </div>
 <div class="toolbar">
   <button class="fbtn active" onclick="setF('all',this)">Todos</button>
@@ -972,13 +972,13 @@ function buildEvolucao(){
 
   // --- carga que entra na sprint nova ---
   const box=document.getElementById('evo-s18');
-  const sel=ISSUES.filter(inS18);
+  const sel=ISSUES.filter(i=>!isDone(i.status));   // tudo que segue aberto no fechamento
   const pend=sel.filter(i=>!isProg(i.status)).length, prog=sel.filter(i=>isProg(i.status)).length;
   const porProj={};sel.forEach(i=>porProj[i.project]=(porProj[i.project]||0)+1);
   const ord=Object.entries(porProj).sort((a,b)=>b[1]-a[1]);
   const maxN=ord.length?ord[0][1]:1;
   box.innerHTML='<div class="evo-card-title">Entrando na '+SPRINT_NOVA.id+'</div>'
-    +'<div class="evo-card-sub">'+SPRINT_NOVA.periodo+'. Issues cuja janela cruza a sprint nova e que não foram encerradas na '+cur.id+'.</div>'
+    +'<div class="evo-card-sub">'+SPRINT_NOVA.periodo+'. Todas as issues da '+cur.id+' que seguem abertas no fechamento e atravessam para a sprint nova.</div>'
     +'<div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px;">'
     +'<span class="s18-chip"><b>'+sel.length+'</b> issues</span>'
     +'<span class="s18-chip"><b>'+prog+'</b> em andamento</span>'
@@ -1053,7 +1053,7 @@ function applyFilter(){
       let show=true;
       if(activeFilter==='done')show=isDone(s);
       else if(activeFilter==='carry')show=!isDone(s);
-      else if(activeFilter==='s18')show=tr.dataset.s18==='1';
+      else if(activeFilter==='s19')show=tr.dataset.s18==='1';
       tr.style.display=show?'':'none';
       if(show)any=true;
     });
@@ -1231,7 +1231,7 @@ function buildGantt(){
   const kt=document.getElementById('kpi-taxa');
   if(kt)kt.closest('.kpi').className='kpi '+(pct>=80?'ok':pct>=50?'warn':'danger');
 })();
-(function(){const e=document.getElementById('kpi-s18-count');if(e)e.textContent=ISSUES.filter(inS18).length;})();
+(function(){const e=document.getElementById('kpi-s19-count');if(e)e.textContent=ISSUES.filter(inS18).length;})();
 (function(){
   const a=document.getElementById('desc-status');if(a)a.innerHTML=descricaoStatus();
   const b=document.getElementById('desc-taxa');if(b)b.innerHTML=descricaoProjetos();
