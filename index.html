@@ -16,79 +16,79 @@
 }
 *{box-sizing:border-box;margin:0;padding:0;}
 html{background:#080B0F;}
-body{background:var(--bg);color:var(--text);font-family:var(--font);font-size:13px;overflow-x:hidden;max-width:1400px;margin:0 auto;box-shadow:0 0 0 1px var(--bord),0 0 40px rgba(0,0,0,.4);min-height:100vh;}
+body{background:var(--bg);color:var(--text);font-family:var(--font);font-size:14px;overflow-x:hidden;max-width:1400px;margin:0 auto;box-shadow:0 0 0 1px var(--bord),0 0 40px rgba(0,0,0,.4);min-height:100vh;}
 .hdr{background:var(--dark);padding:12px 24px;display:flex;align-items:center;justify-content:space-between;border-bottom:2px solid var(--blue);}
-.hdr-brand{font-size:10px;color:var(--cyan);font-weight:700;letter-spacing:1.5px;text-transform:uppercase;}
-.hdr-title{font-size:17px;font-weight:700;color:#fff;margin-top:2px;}
-.hdr-sub{font-size:10px;color:rgba(255,255,255,.5);margin-top:1px;}
-.hdr-badge{background:var(--bg3);border:1px solid var(--bord);border-radius:20px;padding:4px 12px;font-size:10px;color:var(--muted);}
+.hdr-brand{font-size:11px;color:var(--cyan);font-weight:700;letter-spacing:1.5px;text-transform:uppercase;}
+.hdr-title{font-size:18px;font-weight:700;color:#fff;margin-top:2px;}
+.hdr-sub{font-size:11px;color:rgba(255,255,255,.5);margin-top:1px;}
+.hdr-badge{background:var(--bg3);border:1px solid var(--bord);border-radius:20px;padding:4px 12px;font-size:11px;color:var(--muted);}
 .tabs{display:flex;background:var(--bg2);border-bottom:1px solid var(--bord);padding:0 24px;}
-.tab{padding:10px 18px;cursor:pointer;color:var(--muted);font-size:13px;font-weight:500;border-bottom:3px solid transparent;transition:all .15s;white-space:nowrap;}
+.tab{padding:10px 18px;cursor:pointer;color:var(--muted);font-size:14px;font-weight:500;border-bottom:3px solid transparent;transition:all .15s;white-space:nowrap;}
 .tab.active{color:var(--blue);border-bottom-color:var(--blue);}
 .tab:hover:not(.active){color:var(--text);}
 .panel{display:none;}.panel.active{display:block;}
 .kpi-strip{display:flex;gap:10px;padding:16px 24px;flex-wrap:wrap;}
 .kpi{background:var(--bg2);border:1px solid var(--bord);border-radius:8px;padding:12px 18px;flex:1;min-width:100px;}
-.kpi-val{font-size:26px;font-weight:700;color:var(--cyan);font-family:var(--mono);}
-.kpi-label{font-size:9px;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;margin-top:2px;}
+.kpi-val{font-size:27px;font-weight:700;color:var(--cyan);font-family:var(--mono);}
+.kpi-label{font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;margin-top:2px;}
 .kpi.ok .kpi-val{color:var(--green);}.kpi.warn .kpi-val{color:var(--yellow);}.kpi.danger .kpi-val{color:var(--red);}
 
 /* PROJETOS */
 .proj-view{padding:0 24px 24px;}
 .cat-group{margin-bottom:24px;}
-.cat-title{font-size:11px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.8px;margin-bottom:10px;display:flex;align-items:center;gap:8px;}
-.cat-count{background:var(--bg3);border-radius:10px;padding:1px 7px;font-size:10px;font-weight:600;color:var(--text);}
+.cat-title{font-size:12px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.8px;margin-bottom:10px;display:flex;align-items:center;gap:8px;}
+.cat-count{background:var(--bg3);border-radius:10px;padding:1px 7px;font-size:11px;font-weight:600;color:var(--text);}
 .proj-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:10px;}
 .proj-card{background:var(--bg2);border:1px solid var(--bord);border-radius:8px;padding:12px;cursor:pointer;transition:border-color .15s,background .15s;position:relative;overflow:hidden;}
 .proj-card:hover{border-color:var(--blue);background:#1a2030;}
-.proj-key{font-size:10px;font-weight:700;letter-spacing:.5px;}
-.proj-name{font-size:11px;color:var(--muted);margin-top:1px;margin-bottom:8px;}
-.no-issues{font-size:10px;color:var(--gray);font-style:italic;}
+.proj-key{font-size:11px;font-weight:700;letter-spacing:.5px;}
+.proj-name{font-size:12px;color:var(--muted);margin-top:1px;margin-bottom:8px;}
+.no-issues{font-size:11px;color:var(--gray);font-style:italic;}
 
 /* SDESK */
 .grid-2{display:grid;grid-template-columns:1fr 1fr;gap:12px;padding:0 24px 24px;}
 .dp-issue{display:flex;align-items:flex-start;gap:7px;padding:5px 6px;border-radius:4px;margin-bottom:2px;}
 .dp-issue:hover{background:var(--bg3);}
 .dp-dot{width:7px;height:7px;border-radius:50%;flex-shrink:0;margin-top:3px;}
-.dp-key{font-family:var(--mono);font-size:9px;color:var(--muted);flex-shrink:0;width:80px;}
-.dp-sum{font-size:10px;line-height:1.4;flex:1;}
-.dp-owner{font-size:9px;color:var(--muted);flex-shrink:0;margin-top:1px;}
-.sla-badge{font-size:8px;font-weight:700;padding:1px 5px;border-radius:8px;margin-left:4px;}
+.dp-key{font-family:var(--mono);font-size:10px;color:var(--muted);flex-shrink:0;width:89px;}
+.dp-sum{font-size:11px;line-height:1.4;flex:1;}
+.dp-owner{font-size:10px;color:var(--muted);flex-shrink:0;margin-top:1px;}
+.sla-badge{font-size:9px;font-weight:700;padding:1px 5px;border-radius:8px;margin-left:4px;}
 
 /* DETAIL PANEL */
 .detail-panel{position:fixed;right:-400px;top:0;bottom:0;width:380px;background:#161B22;border-left:1px solid #30363D;z-index:100;transition:right .25s ease;display:flex;flex-direction:column;box-shadow:-8px 0 32px rgba(0,0,0,.6);}
 .detail-panel.open{right:0;}
 .dp-hdr{padding:14px 16px 12px;border-bottom:1px solid #30363D;display:flex;align-items:center;justify-content:space-between;}
-.dp-proj{font-size:11px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;}
-.dp-sub{font-size:10px;color:#8B949E;margin-top:2px;}
-.dp-close{background:none;border:none;color:#8B949E;cursor:pointer;font-size:18px;padding:2px 6px;}
+.dp-proj{font-size:12px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;}
+.dp-sub{font-size:11px;color:#8B949E;margin-top:2px;}
+.dp-close{background:none;border:none;color:#8B949E;cursor:pointer;font-size:19px;padding:2px 6px;}
 .dp-close:hover{color:#E6EDF3;}
 .dp-body{flex:1;overflow-y:auto;padding:14px;}
 .dp-kpis{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:14px;}
 .dp-kpi{background:#21262D;border-radius:6px;padding:8px 10px;}
-.dp-kpi-val{font-size:20px;font-weight:700;font-family:var(--mono);}
-.dp-kpi-label{font-size:9px;color:#8B949E;text-transform:uppercase;letter-spacing:.4px;margin-top:1px;}
+.dp-kpi-val{font-size:21px;font-weight:700;font-family:var(--mono);}
+.dp-kpi-label{font-size:10px;color:#8B949E;text-transform:uppercase;letter-spacing:.4px;margin-top:1px;}
 .dp-sec{margin-bottom:12px;}
-.dp-sec-title{font-size:9px;font-weight:600;color:#8B949E;text-transform:uppercase;letter-spacing:.8px;margin-bottom:6px;padding-bottom:4px;border-bottom:1px solid #30363D;}
+.dp-sec-title{font-size:10px;font-weight:600;color:#8B949E;text-transform:uppercase;letter-spacing:.8px;margin-bottom:6px;padding-bottom:4px;border-bottom:1px solid #30363D;}
 
 /* TEAM */
 .team-view{padding:0 24px 24px;}
 .team-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:12px;}
 .member-card{background:var(--bg2);border:1px solid var(--bord);border-radius:8px;overflow:hidden;}
 .member-hdr{padding:12px 14px;display:flex;align-items:center;gap:10px;border-bottom:1px solid var(--bord);}
-.member-av{width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;flex-shrink:0;}
-.member-name{font-size:13px;font-weight:600;}
-.member-role{font-size:10px;color:var(--muted);}
+.member-av{width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;flex-shrink:0;}
+.member-name{font-size:14px;font-weight:600;}
+.member-role{font-size:11px;color:var(--muted);}
 .member-stats{display:flex;gap:0;border-bottom:1px solid var(--bord);}
 .mstat{flex:1;padding:8px;text-align:center;border-right:1px solid var(--bord);}
 .mstat:last-child{border-right:none;}
-.mstat-val{font-size:16px;font-weight:700;font-family:var(--mono);}
-.mstat-label{font-size:8px;color:var(--muted);text-transform:uppercase;letter-spacing:.4px;margin-top:1px;}
+.mstat-val{font-size:17px;font-weight:700;font-family:var(--mono);}
+.mstat-label{font-size:9px;color:var(--muted);text-transform:uppercase;letter-spacing:.4px;margin-top:1px;}
 .member-issues{padding:8px;max-height:200px;overflow-y:auto;}
-.m-issue{display:flex;align-items:center;gap:6px;padding:4px 5px;border-radius:4px;margin-bottom:2px;font-size:10px;}
+.m-issue{display:flex;align-items:center;gap:6px;padding:4px 5px;border-radius:4px;margin-bottom:2px;font-size:11px;}
 .m-issue:hover{background:var(--bg3);}
 .m-dot{width:6px;height:6px;border-radius:50%;flex-shrink:0;}
-.m-key{font-family:var(--mono);font-size:9px;color:var(--muted);flex-shrink:0;width:68px;}
+.m-key{font-family:var(--mono);font-size:10px;color:var(--muted);flex-shrink:0;width:76px;}
 .m-sum{flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
 .m-bar-wrap{padding:0 14px 12px;}
 .m-bar-track{background:var(--bg3);border-radius:3px;height:4px;}
@@ -101,58 +101,58 @@ body{background:var(--bg);color:var(--text);font-family:var(--font);font-size:13
 /* EVOLUCAO */
 .evo-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(172px,1fr));gap:10px;padding:0 24px 16px;}
 .evo-tile{background:var(--bg2);border:1px solid var(--bord);border-radius:8px;padding:12px 14px;}
-.evo-label{font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.6px;margin-bottom:7px;line-height:1.2;}
-.evo-value{font-size:27px;font-weight:600;color:var(--text);line-height:1;}
-.evo-delta{font-size:11px;font-weight:600;margin-top:6px;display:flex;align-items:baseline;gap:5px;}
-.evo-delta span.evo-vs{color:var(--muted);font-weight:400;font-size:10px;}
+.evo-label{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.6px;margin-bottom:7px;line-height:1.2;}
+.evo-value{font-size:28px;font-weight:600;color:var(--text);line-height:1;}
+.evo-delta{font-size:12px;font-weight:600;margin-top:6px;display:flex;align-items:baseline;gap:5px;}
+.evo-delta span.evo-vs{color:var(--muted);font-weight:400;font-size:11px;}
 .evo-spark{margin-top:9px;display:block;width:100%;height:auto;}
 .evo-card{background:var(--bg2);border:1px solid var(--bord);border-radius:8px;padding:16px;}
-.evo-card-title{font-size:12px;font-weight:600;color:var(--cyan);text-transform:uppercase;letter-spacing:.8px;margin-bottom:4px;}
-.evo-card-sub{font-size:10px;color:var(--muted);margin-bottom:16px;line-height:1.5;}
-.evo-legend{display:flex;gap:14px;font-size:10px;color:var(--muted);align-items:center;margin-bottom:14px;flex-wrap:wrap;}
+.evo-card-title{font-size:13px;font-weight:600;color:var(--cyan);text-transform:uppercase;letter-spacing:.8px;margin-bottom:4px;}
+.evo-card-sub{font-size:11px;color:var(--muted);margin-bottom:16px;line-height:1.5;}
+.evo-legend{display:flex;gap:14px;font-size:11px;color:var(--muted);align-items:center;margin-bottom:14px;flex-wrap:wrap;}
 .evo-legend i{width:9px;height:9px;border-radius:50%;display:inline-block;margin-right:5px;vertical-align:-1px;}
 .evo-intro{margin:0 24px 16px;background:rgba(2,37,235,.12);border:1px solid rgba(2,37,235,.35);border-left:3px solid var(--blue);border-radius:8px;padding:13px 16px;display:flex;gap:12px;align-items:flex-start;}
-.evo-intro h4{font-size:11px;font-weight:700;color:var(--cyan);text-transform:uppercase;letter-spacing:.8px;margin-bottom:5px;}
-.evo-intro p{font-size:11px;color:#C0C8D4;line-height:1.6;margin-bottom:6px;}
-.evo-intro p:last-child{margin-bottom:0;color:var(--muted);font-size:10px;}
+.evo-intro h4{font-size:12px;font-weight:700;color:var(--cyan);text-transform:uppercase;letter-spacing:.8px;margin-bottom:5px;}
+.evo-intro p{font-size:12px;color:#C0C8D4;line-height:1.6;margin-bottom:6px;}
+.evo-intro p:last-child{margin-bottom:0;color:var(--muted);font-size:11px;}
 .evo-obs{margin-top:15px;padding-top:14px;border-top:1px solid var(--bord);}
 .evo-obs-card{margin:0 24px 16px;background:var(--bg2);border:1px solid var(--bord);border-radius:8px;padding:15px 17px;}
 .evo-obs-card .evo-obs{margin-top:0;padding-top:0;border-top:none;}
-.evo-obs-hd{font-size:10px;font-weight:700;color:var(--cyan);text-transform:uppercase;letter-spacing:.8px;margin-bottom:9px;}
-.evo-obs p{font-size:11px;color:#C0C8D4;line-height:1.65;margin:0 0 8px;}
+.evo-obs-hd{font-size:11px;font-weight:700;color:var(--cyan);text-transform:uppercase;letter-spacing:.8px;margin-bottom:9px;}
+.evo-obs p{font-size:12px;color:#C0C8D4;line-height:1.65;margin:0 0 8px;}
 .evo-obs p b{color:var(--text);font-weight:700;}
-.evo-obs .acao{font-size:11px;color:#E6EDF3;line-height:1.6;background:rgba(2,255,255,.06);border-left:2px solid var(--cyan);padding:8px 12px;border-radius:0 5px 5px 0;margin:0;}
+.evo-obs .acao{font-size:12px;color:#E6EDF3;line-height:1.6;background:rgba(2,255,255,.06);border-left:2px solid var(--cyan);padding:8px 12px;border-radius:0 5px 5px 0;margin:0;}
 .dv-row{display:flex;align-items:center;gap:9px;margin-bottom:8px;}
-.dv-name{width:74px;font-size:10px;font-weight:600;text-align:right;flex-shrink:0;}
+.dv-name{width:81px;font-size:11px;font-weight:600;text-align:right;flex-shrink:0;}
 .dv-track{flex:1;min-width:70px;position:relative;height:15px;background:var(--bg3);border-radius:3px;}
 .dv-zero{position:absolute;left:50%;top:-3px;bottom:-3px;width:1px;background:#484F58;}
 .dv-bar{position:absolute;top:2px;bottom:2px;border-radius:2px;}
-.dv-delta{width:28px;font-size:11px;font-weight:700;text-align:right;flex-shrink:0;font-family:var(--mono);font-variant-numeric:tabular-nums;}
-.dv-detail{width:154px;flex-shrink:1;min-width:0;overflow:hidden;white-space:nowrap;font-size:9px;color:var(--muted);font-family:var(--mono);}
-.dv-tag{font-size:8px;padding:1px 5px;border-radius:6px;background:var(--bg3);color:var(--muted);margin-left:5px;font-family:var(--font);}
-.dv-scale{display:grid;grid-template-columns:1fr 1fr 1fr;font-size:9px;color:var(--gray);margin:6px 200px 0 83px;}
+.dv-delta{width:31px;font-size:12px;font-weight:700;text-align:right;flex-shrink:0;font-family:var(--mono);font-variant-numeric:tabular-nums;}
+.dv-detail{width:171px;flex-shrink:1;min-width:0;overflow:hidden;white-space:nowrap;font-size:10px;color:var(--muted);font-family:var(--mono);}
+.dv-tag{font-size:9px;padding:1px 5px;border-radius:6px;background:var(--bg3);color:var(--muted);margin-left:5px;font-family:var(--font);}
+.dv-scale{display:grid;grid-template-columns:1fr 1fr 1fr;font-size:10px;color:var(--gray);margin:6px 200px 0 83px;}
 .dv-scale span:nth-child(2){text-align:center;}.dv-scale span:last-child{text-align:right;}
-.s18-chip{display:inline-flex;align-items:center;gap:6px;background:var(--bg3);border:1px solid var(--bord);border-radius:14px;padding:4px 11px;font-size:11px;color:#C0C8D4;}
+.s18-chip{display:inline-flex;align-items:center;gap:6px;background:var(--bg3);border:1px solid var(--bord);border-radius:14px;padding:4px 11px;font-size:12px;color:#C0C8D4;}
 .s18-chip b{color:var(--text);font-weight:700;}
-.fbtn{background:var(--bg3);border:1px solid var(--bord);color:var(--muted);padding:4px 10px;border-radius:14px;cursor:pointer;font-size:11px;transition:all .15s;}
+.fbtn{background:var(--bg3);border:1px solid var(--bord);color:var(--muted);padding:4px 10px;border-radius:14px;cursor:pointer;font-size:12px;transition:all .15s;}
 .fbtn.active,.fbtn:hover{background:var(--blue);color:#fff;border-color:var(--blue);}
-.today-btn{background:var(--dark);border:1px solid var(--blue);color:var(--cyan);padding:4px 10px;border-radius:14px;cursor:pointer;font-size:11px;margin-left:auto;}
+.today-btn{background:var(--dark);border:1px solid var(--blue);color:var(--cyan);padding:4px 10px;border-radius:14px;cursor:pointer;font-size:12px;margin-left:auto;}
 .m-hdr{display:flex;border-bottom:1px solid var(--bord);}
 .m-lbl-col{width:280px;min-width:280px;position:sticky;left:0;background:var(--bg);z-index:11;border-right:1px solid var(--bord);}
-.m-cell{background:var(--bg2);text-align:center;font-size:10px;font-weight:600;color:var(--cyan);padding:4px 0;border-right:1px solid var(--bord);flex-shrink:0;}
+.m-cell{background:var(--bg2);text-align:center;font-size:11px;font-weight:600;color:var(--cyan);padding:4px 0;border-right:1px solid var(--bord);flex-shrink:0;}
 .g-hdr{display:flex;position:sticky;top:0;z-index:10;background:var(--bg);border-bottom:1px solid var(--bord);}
-.g-lbl-col{width:280px;min-width:280px;padding:5px 10px;font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;position:sticky;left:0;background:var(--bg);z-index:11;border-right:1px solid var(--bord);}
+.g-lbl-col{width:280px;min-width:280px;padding:5px 10px;font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;position:sticky;left:0;background:var(--bg);z-index:11;border-right:1px solid var(--bord);}
 .g-days{display:flex;flex-shrink:0;}
-.d-cell{width:var(--day);min-width:var(--day);text-align:center;font-size:9px;color:var(--muted);padding:3px 0;border-right:1px solid rgba(48,54,61,.4);}
+.d-cell{width:var(--day);min-width:var(--day);text-align:center;font-size:10px;color:var(--muted);padding:3px 0;border-right:1px solid rgba(48,54,61,.4);}
 .d-cell.wknd{background:rgba(255,255,255,.015);}.d-cell.s18-d{color:var(--purple);}.d-cell.today-d{background:rgba(248,81,73,.15);color:var(--red);font-weight:600;}
 .g-row{display:flex;border-bottom:1px solid rgba(48,54,61,.3);transition:background .1s;}
 .g-row:hover{background:rgba(255,255,255,.025);}
 .grp-row{display:flex;background:rgba(2,32,96,.35);cursor:pointer;border-bottom:1px solid rgba(48,54,61,.5);}
 .grp-row:hover{background:rgba(2,32,96,.55);}
 .grp-lbl{width:280px;min-width:280px;padding:6px 10px;display:flex;align-items:center;gap:8px;position:sticky;left:0;background:rgba(2,32,96,.35);z-index:5;border-right:1px solid var(--bord);}
-.grp-name{font-size:11px;font-weight:700;flex:1;}
+.grp-name{font-size:12px;font-weight:700;flex:1;}
 .grp-badges{display:flex;gap:4px;align-items:center;}
-.gbadge{font-size:8px;font-weight:700;padding:1px 5px;border-radius:8px;}
+.gbadge{font-size:9px;font-weight:700;padding:1px 5px;border-radius:8px;}
 .grp-tl{position:relative;flex:none;height:28px;background:rgba(2,32,96,.2);}
 .grp-summary{position:absolute;top:8px;left:8px;display:flex;gap:6px;}
 .gs-seg{height:12px;border-radius:2px;min-width:3px;}
@@ -162,8 +162,8 @@ body{background:var(--bg);color:var(--text);font-family:var(--font);font-size:13
 .task-row:hover{background:rgba(255,255,255,.02);}
 .task-lbl{width:280px;min-width:280px;padding:3px 10px 3px 22px;display:flex;align-items:center;gap:6px;position:sticky;left:0;background:rgba(13,17,23,.9);z-index:5;border-right:1px solid var(--bord);}
 .task-dot{width:6px;height:6px;border-radius:50%;flex-shrink:0;}
-.task-key{font-family:var(--mono);font-size:8px;color:var(--muted);flex-shrink:0;width:72px;}
-.task-sum{font-size:9px;flex:1;color:#C0C8D4;line-height:1.3;}
+.task-key{font-family:var(--mono);font-size:9px;color:var(--muted);flex-shrink:0;width:81px;}
+.task-sum{font-size:10px;flex:1;color:#C0C8D4;line-height:1.3;}
 .task-tl{position:relative;flex:none;min-height:22px;}
 .task-bar{position:absolute;height:8px;border-radius:2px;top:50%;transform:translateY(-50%);opacity:.85;min-width:2px;}
 .task-bar.done{background:var(--green);}.task-bar.prog{background:var(--blue);}.task-bar.pend{background:var(--gray);}
@@ -178,9 +178,9 @@ body{background:var(--bg);color:var(--text);font-family:var(--font);font-size:13
 .bar{position:absolute;height:12px;border-radius:2px;top:7px;opacity:.9;min-width:3px;cursor:pointer;}
 .bar.done{background:var(--green);}.bar.prog{background:var(--blue);}.bar.pend{background:var(--gray);}
 .bar.carry{background:linear-gradient(90deg,var(--blue),var(--purple));}
-.expand-icon{font-size:9px;color:var(--muted);flex-shrink:0;width:10px;}
-.g-tooltip{position:fixed;background:#21262D;border:1px solid #30363D;border-radius:6px;padding:8px 10px;font-size:10px;color:#E6EDF3;pointer-events:none;z-index:200;max-width:260px;display:none;line-height:1.5;box-shadow:0 4px 16px rgba(0,0,0,.5);}
-.footer{background:var(--dark);padding:10px 24px;font-size:10px;color:var(--muted);border-top:1px solid var(--bord);display:flex;justify-content:space-between;}
+.expand-icon{font-size:10px;color:var(--muted);flex-shrink:0;width:10px;}
+.g-tooltip{position:fixed;background:#21262D;border:1px solid #30363D;border-radius:6px;padding:8px 10px;font-size:11px;color:#E6EDF3;pointer-events:none;z-index:200;max-width:260px;display:none;line-height:1.5;box-shadow:0 4px 16px rgba(0,0,0,.5);}
+.footer{background:var(--dark);padding:10px 24px;font-size:11px;color:var(--muted);border-top:1px solid var(--bord);display:flex;justify-content:space-between;}
 /* tablets — reduz o respiro lateral de 24px */
 @media(max-width:1024px){
   .hdr,.tabs,.footer{padding-left:18px;padding-right:18px;}
@@ -195,17 +195,17 @@ body{background:var(--bg);color:var(--text);font-family:var(--font);font-size:13
 @media(max-width:768px){
   /* header */
   .hdr{flex-wrap:wrap;gap:6px;padding:10px 14px;}
-  .hdr-title{font-size:15px;}
-  .hdr-sub{font-size:9px;line-height:1.4;}
+  .hdr-title{font-size:16px;}
+  .hdr-sub{font-size:10px;line-height:1.4;}
   .hdr-badge{align-self:flex-start;}
   /* tabs */
   .tabs{padding:0 8px;overflow-x:auto;scrollbar-width:none;-webkit-overflow-scrolling:touch;}
   .tabs::-webkit-scrollbar{display:none;}
-  .tab{padding:9px 12px;font-size:12px;flex-shrink:0;}
+  .tab{padding:9px 12px;font-size:13px;flex-shrink:0;}
   /* kpis */
   .kpi-strip{padding:12px 14px;gap:8px;}
   .kpi{padding:9px 11px;min-width:calc(50% - 4px);flex:none;}
-  .kpi-val{font-size:21px;}
+  .kpi-val{font-size:22px;}
   /* grids */
   .grid-2{grid-template-columns:1fr !important;gap:10px;padding-left:14px !important;padding-right:14px !important;}
   .proj-view,.team-view{padding:0 14px 16px;}
@@ -234,7 +234,7 @@ body{background:var(--bg);color:var(--text);font-family:var(--font);font-size:13
   .sla-marco{margin-left:12px !important;margin-right:12px !important;}
   .gantt-wrap,.toolbar,.gantt-legend{padding-left:12px !important;padding-right:12px !important;}
   .kpi{min-width:calc(50% - 4px);}
-  .kpi-val{font-size:19px;}
+  .kpi-val{font-size:20px;}
   .proj-grid{grid-template-columns:1fr 1fr;}
   .m-lbl-col,.g-lbl-col,.grp-lbl,.task-lbl{width:120px;min-width:120px;}
 }
@@ -244,7 +244,7 @@ body{background:var(--bg);color:var(--text);font-family:var(--font);font-size:13
 @media(max-width:1200px){#panel-evolucao .grid-2{grid-template-columns:1fr !important;}}
 @media(max-width:560px){
   .dv-detail{display:none;}
-  .dv-name{width:60px;}
+  .dv-name{width:66px;}
   .dv-scale{margin:6px 37px 0 69px;}
 }
 </style>
@@ -278,7 +278,7 @@ body{background:var(--bg);color:var(--text);font-family:var(--font);font-size:13
 </div>
 <div class="grid-2" style="padding:0 24px 16px;">
   <div style="background:var(--bg2);border:1px solid var(--bord);border-radius:8px;padding:16px;">
-    <div style="font-size:12px;font-weight:600;color:var(--cyan);text-transform:uppercase;letter-spacing:.8px;margin-bottom:14px;">Distribuição de Status S18</div>
+    <div style="font-size:13px;font-weight:600;color:var(--cyan);text-transform:uppercase;letter-spacing:.8px;margin-bottom:14px;">Distribuição de Status S18</div>
     <div style="display:flex;align-items:center;gap:24px;justify-content:center;">
       <canvas id="donut" width="150" height="150"></canvas>
       <div id="donut-legend" style="display:flex;flex-direction:column;gap:10px;"></div>
@@ -286,7 +286,7 @@ body{background:var(--bg);color:var(--text);font-family:var(--font);font-size:13
     <div class="evo-obs" id="desc-status"></div>
   </div>
   <div style="background:var(--bg2);border:1px solid var(--bord);border-radius:8px;padding:16px;">
-    <div style="font-size:12px;font-weight:600;color:var(--cyan);text-transform:uppercase;letter-spacing:.8px;margin-bottom:14px;">Entregas por Projeto</div>
+    <div style="font-size:13px;font-weight:600;color:var(--cyan);text-transform:uppercase;letter-spacing:.8px;margin-bottom:14px;">Entregas por Projeto</div>
     <div id="taxa-chart"></div>
     <div class="evo-obs" id="desc-taxa"></div>
   </div>
@@ -297,7 +297,7 @@ body{background:var(--bg);color:var(--text);font-family:var(--font);font-size:13
 <!-- EVOLUCAO -->
 <div class="panel" id="panel-evolucao">
 <div class="evo-intro">
-  <div style="font-size:20px;flex-shrink:0;margin-top:1px;">📈</div>
+  <div style="font-size:21px;flex-shrink:0;margin-top:1px;">📈</div>
   <div>
     <h4>O que esta aba mostra</h4>
     <p>Compara a <strong style="color:var(--text);">sprint que acabou de fechar</strong> com a <strong style="color:var(--text);">anterior</strong>, para responder se o time evoluiu — e antecipa a carga que atravessa para a <strong style="color:var(--text);">sprint que inicia</strong>. Os cartões no topo trazem cada indicador com a variação em relação à sprint passada e a tendência das últimas três. O gráfico por frente mostra onde as entregas cresceram ou caíram. O último bloco é o que já entra na sprint nova.</p>
@@ -340,7 +340,7 @@ body{background:var(--bg);color:var(--text);font-family:var(--font);font-size:13
   <button class="fbtn" onclick="collapseAll()">⊟ Recolher</button>
   <button class="today-btn" onclick="scrollToToday()">📍 Hoje</button>
 </div>
-<div class="gantt-legend" style="display:flex;gap:16px;padding:0 24px 8px;font-size:10px;color:var(--muted);align-items:center;flex-wrap:wrap;">
+<div class="gantt-legend" style="display:flex;gap:16px;padding:0 24px 8px;font-size:11px;color:var(--muted);align-items:center;flex-wrap:wrap;">
   <span style="display:flex;align-items:center;gap:5px;"><span style="width:20px;height:3px;background:rgba(2,37,235,.4);display:inline-block;border-radius:2px;"></span>Sprint S18 (17/08–31/08)</span>
   <span style="display:flex;align-items:center;gap:5px;"><span style="width:2px;height:12px;background:#F85149;opacity:.7;display:inline-block;"></span>Hoje</span>
   <span style="display:flex;align-items:center;gap:5px;"><span style="width:2px;height:12px;background:#8957E5;opacity:.6;display:inline-block;"></span>Fim S18</span>
@@ -365,38 +365,38 @@ body{background:var(--bg);color:var(--text);font-family:var(--font);font-size:13
 
 <!-- Marco SLA -->
 <div class="sla-marco" style="margin:0 24px 16px;background:rgba(2,37,235,.12);border:1px solid rgba(2,37,235,.35);border-left:3px solid var(--blue);border-radius:8px;padding:12px 16px;display:flex;align-items:flex-start;gap:12px;">
-  <div style="font-size:20px;flex-shrink:0;margin-top:1px;">🏁</div>
+  <div style="font-size:21px;flex-shrink:0;margin-top:1px;">🏁</div>
   <div>
-    <div style="font-size:11px;font-weight:700;color:var(--cyan);text-transform:uppercase;letter-spacing:.8px;margin-bottom:4px;">SLA — leitura real por trilha (campo do JSM)</div>
-    <div style="font-size:11px;color:#C0C8D4;line-height:1.55;">Agora o cumprimento de SLA é lido direto dos campos oficiais do JSM (<span style="font-family:var(--mono);font-size:10px;color:var(--cyan);">customfield_10577</span> e <span style="font-family:var(--mono);font-size:10px;color:var(--cyan);">customfield_10610</span>), apurado em horário comercial. <strong style="color:var(--text);">Não é mais cálculo manual.</strong> Metas por trilha: Solicitação de TI 4h/24h, Comunicação Digital 4h/56h, e incidente na régua global 4h/24h. Na S18, os estouros de resolução concentram-se em chamados de equipamento e material que dependeram de compra ou de entrega (toner, scanner, material de evento), e não de capacidade da equipe. O status Bloqueado já operou no período, pausando o SLA quando a dependência é de terceiros.</div>
+    <div style="font-size:12px;font-weight:700;color:var(--cyan);text-transform:uppercase;letter-spacing:.8px;margin-bottom:4px;">SLA — leitura real por trilha (campo do JSM)</div>
+    <div style="font-size:12px;color:#C0C8D4;line-height:1.55;">Agora o cumprimento de SLA é lido direto dos campos oficiais do JSM (<span style="font-family:var(--mono);font-size:11px;color:var(--cyan);">customfield_10577</span> e <span style="font-family:var(--mono);font-size:11px;color:var(--cyan);">customfield_10610</span>), apurado em horário comercial. <strong style="color:var(--text);">Não é mais cálculo manual.</strong> Metas por trilha: Solicitação de TI 4h/24h, Comunicação Digital 4h/56h, e incidente na régua global 4h/24h. Na S18, os estouros de resolução concentram-se em chamados de equipamento e material que dependeram de compra ou de entrega (toner, scanner, material de evento), e não de capacidade da equipe. O status Bloqueado já operou no período, pausando o SLA quando a dependência é de terceiros.</div>
   </div>
 </div>
 
 <div id="sdesk-trilhas" style="padding:0 24px 4px;">
-  <div style="font-size:12px;font-weight:600;color:var(--cyan);text-transform:uppercase;letter-spacing:.8px;margin-bottom:10px;">SLA por trilha — cumprimento real (lido do JSM, horário comercial)</div>
+  <div style="font-size:13px;font-weight:600;color:var(--cyan);text-transform:uppercase;letter-spacing:.8px;margin-bottom:10px;">SLA por trilha — cumprimento real (lido do JSM, horário comercial)</div>
   <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:10px;">
     <div style="background:var(--bg2);border:1px solid var(--bord);border-left:3px solid #F85149;border-radius:8px;padding:12px 14px;">
-      <div style="font-size:12px;font-weight:700;color:var(--text);">Solicitação de TI <span style="font-size:9px;color:var(--muted);font-weight:400;">meta 4h / 24h</span></div>
-      <div style="font-size:22px;font-weight:700;font-family:var(--mono);color:#F85149;margin-top:4px;">67%<span style="font-size:11px;color:var(--muted);font-family:var(--font);font-weight:400;"> resolução no prazo</span></div>
-      <div style="font-size:10px;color:var(--muted);margin-top:3px;">15 recebidos · 8 no prazo · 5 estouros · 1 bloqueado · 1 em curso · 1ª resposta 100%</div>
-      <div style="font-size:10px;color:#C0C8D4;margin-top:6px;line-height:1.4;">A maior trilha da sprint. Os estouros são chamados de equipamento e material (toner, scanner, material de evento) que dependeram de compra ou entrega, não de capacidade da equipe.</div>
+      <div style="font-size:13px;font-weight:700;color:var(--text);">Solicitação de TI <span style="font-size:10px;color:var(--muted);font-weight:400;">meta 4h / 24h</span></div>
+      <div style="font-size:23px;font-weight:700;font-family:var(--mono);color:#F85149;margin-top:4px;">67%<span style="font-size:12px;color:var(--muted);font-family:var(--font);font-weight:400;"> resolução no prazo</span></div>
+      <div style="font-size:11px;color:var(--muted);margin-top:3px;">15 recebidos · 8 no prazo · 5 estouros · 1 bloqueado · 1 em curso · 1ª resposta 100%</div>
+      <div style="font-size:11px;color:#C0C8D4;margin-top:6px;line-height:1.4;">A maior trilha da sprint. Os estouros são chamados de equipamento e material (toner, scanner, material de evento) que dependeram de compra ou entrega, não de capacidade da equipe.</div>
     </div>
     <div style="background:var(--bg2);border:1px solid var(--bord);border-left:3px solid #2EA043;border-radius:8px;padding:12px 14px;">
-      <div style="font-size:12px;font-weight:700;color:var(--text);">Reportar incidente <span style="font-size:9px;color:var(--muted);font-weight:400;">meta 4h / 24h</span></div>
-      <div style="font-size:22px;font-weight:700;font-family:var(--mono);color:#2EA043;margin-top:4px;">100%<span style="font-size:11px;color:var(--muted);font-family:var(--font);font-weight:400;"> no prazo</span></div>
-      <div style="font-size:10px;color:var(--muted);margin-top:3px;">5 recebidos · 4 no prazo · 1 estouro (aguardando o solicitante) · 1ª resposta 80%</div>
-      <div style="font-size:10px;color:#C0C8D4;margin-top:6px;line-height:1.4;">Todos os incidentes concluídos saíram no prazo. Um segue aguardando retorno do solicitante (o wi-fi que some), o que puxou a primeira resposta.</div>
+      <div style="font-size:13px;font-weight:700;color:var(--text);">Reportar incidente <span style="font-size:10px;color:var(--muted);font-weight:400;">meta 4h / 24h</span></div>
+      <div style="font-size:23px;font-weight:700;font-family:var(--mono);color:#2EA043;margin-top:4px;">100%<span style="font-size:12px;color:var(--muted);font-family:var(--font);font-weight:400;"> no prazo</span></div>
+      <div style="font-size:11px;color:var(--muted);margin-top:3px;">5 recebidos · 4 no prazo · 1 estouro (aguardando o solicitante) · 1ª resposta 80%</div>
+      <div style="font-size:11px;color:#C0C8D4;margin-top:6px;line-height:1.4;">Todos os incidentes concluídos saíram no prazo. Um segue aguardando retorno do solicitante (o wi-fi que some), o que puxou a primeira resposta.</div>
     </div>
     <div style="background:var(--bg2);border:1px solid var(--bord);border-left:3px solid #2EA043;border-radius:8px;padding:12px 14px;">
-      <div style="font-size:12px;font-weight:700;color:var(--text);">Comunicação Digital <span style="font-size:9px;color:var(--muted);font-weight:400;">meta 4h / 56h</span></div>
-      <div style="font-size:22px;font-weight:700;font-family:var(--mono);color:#2EA043;margin-top:4px;">100%<span style="font-size:11px;color:var(--muted);font-family:var(--font);font-weight:400;"> no prazo</span></div>
-      <div style="font-size:10px;color:var(--muted);margin-top:3px;">2 recebidos · 1 no prazo · 1 em curso · 1ª resposta 100%</div>
-      <div style="font-size:10px;color:#C0C8D4;margin-top:6px;line-height:1.4;">Base pequena na S18. O banner do Clube F saiu no prazo; a alteração de texto do Clube F segue em curso, dentro da meta folgada de 56h.</div>
+      <div style="font-size:13px;font-weight:700;color:var(--text);">Comunicação Digital <span style="font-size:10px;color:var(--muted);font-weight:400;">meta 4h / 56h</span></div>
+      <div style="font-size:23px;font-weight:700;font-family:var(--mono);color:#2EA043;margin-top:4px;">100%<span style="font-size:12px;color:var(--muted);font-family:var(--font);font-weight:400;"> no prazo</span></div>
+      <div style="font-size:11px;color:var(--muted);margin-top:3px;">2 recebidos · 1 no prazo · 1 em curso · 1ª resposta 100%</div>
+      <div style="font-size:11px;color:#C0C8D4;margin-top:6px;line-height:1.4;">Base pequena na S18. O banner do Clube F saiu no prazo; a alteração de texto do Clube F segue em curso, dentro da meta folgada de 56h.</div>
     </div>
   </div>
-  <div style="font-size:10px;color:var(--muted);margin-top:10px;font-style:italic;">Total: 76% das resoluções (13 de 17 concluídos) e 95% das primeiras respostas (21 de 22) dentro do SLA. Lido da régua global do JSM. Os chamados ainda em curso ficam fora do índice de resolução. Abaixo, os chamados por área.</div>
+  <div style="font-size:11px;color:var(--muted);margin-top:10px;font-style:italic;">Total: 76% das resoluções (13 de 17 concluídos) e 95% das primeiras respostas (21 de 22) dentro do SLA. Lido da régua global do JSM. Os chamados ainda em curso ficam fora do índice de resolução. Abaixo, os chamados por área.</div>
 </div>
-<div style="margin:0 24px 16px;background:#161B22;border:1px solid #2A3140;border-left:3px solid #8B94A7;border-radius:8px;padding:12px 14px;font-size:10.5px;color:#AEB8CC;line-height:1.55;"><b style="color:#D3DBEA;">Régua de apuração.</b> Base: coorte da sprint — os 22 chamados abertos entre 31/08 e 14/09. Cada chamado recebe um veredito na régua global do JSM: <b style="color:#D3DBEA;">no prazo</b> (concluído dentro da meta), <b style="color:#D3DBEA;">estouro</b> (meta vencida, esteja concluído ou ainda aberto) ou <b style="color:#D3DBEA;">em curso</b> (aberto e dentro da meta). O índice de resolução usa os 17 chamados concluídos. Incidentes têm régua própria mais rígida no JSM, mas a decisão vigente é medir todos pela régua global (4h/24h). Cores dos cartões: verde a partir de 85%, âmbar entre 70% e 84%, vermelho abaixo de 70% — limiar provisório, enquanto a revisão das metas de SLA não fecha. Os seis estouros de resolução foram, na maioria, chamados de equipamento e material que dependeram de compra ou entrega. Mesma régua usada nas sprints anteriores e no panorama mensal.</div>
+<div style="margin:0 24px 16px;background:#161B22;border:1px solid #2A3140;border-left:3px solid #8B94A7;border-radius:8px;padding:12px 14px;font-size:11.5px;color:#AEB8CC;line-height:1.55;"><b style="color:#D3DBEA;">Régua de apuração.</b> Base: coorte da sprint — os 22 chamados abertos entre 31/08 e 14/09. Cada chamado recebe um veredito na régua global do JSM: <b style="color:#D3DBEA;">no prazo</b> (concluído dentro da meta), <b style="color:#D3DBEA;">estouro</b> (meta vencida, esteja concluído ou ainda aberto) ou <b style="color:#D3DBEA;">em curso</b> (aberto e dentro da meta). O índice de resolução usa os 17 chamados concluídos. Incidentes têm régua própria mais rígida no JSM, mas a decisão vigente é medir todos pela régua global (4h/24h). Cores dos cartões: verde a partir de 85%, âmbar entre 70% e 84%, vermelho abaixo de 70% — limiar provisório, enquanto a revisão das metas de SLA não fecha. Os seis estouros de resolução foram, na maioria, chamados de equipamento e material que dependeram de compra ou entrega. Mesma régua usada nas sprints anteriores e no panorama mensal.</div>
 <div id="sdesk-areas" style="padding:0 24px 24px;display:flex;flex-direction:column;gap:14px;"></div>
 </div>
 
@@ -587,11 +587,11 @@ function buildProjects(){
         <div class="proj-key" style="color:${meta.color}">${key}</div>
         <div class="proj-name">${meta.name}</div>
         <div style="display:flex;flex-wrap:wrap;gap:4px;margin-top:8px;">
-          ${st.done?`<span style="background:rgba(46,160,67,.15);padding:2px 7px;border-radius:10px;font-size:10px;font-weight:600;color:#2EA043;">${st.done} ✓</span>`:''}
-          ${st.prog?`<span style="background:rgba(2,37,235,.15);padding:2px 7px;border-radius:10px;font-size:10px;font-weight:600;color:#6699FF;">${st.prog} ↻</span>`:''}
-          ${st.pend?`<span style="background:rgba(72,72,88,.25);padding:2px 7px;border-radius:10px;font-size:10px;font-weight:600;color:#8B949E;">${st.pend} ⏸</span>`:''}
+          ${st.done?`<span style="background:rgba(46,160,67,.15);padding:2px 7px;border-radius:10px;font-size:11px;font-weight:600;color:#2EA043;">${st.done} ✓</span>`:''}
+          ${st.prog?`<span style="background:rgba(2,37,235,.15);padding:2px 7px;border-radius:10px;font-size:11px;font-weight:600;color:#6699FF;">${st.prog} ↻</span>`:''}
+          ${st.pend?`<span style="background:rgba(72,72,88,.25);padding:2px 7px;border-radius:10px;font-size:11px;font-weight:600;color:#8B949E;">${st.pend} ⏸</span>`:''}
         </div>
-        <div style="font-size:9px;color:#484F58;margin-top:4px;">${st.total} issues · ${taxa}%</div>`;
+        <div style="font-size:10px;color:#484F58;margin-top:4px;">${st.total} issues · ${taxa}%</div>`;
       card.onclick=()=>openPanel(key);
       grid.appendChild(card);
     });
@@ -662,12 +662,12 @@ function buildSdesk(){
     hdr.style.cssText='padding:10px 14px;display:flex;align-items:center;gap:10px;border-bottom:1px solid var(--bord);cursor:pointer;';
     hdr.innerHTML=`
       <div style="width:8px;height:8px;border-radius:50%;background:${barColor};flex-shrink:0;"></div>
-      <div style="font-size:11px;font-weight:700;color:var(--text);flex:1;">${area.id}</div>
-      <div style="font-size:10px;color:${barColor};font-weight:700;font-family:var(--mono);">${area.meta}</div>
+      <div style="font-size:12px;font-weight:700;color:var(--text);flex:1;">${area.id}</div>
+      <div style="font-size:11px;color:${barColor};font-weight:700;font-family:var(--mono);">${area.meta}</div>
       <div style="width:80px;height:5px;background:var(--bg3);border-radius:3px;overflow:hidden;flex-shrink:0;">
         <div style="height:100%;width:${pct}%;background:${barColor};border-radius:3px;"></div>
       </div>
-      <span style="font-size:9px;color:var(--muted);margin-left:4px;" class="area-toggle">▼</span>`;
+      <span style="font-size:10px;color:var(--muted);margin-left:4px;" class="area-toggle">▼</span>`;
 
     // body
     const body=document.createElement('div');
@@ -675,9 +675,9 @@ function buildSdesk(){
 
     function issueRow(i){
       const sla=isDone(i.status)?(
-        i.outlier?`<span style="background:#F85149;color:#fff;font-size:8px;padding:1px 5px;border-radius:8px;font-weight:700;margin-left:3px;">${i.dias}d ⚠</span>`:
-        i.dias===0?`<span style="background:#2EA043;color:#fff;font-size:8px;padding:1px 5px;border-radius:8px;font-weight:700;margin-left:3px;">< 1d</span>`:
-        `<span style="font-size:9px;color:var(--muted);margin-left:4px;">${i.dias}d</span>`
+        i.outlier?`<span style="background:#F85149;color:#fff;font-size:9px;padding:1px 5px;border-radius:8px;font-weight:700;margin-left:3px;">${i.dias}d ⚠</span>`:
+        i.dias===0?`<span style="background:#2EA043;color:#fff;font-size:9px;padding:1px 5px;border-radius:8px;font-weight:700;margin-left:3px;">< 1d</span>`:
+        `<span style="font-size:10px;color:var(--muted);margin-left:4px;">${i.dias}d</span>`
       ):'';
       const dot=isDone(i.status)?'#2EA043':i.status==='Em andamento'?'#0225EB':'#484F58';
       return`<div class="dp-issue" style="opacity:${isDone(i.status)?1:.65};">
@@ -690,13 +690,13 @@ function buildSdesk(){
     // colunas: concluídos | pendentes
     const colDone=document.createElement('div');
     if(done.length){
-      colDone.innerHTML=`<div style="font-size:9px;color:var(--muted);text-transform:uppercase;letter-spacing:.6px;padding:4px 6px 6px;border-bottom:1px solid var(--bord);margin-bottom:4px;">✅ ${done.length} resolvidos</div>`+done.map(issueRow).join('');
+      colDone.innerHTML=`<div style="font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.6px;padding:4px 6px 6px;border-bottom:1px solid var(--bord);margin-bottom:4px;">✅ ${done.length} resolvidos</div>`+done.map(issueRow).join('');
     }
     const colOpen=document.createElement('div');
     if(open.length){
-      colOpen.innerHTML=`<div style="font-size:9px;color:var(--muted);text-transform:uppercase;letter-spacing:.6px;padding:4px 6px 6px;border-bottom:1px solid var(--bord);margin-bottom:4px;">⏳ ${open.length} pendentes</div>`+open.map(issueRow).join('');
+      colOpen.innerHTML=`<div style="font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.6px;padding:4px 6px 6px;border-bottom:1px solid var(--bord);margin-bottom:4px;">⏳ ${open.length} pendentes</div>`+open.map(issueRow).join('');
     } else {
-      colOpen.innerHTML='<div style="font-size:10px;color:var(--gray);font-style:italic;padding:8px 6px;">Sem pendências</div>';
+      colOpen.innerHTML='<div style="font-size:11px;color:var(--gray);font-style:italic;padding:8px 6px;">Sem pendências</div>';
     }
 
     body.appendChild(colDone);
@@ -744,7 +744,7 @@ function closePanel(){document.getElementById('detail-panel')?.classList.remove(
 // TOOLTIP
 let _tt=null;
 function getTT(){if(!_tt)_tt=document.getElementById('g-tooltip');return _tt;}
-function showTT(e,issue){const t=getTT();if(!t)return;t.innerHTML=`<div style="font-family:var(--mono);font-size:9px;color:#8B949E;margin-bottom:3px">${issue.key}</div><div style="font-size:11px;font-weight:600;margin-bottom:4px;line-height:1.3">${issue.summary}</div><div style="color:#8B949E">${issue.status} · ${issue.assignee}</div>`;t.style.display='block';posTT(e);}
+function showTT(e,issue){const t=getTT();if(!t)return;t.innerHTML=`<div style="font-family:var(--mono);font-size:10px;color:#8B949E;margin-bottom:3px">${issue.key}</div><div style="font-size:12px;font-weight:600;margin-bottom:4px;line-height:1.3">${issue.summary}</div><div style="color:#8B949E">${issue.status} · ${issue.assignee}</div>`;t.style.display='block';posTT(e);}
 function posTT(e){const t=getTT();if(!t)return;const x=e.clientX+14,y=e.clientY+14,w=t.offsetWidth||200,h=t.offsetHeight||60;t.style.left=(x+w>window.innerWidth?x-w-28:x)+'px';t.style.top=(y+h>window.innerHeight?y-h-28:y)+'px';}
 function hideTT(){const t=getTT();if(t)t.style.display='none';}
 
@@ -971,10 +971,10 @@ function buildEvolucao(){
     +ord.map(([p,n])=>{
       const cor=PROJ_META[p]?.color||'#8B949E';
       return '<div style="display:flex;align-items:center;gap:8px;margin-bottom:7px;">'
-        +'<div style="width:75px;font-size:10px;font-weight:600;color:'+cor+';text-align:right;flex-shrink:0;">'+p+'</div>'
+        +'<div style="width:75px;font-size:11px;font-weight:600;color:'+cor+';text-align:right;flex-shrink:0;">'+p+'</div>'
         +'<div style="flex:1;background:var(--bg3);border-radius:3px;height:16px;overflow:hidden;">'
         +'<div style="height:100%;width:'+Math.round(n/maxN*100)+'%;background:'+EVO_ACCENT+';opacity:.55;border-radius:3px;"></div></div>'
-        +'<div style="font-size:10px;color:var(--muted);width:22px;text-align:right;flex-shrink:0;font-variant-numeric:tabular-nums;">'+n+'</div></div>';
+        +'<div style="font-size:11px;color:var(--muted);width:24px;text-align:right;flex-shrink:0;font-variant-numeric:tabular-nums;">'+n+'</div></div>';
     }).join('')
     +'<div class="evo-obs">'+leituraS18(sel,cur,SPRINTS)+'</div>';
 }
@@ -1087,7 +1087,7 @@ function buildGantt(){
     const grpLbl=document.createElement('div');grpLbl.className='grp-lbl';
     grpLbl.innerHTML=`<span class="expand-icon" id="exp-${proj}">▶</span>
       <span class="grp-name" style="color:${meta.color}">${proj}</span>
-      <span style="font-size:9px;color:#8B949E;">${meta.name||''}</span>
+      <span style="font-size:10px;color:#8B949E;">${meta.name||''}</span>
       <div class="grp-badges">
         <span class="gbadge" style="background:#2EA04330;color:#2EA043">${st.done}✓</span>
         ${st.prog?`<span class="gbadge" style="background:#0225EB30;color:#6699FF">${st.prog}↻</span>`:''}
@@ -1173,7 +1173,7 @@ function buildGantt(){
   if(leg)[[nDone,'#2EA043',labels[0]],[nProg,'#0225EB',labels[1]],[nPend,'#484F58',labels[2]]].forEach(([n,col,lbl])=>{
     if(!n)return;
     const pctN=Math.round(n/total*100);
-    leg.innerHTML+=`<div style="display:flex;align-items:center;gap:8px;font-size:12px;">
+    leg.innerHTML+=`<div style="display:flex;align-items:center;gap:8px;font-size:13px;">
       <div style="width:12px;height:12px;border-radius:2px;background:${col};flex-shrink:0;"></div>
       ${lbl}: <strong style="color:#E6EDF3;margin-left:4px;">${n}</strong>
       <span style="color:var(--muted);">(${pctN}%)</span></div>`;
@@ -1190,11 +1190,11 @@ function buildGantt(){
     const barColor=pct>=60?'#2EA043':pct>=30?'#D29922':'#F85149';
     const row=document.createElement('div');
     row.style.cssText='display:flex;align-items:center;gap:8px;margin-bottom:7px;';
-    row.innerHTML=`<div style="width:75px;font-size:10px;font-weight:600;color:${color};text-align:right;flex-shrink:0;">${proj}</div>
+    row.innerHTML=`<div style="width:75px;font-size:11px;font-weight:600;color:${color};text-align:right;flex-shrink:0;">${proj}</div>
       <div style="flex:1;background:var(--bg3);border-radius:3px;height:18px;overflow:hidden;">
-        <div style="height:100%;width:${pct}%;background:${barColor};border-radius:3px;display:flex;align-items:center;padding:0 6px;font-size:9px;font-weight:700;color:#fff;min-width:20px;">${pct}%</div>
+        <div style="height:100%;width:${pct}%;background:${barColor};border-radius:3px;display:flex;align-items:center;padding:0 6px;font-size:10px;font-weight:700;color:#fff;min-width:20px;">${pct}%</div>
       </div>
-      <div style="font-size:10px;color:var(--muted);flex-shrink:0;width:36px;text-align:right;">${d.done}/${d.total}</div>`;
+      <div style="font-size:11px;color:var(--muted);flex-shrink:0;width:36px;text-align:right;">${d.done}/${d.total}</div>`;
     tc.appendChild(row);
   });
 })();
