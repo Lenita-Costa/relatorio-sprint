@@ -304,6 +304,7 @@ body{background:var(--bg);color:var(--text);font-family:var(--font);font-size:14
     <p>Os números da sprint fechada são calculados dos dados desta própria página; os das sprints anteriores vêm dos dashboards daquelas sprints.</p>
   </div>
 </div>
+<div id="evo-comparacao" style="margin:0 24px 14px;"></div>
 <div class="evo-grid" id="evo-tiles"></div>
 <div class="evo-obs-card"><div class="evo-obs" id="evo-obs-kpi"></div></div>
 <div class="grid-2" style="padding:0 24px 16px;">
@@ -754,9 +755,10 @@ function hideTT(){const t=getTT();if(t)t.style.display='none';}
 const SPRINT_HISTORY=[
   {id:"S15",periodo:"21/07–01/08",issues:61,done:52,projetos:12,sdesk:30,sdeskDone:22,sdeskEstouro:2,porProjeto:{"SISFENAS":[1,1],"FAUTH":[1,1],"CONECTA":[4,4],"GEP":[6,7],"PORTAL":[0,1],"PROC":[15,20],"ETI":[4,4],"FENASBR":[0,1],"SRR":[1,2],"SYNCOOP":[1,1],"STRAPI":[8,8],"TECH":[11,11]}},
   {id:"S16",periodo:"04/08–14/08",issues:62,done:24,projetos:11,sdesk:23,sdeskDone:13,sdeskEstouro:2,porProjeto:{"SISFENAS":[0,1],"ENG":[1,13],"FENASHUB":[1,1],"CONECTA":[1,2],"GEP":[1,2],"PORTAL":[0,1],"PROC":[3,16],"ETI":[5,7],"SRR":[0,1],"STRAPI":[1,6],"TECH":[11,12]}},
+  {id:"S17",periodo:"17/08–31/08",issues:88,done:37,projetos:13,sdesk:19,sdeskDone:13,sdeskEstouro:3,porProjeto:{"CERTI":[11,11],"DOCS":[0,6],"ENG":[1,11],"FENASBR":[0,1],"FENASHUB":[5,17],"FIA":[5,5],"GEP":[0,2],"PORTAL":[1,1],"PROC":[6,22],"SISFENAS":[0,1],"SRR":[0,1],"STRAPI":[0,1],"TECH":[8,9]}},
 ];
 const SPRINT_ATUAL={id:"S18",periodo:"31/08–14/09"};
-const SPRINT_NOVA={id:"S18",periodo:"31/08–14/09"};
+const SPRINT_NOVA={id:"S19",periodo:"14/09–28/09"};
 
 // [concluídas, total] por frente
 function porProjetoDe(lista){
@@ -848,7 +850,9 @@ function leituraIndicadores(cur,prev,serie){
   const pEnt=Math.round(dEnt/prev.done*100), pEsc=Math.round(dEsc/prev.issues*100);
   const carry=s=>s.issues-s.done, cPct=Math.round(carry(cur)/cur.issues*100);
   let seq=0;for(let i=serie.length-1;i>0;i--){if(carry(serie[i])>carry(serie[i-1]))seq++;else break;}
-  const ritmo = pEnt>=pEsc
+  const ritmo = dEsc<0
+    ? 'O escopo encolheu <b>'+Math.abs(pEsc)+'%</b> ('+prev.issues+' → '+cur.issues+') e as entregas '+(dEnt>=0?'cresceram':'caíram')+' <b>'+Math.abs(pEnt)+'%</b> ('+prev.done+' → '+cur.done+'): a taxa '+(dTx>=0?'subiu':'caiu')+' '+Math.abs(dTx)+' pontos percentuais.'
+    : pEnt>=pEsc
     ? 'As entregas cresceram <b>'+pEnt+'%</b> ('+prev.done+' → '+cur.done+') contra <b>'+pEsc+'%</b> de crescimento do escopo ('+prev.issues+' → '+cur.issues+'): o time acompanhou o aumento e ganhou '+Math.abs(dTx)+' pontos percentuais de taxa.'
     : 'O escopo cresceu <b>'+pEsc+'%</b> ('+prev.issues+' → '+cur.issues+') contra <b>'+pEnt+'%</b> de crescimento das entregas ('+prev.done+' → '+cur.done+'), e a taxa '+(dTx>=0?'subiu':'caiu')+' '+Math.abs(dTx)+' pontos percentuais.';
   const fila = dEsc>dEnt
@@ -900,6 +904,18 @@ function buildEvolucao(){
   const host=document.getElementById('evo-tiles');
   if(!host||host.children.length)return;
   const cur=SPRINTS[SPRINTS.length-1], prev=SPRINTS[SPRINTS.length-2];
+
+  // deixa explicito quais sprints entram na comparacao, em vez de so 'a anterior'
+  const cmp=document.getElementById('evo-comparacao');
+  if(cmp) cmp.innerHTML='<div style="background:var(--bg2);border:1px solid var(--bord);border-left:3px solid var(--cyan);border-radius:8px;padding:10px 14px;display:flex;align-items:center;gap:10px;flex-wrap:wrap;">'
+    +'<span style="font-size:11px;font-weight:700;color:var(--cyan);text-transform:uppercase;letter-spacing:.8px;">Comparando</span>'
+    +'<span style="font-family:var(--mono);font-size:15px;font-weight:700;color:var(--text);">'+prev.id+'</span>'
+    +'<span style="font-size:11px;color:var(--muted);">'+prev.periodo+'</span>'
+    +'<span style="color:var(--cyan);font-size:15px;font-weight:700;">→</span>'
+    +'<span style="font-family:var(--mono);font-size:15px;font-weight:700;color:var(--text);">'+cur.id+'</span>'
+    +'<span style="font-size:11px;color:var(--muted);">'+cur.periodo+'</span>'
+    +'<span style="margin-left:auto;font-size:11px;color:var(--muted);">série completa: '+SPRINTS.map(sp=>sp.id).join(' · ')+'</span>'
+    +'</div>';
 
   // --- stat tiles: valor da sprint fechada + delta vs anterior + sparkline ---
   EVO_METRICS.forEach(m=>{
