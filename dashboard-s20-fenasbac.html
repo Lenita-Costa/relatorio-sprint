@@ -1,0 +1,1345 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Dashboard Sprint S20 — Fenasbac TI</title>
+<link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@300;400;600;700&family=IBM+Plex+Mono:wght@400&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0D1117;--bg2:#161B22;--bg3:#21262D;--bord:#30363D;
+  --text:#E6EDF3;--muted:#8B949E;
+  --blue:#0225EB;--cyan:#02FFFF;--dark:#002060;
+  --green:#2EA043;--yellow:#D29922;--red:#F85149;--purple:#8957E5;
+  --gray:#484F58;--font:'Exo 2',sans-serif;--mono:'IBM Plex Mono',monospace;
+  --day:22px;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+html{background:#080B0F;}
+body{background:var(--bg);color:var(--text);font-family:var(--font);font-size:16.8px;overflow-x:hidden;max-width:1400px;margin:0 auto;box-shadow:0 0 0 1px var(--bord),0 0 40px rgba(0,0,0,.4);min-height:100vh;}
+.hdr{background:var(--dark);padding:12px 24px;display:flex;align-items:center;justify-content:space-between;border-bottom:2px solid var(--blue);}
+.hdr-brand{font-size:13.2px;color:var(--cyan);font-weight:700;letter-spacing:1.5px;text-transform:uppercase;}
+.hdr-title{font-size:21.6px;font-weight:700;color:#fff;margin-top:2px;}
+.hdr-sub{font-size:13.2px;color:rgba(255,255,255,.5);margin-top:1px;}
+.hdr-badge{background:var(--bg3);border:1px solid var(--bord);border-radius:20px;padding:4px 12px;font-size:13.2px;color:var(--muted);}
+.tabs{display:flex;background:var(--bg2);border-bottom:1px solid var(--bord);padding:0 24px;}
+.tab{padding:10px 18px;cursor:pointer;color:var(--muted);font-size:16.8px;font-weight:500;border-bottom:3px solid transparent;transition:all .15s;white-space:nowrap;}
+.tab.active{color:var(--blue);border-bottom-color:var(--blue);}
+.tab:hover:not(.active){color:var(--text);}
+.panel{display:none;}.panel.active{display:block;}
+.kpi-strip{display:flex;gap:10px;padding:16px 24px;flex-wrap:wrap;}
+.kpi{background:var(--bg2);border:1px solid var(--bord);border-radius:8px;padding:12px 18px;flex:1;min-width:100px;}
+.kpi-val{font-size:32.4px;font-weight:700;color:var(--cyan);font-family:var(--mono);}
+.kpi-label{font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;margin-top:2px;}
+.kpi.ok .kpi-val{color:var(--green);}.kpi.warn .kpi-val{color:var(--yellow);}.kpi.danger .kpi-val{color:var(--red);}
+
+/* PROJETOS */
+.proj-view{padding:0 24px 24px;}
+.cat-group{margin-bottom:24px;}
+.cat-title{font-size:14.4px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.8px;margin-bottom:10px;display:flex;align-items:center;gap:8px;}
+.cat-count{background:var(--bg3);border-radius:10px;padding:1px 7px;font-size:13.2px;font-weight:600;color:var(--text);}
+.proj-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:10px;}
+.proj-card{background:var(--bg2);border:1px solid var(--bord);border-radius:8px;padding:12px;cursor:pointer;transition:border-color .15s,background .15s;position:relative;overflow:hidden;}
+.proj-card:hover{border-color:var(--blue);background:#1a2030;}
+.proj-key{font-size:13.2px;font-weight:700;letter-spacing:.5px;}
+.proj-name{font-size:14.4px;color:var(--muted);margin-top:1px;margin-bottom:8px;}
+.no-issues{font-size:13.2px;color:var(--gray);font-style:italic;}
+
+/* SDESK */
+.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:12px;padding:0 24px 24px;}
+.dp-issue{display:flex;align-items:flex-start;gap:7px;padding:5px 6px;border-radius:4px;margin-bottom:2px;}
+.dp-issue:hover{background:var(--bg3);}
+.dp-dot{width:7px;height:7px;border-radius:50%;flex-shrink:0;margin-top:3px;}
+.dp-key{font-family:var(--mono);font-size:12px;color:var(--muted);flex-shrink:0;width:89px;}
+.dp-sum{font-size:13.2px;line-height:1.4;flex:1;}
+.dp-owner{font-size:12px;color:var(--muted);flex-shrink:0;margin-top:1px;}
+.sla-badge{font-size:10.8px;font-weight:700;padding:1px 5px;border-radius:8px;margin-left:4px;}
+
+/* DETAIL PANEL */
+.detail-panel{position:fixed;right:-400px;top:0;bottom:0;width:380px;background:#161B22;border-left:1px solid #30363D;z-index:100;transition:right .25s ease;display:flex;flex-direction:column;box-shadow:-8px 0 32px rgba(0,0,0,.6);}
+.detail-panel.open{right:0;}
+.dp-hdr{padding:14px 16px 12px;border-bottom:1px solid #30363D;display:flex;align-items:center;justify-content:space-between;}
+.dp-proj{font-size:14.4px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;}
+.dp-sub{font-size:13.2px;color:#8B949E;margin-top:2px;}
+.dp-close{background:none;border:none;color:#8B949E;cursor:pointer;font-size:22.8px;padding:2px 6px;}
+.dp-close:hover{color:#E6EDF3;}
+.dp-body{flex:1;overflow-y:auto;padding:14px;}
+.dp-kpis{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:14px;}
+.dp-kpi{background:#21262D;border-radius:6px;padding:8px 10px;}
+.dp-kpi-val{font-size:25.2px;font-weight:700;font-family:var(--mono);}
+.dp-kpi-label{font-size:12px;color:#8B949E;text-transform:uppercase;letter-spacing:.4px;margin-top:1px;}
+.dp-sec{margin-bottom:12px;}
+.dp-sec-title{font-size:12px;font-weight:600;color:#8B949E;text-transform:uppercase;letter-spacing:.8px;margin-bottom:6px;padding-bottom:4px;border-bottom:1px solid #30363D;}
+
+/* TEAM */
+.team-view{padding:0 24px 24px;}
+.team-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:12px;}
+.member-card{background:var(--bg2);border:1px solid var(--bord);border-radius:8px;overflow:hidden;}
+.member-hdr{padding:12px 14px;display:flex;align-items:center;gap:10px;border-bottom:1px solid var(--bord);}
+.member-av{width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:15.6px;font-weight:700;flex-shrink:0;}
+.member-name{font-size:16.8px;font-weight:600;}
+.member-role{font-size:13.2px;color:var(--muted);}
+.member-stats{display:flex;gap:0;border-bottom:1px solid var(--bord);}
+.mstat{flex:1;padding:8px;text-align:center;border-right:1px solid var(--bord);}
+.mstat:last-child{border-right:none;}
+.mstat-val{font-size:20.4px;font-weight:700;font-family:var(--mono);}
+.mstat-label{font-size:10.8px;color:var(--muted);text-transform:uppercase;letter-spacing:.4px;margin-top:1px;}
+.member-issues{padding:8px;max-height:200px;overflow-y:auto;}
+.m-issue{display:flex;align-items:center;gap:6px;padding:4px 5px;border-radius:4px;margin-bottom:2px;font-size:13.2px;}
+.m-issue:hover{background:var(--bg3);}
+.m-dot{width:6px;height:6px;border-radius:50%;flex-shrink:0;}
+.m-key{font-family:var(--mono);font-size:12px;color:var(--muted);flex-shrink:0;width:76px;}
+.m-sum{flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.m-bar-wrap{padding:0 14px 12px;}
+.m-bar-track{background:var(--bg3);border-radius:3px;height:4px;}
+.m-bar-fill{height:4px;border-radius:3px;}
+
+/* GANTT */
+.gantt-wrap{overflow-x:auto;padding:0 24px 24px;}
+#gantt-container{width:max-content;min-width:100%;}
+.toolbar{display:flex;gap:6px;padding:0 24px 10px;flex-wrap:wrap;align-items:center;}
+/* EVOLUCAO */
+.evo-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(172px,1fr));gap:10px;padding:0 24px 16px;}
+.evo-tile{background:var(--bg2);border:1px solid var(--bord);border-radius:8px;padding:12px 14px;}
+.evo-label{font-size:13.2px;color:var(--muted);text-transform:uppercase;letter-spacing:.6px;margin-bottom:7px;line-height:1.2;}
+.evo-value{font-size:33.6px;font-weight:600;color:var(--text);line-height:1;}
+.evo-delta{font-size:14.4px;font-weight:600;margin-top:6px;display:flex;align-items:baseline;gap:5px;}
+.evo-delta span.evo-vs{color:var(--muted);font-weight:400;font-size:13.2px;}
+.evo-spark{margin-top:9px;display:block;width:100%;height:auto;}
+.evo-spark-wrap{position:relative;}
+.evo-spark-eixo{position:relative;height:14px;margin-top:3px;}
+.evo-spark-eixo span{position:absolute;top:0;font-family:var(--mono);font-size:12px;line-height:14px;color:var(--muted);white-space:nowrap;}
+.evo-spark-eixo span.cmp{color:var(--text);font-weight:700;}
+.evo-card{background:var(--bg2);border:1px solid var(--bord);border-radius:8px;padding:16px;}
+.evo-card-title{font-size:15.6px;font-weight:600;color:var(--cyan);text-transform:uppercase;letter-spacing:.8px;margin-bottom:4px;}
+.evo-card-sub{font-size:13.2px;color:var(--muted);margin-bottom:16px;line-height:1.5;}
+.evo-legend{display:flex;gap:14px;font-size:13.2px;color:var(--muted);align-items:center;margin-bottom:14px;flex-wrap:wrap;}
+.evo-legend i{width:9px;height:9px;border-radius:50%;display:inline-block;margin-right:5px;vertical-align:-1px;}
+.evo-intro{margin:0 24px 16px;background:rgba(2,37,235,.12);border:1px solid rgba(2,37,235,.35);border-left:3px solid var(--blue);border-radius:8px;padding:13px 16px;display:flex;gap:12px;align-items:flex-start;}
+.evo-intro h4{font-size:14.4px;font-weight:700;color:var(--cyan);text-transform:uppercase;letter-spacing:.8px;margin-bottom:5px;}
+.evo-intro p{font-size:14.4px;color:#C0C8D4;line-height:1.6;margin-bottom:6px;}
+.evo-intro p:last-child{margin-bottom:0;color:var(--muted);font-size:13.2px;}
+.evo-obs{margin-top:15px;padding-top:14px;border-top:1px solid var(--bord);}
+.evo-obs-card{margin:0 24px 16px;background:var(--bg2);border:1px solid var(--bord);border-radius:8px;padding:15px 17px;}
+.evo-obs-card .evo-obs{margin-top:0;padding-top:0;border-top:none;}
+.evo-obs-hd{font-size:13.2px;font-weight:700;color:var(--cyan);text-transform:uppercase;letter-spacing:.8px;margin-bottom:9px;}
+.evo-obs p{font-size:14.4px;color:#C0C8D4;line-height:1.65;margin:0 0 8px;}
+.evo-obs p b{color:var(--text);font-weight:700;}
+.evo-obs .acao{font-size:14.4px;color:#E6EDF3;line-height:1.6;background:rgba(2,255,255,.06);border-left:2px solid var(--cyan);padding:8px 12px;border-radius:0 5px 5px 0;margin:0;}
+.dv-row{display:flex;align-items:center;gap:9px;margin-bottom:8px;}
+.dv-name{width:81px;font-size:13.2px;font-weight:600;text-align:right;flex-shrink:0;}
+.dv-track{flex:1;min-width:70px;position:relative;height:15px;background:var(--bg3);border-radius:3px;}
+.dv-zero{position:absolute;left:50%;top:-3px;bottom:-3px;width:1px;background:#484F58;}
+.dv-bar{position:absolute;top:2px;bottom:2px;border-radius:2px;}
+.dv-delta{width:31px;font-size:14.4px;font-weight:700;text-align:right;flex-shrink:0;font-family:var(--mono);font-variant-numeric:tabular-nums;}
+.dv-detail{width:171px;flex-shrink:1;min-width:0;overflow:hidden;white-space:nowrap;font-size:12px;color:var(--muted);font-family:var(--mono);}
+.dv-tag{font-size:10.8px;padding:1px 5px;border-radius:6px;background:var(--bg3);color:var(--muted);margin-left:5px;font-family:var(--font);}
+.dv-scale{display:grid;grid-template-columns:1fr 1fr 1fr;font-size:12px;color:var(--gray);margin:6px 200px 0 83px;}
+.dv-scale span:nth-child(2){text-align:center;}.dv-scale span:last-child{text-align:right;}
+.s18-chip{display:inline-flex;align-items:center;gap:6px;background:var(--bg3);border:1px solid var(--bord);border-radius:14px;padding:4px 11px;font-size:14.4px;color:#C0C8D4;}
+.s18-chip b{color:var(--text);font-weight:700;}
+.fbtn{background:var(--bg3);border:1px solid var(--bord);color:var(--muted);padding:4px 10px;border-radius:14px;cursor:pointer;font-size:14.4px;transition:all .15s;}
+.fbtn.active,.fbtn:hover{background:var(--blue);color:#fff;border-color:var(--blue);}
+.today-btn{background:var(--dark);border:1px solid var(--blue);color:var(--cyan);padding:4px 10px;border-radius:14px;cursor:pointer;font-size:14.4px;margin-left:auto;}
+.m-hdr{display:flex;border-bottom:1px solid var(--bord);}
+.m-lbl-col{width:280px;min-width:280px;position:sticky;left:0;background:var(--bg);z-index:11;border-right:1px solid var(--bord);}
+.m-cell{background:var(--bg2);text-align:center;font-size:13.2px;font-weight:600;color:var(--cyan);padding:4px 0;border-right:1px solid var(--bord);flex-shrink:0;}
+.g-hdr{display:flex;position:sticky;top:0;z-index:10;background:var(--bg);border-bottom:1px solid var(--bord);}
+.g-lbl-col{width:280px;min-width:280px;padding:5px 10px;font-size:13.2px;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;position:sticky;left:0;background:var(--bg);z-index:11;border-right:1px solid var(--bord);}
+.g-days{display:flex;flex-shrink:0;}
+.d-cell{width:var(--day);min-width:var(--day);text-align:center;font-size:12px;color:var(--muted);padding:3px 0;border-right:1px solid rgba(48,54,61,.4);}
+.d-cell.wknd{background:rgba(255,255,255,.015);}.d-cell.s18-d{color:var(--purple);}.d-cell.today-d{background:rgba(248,81,73,.15);color:var(--red);font-weight:600;}
+.g-row{display:flex;border-bottom:1px solid rgba(48,54,61,.3);transition:background .1s;}
+.g-row:hover{background:rgba(255,255,255,.025);}
+.grp-row{display:flex;background:rgba(2,32,96,.35);cursor:pointer;border-bottom:1px solid rgba(48,54,61,.5);}
+.grp-row:hover{background:rgba(2,32,96,.55);}
+.grp-lbl{width:280px;min-width:280px;padding:6px 10px;display:flex;align-items:center;gap:8px;position:sticky;left:0;background:rgba(2,32,96,.35);z-index:5;border-right:1px solid var(--bord);}
+.grp-name{font-size:14.4px;font-weight:700;flex:1;}
+.grp-badges{display:flex;gap:4px;align-items:center;}
+.gbadge{font-size:10.8px;font-weight:700;padding:1px 5px;border-radius:8px;}
+.grp-tl{position:relative;flex:none;height:28px;background:rgba(2,32,96,.2);}
+.grp-summary{position:absolute;top:8px;left:8px;display:flex;gap:6px;}
+.gs-seg{height:12px;border-radius:2px;min-width:3px;}
+.task-rows{display:none;}
+.task-rows.open{display:block;}
+.task-row{display:flex;border-bottom:1px solid rgba(48,54,61,.2);background:rgba(0,0,0,.15);align-items:center;}
+.task-row:hover{background:rgba(255,255,255,.02);}
+.task-lbl{width:280px;min-width:280px;padding:3px 10px 3px 22px;display:flex;align-items:center;gap:6px;position:sticky;left:0;background:rgba(13,17,23,.9);z-index:5;border-right:1px solid var(--bord);}
+.task-dot{width:6px;height:6px;border-radius:50%;flex-shrink:0;}
+.task-key{font-family:var(--mono);font-size:10.8px;color:var(--muted);flex-shrink:0;width:81px;}
+.task-sum{font-size:12px;flex:1;color:#C0C8D4;line-height:1.3;}
+.task-tl{position:relative;flex:none;min-height:22px;}
+.task-bar{position:absolute;height:8px;border-radius:2px;top:50%;transform:translateY(-50%);opacity:.85;min-width:2px;}
+.task-bar.done{background:var(--green);}.task-bar.prog{background:var(--blue);}.task-bar.pend{background:var(--gray);}
+.task-bar.carry{background:linear-gradient(90deg,var(--blue),var(--purple));}
+.task-bar.semprev{background:repeating-linear-gradient(90deg,var(--gray) 0 5px,transparent 5px 9px);opacity:.75;border-radius:0;}
+.dbg{position:absolute;top:0;bottom:0;}
+.dbg.wknd{background:rgba(255,255,255,.012);}.dbg.sprint{background:rgba(2,37,235,.05);}
+.dbg.today-col{background:rgba(248,81,73,.08);}
+.dbg.s18{background:rgba(137,87,229,.07);}
+.ref-line{position:absolute;top:0;bottom:0;width:2px;z-index:8;}
+.ref-today{background:var(--red);opacity:.7;}.ref-end{background:var(--purple);opacity:.6;}
+.ref-s18{background:var(--cyan);opacity:.55;}
+.bar{position:absolute;height:12px;border-radius:2px;top:7px;opacity:.9;min-width:3px;cursor:pointer;}
+.bar.done{background:var(--green);}.bar.prog{background:var(--blue);}.bar.pend{background:var(--gray);}
+.bar.carry{background:linear-gradient(90deg,var(--blue),var(--purple));}
+.expand-icon{font-size:12px;color:var(--muted);flex-shrink:0;width:10px;}
+.g-tooltip{position:fixed;background:#21262D;border:1px solid #30363D;border-radius:6px;padding:8px 10px;font-size:13.2px;color:#E6EDF3;pointer-events:none;z-index:200;max-width:260px;display:none;line-height:1.5;box-shadow:0 4px 16px rgba(0,0,0,.5);}
+.footer{background:var(--dark);padding:10px 24px;font-size:13.2px;color:var(--muted);border-top:1px solid var(--bord);display:flex;justify-content:space-between;}
+/* tablets — reduz o respiro lateral de 24px */
+@media(max-width:1024px){
+  .hdr,.tabs,.footer{padding-left:18px;padding-right:18px;}
+  .kpi-strip{padding-left:18px;padding-right:18px;}
+  .proj-view{padding:0 18px 20px;}
+  .team-view{padding:0 18px 20px;}
+  .grid-2{padding-left:18px !important;padding-right:18px !important;}
+  .toolbar,.gantt-wrap,.gantt-legend{padding-left:18px !important;padding-right:18px !important;}
+  #sdesk-areas{padding-left:18px !important;padding-right:18px !important;}
+  .sla-marco{margin-left:18px !important;margin-right:18px !important;}
+}
+@media(max-width:768px){
+  /* header */
+  .hdr{flex-wrap:wrap;gap:6px;padding:10px 14px;}
+  .hdr-title{font-size:19.2px;}
+  .hdr-sub{font-size:12px;line-height:1.4;}
+  .hdr-badge{align-self:flex-start;}
+  /* tabs */
+  .tabs{padding:0 8px;overflow-x:auto;scrollbar-width:none;-webkit-overflow-scrolling:touch;}
+  .tabs::-webkit-scrollbar{display:none;}
+  .tab{padding:9px 12px;font-size:15.6px;flex-shrink:0;}
+  /* kpis */
+  .kpi-strip{padding:12px 14px;gap:8px;}
+  .kpi{padding:9px 11px;min-width:calc(50% - 4px);flex:none;}
+  .kpi-val{font-size:26.4px;}
+  /* grids */
+  .grid-2{grid-template-columns:1fr !important;gap:10px;padding-left:14px !important;padding-right:14px !important;}
+  .proj-view,.team-view{padding:0 14px 16px;}
+  .proj-grid{gap:8px;}
+  .team-grid{grid-template-columns:1fr;}
+  /* sdesk */
+  #sdesk-areas{padding:0 14px 20px !important;}
+  .sdesk-area-body{grid-template-columns:1fr !important;}
+  /* marco SLA */
+  .sla-marco{margin-left:14px !important;margin-right:14px !important;}
+  /* gantt */
+  .gantt-wrap{padding-left:14px !important;padding-right:14px !important;}
+  .toolbar{padding:0 14px 10px !important;}
+  .gantt-legend{padding-left:14px !important;padding-right:14px !important;flex-wrap:wrap;}
+  .m-lbl-col,.g-lbl-col,.grp-lbl,.task-lbl{width:150px;min-width:150px;}
+  /* painel detalhe */
+  .detail-panel{width:100%;right:-100%;}
+  /* footer */
+  .footer{flex-direction:column;gap:4px;padding:10px 14px;text-align:center;}
+}
+@media(max-width:480px){
+  .hdr,.tabs,.footer,.kpi-strip{padding-left:12px;padding-right:12px;}
+  .proj-view,.team-view{padding:0 12px 14px;}
+  .grid-2{padding-left:12px !important;padding-right:12px !important;}
+  #sdesk-areas{padding-left:12px !important;padding-right:12px !important;}
+  .sla-marco{margin-left:12px !important;margin-right:12px !important;}
+  .gantt-wrap,.toolbar,.gantt-legend{padding-left:12px !important;padding-right:12px !important;}
+  .kpi{min-width:calc(50% - 4px);}
+  .kpi-val{font-size:24px;}
+  .proj-grid{grid-template-columns:1fr 1fr;}
+  .m-lbl-col,.g-lbl-col,.grp-lbl,.task-lbl{width:120px;min-width:120px;}
+}
+/* Evolução: o gráfico por frente precisa de largura — solta os dois cards
+   em coluna antes do breakpoint geral, e some com o detalhe no celular
+   (o valor continua no title da barra) */
+@media(max-width:1200px){#panel-evolucao .grid-2{grid-template-columns:1fr !important;}}
+@media(max-width:560px){
+  .dv-detail{display:none;}
+  .dv-name{width:66px;}
+  .dv-scale{margin:6px 37px 0 69px;}
+}
+</style>
+</head>
+<body>
+
+<div class="hdr">
+  <div>
+    <div class="hdr-brand">Fenasbac TI</div>
+    <div class="hdr-title">Dashboard · Sprint S20</div>
+    <div class="hdr-sub">fenasbac-tech.atlassian.net · S20 encerrada: 28/09–09/10/2026 &nbsp;·&nbsp; S21 em andamento: 13/10–24/10/2026</div>
+  </div>
+  <div class="hdr-badge" id="hdr-badge">—</div>
+</div>
+
+<div class="tabs">
+  <div class="tab active" onclick="showTab('projetos')">🗂 Projetos</div>
+  <div class="tab" onclick="showTab('evolucao')">📈 Evolução</div>
+  <div class="tab" onclick="showTab('time')">👥 Time</div>
+  <div class="tab" onclick="showTab('gantt')">📅 Gantt</div>
+  <div class="tab" onclick="showTab('sdesk')">🎫 SDesk</div>
+</div>
+
+<!-- PROJETOS -->
+<div class="panel active" id="panel-projetos">
+<div class="kpi-strip">
+  <div class="kpi ok"><div class="kpi-val" id="kpi-done">—</div><div class="kpi-label">Concluídos S20</div></div>
+  <div class="kpi warn"><div class="kpi-val" id="kpi-taxa">—</div><div class="kpi-label">Taxa geral</div></div>
+  <div class="kpi warn"><div class="kpi-val" id="kpi-carry">—</div><div class="kpi-label">Carry-over S20</div></div>
+  <div class="kpi ok"><div class="kpi-val" id="kpi-projs">—</div><div class="kpi-label">Projetos</div></div>
+</div>
+<div class="grid-2" style="padding:0 24px 16px;">
+  <div style="background:var(--bg2);border:1px solid var(--bord);border-radius:8px;padding:16px;">
+    <div style="font-size:15.6px;font-weight:600;color:var(--cyan);text-transform:uppercase;letter-spacing:.8px;margin-bottom:14px;">Distribuição de Status S20</div>
+    <div style="display:flex;align-items:center;gap:24px;justify-content:center;">
+      <canvas id="donut" width="150" height="150"></canvas>
+      <div id="donut-legend" style="display:flex;flex-direction:column;gap:10px;"></div>
+    </div>
+    <div class="evo-obs" id="desc-status"></div>
+  </div>
+  <div style="background:var(--bg2);border:1px solid var(--bord);border-radius:8px;padding:16px;">
+    <div style="font-size:15.6px;font-weight:600;color:var(--cyan);text-transform:uppercase;letter-spacing:.8px;margin-bottom:14px;">Entregas por Projeto</div>
+    <div id="taxa-chart"></div>
+    <div class="evo-obs" id="desc-taxa"></div>
+  </div>
+</div>
+<div class="proj-view" id="proj-view"></div>
+</div>
+
+<!-- EVOLUCAO -->
+<div class="panel" id="panel-evolucao">
+<div class="evo-intro">
+  <div style="font-size:25.2px;flex-shrink:0;margin-top:1px;">📈</div>
+  <div>
+    <h4>O que esta aba mostra</h4>
+    <p>Compara a <strong style="color:var(--text);">sprint que acabou de fechar</strong> com a <strong style="color:var(--text);">anterior</strong>, para responder se o time evoluiu — e antecipa a carga que atravessa para a <strong style="color:var(--text);">sprint que inicia</strong>. Os cartões no topo trazem cada indicador com a variação em relação à sprint passada e a tendência das últimas três. O gráfico por frente mostra onde as entregas cresceram ou caíram. O último bloco é o que já entra na sprint nova.</p>
+    <p>Os números da sprint fechada são calculados dos dados desta própria página; os das sprints anteriores vêm dos dashboards daquelas sprints.</p>
+  </div>
+</div>
+<div id="evo-comparacao" style="margin:0 24px 14px;"></div>
+<div class="evo-grid" id="evo-tiles"></div>
+<div class="evo-obs-card"><div class="evo-obs" id="evo-obs-kpi"></div></div>
+<div class="grid-2" style="padding:0 24px 16px;">
+  <div class="evo-card" id="evo-dumbbell"></div>
+  <div class="evo-card" id="evo-s18"></div>
+</div>
+</div>
+
+<!-- TIME -->
+<div class="panel" id="panel-time">
+<div class="kpi-strip">
+  <div class="kpi ok"><div class="kpi-val" id="kpi-time-done">—</div><div class="kpi-label">Concluídos</div></div>
+  <div class="kpi ok"><div class="kpi-val" id="kpi-time-membros">—</div><div class="kpi-label">Membros ativos</div></div>
+</div>
+<div class="team-view" id="team-view"></div>
+</div>
+
+<!-- GANTT -->
+<div class="panel" id="panel-gantt">
+<div class="kpi-strip" style="padding-bottom:8px;">
+  <div class="kpi ok"><div class="kpi-val" id="kpi-gantt-done">—</div><div class="kpi-label">Concluídos</div></div>
+  <div class="kpi"><div class="kpi-val">14/09</div><div class="kpi-label">Início S19</div></div>
+  <div class="kpi"><div class="kpi-val">28/09</div><div class="kpi-label">Fim S19</div></div>
+  <div class="kpi warn"><div class="kpi-val">28/09</div><div class="kpi-label">Início S20</div></div>
+  <div class="kpi warn"><div class="kpi-val">09/10</div><div class="kpi-label">Fim S20</div></div>
+  <div class="kpi"><div class="kpi-val" id="kpi-s20-count">–</div><div class="kpi-label">Atravessam p/ a S21</div></div>
+</div>
+<div class="toolbar">
+  <button class="fbtn active" onclick="setF('all',this)">Todos</button>
+  <button class="fbtn" onclick="setF('done',this)">✓ Concluídos</button>
+  <button class="fbtn" onclick="setF('carry',this)">→ Não concluídos</button>
+  <button class="fbtn" onclick="setF('alem',this)" title="Isola as barras em gradiente: issues abertas no fechamento cuja entrega prevista cai depois de 09/10. É um recorte do Gantt, mais estreito que o total de abertas — para o total, use “Não concluídos”.">⇢ Entrega além de 09/10</button>
+  <button class="fbtn" onclick="expandAll()">⊞ Expandir</button>
+  <button class="fbtn" onclick="collapseAll()">⊟ Recolher</button>
+  <button class="today-btn" onclick="scrollToToday()">📍 Hoje</button>
+</div>
+<div class="gantt-legend" style="display:flex;gap:16px;padding:0 24px 8px;font-size:13.2px;color:var(--muted);align-items:center;flex-wrap:wrap;">
+  <span style="display:flex;align-items:center;gap:5px;"><span style="width:20px;height:3px;background:rgba(2,37,235,.4);display:inline-block;border-radius:2px;"></span>Sprint S20 (28/09–09/10)</span>
+  <span style="display:flex;align-items:center;gap:5px;"><span style="width:2px;height:12px;background:#F85149;opacity:.7;display:inline-block;"></span>Hoje</span>
+  <span style="display:flex;align-items:center;gap:5px;"><span style="width:2px;height:12px;background:#8957E5;opacity:.6;display:inline-block;"></span>Fim S20</span>
+  <span style="display:flex;align-items:center;gap:5px;"><span style="width:20px;height:3px;background:rgba(137,87,229,.35);display:inline-block;border-radius:2px;"></span>Sprint S19 (14/09–28/09)</span>
+  <span style="display:flex;align-items:center;gap:5px;"><span style="width:2px;height:12px;background:#02FFFF;opacity:.55;display:inline-block;"></span>Fim S19</span>
+  <span style="display:flex;align-items:center;gap:5px;"><span style="width:20px;height:3px;background:#2EA043;opacity:.5;display:inline-block;border-radius:2px;"></span>Barra = concluído</span>
+  <span style="display:flex;align-items:center;gap:5px;"><span style="width:20px;height:3px;background:linear-gradient(90deg,#0225EB,#8957E5);display:inline-block;border-radius:2px;"></span>Carry-over para a S21</span>
+  <span style="display:flex;align-items:center;gap:5px;"><span style="width:20px;height:3px;background:repeating-linear-gradient(90deg,#8B949E 0 5px,transparent 5px 9px);display:inline-block;"></span>Sem previsão de entrega no Jira</span>
+</div>
+<div class="gantt-wrap" id="gantt-wrap"><div id="gantt-container"></div></div>
+</div>
+
+<!-- SDESK -->
+<div class="panel" id="panel-sdesk">
+<div class="kpi-strip">
+  <div class="kpi"><div class="kpi-val" id="sd-total">—</div><div class="kpi-label">Chamados</div></div>
+  <div class="kpi warn"><div class="kpi-val" id="sd-sla-res">—</div><div class="kpi-label">SLA Resolução</div></div>
+  <div class="kpi ok"><div class="kpi-val" id="sd-sla-1a">—</div><div class="kpi-label">SLA 1ª Resposta</div></div>
+  <div class="kpi"><div class="kpi-val" id="sd-noprazo">—</div><div class="kpi-label">Dentro do prazo</div></div>
+  <div class="kpi warn"><div class="kpi-val" id="sd-estouro">—</div><div class="kpi-label">Estouraram</div></div>
+  <div class="kpi"><div class="kpi-val" id="sd-pend">—</div><div class="kpi-label">Pendentes</div></div>
+</div>
+
+<div id="sdesk-trilhas" style="padding:0 24px 4px;">
+  <div style="font-size:15.6px;font-weight:600;color:var(--cyan);text-transform:uppercase;letter-spacing:.8px;margin-bottom:10px;">SLA por trilha — cumprimento real (lido do JSM, horário comercial)</div>
+  <div id="sdesk-trilha-cards" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:10px;"></div>
+  <div id="sdesk-trilha-total" style="font-size:13.2px;color:var(--muted);margin-top:10px;font-style:italic;"></div>
+</div>
+</div>
+<div id="sdesk-areas" style="padding:0 24px 24px;display:flex;flex-direction:column;gap:14px;"></div>
+</div>
+
+<!-- DETAIL PANEL -->
+<div class="detail-panel" id="detail-panel">
+  <div class="dp-hdr">
+    <div>
+      <div class="dp-proj" id="dp-proj-name">—</div>
+      <div class="dp-sub" id="dp-proj-sub">Clique em um projeto</div>
+    </div>
+    <button class="dp-close" onclick="closePanel()">✕</button>
+  </div>
+  <div class="dp-body">
+    <div class="dp-kpis" id="dp-kpis"></div>
+    <div class="dp-sec" id="dp-done-sec"><div class="dp-sec-title">✅ Concluídos</div><div id="dp-done-list"></div></div>
+    <div class="dp-sec" id="dp-open-sec"><div class="dp-sec-title">⏳ Carry-over / Em andamento</div><div id="dp-open-list"></div></div>
+  </div>
+</div>
+
+<div class="g-tooltip" id="g-tooltip"></div>
+
+<div class="footer">
+  <span>SBS Quadra 02, Bloco A, Ed. Casa de São Paulo, 7º andar — Brasília/DF</span>
+  <span>Fenasbac TI · Sprint S20 · fechamento em 13/10/2026 · Jira + Slack + Gmail · SLA desta rodada simplificado (resolvido=no prazo)</span>
+</div>
+
+<script>
+// created e due vem do Jira (created / duedate), lidos em 13/10/2026.
+// Quando o Jira nao tem duedate: concluida usa a data real de resolucao;
+// aberta recebe semPrev:true e a barra vai ate o fim da sprint, tracejada.
+const ISSUES=[
+  {key:"PROC-351",project:"PROC",status:"Em andamento",assignee:"Coordenação",summary:"Iniciar os testes de integração do Jira com o Git",created:"2026-09-15",due:"2026-10-23"},
+  {key:"PORTAL-4",project:"PORTAL",status:"Em andamento",assignee:"Infra / Suporte N1",summary:"Intranet - Implementação e Validação do Redesign em Ambiente de Staging (Pré-Produção)",created:"2026-08-26",due:"2026-10-16"},
+  {key:"ETI-15",project:"ETI",status:"Em andamento",assignee:"Coordenação",summary:"[ETI] P08 · Dashboards operacionais (indicadores Jira)",created:"2026-06-24",due:"2026-10-16"},
+  {key:"ETI-14",project:"ETI",status:"Em andamento",assignee:"Coordenação",summary:"[ETI] P09 · Ciclos formais de report",created:"2026-06-24",due:"2026-10-16"},
+  {key:"ENG-40",project:"ENG",status:"Em andamento",assignee:"Conteúdo",summary:"Criar identidade de elementos para as aplicações internas Fenasbac",created:"2026-09-15",due:"2026-10-26"},
+  {key:"CONECTA-104",project:"CONECTA",status:"Em andamento",assignee:"Infra / Suporte N1",summary:"Averiguar validação de e-mail/CPF já cadastrado no fluxo de cadastro",created:"2026-10-07",due:"2026-10-16"},
+  {key:"TECH-151",project:"TECH",status:"Pendente",assignee:"Infra / Suporte N1",summary:"Aquisição e Instalacao de Nobreaks para a Infraestrutura",created:"2026-10-07",due:"2026-10-09",semPrev:true},
+  {key:"PROC-366",project:"PROC",status:"Pendente",assignee:"Coordenação",summary:"Validar com a equipe técnica as funcionalidades do FenasHub levantadas pelas áreas",created:"2026-10-05",due:"2026-10-23"},
+  {key:"PROC-363",project:"PROC",status:"Pendente",assignee:"Coordenação",summary:"9. Documentar o padrão de status na Base de Conhecimento",created:"2026-09-22",due:"2026-10-09",semPrev:true},
+  {key:"PROC-362",project:"PROC",status:"Pendente",assignee:"Coordenação",summary:"8. Definir condição de permissão na transição para Concluído",created:"2026-09-22",due:"2026-10-09",semPrev:true},
+  {key:"PROC-361",project:"PROC",status:"Pendente",assignee:"Coordenação",summary:"7. Propagar o scheme para os demais projetos de software",created:"2026-09-22",due:"2026-10-09",semPrev:true},
+  {key:"PROC-360",project:"PROC",status:"Pendente",assignee:"Coordenação",summary:"6. Piloto em FENASHUB e FENASBR e medição de uma sprint",created:"2026-09-22",due:"2026-10-09",semPrev:true},
+  {key:"PROC-359",project:"PROC",status:"Pendente",assignee:"Coordenação",summary:"5. Normalizar FIA, ANALYTICS e o status \"Aguardando Cliente\"",created:"2026-09-22",due:"2026-10-09",semPrev:true},
+  {key:"PROC-358",project:"PROC",status:"Pendente",assignee:"Coordenação",summary:"4. Aplicar o scheme nos 14 projetos sem card aberto",created:"2026-09-22",due:"2026-10-09",semPrev:true},
+  {key:"PROC-357",project:"PROC",status:"Pendente",assignee:"Coordenação",summary:"3. Criar o workflow e o scheme compartilhado dos projetos de software",created:"2026-09-22",due:"2026-10-09",semPrev:true},
+  {key:"PROC-356",project:"PROC",status:"Pendente",assignee:"Coordenação",summary:"2. Levantar filtros, dashboards e automações que citam nomes de status",created:"2026-09-22",due:"2026-10-09",semPrev:true},
+  {key:"PROC-355",project:"PROC",status:"Pendente",assignee:"Coordenação",summary:"1. Criar os status \"Aguardando área\" e \"Em homologação\"",created:"2026-09-22",due:"2026-10-09",semPrev:true},
+  {key:"PROC-354",project:"PROC",status:"Pendente",assignee:"Coordenação",summary:"Padronizar status e workflow dos boards Jira do site fenasbac-tech",created:"2026-09-22",due:"2026-10-02"},
+  {key:"PROC-352",project:"PROC",status:"Pendente",assignee:"Coordenação",summary:"Organizar a higienização do Drive de Tecnologia",created:"2026-09-15",due:"2026-10-16"},
+  {key:"PROC-317",project:"PROC",status:"Pendente",assignee:"Coordenação",summary:"Apresentar proposta para a Diretoria - Política de acesso FenasHub",created:"2026-08-03",due:"2026-11-12"},
+  {key:"PORTAL-18",project:"PORTAL",status:"Pendente",assignee:"Infra / Suporte N1",summary:"Configurar e aplicar a integração com Kuma para monitoramento de status em tempo real",created:"2026-09-24",due:"2026-10-16"},
+  {key:"PORTAL-6",project:"PORTAL",status:"Pendente",assignee:"Infra / Suporte N1",summary:"Publicação do Redesign em Produção (Deploy) e Plano de Comunicação",created:"2026-08-26",due:"2026-10-16"},
+  {key:"ETI-13",project:"ETI",status:"Pendente",assignee:"Coordenação",summary:"[ETI] P12 · Triagem/deflexão de chamados com IA",created:"2026-06-24",due:"2026-10-16"},
+  {key:"ETI-11",project:"ETI",status:"Pendente",assignee:"Coordenação",summary:"[ETI] P10 · Report Executivo quinzenal automatizado",created:"2026-06-24",due:"2026-10-16"},
+  {key:"ETI-10",project:"ETI",status:"Pendente",assignee:"Coordenação",summary:"[ETI] P11 · Definição e formalização de indicadores",created:"2026-06-24",due:"2026-10-16"},
+  {key:"CONECTA-84",project:"CONECTA",status:"Pendente",assignee:"Desenvolvimento",summary:"Preparar a ativação das regionais no Conecta (perfis Validação e Gestão)",created:"2026-08-07",due:"2026-10-09",semPrev:true},
+  {key:"TECH-143",project:"TECH",status:"Concluído",assignee:"Coordenação",summary:"Configurar softwares e acessos — André Lin",created:"2026-09-28",due:"2026-10-09"},
+  {key:"TECH-142",project:"TECH",status:"Concluído",assignee:"Coordenação",summary:"Adicionar aos canais do Slack — André Lin",created:"2026-09-28",due:"2026-10-09"},
+  {key:"TECH-141",project:"TECH",status:"Concluído",assignee:"Coordenação",summary:"Criar contas e e-mail corporativo — André Lin",created:"2026-09-28",due:"2026-10-09"},
+  {key:"TECH-139",project:"TECH",status:"Concluído",assignee:"Infra / Suporte N1",summary:"Cotar os equipamentos — André Lin",created:"2026-09-28",due:"2026-10-09"},
+  {key:"TECH-137",project:"TECH",status:"Concluído",assignee:"Infra / Suporte N1",summary:"Realizar cotação e compra de Nobreak",created:"2026-09-25",due:"2026-10-09"},
+  {key:"TECH-124",project:"TECH",status:"Concluído",assignee:"Infra / Suporte N1",summary:"VPN e VNC — Comunicação",created:"2026-08-20",due:"2026-10-13"},
+  {key:"TECH-123",project:"TECH",status:"Concluído",assignee:"Infra / Suporte N1",summary:"VPN e VNC — Tecnologia",created:"2026-08-20",due:"2026-10-07"},
+  {key:"STRAPI-38",project:"STRAPI",status:"Concluído",assignee:"Conteúdo",summary:"Desenhar Strapi Programas",created:"2026-07-17",due:"2026-09-28"},
+  {key:"STRAPI-23",project:"STRAPI",status:"Concluído",assignee:"Conteúdo",summary:"[Nexus][Strapi] Estruturação de conteúdo e integração",created:"2026-05-03",due:"2026-10-09"},
+  {key:"PROC-367",project:"PROC",status:"Concluído",assignee:"Coordenação",summary:"[Handover] Transferência de conhecimento e operacionalização da aplicação de Certificados com as áreas",created:"2026-10-07",due:"2026-10-13"},
+  {key:"PROC-365",project:"PROC",status:"Concluído",assignee:"Coordenação",summary:"Consolidar o input das áreas e atualizar a Política de Governança do FenasHub (v1.1)",created:"2026-10-05",due:"2026-10-12"},
+  {key:"PROC-364",project:"PROC",status:"Concluído",assignee:"Coordenação",summary:"Corrigir a concessão automática de assentos pagos no Atlassian (domínio aprovado)",created:"2026-09-24",due:"2026-09-28"},
+  {key:"PROC-353",project:"PROC",status:"Concluído",assignee:"Coordenação",summary:"Criar guia de uso do Slack como canvas do workspace (#fenasbac)",created:"2026-09-17",due:"2026-10-02"},
+  {key:"PROC-350",project:"PROC",status:"Concluído",assignee:"Coordenação",summary:"Elaborar a proposta do encontrão (encontro presencial da equipe) para o Rodrigo",created:"2026-09-15",due:"2026-10-02"},
+  {key:"PROC-347",project:"PROC",status:"Concluído",assignee:"Coordenação",summary:"Disponibilizar o modelo de perguntas do FenasHub às áreas (canal de coordenação)",created:"2026-09-15",due:"2026-09-29"},
+  {key:"PROC-344",project:"PROC",status:"Concluído",assignee:"Coordenação",summary:"Estruturar modelo de report mensal estratégico para a Diretoria (protótipo)",created:"2026-09-01",due:"2026-10-09"},
+  {key:"PROC-272",project:"PROC",status:"Concluído",assignee:"Coordenação",summary:"[Onda 1 - Financeiro] Encerrar onda e registrar pendências",created:"2026-07-01",due:"2026-10-15"},
+  {key:"PROC-271",project:"PROC",status:"Concluído",assignee:"Coordenação",summary:"[Onda 1 - Financeiro] Suporte assistido (primeiros dias)",created:"2026-07-01",due:"2026-10-14"},
+  {key:"PROC-270",project:"PROC",status:"Concluído",assignee:"Infra / Suporte N1",summary:"[Onda 1 - Financeiro] Treinamento rápido de utilização",created:"2026-07-01",due:"2026-10-02"},
+  {key:"PROC-269",project:"PROC",status:"Concluído",assignee:"Infra / Suporte N1",summary:"[Onda 1 - Financeiro] Migrar senhas para os cofres",created:"2026-07-01",due:"2026-10-02"},
+  {key:"PROC-268",project:"PROC",status:"Concluído",assignee:"Infra / Suporte N1",summary:"[Onda 1 - Financeiro] Onboarding e ativação de MFA dos usuários",created:"2026-07-01",due:"2026-09-29"},
+  {key:"PROC-267",project:"PROC",status:"Concluído",assignee:"Infra / Suporte N1",summary:"[Onda 1 - Financeiro] Enviar convites aos participantes",created:"2026-07-01",due:"2026-09-30"},
+  {key:"PROC-266",project:"PROC",status:"Concluído",assignee:"Coordenação",summary:"[Onda 1 - Financeiro] Organizar permissões (menor privilégio)",created:"2026-07-01",due:"2026-09-30"},
+  {key:"PROC-265",project:"PROC",status:"Concluído",assignee:"Infra / Suporte N1",summary:"[Onda 1 - Financeiro] Preparar cofres e grupos compartilhados",created:"2026-07-01",due:"2026-10-02"},
+  {key:"PROC-264",project:"PROC",status:"Concluído",assignee:"Coordenação",summary:"[Onda 1 - Financeiro] Validar e ativar licenças NordPass",created:"2026-07-01",due:"2026-08-21"},
+  {key:"PROC-263",project:"PROC",status:"Concluído",assignee:"Coordenação",summary:"[Onda 1 - Financeiro] Definir participantes e ordem das áreas",created:"2026-07-01",due:"2026-08-20"},
+  {key:"PROC-213",project:"PROC",status:"Concluído",assignee:"Coordenação",summary:"Criar o fluxo de implementação do gerenciador de senhas nas demais diretorias - Nordpass",created:"2026-05-22",due:"2026-10-09"},
+  {key:"PORTAL-17",project:"PORTAL",status:"Concluído",assignee:"Infra / Suporte N1",summary:"Configurar e aplicar a integração com Fenasbac AUTH para controle de acesso",created:"2026-09-24",due:"2026-10-08"},
+  {key:"PORTAL-16",project:"PORTAL",status:"Concluído",assignee:"Infra / Suporte N1",summary:"Validar com a Maysa a correção dos dados de colaboradores (mural e organograma)",created:"2026-08-31",due:"2026-09-25"},
+  {key:"PORTAL-15",project:"PORTAL",status:"Concluído",assignee:"Infra / Suporte N1",summary:"Busca rápida (Ctrl+K / lupa): pessoas, sites, documentos e atalhos",created:"2026-08-31",due:"2026-09-25"},
+  {key:"PORTAL-14",project:"PORTAL",status:"Concluído",assignee:"Infra / Suporte N1",summary:"Calendário com aniversários",created:"2026-08-31",due:"2026-09-25"},
+  {key:"PORTAL-13",project:"PORTAL",status:"Concluído",assignee:"Infra / Suporte N1",summary:"Área do colaborador vinda do banco via departmentId + tabela Department",created:"2026-08-31",due:"2026-09-25"},
+  {key:"PORTAL-12",project:"PORTAL",status:"Concluído",assignee:"Infra / Suporte N1",summary:"Equipe aberta: mural + organograma por área",created:"2026-08-31",due:"2026-09-25"},
+  {key:"PORTAL-11",project:"PORTAL",status:"Concluído",assignee:"Infra / Suporte N1",summary:"Aviso de VPN em sites e links que exigem conexão (SISFenasbac e PGAFI)",created:"2026-08-31",due:"2026-09-25"},
+  {key:"PORTAL-10",project:"PORTAL",status:"Concluído",assignee:"Infra / Suporte N1",summary:"Central de acesso a todos os sites da Fenasbac",created:"2026-08-31",due:"2026-09-25"},
+  {key:"PORTAL-9",project:"PORTAL",status:"Concluído",assignee:"Infra / Suporte N1",summary:"SISFenasbac em atalho único, com escolha entre produção e homologação",created:"2026-08-31",due:"2026-09-25"},
+  {key:"PORTAL-8",project:"PORTAL",status:"Concluído",assignee:"Infra / Suporte N1",summary:"Configurar e aplicar o novo layout/tema no ambiente de testes",created:"2026-08-31",due:"2026-09-25"},
+  {key:"FSYNC-64",project:"FSYNC",status:"Concluído",assignee:"Desenvolvimento",summary:"3.9 Rotas com o nome do módulo (alinhar com o time)",created:"2026-10-08",due:"2026-10-30"},
+  {key:"FSYNC-56",project:"FSYNC",status:"Concluído",assignee:"Desenvolvimento",summary:"5.4 Upload e limite de corpo no Fastify",created:"2026-10-05",due:"2026-10-30"},
+  {key:"FSYNC-55",project:"FSYNC",status:"Concluído",assignee:"Desenvolvimento",summary:"5.3 Módulo sisfenasbac",created:"2026-10-05",due:"2026-10-30"},
+  {key:"FSYNC-54",project:"FSYNC",status:"Concluído",assignee:"Desenvolvimento",summary:"5.2 Dependências do SIS",created:"2026-10-05",due:"2026-10-30"},
+  {key:"FSYNC-53",project:"FSYNC",status:"Concluído",assignee:"Desenvolvimento",summary:"5.1 Schema do SIS unificado",created:"2026-10-05",due:"2026-10-30"},
+  {key:"FSYNC-51",project:"FSYNC",status:"Concluído",assignee:"Desenvolvimento",summary:"4.1 Conecta lendo o contrato único",created:"2026-10-05",due:"2026-10-30"},
+  {key:"FSYNC-48",project:"FSYNC",status:"Concluído",assignee:"Desenvolvimento",summary:"3.6 Testes de contrato do hub",created:"2026-10-05",due:"2026-10-30"},
+  {key:"FSYNC-47",project:"FSYNC",status:"Concluído",assignee:"Desenvolvimento",summary:"3.5 Módulos e repositórios",created:"2026-10-05",due:"2026-10-30"},
+  {key:"FSYNC-46",project:"FSYNC",status:"Concluído",assignee:"Desenvolvimento",summary:"3.4 Busca de pessoas corrigida",created:"2026-10-05",due:"2026-10-30"},
+  {key:"FSYNC-45",project:"FSYNC",status:"Concluído",assignee:"Desenvolvimento",summary:"3.3 Contrato único implementado",created:"2026-10-05",due:"2026-10-30"},
+  {key:"FSYNC-44",project:"FSYNC",status:"Concluído",assignee:"Desenvolvimento",summary:"3.2 DTOs corrigidos e validação global",created:"2026-10-05",due:"2026-10-30"},
+  {key:"FSYNC-43",project:"FSYNC",status:"Concluído",assignee:"Desenvolvimento",summary:"3.1 Guard do fenasbac-auth global",created:"2026-10-05",due:"2026-10-30"},
+  {key:"FSYNC-42",project:"FSYNC",status:"Concluído",assignee:"Desenvolvimento",summary:"2.5 @RawResponse no lugar da checagem por URL",created:"2026-10-05",due:"2026-10-30"},
+  {key:"FSYNC-41",project:"FSYNC",status:"Concluído",assignee:"Desenvolvimento",summary:"2.4 Streaming sem depender do Express",created:"2026-10-05",due:"2026-10-30"},
+  {key:"FSYNC-40",project:"FSYNC",status:"Concluído",assignee:"Desenvolvimento",summary:"2.3 ParseIntPipe nos ids",created:"2026-10-05",due:"2026-10-30"},
+  {key:"FSYNC-38",project:"FSYNC",status:"Concluído",assignee:"Desenvolvimento",summary:"2.1 Paginação no banco na listagem de associados",created:"2026-10-05",due:"2026-10-30"},
+  {key:"FSYNC-37",project:"FSYNC",status:"Concluído",assignee:"Desenvolvimento",summary:"1.1 Segredos do SIS no Infisical da fenasync",created:"2026-10-05",due:"2026-10-30"},
+  {key:"FSYNC-29",project:"FSYNC",status:"Concluído",assignee:"Desenvolvimento",summary:"Garantir padrão de rotas e módulos",created:"2026-09-28",due:"2026-10-09"},
+  {key:"FSYNC-28",project:"FSYNC",status:"Concluído",assignee:"Desenvolvimento",summary:"Mapear ajuste de escopo",created:"2026-09-14",due:"2026-10-02"},
+  {key:"FENASBR-258",project:"FENASBR",status:"Concluído",assignee:"Infra / Suporte N1",summary:"Publicação do Estatuto e Regimento Interno no Portal Fenasbac",created:"2026-10-07",due:"2026-10-07"},
+  {key:"CONECTA-102",project:"CONECTA",status:"Concluído",assignee:"Coordenação",summary:"Termo de Adesão, Regional Belém",created:"2026-09-30",due:"2026-10-09"},
+  {key:"CONECTA-101",project:"CONECTA",status:"Concluído",assignee:"Coordenação",summary:"Termo de Adesão, Regional Fortaleza",created:"2026-09-30",due:"2026-10-09"},
+  {key:"CONECTA-99",project:"CONECTA",status:"Concluído",assignee:"Coordenação",summary:"Termo de Adesão, Regional Salvador",created:"2026-09-30",due:"2026-10-09"},
+  {key:"CONECTA-98",project:"CONECTA",status:"Concluído",assignee:"Coordenação",summary:"Termo de Adesão, Regional Porto Alegre",created:"2026-09-30",due:"2026-10-09"},
+  {key:"CONECTA-96",project:"CONECTA",status:"Concluído",assignee:"Coordenação",summary:"Termo de Adesão, Regional Belo Horizonte",created:"2026-09-30",due:"2026-10-09"},
+  {key:"CONECTA-95",project:"CONECTA",status:"Concluído",assignee:"Coordenação",summary:"Termo de Adesão, Regional Rio de Janeiro",created:"2026-09-30",due:"2026-10-09"},
+  {key:"CONECTA-92",project:"CONECTA",status:"Concluído",assignee:"Coordenação",summary:"Enviar o Termo de Adesão aos diretores executivos das regionais",created:"2026-09-29",due:"2026-10-09"},
+  {key:"CONECTA-89",project:"CONECTA",status:"Concluído",assignee:"Coordenação",summary:"Levantar e alinhar melhorias do dashboard do Conecta por perfil",created:"2026-09-09",due:"2026-09-30"},
+  {key:"CONECTA-83",project:"CONECTA",status:"Concluído",assignee:"Coordenação",summary:"Formalizar o Termo de Adesão das regionais ao Conecta",created:"2026-08-14",due:"2026-10-02"},
+  {key:"CONECTA-80",project:"CONECTA",status:"Concluído",assignee:"Infra / Suporte N1",summary:"Testar permissões de acesso",created:"2026-08-03",due:"2026-10-16"},
+  {key:"CERTI-14",project:"CERTI",status:"Concluído",assignee:"Desenvolvimento",summary:"Handover entre áreas",created:"2026-09-14",due:"2026-10-13"},
+  {key:"ANALYTICS-7",project:"ANALYTICS",status:"Concluído",assignee:"Tech Lead",summary:"Criar o protótipo do Dashboard unificado de métricas (IO + Fenasbac.com.br)",created:"2026-09-14",due:"2026-10-23"},
+  {key:"ANALYTICS-11",project:"ANALYTICS",status:"Em andamento",assignee:"Conteúdo",summary:"Configurar e validar Google Analytics (GA4) / Tag Manager na área logada do  site Fenasbac.br",created:"2026-09-28",due:"2026-10-16"},
+  {key:"CVM-21",project:"CVM",status:"Pendente",assignee:"Conteúdo",summary:"Nova versão do Site Sandbox",created:"2026-10-05",due:"2026-10-16"},
+  {key:"CVM-13",project:"CVM",status:"Pendente",assignee:"Conteúdo",summary:"Nova versão do Site Nexus CVM",created:"2026-10-05",due:"2026-10-16"},
+  {key:"CONECTA-100",project:"CONECTA",status:"Bloqueado",assignee:"Coordenação",summary:"Termo de Adesão, Regional Recife",created:"2026-09-30",due:"2026-10-09"},
+  {key:"CONECTA-97",project:"CONECTA",status:"Bloqueado",assignee:"Coordenação",summary:"Termo de Adesão, Regional Curitiba",created:"2026-09-30",due:"2026-10-09"},
+  {key:"CONECTA-94",project:"CONECTA",status:"Bloqueado",assignee:"Coordenação",summary:"Termo de Adesão, Regional São Paulo",created:"2026-09-30",due:"2026-10-09"},
+  {key:"CONECTA-93",project:"CONECTA",status:"Bloqueado",assignee:"Coordenação",summary:"Termo de Adesão, Regional Brasília",created:"2026-09-30",due:"2026-10-09"},
+];
+
+const PROJ_META={
+  "CVM":{name:"Site Nexus CVM",color:"#FF8C00",cat:"Conteúdo / Sites"},
+  "CERTI":{name:"Certificados",color:"#00C7FF",cat:"Produtos"},
+  "ANALYTICS":{name:"Analytics",color:"#D29922",cat:"Produtos"},
+  "FSYNC":{name:"FenaSync",color:"#00B3D6",cat:"Produtos"},
+  "FIA":{name:"Fenasbac IA",color:"#8957E5",cat:"Produtos"},
+  "DOCS":{name:"DOCS",color:"#FF8C00",cat:"Conteúdo / Sites"},
+  "FENASBR":{name:"Site Fenasbac.br",color:"#FF6B6B",cat:"Conteúdo / Sites"},
+  "PROC":{name:"Processos",color:"#FF69B4",cat:"Operacional / Interno"},
+  "ENG":{name:"Engenharia",color:"#7C5CFC",cat:"Operacional / Interno"},
+  "FENASHUB":{name:"Fenasbac Hub",color:"#00C7FF",cat:"Produtos"},
+  "TECH":{name:"TechOps",color:"#8B949E",cat:"Operacional / Interno"},
+  "SDESK":{name:"SDesk",color:"#00C7FF",cat:"Operacional / Interno"},
+  "STRAPI":{name:"Strapi CMS",color:"#FF8C00",cat:"Conteúdo / Sites"},
+  "FENASBR":{name:"Site Fenasbac.br",color:"#FF6B6B",cat:"Conteúdo / Sites"},
+  "SRR":{name:"Regulation Rocks",color:"#00C7FF",cat:"Conteúdo / Sites"},
+  "GEP":{name:"Plataforma GEP",color:"#2EA043",cat:"Produtos"},
+  "CONECTA":{name:"Fenasbac Conecta",color:"#00C7FF",cat:"Produtos"},
+  "ETI":{name:"Roadmap ETI",color:"#7C5CFC",cat:"Operacional / Interno"},
+  "FAUTH":{name:"Fenasbac Auth",color:"#8957E5",cat:"Produtos"},
+  "SISFENAS":{name:"API SisFenasbac",color:"#2EA043",cat:"Produtos"},
+  "SYNCOOP":{name:"Syncoop",color:"#2EA043",cat:"Conteúdo / Sites"},
+  "PORTAL":{name:"Portal TI",color:"#7C5CFC",cat:"Operacional / Interno"},
+};
+const PROJ_ORDER=["PROC","FSYNC","CONECTA","PORTAL","TECH","ETI","ANALYTICS","CVM","STRAPI","CERTI","ENG","FENASBR","FENASHUB","SISFENAS","SRR","FIA","DOCS","GEP","SYNCOOP","FAUTH"];
+const CATS=["Operacional / Interno","Produtos","Conteúdo / Sites"];
+
+// sla / sla1a = veredito de cada chamado na regua global do JSM, lido de
+// customfield_10610 (resolucao) e customfield_10577 (1a resposta) em 13/10/2026:
+// 'no prazo' | 'estouro' (meta vencida, concluido ou nao) | 'em curso'.
+// trilha = request type do JSM. Alimenta todos os KPIs de SLA do painel SDesk.
+const SDESK_ISSUES=[
+  {key:"SDESK-344",status:"Concluído",area:"PGAFI/Financeiro",trilha:"Reportar incidente",sla:"no prazo",sla1a:"no prazo",summary:"Sistema antigo (PGAFI) fora do ar"},
+  {key:"SDESK-346",status:"Concluído",area:"TI Interno / Infra",trilha:"Solicitação de TI",sla:"no prazo",sla1a:"no prazo",summary:"Compartilhamento de pasta SCANNER"},
+  {key:"SDESK-347",status:"Concluído",area:"Comunicação / Sites",trilha:"Solicitação de TI",sla:"no prazo",sla1a:"no prazo",summary:"Padronizar arte do Diálogo com Propósito no site do GEP"},
+  {key:"SDESK-348",status:"Concluído",area:"TI Interno / Infra",trilha:"Solicitação de TI",sla:"no prazo",sla1a:"no prazo",summary:"Ajuste do fluxo de chamada"},
+  {key:"SDESK-349",status:"Pendente",area:"SISFenasbac",trilha:"Solicitação de TI",sla:"estouro",sla1a:"no prazo",summary:"Registros de exclusão - SISfenasbac"},
+  {key:"SDESK-350",status:"Concluído",area:"GEP",trilha:"Solicitação de TI",sla:"no prazo",sla1a:"no prazo",summary:"Acesso às transcrições de entrevistas (Teams)"},
+  {key:"SDESK-351",status:"Concluído",area:"Comunicação / Sites",trilha:"Solicitação de TI",sla:"no prazo",sla1a:"no prazo",summary:"Direcionamento de links - Site Next"},
+  {key:"SDESK-352",status:"Concluído",area:"Comunicação / Sites",trilha:"Comunicação Digital",sla:"no prazo",sla1a:"no prazo",summary:"UTM e formulários no site Next"},
+  {key:"SDESK-353",status:"Concluído",area:"PGAFI/Financeiro",trilha:"Reportar incidente",sla:"no prazo",sla1a:"no prazo",summary:"Atualização do saldo devedor - PGAFI"},
+  {key:"SDESK-354",status:"Concluído",area:"Financeiro",trilha:"Reportar incidente",sla:"no prazo",sla1a:"no prazo",summary:"Estorno de fechamento setembro/2026"},
+  {key:"SDESK-355",status:"Concluído",area:"GEP",trilha:"Reportar incidente",sla:"no prazo",sla1a:"no prazo",summary:"Dados ausentes no RECIP"},
+  {key:"SDESK-356",status:"Em andamento",area:"TI Interno / Infra",trilha:"Reportar incidente",sla:"estouro",sla1a:"no prazo",summary:"Wi-Fi segue sumindo"},
+  {key:"SDESK-357",status:"Concluído",area:"TI Interno / Infra",trilha:"Reportar incidente",sla:"estouro",sla1a:"no prazo",summary:"Máquina muito devagar/travando (cancelado)"},
+  {key:"SDESK-358",status:"Concluído",area:"GEP",trilha:"Solicitação de TI",sla:"no prazo",sla1a:"no prazo",summary:"Inserção do Diálogo #5 no site de GEP"},
+  {key:"SDESK-359",status:"Concluído",area:"Inovação",trilha:"Solicitação de TI",sla:"estouro",sla1a:"no prazo",summary:"Inclusão de membro no canal da QSentinel"},
+  {key:"SDESK-360",status:"Concluído",area:"Marketing",trilha:"Comunicação Digital",sla:"no prazo",sla1a:"no prazo",summary:"Liberação de acesso adm no pipeline do Slack"},
+  {key:"SDESK-361",status:"Bloqueado",area:"TI Interno / Infra",trilha:"Solicitação de TI",sla:"em curso",sla1a:"no prazo",summary:"Celulares Equipe São Paulo"},
+  {key:"SDESK-362",status:"Bloqueado",area:"TI Interno / Infra",trilha:"Solicitação de TI",sla:"em curso",sla1a:"no prazo",summary:"Solicitação de Equipamentos - Teclado"},
+  {key:"SDESK-363",status:"Pendente",area:"TI Interno / Infra",trilha:"Solicitação de TI",sla:"estouro",sla1a:"no prazo",summary:"Criar ramal e instalar telefone na Secretaria"},
+  {key:"SDESK-364",status:"Concluído",area:"GEP",trilha:"Solicitação de TI",sla:"no prazo",sla1a:"no prazo",summary:"Dificuldade para preparar AMs e APs"},
+  {key:"SDESK-365",status:"Pendente",area:"Certificados",trilha:"Solicitação de TI",sla:"em curso",sla1a:"no prazo",summary:"Emissão automática de certificado de conclusão"},
+];
+
+// metas da regua global do JSM (goalDuration de customfield_10577/10610)
+const TRILHA_META={
+  "Solicitação de TI":"4h / 24h",
+  "Comunicação Digital":"4h / 56h",
+  "Reportar incidente":"4h / 24h",
+  "Desligamento":"4h / 80h",
+  "Integração":"4h / 80h",
+};
+
+const STATUS_COLOR={'Concluído':'#2EA043','Concluída':'#2EA043','Em andamento':'#0225EB','Em análise':'#D29922','Tarefas pendentes':'#484F58','Pendente':'#484F58','default':'#484F58'};
+function isDone(s){return s==='Concluído'||s==='Concluída';}
+function isProg(s){return s==='Em andamento';}
+function dotColor(s){return STATUS_COLOR[s]||STATUS_COLOR.default;}
+
+function showTab(t){
+  ['projetos','evolucao','time','gantt','sdesk'].forEach((id,i)=>{
+    document.querySelectorAll('.tab')[i].classList.toggle('active',id===t);
+    document.getElementById('panel-'+id).classList.toggle('active',id===t);
+  });
+  if(t==='evolucao')setTimeout(buildEvolucao,50);
+  if(t==='time')setTimeout(buildTeam,50);
+  if(t==='gantt')setTimeout(scrollToToday,80);
+}
+
+// projStats
+const projStats={};
+ISSUES.forEach(i=>{
+  if(!projStats[i.project])projStats[i.project]={done:0,prog:0,pend:0,total:0,issues:[]};
+  const p=projStats[i.project]; p.total++; p.issues.push(i);
+  if(isDone(i.status))p.done++;
+  else if(isProg(i.status))p.prog++;
+  else p.pend++;
+});
+
+// BUILD PROJECTS
+function buildProjects(){
+  const view=document.getElementById('proj-view');if(!view)return;
+  CATS.forEach(cat=>{
+    const projs=PROJ_ORDER.filter(p=>PROJ_META[p]&&PROJ_META[p].cat===cat&&projStats[p]);
+    if(!projs.length)return;
+    const grp=document.createElement('div');grp.className='cat-group';
+    grp.innerHTML=`<div class="cat-title">${cat}<span class="cat-count">${projs.length}</span></div>`;
+    const grid=document.createElement('div');grid.className='proj-grid';
+    projs.forEach(key=>{
+      const meta=PROJ_META[key]||{name:key,color:'#8B949E'};
+      const st=projStats[key]||{done:0,prog:0,pend:0,total:0};
+      const taxa=st.total?Math.round(st.done/st.total*100):0;
+      const card=document.createElement('div');card.className='proj-card';
+      card.innerHTML=`<div style="position:absolute;top:0;left:0;right:0;height:3px;background:${meta.color};border-radius:3px 3px 0 0;"></div>
+        <div class="proj-key" style="color:${meta.color}">${key}</div>
+        <div class="proj-name">${meta.name}</div>
+        <div style="display:flex;flex-wrap:wrap;gap:4px;margin-top:8px;">
+          ${st.done?`<span style="background:rgba(46,160,67,.15);padding:2px 7px;border-radius:10px;font-size:13.2px;font-weight:600;color:#2EA043;">${st.done} ✓</span>`:''}
+          ${st.prog?`<span style="background:rgba(2,37,235,.15);padding:2px 7px;border-radius:10px;font-size:13.2px;font-weight:600;color:#6699FF;">${st.prog} ↻</span>`:''}
+          ${st.pend?`<span style="background:rgba(72,72,88,.25);padding:2px 7px;border-radius:10px;font-size:13.2px;font-weight:600;color:#8B949E;">${st.pend} ⏸</span>`:''}
+        </div>
+        <div style="font-size:12px;color:#484F58;margin-top:4px;">${st.total} issues · ${taxa}%</div>`;
+      card.onclick=()=>openPanel(key);
+      grid.appendChild(card);
+    });
+    grp.appendChild(grid);view.appendChild(grp);
+  });
+}
+
+// TEAM
+const MEMBERS=[
+  {id:"Coordenação",role:"Coordenação de TI",color:"#0225EB",initials:"CT"},
+  {id:"Tech Lead",role:"Tech Lead",color:"#D29922",initials:"TL"},
+  {id:"Desenvolvimento",role:"Dev Full-Stack",color:"#2EA043",initials:"DF"},
+  {id:"Conteúdo",role:"Conteúdo / Front",color:"#8957E5",initials:"CF"},
+  {id:"Infra / Suporte N1",role:"Infra e Suporte",color:"#484F58",initials:"IS"},
+];
+function buildTeam(){
+  const view=document.getElementById('team-view');if(!view||view.children.length)return;
+  const grid=document.createElement('div');grid.className='team-grid';
+  MEMBERS.forEach(m=>{
+    const issues=ISSUES.filter(i=>i.assignee===m.id);
+    const done=issues.filter(i=>isDone(i.status));
+    const open=issues.filter(i=>!isDone(i.status));
+    const taxa=issues.length?Math.round(done.length/issues.length*100):0;
+    const card=document.createElement('div');card.className='member-card';
+    card.innerHTML=`<div class="member-hdr">
+        <div class="member-av" style="background:${m.color}">${m.initials}</div>
+        <div><div class="member-name">${m.id}</div><div class="member-role">${m.role}</div></div>
+      </div>
+      <div class="member-stats">
+        <div class="mstat"><div class="mstat-val" style="color:#2EA043">${done.length}</div><div class="mstat-label">Concluídos</div></div>
+        <div class="mstat"><div class="mstat-val" style="color:#484F58">${open.length}</div><div class="mstat-label">Carry-over</div></div>
+        <div class="mstat"><div class="mstat-val" style="color:${taxa>=60?'#2EA043':taxa>=30?'#D29922':'#F85149'}">${taxa}%</div><div class="mstat-label">Taxa</div></div>
+      </div>
+      <div class="m-bar-wrap"><div class="m-bar-track"><div class="m-bar-fill" style="width:${taxa}%;background:${taxa>=60?'#2EA043':taxa>=30?'#D29922':'#F85149'}"></div></div></div>
+      <div class="member-issues">${(m.id==='Tech Lead'?'<div class="m-issue"><div class="m-sum" style="color:#AEB8CC;white-space:normal;line-height:1.5">Atua&ccedil;&atilde;o na S20: arquitetura da migra&ccedil;&atilde;o para a fenasync (monolito modular, guard global, contrato &uacute;nico), valida&ccedil;&atilde;o do Kuma para liberar a intranet, apoio na instala&ccedil;&atilde;o dos nobreaks e no alinhamento com a Comunica&ccedil;&atilde;o. Revis&atilde;o e dire&ccedil;&atilde;o t&eacute;cnica, n&atilde;o medida por cards atribu&iacute;dos.</div></div>':'')+issues.map(i=>`<div class="m-issue">
+        <div class="m-dot" style="background:${dotColor(i.status)}"></div>
+        <div class="m-key">${i.key}</div>
+        <div class="m-sum" title="${i.summary}">${i.summary}</div>
+      </div>`).join('')}</div>`;
+    grid.appendChild(card);
+  });
+  view.appendChild(grid);
+}
+
+// SDESK — cartoes de SLA por trilha, gerados dos vereditos gravados em
+// SDESK_ISSUES. Antes eram HTML fixo, e foi assim que os numeros da S18
+// sobreviveram a virada de sprint.
+const TRILHA_NOTA={
+  "Solicitação de TI":"A maior trilha da sprint e a que concentra os estouros, na meta mais curta (24h): SDESK-359 fechou fora do prazo, e SDESK-349 e SDESK-363 seguem abertos com a meta já vencida. Os três em curso são pedidos de equipamento, dois deles bloqueados por aquisição.",
+  "Comunicação Digital":"Duas solicitações no período, ambas resolvidas dentro da meta folgada de 56h — as UTMs e formulários do site Next e o acesso administrativo ao pipeline do Slack. Sem estouro e sem chamado em aberto.",
+  "Reportar incidente":"Volume baixo, mas dois estouros na meta de 24h: o Wi-Fi que segue sumindo (SDESK-356), ainda em andamento, e a máquina lenta (SDESK-357), encerrada como cancelada depois do prazo. Os quatro incidentes de sistema — PGAFI, RECIP e o estorno do fechamento — foram resolvidos dentro da meta.",
+  "Desligamento":"Trilha de chamado único no período, concluída dentro da meta de 80h.",
+  "Integração":"Só o onboarding do novo colaborador (início em 05/10), aberto e ainda dentro da meta de 80h.",
+};
+
+function buildTrilhas(){
+  const host=document.getElementById('sdesk-trilha-cards');
+  if(!host)return;
+  const nomes=[...new Set(SDESK_ISSUES.map(i=>i.trilha))]
+    .sort((a,b)=>SDESK_ISSUES.filter(i=>i.trilha===b).length-SDESK_ISSUES.filter(i=>i.trilha===a).length||a.localeCompare(b));
+  host.innerHTML=nomes.map(t=>{
+    const lista=SDESK_ISSUES.filter(i=>i.trilha===t);
+    const r=slaIndice(lista,'sla'), p=slaIndice(lista,'sla1a');
+    const ec=lista.filter(i=>i.sla==='em curso').length;
+    const cor=r?slaCor(r.pct):'#8B94A7';
+    const detalhe=[lista.length+(lista.length>1?' recebidos':' recebido')]
+      .concat(r&&r.np?[r.np+' no prazo']:[])
+      .concat(r&&r.es?[r.es+(r.es>1?' estouros':' estouro')]:[])
+      .concat(ec?[ec+' em curso']:[])
+      .concat(p?['1ª resposta '+p.pct+'%']:[]).join(' · ');
+    return '<div style="background:var(--bg2);border:1px solid var(--bord);border-left:3px solid '+cor+';border-radius:8px;padding:12px 14px;">'
+      +'<div style="font-size:15.6px;font-weight:700;color:var(--text);">'+t
+      +' <span style="font-size:12px;color:var(--muted);font-weight:400;">meta '+(TRILHA_META[t]||'—')+'</span></div>'
+      +'<div style="font-size:27.6px;font-weight:700;font-family:var(--mono);color:'+cor+';margin-top:4px;">'
+      +(r?r.pct+'%':'—')+'<span style="font-size:14.4px;color:var(--muted);font-family:var(--font);font-weight:400;"> '
+      +(r?'resolução no prazo':'sem chamado com veredito')+'</span></div>'
+      +'<div style="font-size:13.2px;color:var(--muted);margin-top:3px;">'+detalhe+'</div>'
+      +(TRILHA_NOTA[t]?'<div style="font-size:13.2px;color:#C0C8D4;margin-top:6px;line-height:1.4;">'+TRILHA_NOTA[t]+'</div>':'')
+      +'</div>';
+  }).join('');
+
+  const tot=document.getElementById('sdesk-trilha-total');
+  if(tot){
+    const r=slaIndice(SDESK_ISSUES,'sla'), p=slaIndice(SDESK_ISSUES,'sla1a');
+    const ec=SDESK_ISSUES.filter(i=>i.sla==='em curso').length;
+    tot.innerHTML='Total: <b>'+r.pct+'%</b> das resoluções ('+r.np+' de '+(r.np+r.es)+' com veredito) e <b>'+p.pct
+      +'%</b> das primeiras respostas ('+p.np+' de '+(p.np+p.es)+') dentro do SLA. Lido da régua global do JSM. '
+      +'Os '+ec+' chamados ainda em curso ficam fora do índice de resolução. Abaixo, os chamados por área.';
+  }
+}
+
+// SDESK
+function buildSdesk(){
+  buildTrilhas();
+  const container=document.getElementById('sdesk-areas');
+  if(!container)return;
+  // áreas derivadas de SDESK_ISSUES — nada de lista fixa que descola dos dados
+  const AREAS=[...new Set(SDESK_ISSUES.map(i=>i.area))].map(id=>{
+    const issues=SDESK_ISSUES.filter(i=>i.area===id);
+    const nDone=issues.filter(i=>isDone(i.status)).length;
+    const pct=Math.round(nDone/issues.length*100);
+    return {id,meta:nDone+'/'+issues.length+' · '+pct+'%',pct};
+  }).sort((a,b)=>b.pct-a.pct||a.id.localeCompare(b.id));
+  AREAS.forEach(area=>{
+    const issues=SDESK_ISSUES.filter(i=>i.area===area.id);
+    const done=issues.filter(i=>isDone(i.status));
+    const open=issues.filter(i=>!isDone(i.status));
+    const pct=area.pct;
+    const barColor=pct===100?'#2EA043':pct>=60?'#D29922':'#F85149';
+
+    const wrap=document.createElement('div');
+    wrap.style.cssText='background:var(--bg2);border:1px solid var(--bord);border-radius:8px;overflow:hidden;';
+
+    // header da área
+    const hdr=document.createElement('div');
+    hdr.style.cssText='padding:10px 14px;display:flex;align-items:center;gap:10px;border-bottom:1px solid var(--bord);cursor:pointer;';
+    hdr.innerHTML=`
+      <div style="width:8px;height:8px;border-radius:50%;background:${barColor};flex-shrink:0;"></div>
+      <div style="font-size:14.4px;font-weight:700;color:var(--text);flex:1;">${area.id}</div>
+      <div style="font-size:13.2px;color:${barColor};font-weight:700;font-family:var(--mono);">${area.meta}</div>
+      <div style="width:80px;height:5px;background:var(--bg3);border-radius:3px;overflow:hidden;flex-shrink:0;">
+        <div style="height:100%;width:${pct}%;background:${barColor};border-radius:3px;"></div>
+      </div>
+      <span style="font-size:12px;color:var(--muted);margin-left:4px;" class="area-toggle">▼</span>`;
+
+    // body
+    const body=document.createElement('div');
+    body.style.cssText='padding:8px 14px;display:grid;grid-template-columns:1fr 1fr;gap:0 12px;';body.className='sdesk-area-body';
+
+    function issueRow(i){
+      // o veredito vale tambem para chamado aberto: estouro em aberto continua estouro
+      const selo={'estouro':['#F85149','#fff','estouro ⚠'],'no prazo':['#2EA043','#fff','no prazo'],'em curso':['#30363D','#C0C8D4','em curso']}[i.sla];
+      const sla=selo?`<span style="background:${selo[0]};color:${selo[1]};font-size:10.8px;padding:1px 5px;border-radius:8px;font-weight:700;margin-left:3px;">${selo[2]}</span>`:'';
+      const dot=isDone(i.status)?'#2EA043':i.status==='Em andamento'?'#0225EB':'#484F58';
+      return`<div class="dp-issue" style="opacity:${isDone(i.status)?1:.65};">
+        <div class="dp-dot" style="background:${dot}"></div>
+        <div class="dp-key">${i.key}${sla}</div>
+        <div class="dp-sum">${i.summary}</div>
+      </div>`;
+    }
+
+    // colunas: concluídos | pendentes
+    const colDone=document.createElement('div');
+    if(done.length){
+      colDone.innerHTML=`<div style="font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:.6px;padding:4px 6px 6px;border-bottom:1px solid var(--bord);margin-bottom:4px;">✅ ${done.length} resolvidos</div>`+done.map(issueRow).join('');
+    }
+    const colOpen=document.createElement('div');
+    if(open.length){
+      colOpen.innerHTML=`<div style="font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:.6px;padding:4px 6px 6px;border-bottom:1px solid var(--bord);margin-bottom:4px;">⏳ ${open.length} pendentes</div>`+open.map(issueRow).join('');
+    } else {
+      colOpen.innerHTML='<div style="font-size:13.2px;color:var(--gray);font-style:italic;padding:8px 6px;">Sem pendências</div>';
+    }
+
+    body.appendChild(colDone);
+    body.appendChild(colOpen);
+
+    // toggle
+    let expanded=true;
+    hdr.onclick=()=>{
+      expanded=!expanded;
+      body.style.display=expanded?'grid':'none';
+      hdr.querySelector('.area-toggle').textContent=expanded?'▼':'▶';
+    };
+
+    wrap.appendChild(hdr);
+    wrap.appendChild(body);
+    container.appendChild(wrap);
+  });
+}
+
+// DETAIL PANEL
+function openPanel(proj){
+  const panel=document.getElementById('detail-panel');if(!panel)return;
+  const st=projStats[proj];if(!st)return;
+  const meta=PROJ_META[proj]||{name:proj,color:'#8B949E'};
+  const done=st.issues.filter(i=>isDone(i.status));
+  const open=st.issues.filter(i=>!isDone(i.status));
+  document.getElementById('dp-proj-name').textContent=proj+' — '+(meta.name||'');
+  document.getElementById('dp-proj-name').style.color=meta.color||'#02FFFF';
+  document.getElementById('dp-proj-sub').textContent=st.total+' issues';
+  document.getElementById('dp-kpis').innerHTML=`
+    <div class="dp-kpi"><div class="dp-kpi-val" style="color:#2EA043">${done.length}</div><div class="dp-kpi-label">Concluídos</div></div>
+    <div class="dp-kpi"><div class="dp-kpi-val" style="color:#484F58">${open.length}</div><div class="dp-kpi-label">Carry-over</div></div>`;
+  function rl(cid,sid,list){
+    const sec=document.getElementById(sid);const el=document.getElementById(cid);if(!sec||!el)return;
+    if(!list.length){sec.style.display='none';return;}
+    sec.style.display='block';
+    el.innerHTML=list.map(i=>`<div class="dp-issue"><div class="dp-dot" style="background:${dotColor(i.status)}"></div><div class="dp-key">${i.key}</div><div class="dp-sum">${i.summary}</div></div>`).join('');
+  }
+  rl('dp-done-list','dp-done-sec',done);
+  rl('dp-open-list','dp-open-sec',open);
+  panel.classList.add('open');
+}
+function closePanel(){document.getElementById('detail-panel')?.classList.remove('open');}
+
+// TOOLTIP
+let _tt=null;
+function getTT(){if(!_tt)_tt=document.getElementById('g-tooltip');return _tt;}
+function showTT(e,issue){const t=getTT();if(!t)return;t.innerHTML=`<div style="font-family:var(--mono);font-size:12px;color:#8B949E;margin-bottom:3px">${issue.key}</div><div style="font-size:14.4px;font-weight:600;margin-bottom:4px;line-height:1.3">${issue.summary}</div><div style="color:#8B949E">${issue.status} · ${issue.assignee}</div>`;t.style.display='block';posTT(e);}
+function posTT(e){const t=getTT();if(!t)return;const x=e.clientX+14,y=e.clientY+14,w=t.offsetWidth||200,h=t.offsetHeight||60;t.style.left=(x+w>window.innerWidth?x-w-28:x)+'px';t.style.top=(y+h>window.innerHeight?y-h-28:y)+'px';}
+function hideTT(){const t=getTT();if(t)t.style.display='none';}
+
+// ===================== EVOLUÇÃO ENTRE SPRINTS =====================
+// Sprints encerradas: agregados extraídos dos dashboards das próprias sprints
+// (dashboard-s15/s16). A sprint corrente é calculada de ISSUES/SDESK_ISSUES.
+const SPRINT_HISTORY=[
+  {id:"S15",periodo:"21/07–01/08",issues:61,done:52,projetos:12,sdesk:30,sdeskDone:22,sdeskEstouro:2,porProjeto:{"SISFENAS":[1,1],"FAUTH":[1,1],"CONECTA":[4,4],"GEP":[6,7],"PORTAL":[0,1],"PROC":[15,20],"ETI":[4,4],"FENASBR":[0,1],"SRR":[1,2],"SYNCOOP":[1,1],"STRAPI":[8,8],"TECH":[11,11]}},
+  {id:"S16",periodo:"04/08–14/08",issues:62,done:24,projetos:11,sdesk:23,sdeskDone:13,sdeskEstouro:2,porProjeto:{"SISFENAS":[0,1],"ENG":[1,13],"FENASHUB":[1,1],"CONECTA":[1,2],"GEP":[1,2],"PORTAL":[0,1],"PROC":[3,16],"ETI":[5,7],"SRR":[0,1],"STRAPI":[1,6],"TECH":[11,12]}},
+  {id:"S17",periodo:"17/08–31/08",issues:88,done:37,projetos:13,sdesk:19,sdeskDone:13,sdeskEstouro:3,porProjeto:{"CERTI":[11,11],"DOCS":[0,6],"ENG":[1,11],"FENASBR":[0,1],"FENASHUB":[5,17],"FIA":[5,5],"GEP":[0,2],"PORTAL":[1,1],"PROC":[6,22],"SISFENAS":[0,1],"SRR":[0,1],"STRAPI":[0,1],"TECH":[8,9]}},
+  {id:"S18",periodo:"31/08–14/09",issues:66,done:35,projetos:13,sdesk:22,sdeskDone:17,sdeskEstouro:6,porProjeto:{"CONECTA":[1,1],"DOCS":[5,5],"ENG":[0,1],"ETI":[0,5],"FENASBR":[12,12],"FENASHUB":[0,1],"FIA":[1,9],"PORTAL":[1,1],"PROC":[9,21],"SISFENAS":[0,1],"SRR":[0,1],"STRAPI":[0,2],"TECH":[6,6]}},
+  {id:"S19",periodo:"14/09–28/09",issues:50,done:22,projetos:11,sdesk:28,sdeskDone:20,sdeskEstouro:6,porProjeto:{"PROC":[7,20],"CONECTA":[4,5],"TECH":[4,5],"FENASHUB":[2,3],"FENASBR":[2,2],"ANALYTICS":[0,2],"FIA":[0,1],"ETI":[0,1],"STRAPI":[1,2],"SISFENAS":[1,1],"CERTI":[0,1]}},
+];
+const SPRINT_ATUAL={id:"S20",periodo:"28/09–09/10"};
+const SPRINT_NOVA={id:"S21",periodo:"13/10–24/10"};
+
+// [concluídas, total] por frente
+function porProjetoDe(lista){
+  const o={};
+  lista.forEach(i=>{o[i.project]=o[i.project]||[0,0];o[i.project][1]++;if(isDone(i.status))o[i.project][0]++;});
+  return o;
+}
+function sprintCorrente(){
+  return {id:SPRINT_ATUAL.id,periodo:SPRINT_ATUAL.periodo,porProjeto:porProjetoDe(ISSUES),
+    issues:ISSUES.length,done:ISSUES.filter(i=>isDone(i.status)).length,
+    projetos:new Set(ISSUES.map(i=>i.project)).size,
+    sdesk:SDESK_ISSUES.length,sdeskDone:SDESK_ISSUES.filter(i=>isDone(i.status)).length,
+    sdeskEstouro:SDESK_ISSUES.filter(i=>i.sla==='estouro').length};
+}
+const SPRINTS=[...SPRINT_HISTORY,sprintCorrente()];
+
+// direcao: 'bom' = subir é bom, 'ruim' = subir é ruim, 'neutro' = sem juízo de valor
+const EVO_METRICS=[
+  {label:"Taxa de conclusão",get:s=>Math.round(s.done/s.issues*100),suf:"%",dsuf:" pontos",dir:"bom"},
+  {label:"Entregas",         get:s=>s.done,                                        dir:"bom"},
+  {label:"Escopo da sprint", get:s=>s.issues,                                       dir:"neutro"},
+  {label:"Carry-over",       get:s=>s.issues-s.done,                                dir:"ruim"},
+  {label:"SDesk resolvidos", get:s=>s.sdeskDone,                                    dir:"bom"},
+];
+
+const EVO_ACCENT="#02FFFF", EVO_MUTED="#8B949E";
+
+function sparkline(vals,titulos,ids){
+  const w=150,h=30,pad=5;
+  const min=Math.min(...vals),max=Math.max(...vals),rng=(max-min)||1;
+  const pts=vals.map((v,i)=>[pad+i*((w-2*pad)/(vals.length-1)),h-pad-((v-min)/rng)*(h-2*pad)]);
+  const line=pts.map(p=>p[0].toFixed(1)+','+p[1].toFixed(1)).join(' ');
+  // os dois ultimos pontos sao os que a comparacao usa: o atual cheio no
+  // destaque, o anterior como anel — mesma serie, ponto de referencia.
+  const iCur=pts.length-1, iPrev=pts.length-2;
+  const dots=pts.map((p,i)=>{
+    const cur=i===iCur, prev=i===iPrev;
+    const pinta = cur  ? 'fill="'+EVO_ACCENT+'"'
+                : prev ? 'fill="var(--bg2)" stroke="'+EVO_ACCENT+'" stroke-width="1.6"'
+                :        'fill="'+EVO_MUTED+'"';
+    return '<circle cx="'+p[0].toFixed(1)+'" cy="'+p[1].toFixed(1)+'" r="'+(cur||prev?3.5:2.5)+'" '+pinta+'><title>'+titulos[i]+'</title></circle>';
+  }).join('');
+  const svg='<svg class="evo-spark" viewBox="0 0 '+w+' '+h+'" role="img" aria-label="Tendência '+titulos.join(', ')+'">'
+    +'<polyline points="'+line+'" fill="none" stroke="'+EVO_MUTED+'" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" opacity=".75"/>'+dots+'</svg>';
+  // nomear a sprint de cada ponto: sem isso a identidade so existe no hover
+  if(!ids) return svg;
+  const eixo=ids.map((id,i)=>{
+    const x=(pad+i*((w-2*pad)/(Math.max(1,ids.length-1))))/w*100;
+    const pos = i===0 ? 'left:0;' : (i===ids.length-1 ? 'right:0;' : 'left:'+x.toFixed(2)+'%;transform:translateX(-50%);');
+    return '<span class="'+(i>=ids.length-2?'cmp':'')+'" style="'+pos+'">'+id+'</span>';
+  }).join('');
+  return '<div class="evo-spark-wrap">'+svg+'<div class="evo-spark-eixo">'+eixo+'</div></div>';
+}
+
+// ---- leitura dos gráficos: texto montado a partir dos números, para não
+// ---- descolar dos dados quando a sprint virar ----
+function lista(a){return a.length<2?(a[0]||''):a.slice(0,-1).join(', ')+' e '+a[a.length-1];}
+
+// ---- descrição dos dois gráficos da aba Projetos: explica o que cada um
+// ---- mede e como lê-lo, sem interpretar o resultado da sprint ----
+function descBox(paras,nota){
+  return '<div class="evo-obs-hd">Sobre este gráfico</div>'
+    +paras.map(t=>'<p>'+t+'</p>').join('')+'<p class="acao">'+nota+'</p>';
+}
+
+function descricaoStatus(){
+  const tot=ISSUES.length;
+  const nD=ISSUES.filter(i=>isDone(i.status)).length;
+  const nP=ISSUES.filter(i=>isProg(i.status)).length;
+  const nZ=tot-nD-nP;
+  const a='Classifica as <b>'+tot+'</b> issues do escopo da '+SPRINT_ATUAL.id+' ('+SPRINT_ATUAL.periodo+') '
+    +'em três estados, conforme o campo de status no board na data de extração: '
+    +'<b>concluídas</b> ('+nD+'), <b>em andamento</b> ('+nP+') e <b>pendentes</b> ('+nZ+' — as que ainda não foram iniciadas).';
+  const b='Cada fatia conta issues, não esforço: itens de tamanhos bem diferentes pesam igual na rosca. '
+    +'E o grupo de pendentes é heterogêneo — reúne tanto itens que seguem para a '+SPRINT_NOVA.id
+    +' quanto itens que entraram no board já perto do fim da sprint.';
+  return descBox([a,b],'→ É uma fotografia da situação no fechamento da '+SPRINT_ATUAL.id
+    +', não uma medida de ritmo. A comparação entre sprints está na aba Evolução.');
+}
+
+function descricaoProjetos(){
+  const arr=PROJ_ORDER.filter(f=>projStats[f]).map(f=>projStats[f].total);
+  const min=Math.min.apply(null,arr), max=Math.max.apply(null,arr);
+  const peq=arr.filter(t=>t<=3).length;
+  const a='Cada barra é a razão entre issues concluídas e issues totais daquela frente na '+SPRINT_ATUAL.id
+    +'; o par à direita mostra <b>concluídas/total</b>. As cores seguem faixas fixas: '
+    +'verde a partir de 60%, amarelo entre 30% e 59%, vermelho abaixo de 30%.';
+  const b='As '+arr.length+' frentes têm escopos de tamanhos bem diferentes — de <b>'+min+'</b> a <b>'+max+'</b> issues'
+    +(peq?', e <b>'+peq+'</b> delas têm até 3 issues':'')+'. '
+    +'Em frentes pequenas a porcentagem anda em saltos grandes: com 2 issues, cada uma vale 50 pontos percentuais, '
+    +'então 0% ou 100% ali dizem pouco.';
+  return descBox([a,b],'→ As barras não são comparáveis entre si sem olhar o volume ao lado: '
+    +'a porcentagem responde "quanto do escopo desta frente foi fechado", e não "qual frente rendeu mais".');
+}
+function obsBox(titulo,paras,acao){
+  return '<div class="evo-obs-hd">'+titulo+'</div>'+paras.map(t=>'<p>'+t+'</p>').join('')
+    +'<p class="acao">'+acao+'</p>';
+}
+
+function leituraIndicadores(cur,prev,serie){
+  const dEnt=cur.done-prev.done, dEsc=cur.issues-prev.issues;
+  const tx=s=>Math.round(s.done/s.issues*100), dTx=tx(cur)-tx(prev);
+  const pEnt=Math.round(dEnt/prev.done*100), pEsc=Math.round(dEsc/prev.issues*100);
+  const carry=s=>s.issues-s.done, cPct=Math.round(carry(cur)/cur.issues*100);
+  let seq=0;for(let i=serie.length-1;i>0;i--){if(carry(serie[i])>carry(serie[i-1]))seq++;else break;}
+  const ritmo = dEsc<0
+    ? 'O escopo encolheu <b>'+Math.abs(pEsc)+'%</b> ('+prev.issues+' → '+cur.issues+') e as entregas '+(dEnt>=0?'cresceram':'caíram')+' <b>'+Math.abs(pEnt)+'%</b> ('+prev.done+' → '+cur.done+'): a taxa '+(dTx>=0?'subiu':'caiu')+' '+Math.abs(dTx)+' pontos percentuais.'
+    : pEnt>=pEsc
+    ? 'As entregas cresceram <b>'+pEnt+'%</b> ('+prev.done+' → '+cur.done+') contra <b>'+pEsc+'%</b> de crescimento do escopo ('+prev.issues+' → '+cur.issues+'): o time acompanhou o aumento e ganhou '+Math.abs(dTx)+' pontos percentuais de taxa.'
+    : 'O escopo cresceu <b>'+pEsc+'%</b> ('+prev.issues+' → '+cur.issues+') contra <b>'+pEnt+'%</b> de crescimento das entregas ('+prev.done+' → '+cur.done+'), e a taxa '+(dTx>=0?'subiu':'caiu')+' '+Math.abs(dTx)+' pontos percentuais.';
+  const fila = dEsc>dEnt
+    ? 'Só que em números absolutos o escopo entrou em <b>'+(dEsc/Math.max(1,dEnt)).toFixed(1).replace('.',',')+'x</b> o ritmo das entregas (+'+dEsc+' contra +'+dEnt+'), então o carry-over foi de '+carry(prev)+' para <b>'+carry(cur)+'</b> — '+cPct+'% de tudo que estava na '+cur.id+'.'
+    : 'O carry-over ficou em <b>'+carry(cur)+'</b> ('+cPct+'% do escopo da '+cur.id+'), contra '+carry(prev)+' na '+prev.id+'.';
+  const hist = seq>=2 ? ' Ele sobe há '+seq+' sprints seguidas ('+serie.map(carry).join(' → ')+').' : '';
+  const acao = dEsc>dEnt
+    ? '→ Melhorar a taxa não está reduzindo a fila. Enquanto o escopo entrar mais rápido do que a capacidade de fechar, o acumulado cresce mesmo com o time indo melhor — a alavanca da '+SPRINT_NOVA.id+' é limitar a entrada, não cobrar mais rendimento.'
+    : '→ A fila parou de crescer. Vale manter o teto de escopo que produziu esse resultado.';
+  return obsBox('Leitura',[ritmo,fila+hist],acao);
+}
+
+function leituraFrentes(cur,prev,pa,pb){
+  const comuns=Object.keys(pb).filter(f=>pa[f]), novas=Object.keys(pb).filter(f=>!pa[f]), saiu=Object.keys(pa).filter(f=>!pb[f]);
+  const soma=(o,ks)=>ks.reduce((t,k)=>t+o[k][0],0);
+  const baseA=soma(pa,comuns), baseB=soma(pb,comuns), gNovas=soma(pb,novas), pSaiu=soma(pa,saiu);
+  const fechadas=novas.filter(f=>pb[f][1]>0&&pb[f][0]===pb[f][1]);
+  const abertas=Object.entries(pb).map(([f,v])=>[f,v[1]-v[0]]).filter(x=>x[1]>0).sort((x,y)=>y[1]-x[1]);
+  const tot=abertas.reduce((t,x)=>t+x[1],0), top=abertas.slice(0,3);
+  const topSum=top.reduce((t,x)=>t+x[1],0);
+  const decomp='Das <b>'+(cur.done-prev.done>0?'+':'')+(cur.done-prev.done)+'</b> entregas em relação à '+prev.id
+    +', <b>+'+gNovas+'</b> vieram de frentes que só existem na '+cur.id+' ('+lista(novas.filter(f=>pb[f][0]>0))+')'
+    +(pSaiu?' e <b>−'+pSaiu+'</b> saíram junto com frentes encerradas ('+lista(saiu)+')':'')
+    +'. As '+comuns.length+' frentes presentes nas duas sprints somaram '+baseB+' contra '+baseA+' — avanço real de <b>'+(baseB-baseA>0?'+':'')+(baseB-baseA)+'</b>.';
+  const parado='O que ficou parado está concentrado: '+top.map(x=>'<b>'+x[0]+'</b> ('+x[1]+')').join(', ')
+    +' respondem por '+Math.round(topSum/tot*100)+'% das '+tot+' issues em aberto.';
+  const acao=fechadas.length
+    ? '→ O salto veio de frentes que abriram e fecharam dentro da sprint ('+lista(fechadas.map(f=>f+' '+pb[f][0]+'/'+pb[f][1]))+'). As frentes de esteira longa quase não se moveram, e são elas que vão definir a '+SPRINT_NOVA.id+' — vale tratá-las com meta própria em vez de diluí-las no total.'
+    : '→ O avanço se distribuiu entre as frentes que já vinham correndo. Vale checar se as maiores têm capacidade dedicada na '+SPRINT_NOVA.id+'.';
+  return obsBox('Leitura',[decomp,parado],acao);
+}
+
+function leituraCargaProxima(sel,cur,serie){
+  const porProj={};sel.forEach(i=>porProj[i.project]=(porProj[i.project]||0)+1);
+  const ord=Object.entries(porProj).sort((a,b)=>b[1]-a[1]);
+  const top=ord.slice(0,2), topSum=top.reduce((t,x)=>t+x[1],0);
+  const hist=serie.map(s=>s.done), media=Math.round(hist.reduce((a,b)=>a+b,0)/hist.length);
+  const carga='A '+SPRINT_NOVA.id+' começa com <b>'+sel.length+' issues herdadas</b>, antes de entrar qualquer escopo novo. Nas últimas '
+    +hist.length+' sprints o time fechou '+lista(hist.map(String))+' — média de <b>'+media+'</b>. A herança sozinha já está '
+    +(sel.length>media?'acima':'abaixo')+' desse patamar.';
+  const conc=top.length>1?'<b>'+top[0][0]+'</b> ('+top[0][1]+') e <b>'+top[1][0]+'</b> ('+top[1][1]+') concentram '+topSum+' das '+sel.length+' ('+Math.round(topSum/sel.length*100)+'%).':'';
+  const acao=sel.length>media
+    ? '→ Antes de aceitar escopo novo, a '+SPRINT_NOVA.id+' já está cheia. Entrar sem teto definido repete o padrão da '+cur.id+' e empurra a fila de novo para a sprint seguinte.'
+    : '→ Há folga sobre a média histórica; dá para absorver escopo novo sem inflar a fila.';
+  return obsBox('Leitura',[carga,conc].filter(Boolean),acao);
+}
+
+function buildEvolucao(){
+  const host=document.getElementById('evo-tiles');
+  if(!host||host.children.length)return;
+  const cur=SPRINTS[SPRINTS.length-1], prev=SPRINTS[SPRINTS.length-2];
+
+  // deixa explicito quais sprints entram na comparacao, em vez de so 'a anterior'
+  const cmp=document.getElementById('evo-comparacao');
+  if(cmp) cmp.innerHTML='<div style="background:var(--bg2);border:1px solid var(--bord);border-left:3px solid var(--cyan);border-radius:8px;padding:10px 14px;display:flex;align-items:center;gap:10px;flex-wrap:wrap;">'
+    +'<span style="font-size:13.2px;font-weight:700;color:var(--cyan);text-transform:uppercase;letter-spacing:.8px;">Comparando</span>'
+    +'<span style="font-family:var(--mono);font-size:18px;font-weight:700;color:var(--text);">'+prev.id+'</span>'
+    +'<span style="font-size:13.2px;color:var(--muted);">'+prev.periodo+'</span>'
+    +'<span style="color:var(--cyan);font-size:18px;font-weight:700;">→</span>'
+    +'<span style="font-family:var(--mono);font-size:18px;font-weight:700;color:var(--text);">'+cur.id+'</span>'
+    +'<span style="font-size:13.2px;color:var(--muted);">'+cur.periodo+'</span>'
+    +'<span style="margin-left:auto;font-size:13.2px;color:var(--muted);">série completa: '+SPRINTS.map(sp=>sp.id).join(' · ')+'</span>'
+    +'</div>';
+
+  // --- stat tiles: valor da sprint fechada + delta vs anterior + sparkline ---
+  EVO_METRICS.forEach(m=>{
+    const vals=SPRINTS.map(m.get);
+    const v=m.get(cur), p=m.get(prev), d=v-p;
+    const bom = m.dir==='neutro' ? null : (m.dir==='bom' ? d>0 : d<0);
+    const cor = d===0||bom===null ? 'var(--muted)' : (bom?'#2EA043':'#F85149');
+    const seta = d===0 ? '=' : (d>0?'▲':'▼');
+    const tile=document.createElement('div');tile.className='evo-tile';
+    tile.innerHTML='<div class="evo-label">'+m.label+'</div>'
+      +'<div class="evo-value">'+v+(m.suf||'')+'</div>'
+      +'<div class="evo-delta" style="color:'+cor+'">'+seta+' '+(d>0?'+':'')+d+(m.dsuf||'')
+      +' <span class="evo-vs">vs '+prev.id+' ('+p+(m.suf||'')+')</span></div>'
+      +sparkline(vals,SPRINTS.map(sp=>sp.id+': '+m.get(sp)+(m.suf||'')),SPRINTS.map(sp=>sp.id));
+    host.appendChild(tile);
+  });
+  document.getElementById('evo-obs-kpi').innerHTML=leituraIndicadores(cur,prev,SPRINTS);
+
+  // --- barra divergente: evolucao de entregas por frente ---
+  // A barra mede entregas concluidas (numero absoluto). Delta de TAXA por frente
+  // nao serve de indicador aqui: metade das frentes tem 1 ou 2 issues na sprint,
+  // onde uma issue vira 50 ou 100 pontos percentuais de variacao.
+  const db=document.getElementById('evo-dumbbell');
+  const pa=prev.porProjeto||{}, pb=cur.porProjeto||{};
+  const taxa=v=>v?Math.round(v[0]/v[1]*100)+'%':'—';
+  const frentes=[...new Set([...Object.keys(pa),...Object.keys(pb)])].map(f=>{
+    const a=pa[f],b=pb[f];
+    return {f,a,b,d:(b?b[0]:0)-(a?a[0]:0),tag:!a?'nova':(!b?'encerrada':'')};
+  }).filter(r=>r.tag!=='encerrada' && !(r.d===0 && r.f!=='ETI')).sort((x,y)=>y.d-x.d||x.f.localeCompare(y.f));
+  const maxAbs=Math.max(1,...frentes.map(r=>Math.abs(r.d)));
+  db.innerHTML='<div class="evo-card-title">Entregas por frente · '+prev.id+' → '+cur.id+'</div>'
+    +'<div class="evo-card-sub">Variação no número de issues concluídas por frente. Escolhi entregas em vez de taxa porque metade das frentes tem 1 ou 2 issues na sprint, e ali uma única issue já vira 50 ou 100 pontos de variação. A taxa aparece ao lado de cada barra: uma frente pode entregar mais e mesmo assim ver a taxa cair, quando o escopo cresce mais rápido que a entrega.</div>'
+    +'<div class="evo-legend"><span><i style="background:'+EVO_ACCENT+'"></i>entregou mais que na '+prev.id+'</span>'
+    +'<span><i style="background:#F85149"></i>entregou menos</span></div>'
+    +frentes.map(r=>{
+      const cor=r.d>0?EVO_ACCENT:r.d<0?'#F85149':'#484F58';
+      const w=Math.abs(r.d)/maxAbs*50;
+      const barra=r.d===0
+        ? '<div class="dv-bar" style="left:calc(50% - 1.5px);width:3px;background:#484F58;"></div>'
+        : (r.d>0?'<div class="dv-bar" style="left:50%;width:'+w+'%;background:'+cor+';opacity:.8"></div>'
+                :'<div class="dv-bar" style="right:50%;width:'+w+'%;background:'+cor+';opacity:.8"></div>');
+      const raz=v=>v?v[0]+'/'+v[1]:'—';
+      const nEnt=raz(r.a)+' → '+raz(r.b);
+      const nTaxa=taxa(r.a)+'→'+taxa(r.b);
+      return '<div class="dv-row">'
+        +'<div class="dv-name" style="color:'+((PROJ_META[r.f]||{}).color||'#8B949E')+'">'+r.f+'</div>'
+        +'<div class="dv-track" title="'+r.f+': '+nEnt+' concluídas/total · taxa '+nTaxa+'"><div class="dv-zero"></div>'+barra+'</div>'
+        +'<div class="dv-delta" style="color:'+(r.d===0?'var(--muted)':cor)+'">'+(r.d>0?'+':'')+r.d+'</div>'
+        +'<div class="dv-detail">'+nEnt+' · '+nTaxa+(r.tag?'<span class="dv-tag">'+r.tag+'</span>':'')+'</div>'
+        +'</div>';
+    }).join('')
+    +'<div class="dv-scale"><span>−'+maxAbs+' entregas</span><span>0</span><span>+'+maxAbs+'</span></div>'
+    +'<div class="evo-obs">'+leituraFrentes(cur,prev,pa,pb)+'</div>';
+
+  // --- carga que entra na sprint nova ---
+  const box=document.getElementById('evo-s18');
+  const sel=ISSUES.filter(i=>!isDone(i.status));   // tudo que segue aberto no fechamento
+  const pend=sel.filter(i=>!isProg(i.status)).length, prog=sel.filter(i=>isProg(i.status)).length;
+  const porProj={};sel.forEach(i=>porProj[i.project]=(porProj[i.project]||0)+1);
+  const ord=Object.entries(porProj).sort((a,b)=>b[1]-a[1]);
+  const maxN=ord.length?ord[0][1]:1;
+  box.innerHTML='<div class="evo-card-title">Entrando na '+SPRINT_NOVA.id+'</div>'
+    +'<div class="evo-card-sub">'+SPRINT_NOVA.periodo+'. Todas as issues da '+cur.id+' que seguem abertas no fechamento e atravessam para a sprint nova.</div>'
+    +'<div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px;">'
+    +'<span class="s18-chip"><b>'+sel.length+'</b> issues</span>'
+    +'<span class="s18-chip"><b>'+prog+'</b> em andamento</span>'
+    +'<span class="s18-chip"><b>'+pend+'</b> pendentes</span>'
+    +'<span class="s18-chip"><b>'+ord.length+'</b> frentes</span></div>'
+    +ord.map(([p,n])=>{
+      const cor=PROJ_META[p]?.color||'#8B949E';
+      return '<div style="display:flex;align-items:center;gap:8px;margin-bottom:7px;">'
+        +'<div style="width:75px;font-size:13.2px;font-weight:600;color:'+cor+';text-align:right;flex-shrink:0;">'+p+'</div>'
+        +'<div style="flex:1;background:var(--bg3);border-radius:3px;height:16px;overflow:hidden;">'
+        +'<div style="height:100%;width:'+Math.round(n/maxN*100)+'%;background:'+EVO_ACCENT+';opacity:.55;border-radius:3px;"></div></div>'
+        +'<div style="font-size:13.2px;color:var(--muted);width:24px;text-align:right;flex-shrink:0;font-variant-numeric:tabular-nums;">'+n+'</div></div>';
+    }).join('')
+    +'<div class="evo-obs">'+leituraCargaProxima(sel,cur,SPRINTS)+'</div>';
+}
+
+// ===== KPIs derivados dos dados (nada de número fixo no HTML) =====
+// Veredito de SLA de cada chamado vem do JSM (customfield_10577 = 1a resposta,
+// customfield_10610 = resolucao, ambos na regua global) e esta gravado em
+// SDESK_ISSUES. Nenhum indice de SLA e mais digitado a mao no HTML.
+function slaIndice(lista,campo){
+  const np=lista.filter(i=>i[campo]==='no prazo').length;
+  const es=lista.filter(i=>i[campo]==='estouro').length;
+  return np+es?{np,es,pct:Math.round(np/(np+es)*100)}:null;
+}
+function slaCor(pct){return pct>=85?'#2EA043':pct>=60?'#D29922':'#F85149';}
+(function(){
+  const set=(id,v)=>{const e=document.getElementById(id);if(e)e.textContent=v;};
+  const done=ISSUES.filter(i=>isDone(i.status)).length;
+  set('hdr-badge',ISSUES.length+' itens · '+new Set(ISSUES.map(i=>i.project)).size+' frentes');
+  set('kpi-time-done',done);
+  set('kpi-time-membros',MEMBERS.filter(m=>ISSUES.some(i=>i.assignee===m.id)).length);
+  set('kpi-gantt-done',done);
+  const sdDone=SDESK_ISSUES.filter(i=>isDone(i.status)).length;
+  const res=slaIndice(SDESK_ISSUES,'sla'), pri=slaIndice(SDESK_ISSUES,'sla1a');
+  set('sd-total',SDESK_ISSUES.length);
+  set('sd-sla-res',res.pct+'%');          // no prazo / (no prazo + estouro)
+  set('sd-sla-1a',pri.pct+'%');
+  set('sd-noprazo',res.np);
+  set('sd-estouro',res.es);               // inclui os abertos que ja estouraram
+  set('sd-pend',SDESK_ISSUES.length-sdDone);
+  // a cor do cartao de resolucao segue a mesma faixa dos cartoes de trilha
+  const cRes=document.getElementById('sd-sla-res');
+  if(cRes&&cRes.parentElement){cRes.parentElement.className='kpi';cRes.style.color=slaCor(res.pct);}
+})();
+
+// GANTT
+// parse 'YYYY-MM-DD' no fuso local (evita o deslocamento de 1 dia do parse UTC)
+function pd(s){const[y,m,d]=String(s).split('-').map(Number);return new Date(y,m-1,d);}
+const SPRINT_START=pd('2026-09-28'),SPRINT_END=pd('2026-10-09');   // S20 (sprint fechada)
+const S18_START=pd('2026-09-14'),S18_END=pd('2026-09-28');         // S19 (sprint anterior)
+const TODAY=pd('2026-10-13'),DAY_W=22;                             // data de fechamento/apuracao
+function addDays(d,n){const r=new Date(d);r.setDate(r.getDate()+n);return r;}
+function diffDays(a,b){return Math.round((b-a)/86400000);}
+function pad2(n){return String(n).padStart(2,'0');}
+function dateStr(d){return d.getFullYear()+'-'+pad2(d.getMonth()+1)+'-'+pad2(d.getDate());}
+// a janela precisa cobrir a S19, a S20 inteira e o vencimento mais distante do
+// board — senao as barras de outubro vazam para fora do container.
+const VIEW_START=addDays(S18_START,-3);
+const MAX_DUE=ISSUES.reduce((m,i)=>{const d=pd(i.due);return d>m?d:m;},SPRINT_END);
+const VIEW_END=addDays(MAX_DUE>addDays(SPRINT_END,11)?MAX_DUE:addDays(SPRINT_END,11),2);
+// mesma condicao da barra em gradiente do Gantt: aberta no fechamento e com
+// entrega prevista depois de 09/10.
+function entregaAlemDoFim(i){
+  return !isDone(i.status)&&pd(i.due)>SPRINT_END;
+}
+const TOTAL_DAYS=diffDays(VIEW_START,VIEW_END)+1;
+let activeFilter='all';
+const expandState={};
+
+function setF(f,btn){activeFilter=f;document.querySelectorAll('.fbtn').forEach(b=>b.classList.remove('active'));btn.classList.add('active');applyFilter();}
+function applyFilter(){
+  document.querySelectorAll('[data-grp]').forEach(grp=>{
+    const proj=grp.dataset.grp;
+    const tasks=document.querySelectorAll(`[data-task-proj="${proj}"] .task-row`);
+    let any=false;
+    tasks.forEach(tr=>{
+      const s=tr.dataset.status;
+      let show=true;
+      if(activeFilter==='done')show=isDone(s);
+      else if(activeFilter==='carry')show=!isDone(s);
+      else if(activeFilter==='alem')show=tr.dataset.alem==='1';
+      tr.style.display=show?'':'none';
+      if(show)any=true;
+    });
+    grp.style.display=(activeFilter==='all'||any)?'':'none';
+    const tw=document.querySelector(`[data-task-proj="${proj}"]`);
+    if(tw){
+      tw.style.display=grp.style.display;
+      const open=activeFilter==='all'?!!expandState[proj]:any;
+      tw.classList.toggle('open',open);
+      const icon=document.getElementById('exp-'+proj);
+      if(icon)icon.textContent=open?'▼':'▶';
+    }
+  });
+}
+function expandAll(){document.querySelectorAll('.task-rows').forEach(t=>t.classList.add('open'));}
+function collapseAll(){document.querySelectorAll('.task-rows').forEach(t=>t.classList.remove('open'));}
+function scrollToToday(){const w=document.getElementById('gantt-wrap');if(w)w.scrollLeft=(diffDays(VIEW_START,TODAY)*DAY_W)-220;}
+
+function buildGantt(){
+  const container=document.getElementById('gantt-container');if(!container)return;
+  const days=[];
+  for(let i=0;i<TOTAL_DAYS;i++){
+    const d=addDays(VIEW_START,i);const dow=d.getDay();
+    days.push({date:d,ds:dateStr(d),wknd:dow===0||dow===6,sprint:d>=SPRINT_START&&d<=SPRINT_END,s18:d>=S18_START&&d<=S18_END,today:dateStr(d)===dateStr(TODAY),n:d.getDate(),m:d.getMonth()});
+  }
+  // month header
+  const mRow=document.createElement('div');mRow.className='m-hdr';
+  const mlc=document.createElement('div');mlc.className='m-lbl-col';mRow.appendChild(mlc);
+  const months={};days.forEach(d=>{const k=d.date.getFullYear()+'-'+d.m;if(!months[k])months[k]={count:0,name:d.date.toLocaleString('pt-BR',{month:'short'}).toUpperCase()};months[k].count++;});
+  Object.values(months).forEach(m=>{const el=document.createElement('div');el.className='m-cell';el.style.width=(m.count*DAY_W)+'px';el.textContent=m.name;mRow.appendChild(el);});
+  container.appendChild(mRow);
+  // day header
+  const dHdr=document.createElement('div');dHdr.className='g-hdr';
+  const dlc=document.createElement('div');dlc.className='g-lbl-col';dlc.textContent='Projeto / Issue';dHdr.appendChild(dlc);
+  const dDiv=document.createElement('div');dDiv.className='g-days';
+  days.forEach(d=>{const el=document.createElement('div');el.className='d-cell'+(d.wknd?' wknd':'')+(d.s18?' s18-d':'')+(d.today?' today-d':'');el.textContent=d.n;dDiv.appendChild(el);});
+  dHdr.appendChild(dDiv);container.appendChild(dHdr);
+
+  const groups={};
+  PROJ_ORDER.forEach(p=>{const items=ISSUES.filter(i=>i.project===p);if(items.length)groups[p]=items;});
+
+  Object.entries(groups).forEach(([proj,items])=>{
+    const meta=PROJ_META[proj]||{name:proj,color:'#8B949E'};
+    const st=projStats[proj]||{done:0,prog:0,pend:0,total:0};
+    expandState[proj]=false;
+    const grpRow=document.createElement('div');grpRow.className='grp-row';grpRow.dataset.grp=proj;
+    const grpLbl=document.createElement('div');grpLbl.className='grp-lbl';
+    grpLbl.innerHTML=`<span class="expand-icon" id="exp-${proj}">▶</span>
+      <span class="grp-name" style="color:${meta.color}">${proj}</span>
+      <span style="font-size:12px;color:#8B949E;">${meta.name||''}</span>
+      <div class="grp-badges">
+        <span class="gbadge" style="background:#2EA04330;color:#2EA043">${st.done}✓</span>
+        ${st.prog?`<span class="gbadge" style="background:#0225EB30;color:#6699FF">${st.prog}↻</span>`:''}
+        ${st.pend?`<span class="gbadge" style="background:#48485830;color:#8B949E">${st.pend}⏸</span>`:''}
+      </div>`;
+    const grpTl=document.createElement('div');grpTl.className='grp-tl';grpTl.style.width=(TOTAL_DAYS*DAY_W)+'px';
+    const sumDiv=document.createElement('div');sumDiv.className='grp-summary';
+    [[st.done,'#2EA043'],[st.prog,'#0225EB'],[st.pend,'#484F58']].forEach(([n,c])=>{if(n>0){const seg=document.createElement('div');seg.className='gs-seg';seg.style.background=c;seg.style.width=(n*12)+'px';sumDiv.appendChild(seg);}});
+    grpTl.appendChild(sumDiv);
+    grpRow.appendChild(grpLbl);grpRow.appendChild(grpTl);
+
+    const taskRows=document.createElement('div');taskRows.className='task-rows';taskRows.dataset.taskProj=proj;
+
+    items.forEach(issue=>{
+      const tr=document.createElement('div');tr.className='task-row';tr.dataset.status=issue.status;tr.dataset.alem=entregaAlemDoFim(issue)?'1':'0';
+      const tl=document.createElement('div');tl.className='task-lbl';
+      tl.innerHTML=`<div class="task-dot" style="background:${dotColor(issue.status)}"></div>
+        <div class="task-key">${issue.key}</div>
+        <div class="task-sum" title="${issue.summary}">${issue.summary}</div>`;
+      const ttl=document.createElement('div');ttl.className='task-tl';ttl.style.width=(TOTAL_DAYS*DAY_W)+'px';
+      // bg
+      days.forEach((d,i)=>{if(d.wknd||d.sprint||d.s18||d.today){const bg=document.createElement('div');bg.className='dbg'+(d.today?' today-col':d.sprint?' sprint':d.s18?' s18':' wknd');bg.style.left=(i*DAY_W)+'px';bg.style.width=DAY_W+'px';ttl.appendChild(bg);}});
+      // ref lines
+      const r1=document.createElement('div');r1.className='ref-line ref-today';r1.style.left=(diffDays(VIEW_START,TODAY)*DAY_W)+'px';ttl.appendChild(r1);
+      const r2=document.createElement('div');r2.className='ref-line ref-end';r2.style.left=(diffDays(VIEW_START,SPRINT_END)*DAY_W)+'px';ttl.appendChild(r2);
+      const r3=document.createElement('div');r3.className='ref-line ref-s18';r3.style.left=(diffDays(VIEW_START,S18_END)*DAY_W)+'px';ttl.appendChild(r3);
+      // bar
+      const start=pd(issue.created),end=pd(issue.due);
+      const bs=Math.max(0,diffDays(VIEW_START,start));
+      const be=diffDays(VIEW_START,end);
+      const bw=Math.max(2,(be-bs+1))*DAY_W;
+      const bar=document.createElement('div');bar.className='task-bar';
+      const carry=!isDone(issue.status)&&end>SPRINT_END;
+      if(issue.semPrev)bar.className+=' semprev';   // sem data de entrega no Jira
+      else if(carry)bar.className+=' carry';
+      else if(isDone(issue.status))bar.className+=' done';
+      else if(isProg(issue.status))bar.className+=' prog';
+      else bar.className+=' pend';
+      bar.style.left=(bs*DAY_W)+'px';bar.style.width=bw+'px';
+      bar.addEventListener('mouseenter',e=>showTT(e,issue));
+      bar.addEventListener('mousemove',e=>posTT(e));
+      bar.addEventListener('mouseleave',hideTT);
+      ttl.appendChild(bar);
+      tr.appendChild(tl);tr.appendChild(ttl);
+      taskRows.appendChild(tr);
+    });
+
+    grpRow.onclick=()=>{
+      expandState[proj]=!expandState[proj];
+      taskRows.classList.toggle('open',expandState[proj]);
+      const icon=document.getElementById('exp-'+proj);
+      if(icon)icon.textContent=expandState[proj]?'▼':'▶';
+    };
+    container.appendChild(grpRow);
+    container.appendChild(taskRows);
+  });
+}
+
+// DONUT — calculado dos dados reais
+(function(){
+  const c=document.getElementById('donut');if(!c)return;
+  const ctx=c.getContext('2d');
+  const total=ISSUES.length;
+  const nDone=ISSUES.filter(i=>isDone(i.status)).length;
+  const nProg=ISSUES.filter(i=>isProg(i.status)).length;
+  const nPend=total-nDone-nProg;
+  const pct=Math.round(nDone/total*100);
+  const slices=[nDone,nProg,nPend];
+  const colors=['#2EA043','#0225EB','#484F58'];
+  const labels=['Concluídos','Em andamento','Pendentes'];
+  let start=-Math.PI/2;
+  slices.forEach((v,i)=>{
+    if(!v)return;
+    const angle=(v/total)*2*Math.PI;
+    ctx.beginPath();ctx.moveTo(75,75);ctx.arc(75,75,65,start,start+angle);
+    ctx.fillStyle=colors[i];ctx.fill();start+=angle;
+  });
+  ctx.beginPath();ctx.arc(75,75,38,0,2*Math.PI);ctx.fillStyle='#161B22';ctx.fill();
+  ctx.fillStyle='#02FFFF';ctx.font='bold 13px "Exo 2"';ctx.textAlign='center';ctx.textBaseline='middle';
+  ctx.fillText(pct+'%',75,72);
+  ctx.fillStyle='#8B949E';ctx.font='9px "Exo 2"';ctx.fillText(total+' issues',75,86);
+  // legenda
+  const leg=document.getElementById('donut-legend');
+  if(leg)[[nDone,'#2EA043',labels[0]],[nProg,'#0225EB',labels[1]],[nPend,'#484F58',labels[2]]].forEach(([n,col,lbl])=>{
+    if(!n)return;
+    const pctN=Math.round(n/total*100);
+    leg.innerHTML+=`<div style="display:flex;align-items:center;gap:8px;font-size:15.6px;">
+      <div style="width:12px;height:12px;border-radius:2px;background:${col};flex-shrink:0;"></div>
+      ${lbl}: <strong style="color:#E6EDF3;margin-left:4px;">${n}</strong>
+      <span style="color:var(--muted);">(${pctN}%)</span></div>`;
+  });
+})();
+
+// TAXA POR PROJETO
+(function(){
+  const tc=document.getElementById('taxa-chart');if(!tc)return;
+  PROJ_ORDER.filter(p=>projStats[p]).forEach(proj=>{
+    const d=projStats[proj];
+    const pct=Math.round(d.done/d.total*100);
+    const color=PROJ_META[proj]?.color||'#484F58';
+    const barColor=pct>=60?'#2EA043':pct>=30?'#D29922':'#F85149';
+    const row=document.createElement('div');
+    row.style.cssText='display:flex;align-items:center;gap:8px;margin-bottom:7px;';
+    row.innerHTML=`<div style="width:75px;font-size:13.2px;font-weight:600;color:${color};text-align:right;flex-shrink:0;">${proj}</div>
+      <div style="flex:1;background:var(--bg3);border-radius:3px;height:18px;overflow:hidden;">
+        <div style="height:100%;width:${pct}%;background:${barColor};border-radius:3px;display:flex;align-items:center;padding:0 6px;font-size:12px;font-weight:700;color:#fff;min-width:20px;">${pct}%</div>
+      </div>
+      <div style="font-size:13.2px;color:var(--muted);flex-shrink:0;width:36px;text-align:right;">${d.done}/${d.total}</div>`;
+    tc.appendChild(row);
+  });
+})();
+
+// preencher KPIs reais
+(function(){
+  const total=ISSUES.length;
+  const nDone=ISSUES.filter(i=>isDone(i.status)).length;
+  const nCarry=total-nDone;
+  const nProjs=new Set(ISSUES.map(i=>i.project)).size;
+  const pct=Math.round(nDone/total*100);
+  const el=(id,v)=>{const e=document.getElementById(id);if(e)e.textContent=v;};
+  el('kpi-done',nDone);
+  el('kpi-taxa',pct+'%');
+  el('kpi-carry',nCarry);
+  el('kpi-projs',nProjs);
+  // colorir taxa
+  const kt=document.getElementById('kpi-taxa');
+  if(kt)kt.closest('.kpi').className='kpi '+(pct>=80?'ok':pct>=50?'warn':'danger');
+})();
+(function(){const e=document.getElementById('kpi-s20-count');if(e)e.textContent=ISSUES.filter(i=>!isDone(i.status)).length;})();
+(function(){
+  const a=document.getElementById('desc-status');if(a)a.innerHTML=descricaoStatus();
+  const b=document.getElementById('desc-taxa');if(b)b.innerHTML=descricaoProjetos();
+})();
+buildProjects();
+buildSdesk();
+buildGantt();
+setTimeout(scrollToToday,100);
+</script>
+</body>
+</html>

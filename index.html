@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Dashboard Sprint S19 — Fenasbac TI</title>
+<title>Dashboard Sprint S20 — Fenasbac TI</title>
 <link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@300;400;600;700&family=IBM+Plex+Mono:wght@400&display=swap" rel="stylesheet">
 <style>
 :root{
@@ -16,79 +16,79 @@
 }
 *{box-sizing:border-box;margin:0;padding:0;}
 html{background:#080B0F;}
-body{background:var(--bg);color:var(--text);font-family:var(--font);font-size:14px;overflow-x:hidden;max-width:1400px;margin:0 auto;box-shadow:0 0 0 1px var(--bord),0 0 40px rgba(0,0,0,.4);min-height:100vh;}
+body{background:var(--bg);color:var(--text);font-family:var(--font);font-size:16.8px;overflow-x:hidden;max-width:1400px;margin:0 auto;box-shadow:0 0 0 1px var(--bord),0 0 40px rgba(0,0,0,.4);min-height:100vh;}
 .hdr{background:var(--dark);padding:12px 24px;display:flex;align-items:center;justify-content:space-between;border-bottom:2px solid var(--blue);}
-.hdr-brand{font-size:11px;color:var(--cyan);font-weight:700;letter-spacing:1.5px;text-transform:uppercase;}
-.hdr-title{font-size:18px;font-weight:700;color:#fff;margin-top:2px;}
-.hdr-sub{font-size:11px;color:rgba(255,255,255,.5);margin-top:1px;}
-.hdr-badge{background:var(--bg3);border:1px solid var(--bord);border-radius:20px;padding:4px 12px;font-size:11px;color:var(--muted);}
+.hdr-brand{font-size:13.2px;color:var(--cyan);font-weight:700;letter-spacing:1.5px;text-transform:uppercase;}
+.hdr-title{font-size:21.6px;font-weight:700;color:#fff;margin-top:2px;}
+.hdr-sub{font-size:13.2px;color:rgba(255,255,255,.5);margin-top:1px;}
+.hdr-badge{background:var(--bg3);border:1px solid var(--bord);border-radius:20px;padding:4px 12px;font-size:13.2px;color:var(--muted);}
 .tabs{display:flex;background:var(--bg2);border-bottom:1px solid var(--bord);padding:0 24px;}
-.tab{padding:10px 18px;cursor:pointer;color:var(--muted);font-size:14px;font-weight:500;border-bottom:3px solid transparent;transition:all .15s;white-space:nowrap;}
+.tab{padding:10px 18px;cursor:pointer;color:var(--muted);font-size:16.8px;font-weight:500;border-bottom:3px solid transparent;transition:all .15s;white-space:nowrap;}
 .tab.active{color:var(--blue);border-bottom-color:var(--blue);}
 .tab:hover:not(.active){color:var(--text);}
 .panel{display:none;}.panel.active{display:block;}
 .kpi-strip{display:flex;gap:10px;padding:16px 24px;flex-wrap:wrap;}
 .kpi{background:var(--bg2);border:1px solid var(--bord);border-radius:8px;padding:12px 18px;flex:1;min-width:100px;}
-.kpi-val{font-size:27px;font-weight:700;color:var(--cyan);font-family:var(--mono);}
-.kpi-label{font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;margin-top:2px;}
+.kpi-val{font-size:32.4px;font-weight:700;color:var(--cyan);font-family:var(--mono);}
+.kpi-label{font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;margin-top:2px;}
 .kpi.ok .kpi-val{color:var(--green);}.kpi.warn .kpi-val{color:var(--yellow);}.kpi.danger .kpi-val{color:var(--red);}
 
 /* PROJETOS */
 .proj-view{padding:0 24px 24px;}
 .cat-group{margin-bottom:24px;}
-.cat-title{font-size:12px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.8px;margin-bottom:10px;display:flex;align-items:center;gap:8px;}
-.cat-count{background:var(--bg3);border-radius:10px;padding:1px 7px;font-size:11px;font-weight:600;color:var(--text);}
+.cat-title{font-size:14.4px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.8px;margin-bottom:10px;display:flex;align-items:center;gap:8px;}
+.cat-count{background:var(--bg3);border-radius:10px;padding:1px 7px;font-size:13.2px;font-weight:600;color:var(--text);}
 .proj-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:10px;}
 .proj-card{background:var(--bg2);border:1px solid var(--bord);border-radius:8px;padding:12px;cursor:pointer;transition:border-color .15s,background .15s;position:relative;overflow:hidden;}
 .proj-card:hover{border-color:var(--blue);background:#1a2030;}
-.proj-key{font-size:11px;font-weight:700;letter-spacing:.5px;}
-.proj-name{font-size:12px;color:var(--muted);margin-top:1px;margin-bottom:8px;}
-.no-issues{font-size:11px;color:var(--gray);font-style:italic;}
+.proj-key{font-size:13.2px;font-weight:700;letter-spacing:.5px;}
+.proj-name{font-size:14.4px;color:var(--muted);margin-top:1px;margin-bottom:8px;}
+.no-issues{font-size:13.2px;color:var(--gray);font-style:italic;}
 
 /* SDESK */
 .grid-2{display:grid;grid-template-columns:1fr 1fr;gap:12px;padding:0 24px 24px;}
 .dp-issue{display:flex;align-items:flex-start;gap:7px;padding:5px 6px;border-radius:4px;margin-bottom:2px;}
 .dp-issue:hover{background:var(--bg3);}
 .dp-dot{width:7px;height:7px;border-radius:50%;flex-shrink:0;margin-top:3px;}
-.dp-key{font-family:var(--mono);font-size:10px;color:var(--muted);flex-shrink:0;width:89px;}
-.dp-sum{font-size:11px;line-height:1.4;flex:1;}
-.dp-owner{font-size:10px;color:var(--muted);flex-shrink:0;margin-top:1px;}
-.sla-badge{font-size:9px;font-weight:700;padding:1px 5px;border-radius:8px;margin-left:4px;}
+.dp-key{font-family:var(--mono);font-size:12px;color:var(--muted);flex-shrink:0;width:89px;}
+.dp-sum{font-size:13.2px;line-height:1.4;flex:1;}
+.dp-owner{font-size:12px;color:var(--muted);flex-shrink:0;margin-top:1px;}
+.sla-badge{font-size:10.8px;font-weight:700;padding:1px 5px;border-radius:8px;margin-left:4px;}
 
 /* DETAIL PANEL */
 .detail-panel{position:fixed;right:-400px;top:0;bottom:0;width:380px;background:#161B22;border-left:1px solid #30363D;z-index:100;transition:right .25s ease;display:flex;flex-direction:column;box-shadow:-8px 0 32px rgba(0,0,0,.6);}
 .detail-panel.open{right:0;}
 .dp-hdr{padding:14px 16px 12px;border-bottom:1px solid #30363D;display:flex;align-items:center;justify-content:space-between;}
-.dp-proj{font-size:12px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;}
-.dp-sub{font-size:11px;color:#8B949E;margin-top:2px;}
-.dp-close{background:none;border:none;color:#8B949E;cursor:pointer;font-size:19px;padding:2px 6px;}
+.dp-proj{font-size:14.4px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;}
+.dp-sub{font-size:13.2px;color:#8B949E;margin-top:2px;}
+.dp-close{background:none;border:none;color:#8B949E;cursor:pointer;font-size:22.8px;padding:2px 6px;}
 .dp-close:hover{color:#E6EDF3;}
 .dp-body{flex:1;overflow-y:auto;padding:14px;}
 .dp-kpis{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:14px;}
 .dp-kpi{background:#21262D;border-radius:6px;padding:8px 10px;}
-.dp-kpi-val{font-size:21px;font-weight:700;font-family:var(--mono);}
-.dp-kpi-label{font-size:10px;color:#8B949E;text-transform:uppercase;letter-spacing:.4px;margin-top:1px;}
+.dp-kpi-val{font-size:25.2px;font-weight:700;font-family:var(--mono);}
+.dp-kpi-label{font-size:12px;color:#8B949E;text-transform:uppercase;letter-spacing:.4px;margin-top:1px;}
 .dp-sec{margin-bottom:12px;}
-.dp-sec-title{font-size:10px;font-weight:600;color:#8B949E;text-transform:uppercase;letter-spacing:.8px;margin-bottom:6px;padding-bottom:4px;border-bottom:1px solid #30363D;}
+.dp-sec-title{font-size:12px;font-weight:600;color:#8B949E;text-transform:uppercase;letter-spacing:.8px;margin-bottom:6px;padding-bottom:4px;border-bottom:1px solid #30363D;}
 
 /* TEAM */
 .team-view{padding:0 24px 24px;}
 .team-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:12px;}
 .member-card{background:var(--bg2);border:1px solid var(--bord);border-radius:8px;overflow:hidden;}
 .member-hdr{padding:12px 14px;display:flex;align-items:center;gap:10px;border-bottom:1px solid var(--bord);}
-.member-av{width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;flex-shrink:0;}
-.member-name{font-size:14px;font-weight:600;}
-.member-role{font-size:11px;color:var(--muted);}
+.member-av{width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:15.6px;font-weight:700;flex-shrink:0;}
+.member-name{font-size:16.8px;font-weight:600;}
+.member-role{font-size:13.2px;color:var(--muted);}
 .member-stats{display:flex;gap:0;border-bottom:1px solid var(--bord);}
 .mstat{flex:1;padding:8px;text-align:center;border-right:1px solid var(--bord);}
 .mstat:last-child{border-right:none;}
-.mstat-val{font-size:17px;font-weight:700;font-family:var(--mono);}
-.mstat-label{font-size:9px;color:var(--muted);text-transform:uppercase;letter-spacing:.4px;margin-top:1px;}
+.mstat-val{font-size:20.4px;font-weight:700;font-family:var(--mono);}
+.mstat-label{font-size:10.8px;color:var(--muted);text-transform:uppercase;letter-spacing:.4px;margin-top:1px;}
 .member-issues{padding:8px;max-height:200px;overflow-y:auto;}
-.m-issue{display:flex;align-items:center;gap:6px;padding:4px 5px;border-radius:4px;margin-bottom:2px;font-size:11px;}
+.m-issue{display:flex;align-items:center;gap:6px;padding:4px 5px;border-radius:4px;margin-bottom:2px;font-size:13.2px;}
 .m-issue:hover{background:var(--bg3);}
 .m-dot{width:6px;height:6px;border-radius:50%;flex-shrink:0;}
-.m-key{font-family:var(--mono);font-size:10px;color:var(--muted);flex-shrink:0;width:76px;}
+.m-key{font-family:var(--mono);font-size:12px;color:var(--muted);flex-shrink:0;width:76px;}
 .m-sum{flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
 .m-bar-wrap{padding:0 14px 12px;}
 .m-bar-track{background:var(--bg3);border-radius:3px;height:4px;}
@@ -101,62 +101,62 @@ body{background:var(--bg);color:var(--text);font-family:var(--font);font-size:14
 /* EVOLUCAO */
 .evo-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(172px,1fr));gap:10px;padding:0 24px 16px;}
 .evo-tile{background:var(--bg2);border:1px solid var(--bord);border-radius:8px;padding:12px 14px;}
-.evo-label{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.6px;margin-bottom:7px;line-height:1.2;}
-.evo-value{font-size:28px;font-weight:600;color:var(--text);line-height:1;}
-.evo-delta{font-size:12px;font-weight:600;margin-top:6px;display:flex;align-items:baseline;gap:5px;}
-.evo-delta span.evo-vs{color:var(--muted);font-weight:400;font-size:11px;}
+.evo-label{font-size:13.2px;color:var(--muted);text-transform:uppercase;letter-spacing:.6px;margin-bottom:7px;line-height:1.2;}
+.evo-value{font-size:33.6px;font-weight:600;color:var(--text);line-height:1;}
+.evo-delta{font-size:14.4px;font-weight:600;margin-top:6px;display:flex;align-items:baseline;gap:5px;}
+.evo-delta span.evo-vs{color:var(--muted);font-weight:400;font-size:13.2px;}
 .evo-spark{margin-top:9px;display:block;width:100%;height:auto;}
 .evo-spark-wrap{position:relative;}
 .evo-spark-eixo{position:relative;height:14px;margin-top:3px;}
-.evo-spark-eixo span{position:absolute;top:0;font-family:var(--mono);font-size:10px;line-height:14px;color:var(--muted);white-space:nowrap;}
+.evo-spark-eixo span{position:absolute;top:0;font-family:var(--mono);font-size:12px;line-height:14px;color:var(--muted);white-space:nowrap;}
 .evo-spark-eixo span.cmp{color:var(--text);font-weight:700;}
 .evo-card{background:var(--bg2);border:1px solid var(--bord);border-radius:8px;padding:16px;}
-.evo-card-title{font-size:13px;font-weight:600;color:var(--cyan);text-transform:uppercase;letter-spacing:.8px;margin-bottom:4px;}
-.evo-card-sub{font-size:11px;color:var(--muted);margin-bottom:16px;line-height:1.5;}
-.evo-legend{display:flex;gap:14px;font-size:11px;color:var(--muted);align-items:center;margin-bottom:14px;flex-wrap:wrap;}
+.evo-card-title{font-size:15.6px;font-weight:600;color:var(--cyan);text-transform:uppercase;letter-spacing:.8px;margin-bottom:4px;}
+.evo-card-sub{font-size:13.2px;color:var(--muted);margin-bottom:16px;line-height:1.5;}
+.evo-legend{display:flex;gap:14px;font-size:13.2px;color:var(--muted);align-items:center;margin-bottom:14px;flex-wrap:wrap;}
 .evo-legend i{width:9px;height:9px;border-radius:50%;display:inline-block;margin-right:5px;vertical-align:-1px;}
 .evo-intro{margin:0 24px 16px;background:rgba(2,37,235,.12);border:1px solid rgba(2,37,235,.35);border-left:3px solid var(--blue);border-radius:8px;padding:13px 16px;display:flex;gap:12px;align-items:flex-start;}
-.evo-intro h4{font-size:12px;font-weight:700;color:var(--cyan);text-transform:uppercase;letter-spacing:.8px;margin-bottom:5px;}
-.evo-intro p{font-size:12px;color:#C0C8D4;line-height:1.6;margin-bottom:6px;}
-.evo-intro p:last-child{margin-bottom:0;color:var(--muted);font-size:11px;}
+.evo-intro h4{font-size:14.4px;font-weight:700;color:var(--cyan);text-transform:uppercase;letter-spacing:.8px;margin-bottom:5px;}
+.evo-intro p{font-size:14.4px;color:#C0C8D4;line-height:1.6;margin-bottom:6px;}
+.evo-intro p:last-child{margin-bottom:0;color:var(--muted);font-size:13.2px;}
 .evo-obs{margin-top:15px;padding-top:14px;border-top:1px solid var(--bord);}
 .evo-obs-card{margin:0 24px 16px;background:var(--bg2);border:1px solid var(--bord);border-radius:8px;padding:15px 17px;}
 .evo-obs-card .evo-obs{margin-top:0;padding-top:0;border-top:none;}
-.evo-obs-hd{font-size:11px;font-weight:700;color:var(--cyan);text-transform:uppercase;letter-spacing:.8px;margin-bottom:9px;}
-.evo-obs p{font-size:12px;color:#C0C8D4;line-height:1.65;margin:0 0 8px;}
+.evo-obs-hd{font-size:13.2px;font-weight:700;color:var(--cyan);text-transform:uppercase;letter-spacing:.8px;margin-bottom:9px;}
+.evo-obs p{font-size:14.4px;color:#C0C8D4;line-height:1.65;margin:0 0 8px;}
 .evo-obs p b{color:var(--text);font-weight:700;}
-.evo-obs .acao{font-size:12px;color:#E6EDF3;line-height:1.6;background:rgba(2,255,255,.06);border-left:2px solid var(--cyan);padding:8px 12px;border-radius:0 5px 5px 0;margin:0;}
+.evo-obs .acao{font-size:14.4px;color:#E6EDF3;line-height:1.6;background:rgba(2,255,255,.06);border-left:2px solid var(--cyan);padding:8px 12px;border-radius:0 5px 5px 0;margin:0;}
 .dv-row{display:flex;align-items:center;gap:9px;margin-bottom:8px;}
-.dv-name{width:81px;font-size:11px;font-weight:600;text-align:right;flex-shrink:0;}
+.dv-name{width:81px;font-size:13.2px;font-weight:600;text-align:right;flex-shrink:0;}
 .dv-track{flex:1;min-width:70px;position:relative;height:15px;background:var(--bg3);border-radius:3px;}
 .dv-zero{position:absolute;left:50%;top:-3px;bottom:-3px;width:1px;background:#484F58;}
 .dv-bar{position:absolute;top:2px;bottom:2px;border-radius:2px;}
-.dv-delta{width:31px;font-size:12px;font-weight:700;text-align:right;flex-shrink:0;font-family:var(--mono);font-variant-numeric:tabular-nums;}
-.dv-detail{width:171px;flex-shrink:1;min-width:0;overflow:hidden;white-space:nowrap;font-size:10px;color:var(--muted);font-family:var(--mono);}
-.dv-tag{font-size:9px;padding:1px 5px;border-radius:6px;background:var(--bg3);color:var(--muted);margin-left:5px;font-family:var(--font);}
-.dv-scale{display:grid;grid-template-columns:1fr 1fr 1fr;font-size:10px;color:var(--gray);margin:6px 200px 0 83px;}
+.dv-delta{width:31px;font-size:14.4px;font-weight:700;text-align:right;flex-shrink:0;font-family:var(--mono);font-variant-numeric:tabular-nums;}
+.dv-detail{width:171px;flex-shrink:1;min-width:0;overflow:hidden;white-space:nowrap;font-size:12px;color:var(--muted);font-family:var(--mono);}
+.dv-tag{font-size:10.8px;padding:1px 5px;border-radius:6px;background:var(--bg3);color:var(--muted);margin-left:5px;font-family:var(--font);}
+.dv-scale{display:grid;grid-template-columns:1fr 1fr 1fr;font-size:12px;color:var(--gray);margin:6px 200px 0 83px;}
 .dv-scale span:nth-child(2){text-align:center;}.dv-scale span:last-child{text-align:right;}
-.s18-chip{display:inline-flex;align-items:center;gap:6px;background:var(--bg3);border:1px solid var(--bord);border-radius:14px;padding:4px 11px;font-size:12px;color:#C0C8D4;}
+.s18-chip{display:inline-flex;align-items:center;gap:6px;background:var(--bg3);border:1px solid var(--bord);border-radius:14px;padding:4px 11px;font-size:14.4px;color:#C0C8D4;}
 .s18-chip b{color:var(--text);font-weight:700;}
-.fbtn{background:var(--bg3);border:1px solid var(--bord);color:var(--muted);padding:4px 10px;border-radius:14px;cursor:pointer;font-size:12px;transition:all .15s;}
+.fbtn{background:var(--bg3);border:1px solid var(--bord);color:var(--muted);padding:4px 10px;border-radius:14px;cursor:pointer;font-size:14.4px;transition:all .15s;}
 .fbtn.active,.fbtn:hover{background:var(--blue);color:#fff;border-color:var(--blue);}
-.today-btn{background:var(--dark);border:1px solid var(--blue);color:var(--cyan);padding:4px 10px;border-radius:14px;cursor:pointer;font-size:12px;margin-left:auto;}
+.today-btn{background:var(--dark);border:1px solid var(--blue);color:var(--cyan);padding:4px 10px;border-radius:14px;cursor:pointer;font-size:14.4px;margin-left:auto;}
 .m-hdr{display:flex;border-bottom:1px solid var(--bord);}
 .m-lbl-col{width:280px;min-width:280px;position:sticky;left:0;background:var(--bg);z-index:11;border-right:1px solid var(--bord);}
-.m-cell{background:var(--bg2);text-align:center;font-size:11px;font-weight:600;color:var(--cyan);padding:4px 0;border-right:1px solid var(--bord);flex-shrink:0;}
+.m-cell{background:var(--bg2);text-align:center;font-size:13.2px;font-weight:600;color:var(--cyan);padding:4px 0;border-right:1px solid var(--bord);flex-shrink:0;}
 .g-hdr{display:flex;position:sticky;top:0;z-index:10;background:var(--bg);border-bottom:1px solid var(--bord);}
-.g-lbl-col{width:280px;min-width:280px;padding:5px 10px;font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;position:sticky;left:0;background:var(--bg);z-index:11;border-right:1px solid var(--bord);}
+.g-lbl-col{width:280px;min-width:280px;padding:5px 10px;font-size:13.2px;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;position:sticky;left:0;background:var(--bg);z-index:11;border-right:1px solid var(--bord);}
 .g-days{display:flex;flex-shrink:0;}
-.d-cell{width:var(--day);min-width:var(--day);text-align:center;font-size:10px;color:var(--muted);padding:3px 0;border-right:1px solid rgba(48,54,61,.4);}
+.d-cell{width:var(--day);min-width:var(--day);text-align:center;font-size:12px;color:var(--muted);padding:3px 0;border-right:1px solid rgba(48,54,61,.4);}
 .d-cell.wknd{background:rgba(255,255,255,.015);}.d-cell.s18-d{color:var(--purple);}.d-cell.today-d{background:rgba(248,81,73,.15);color:var(--red);font-weight:600;}
 .g-row{display:flex;border-bottom:1px solid rgba(48,54,61,.3);transition:background .1s;}
 .g-row:hover{background:rgba(255,255,255,.025);}
 .grp-row{display:flex;background:rgba(2,32,96,.35);cursor:pointer;border-bottom:1px solid rgba(48,54,61,.5);}
 .grp-row:hover{background:rgba(2,32,96,.55);}
 .grp-lbl{width:280px;min-width:280px;padding:6px 10px;display:flex;align-items:center;gap:8px;position:sticky;left:0;background:rgba(2,32,96,.35);z-index:5;border-right:1px solid var(--bord);}
-.grp-name{font-size:12px;font-weight:700;flex:1;}
+.grp-name{font-size:14.4px;font-weight:700;flex:1;}
 .grp-badges{display:flex;gap:4px;align-items:center;}
-.gbadge{font-size:9px;font-weight:700;padding:1px 5px;border-radius:8px;}
+.gbadge{font-size:10.8px;font-weight:700;padding:1px 5px;border-radius:8px;}
 .grp-tl{position:relative;flex:none;height:28px;background:rgba(2,32,96,.2);}
 .grp-summary{position:absolute;top:8px;left:8px;display:flex;gap:6px;}
 .gs-seg{height:12px;border-radius:2px;min-width:3px;}
@@ -166,8 +166,8 @@ body{background:var(--bg);color:var(--text);font-family:var(--font);font-size:14
 .task-row:hover{background:rgba(255,255,255,.02);}
 .task-lbl{width:280px;min-width:280px;padding:3px 10px 3px 22px;display:flex;align-items:center;gap:6px;position:sticky;left:0;background:rgba(13,17,23,.9);z-index:5;border-right:1px solid var(--bord);}
 .task-dot{width:6px;height:6px;border-radius:50%;flex-shrink:0;}
-.task-key{font-family:var(--mono);font-size:9px;color:var(--muted);flex-shrink:0;width:81px;}
-.task-sum{font-size:10px;flex:1;color:#C0C8D4;line-height:1.3;}
+.task-key{font-family:var(--mono);font-size:10.8px;color:var(--muted);flex-shrink:0;width:81px;}
+.task-sum{font-size:12px;flex:1;color:#C0C8D4;line-height:1.3;}
 .task-tl{position:relative;flex:none;min-height:22px;}
 .task-bar{position:absolute;height:8px;border-radius:2px;top:50%;transform:translateY(-50%);opacity:.85;min-width:2px;}
 .task-bar.done{background:var(--green);}.task-bar.prog{background:var(--blue);}.task-bar.pend{background:var(--gray);}
@@ -183,9 +183,9 @@ body{background:var(--bg);color:var(--text);font-family:var(--font);font-size:14
 .bar{position:absolute;height:12px;border-radius:2px;top:7px;opacity:.9;min-width:3px;cursor:pointer;}
 .bar.done{background:var(--green);}.bar.prog{background:var(--blue);}.bar.pend{background:var(--gray);}
 .bar.carry{background:linear-gradient(90deg,var(--blue),var(--purple));}
-.expand-icon{font-size:10px;color:var(--muted);flex-shrink:0;width:10px;}
-.g-tooltip{position:fixed;background:#21262D;border:1px solid #30363D;border-radius:6px;padding:8px 10px;font-size:11px;color:#E6EDF3;pointer-events:none;z-index:200;max-width:260px;display:none;line-height:1.5;box-shadow:0 4px 16px rgba(0,0,0,.5);}
-.footer{background:var(--dark);padding:10px 24px;font-size:11px;color:var(--muted);border-top:1px solid var(--bord);display:flex;justify-content:space-between;}
+.expand-icon{font-size:12px;color:var(--muted);flex-shrink:0;width:10px;}
+.g-tooltip{position:fixed;background:#21262D;border:1px solid #30363D;border-radius:6px;padding:8px 10px;font-size:13.2px;color:#E6EDF3;pointer-events:none;z-index:200;max-width:260px;display:none;line-height:1.5;box-shadow:0 4px 16px rgba(0,0,0,.5);}
+.footer{background:var(--dark);padding:10px 24px;font-size:13.2px;color:var(--muted);border-top:1px solid var(--bord);display:flex;justify-content:space-between;}
 /* tablets — reduz o respiro lateral de 24px */
 @media(max-width:1024px){
   .hdr,.tabs,.footer{padding-left:18px;padding-right:18px;}
@@ -200,17 +200,17 @@ body{background:var(--bg);color:var(--text);font-family:var(--font);font-size:14
 @media(max-width:768px){
   /* header */
   .hdr{flex-wrap:wrap;gap:6px;padding:10px 14px;}
-  .hdr-title{font-size:16px;}
-  .hdr-sub{font-size:10px;line-height:1.4;}
+  .hdr-title{font-size:19.2px;}
+  .hdr-sub{font-size:12px;line-height:1.4;}
   .hdr-badge{align-self:flex-start;}
   /* tabs */
   .tabs{padding:0 8px;overflow-x:auto;scrollbar-width:none;-webkit-overflow-scrolling:touch;}
   .tabs::-webkit-scrollbar{display:none;}
-  .tab{padding:9px 12px;font-size:13px;flex-shrink:0;}
+  .tab{padding:9px 12px;font-size:15.6px;flex-shrink:0;}
   /* kpis */
   .kpi-strip{padding:12px 14px;gap:8px;}
   .kpi{padding:9px 11px;min-width:calc(50% - 4px);flex:none;}
-  .kpi-val{font-size:22px;}
+  .kpi-val{font-size:26.4px;}
   /* grids */
   .grid-2{grid-template-columns:1fr !important;gap:10px;padding-left:14px !important;padding-right:14px !important;}
   .proj-view,.team-view{padding:0 14px 16px;}
@@ -239,7 +239,7 @@ body{background:var(--bg);color:var(--text);font-family:var(--font);font-size:14
   .sla-marco{margin-left:12px !important;margin-right:12px !important;}
   .gantt-wrap,.toolbar,.gantt-legend{padding-left:12px !important;padding-right:12px !important;}
   .kpi{min-width:calc(50% - 4px);}
-  .kpi-val{font-size:20px;}
+  .kpi-val{font-size:24px;}
   .proj-grid{grid-template-columns:1fr 1fr;}
   .m-lbl-col,.g-lbl-col,.grp-lbl,.task-lbl{width:120px;min-width:120px;}
 }
@@ -259,8 +259,8 @@ body{background:var(--bg);color:var(--text);font-family:var(--font);font-size:14
 <div class="hdr">
   <div>
     <div class="hdr-brand">Fenasbac TI</div>
-    <div class="hdr-title">Dashboard · Sprint S19</div>
-    <div class="hdr-sub">fenasbac-tech.atlassian.net · S19 encerrada: 14/09–28/09/2026 &nbsp;·&nbsp; S20 em andamento: 28/09–12/10/2026</div>
+    <div class="hdr-title">Dashboard · Sprint S20</div>
+    <div class="hdr-sub">fenasbac-tech.atlassian.net · S20 encerrada: 28/09–09/10/2026 &nbsp;·&nbsp; S21 em andamento: 13/10–24/10/2026</div>
   </div>
   <div class="hdr-badge" id="hdr-badge">—</div>
 </div>
@@ -276,14 +276,14 @@ body{background:var(--bg);color:var(--text);font-family:var(--font);font-size:14
 <!-- PROJETOS -->
 <div class="panel active" id="panel-projetos">
 <div class="kpi-strip">
-  <div class="kpi ok"><div class="kpi-val" id="kpi-done">—</div><div class="kpi-label">Concluídos S19</div></div>
+  <div class="kpi ok"><div class="kpi-val" id="kpi-done">—</div><div class="kpi-label">Concluídos S20</div></div>
   <div class="kpi warn"><div class="kpi-val" id="kpi-taxa">—</div><div class="kpi-label">Taxa geral</div></div>
-  <div class="kpi warn"><div class="kpi-val" id="kpi-carry">—</div><div class="kpi-label">Carry-over S19</div></div>
+  <div class="kpi warn"><div class="kpi-val" id="kpi-carry">—</div><div class="kpi-label">Carry-over S20</div></div>
   <div class="kpi ok"><div class="kpi-val" id="kpi-projs">—</div><div class="kpi-label">Projetos</div></div>
 </div>
 <div class="grid-2" style="padding:0 24px 16px;">
   <div style="background:var(--bg2);border:1px solid var(--bord);border-radius:8px;padding:16px;">
-    <div style="font-size:13px;font-weight:600;color:var(--cyan);text-transform:uppercase;letter-spacing:.8px;margin-bottom:14px;">Distribuição de Status S19</div>
+    <div style="font-size:15.6px;font-weight:600;color:var(--cyan);text-transform:uppercase;letter-spacing:.8px;margin-bottom:14px;">Distribuição de Status S20</div>
     <div style="display:flex;align-items:center;gap:24px;justify-content:center;">
       <canvas id="donut" width="150" height="150"></canvas>
       <div id="donut-legend" style="display:flex;flex-direction:column;gap:10px;"></div>
@@ -291,7 +291,7 @@ body{background:var(--bg);color:var(--text);font-family:var(--font);font-size:14
     <div class="evo-obs" id="desc-status"></div>
   </div>
   <div style="background:var(--bg2);border:1px solid var(--bord);border-radius:8px;padding:16px;">
-    <div style="font-size:13px;font-weight:600;color:var(--cyan);text-transform:uppercase;letter-spacing:.8px;margin-bottom:14px;">Entregas por Projeto</div>
+    <div style="font-size:15.6px;font-weight:600;color:var(--cyan);text-transform:uppercase;letter-spacing:.8px;margin-bottom:14px;">Entregas por Projeto</div>
     <div id="taxa-chart"></div>
     <div class="evo-obs" id="desc-taxa"></div>
   </div>
@@ -302,7 +302,7 @@ body{background:var(--bg);color:var(--text);font-family:var(--font);font-size:14
 <!-- EVOLUCAO -->
 <div class="panel" id="panel-evolucao">
 <div class="evo-intro">
-  <div style="font-size:21px;flex-shrink:0;margin-top:1px;">📈</div>
+  <div style="font-size:25.2px;flex-shrink:0;margin-top:1px;">📈</div>
   <div>
     <h4>O que esta aba mostra</h4>
     <p>Compara a <strong style="color:var(--text);">sprint que acabou de fechar</strong> com a <strong style="color:var(--text);">anterior</strong>, para responder se o time evoluiu — e antecipa a carga que atravessa para a <strong style="color:var(--text);">sprint que inicia</strong>. Os cartões no topo trazem cada indicador com a variação em relação à sprint passada e a tendência das últimas três. O gráfico por frente mostra onde as entregas cresceram ou caíram. O último bloco é o que já entra na sprint nova.</p>
@@ -331,29 +331,29 @@ body{background:var(--bg);color:var(--text);font-family:var(--font);font-size:14
 <div class="panel" id="panel-gantt">
 <div class="kpi-strip" style="padding-bottom:8px;">
   <div class="kpi ok"><div class="kpi-val" id="kpi-gantt-done">—</div><div class="kpi-label">Concluídos</div></div>
-  <div class="kpi"><div class="kpi-val">31/08</div><div class="kpi-label">Início S18</div></div>
-  <div class="kpi"><div class="kpi-val">14/09</div><div class="kpi-label">Fim S18</div></div>
-  <div class="kpi warn"><div class="kpi-val">14/09</div><div class="kpi-label">Início S19</div></div>
-  <div class="kpi warn"><div class="kpi-val">28/09</div><div class="kpi-label">Fim S19</div></div>
-  <div class="kpi"><div class="kpi-val" id="kpi-s20-count">–</div><div class="kpi-label">Atravessam p/ a S20</div></div>
+  <div class="kpi"><div class="kpi-val">14/09</div><div class="kpi-label">Início S19</div></div>
+  <div class="kpi"><div class="kpi-val">28/09</div><div class="kpi-label">Fim S19</div></div>
+  <div class="kpi warn"><div class="kpi-val">28/09</div><div class="kpi-label">Início S20</div></div>
+  <div class="kpi warn"><div class="kpi-val">09/10</div><div class="kpi-label">Fim S20</div></div>
+  <div class="kpi"><div class="kpi-val" id="kpi-s20-count">–</div><div class="kpi-label">Atravessam p/ a S21</div></div>
 </div>
 <div class="toolbar">
   <button class="fbtn active" onclick="setF('all',this)">Todos</button>
   <button class="fbtn" onclick="setF('done',this)">✓ Concluídos</button>
   <button class="fbtn" onclick="setF('carry',this)">→ Não concluídos</button>
-  <button class="fbtn" onclick="setF('alem',this)" title="Isola as barras em gradiente: issues abertas no fechamento cuja entrega prevista cai depois de 28/09. É um recorte do Gantt, mais estreito que o total de abertas — para o total, use “Não concluídos”.">⇢ Entrega além de 28/09</button>
+  <button class="fbtn" onclick="setF('alem',this)" title="Isola as barras em gradiente: issues abertas no fechamento cuja entrega prevista cai depois de 09/10. É um recorte do Gantt, mais estreito que o total de abertas — para o total, use “Não concluídos”.">⇢ Entrega além de 09/10</button>
   <button class="fbtn" onclick="expandAll()">⊞ Expandir</button>
   <button class="fbtn" onclick="collapseAll()">⊟ Recolher</button>
   <button class="today-btn" onclick="scrollToToday()">📍 Hoje</button>
 </div>
-<div class="gantt-legend" style="display:flex;gap:16px;padding:0 24px 8px;font-size:11px;color:var(--muted);align-items:center;flex-wrap:wrap;">
-  <span style="display:flex;align-items:center;gap:5px;"><span style="width:20px;height:3px;background:rgba(2,37,235,.4);display:inline-block;border-radius:2px;"></span>Sprint S19 (14/09–28/09)</span>
+<div class="gantt-legend" style="display:flex;gap:16px;padding:0 24px 8px;font-size:13.2px;color:var(--muted);align-items:center;flex-wrap:wrap;">
+  <span style="display:flex;align-items:center;gap:5px;"><span style="width:20px;height:3px;background:rgba(2,37,235,.4);display:inline-block;border-radius:2px;"></span>Sprint S20 (28/09–09/10)</span>
   <span style="display:flex;align-items:center;gap:5px;"><span style="width:2px;height:12px;background:#F85149;opacity:.7;display:inline-block;"></span>Hoje</span>
-  <span style="display:flex;align-items:center;gap:5px;"><span style="width:2px;height:12px;background:#8957E5;opacity:.6;display:inline-block;"></span>Fim S19</span>
-  <span style="display:flex;align-items:center;gap:5px;"><span style="width:20px;height:3px;background:rgba(137,87,229,.35);display:inline-block;border-radius:2px;"></span>Sprint S18 (31/08–14/09)</span>
-  <span style="display:flex;align-items:center;gap:5px;"><span style="width:2px;height:12px;background:#02FFFF;opacity:.55;display:inline-block;"></span>Fim S18</span>
+  <span style="display:flex;align-items:center;gap:5px;"><span style="width:2px;height:12px;background:#8957E5;opacity:.6;display:inline-block;"></span>Fim S20</span>
+  <span style="display:flex;align-items:center;gap:5px;"><span style="width:20px;height:3px;background:rgba(137,87,229,.35);display:inline-block;border-radius:2px;"></span>Sprint S19 (14/09–28/09)</span>
+  <span style="display:flex;align-items:center;gap:5px;"><span style="width:2px;height:12px;background:#02FFFF;opacity:.55;display:inline-block;"></span>Fim S19</span>
   <span style="display:flex;align-items:center;gap:5px;"><span style="width:20px;height:3px;background:#2EA043;opacity:.5;display:inline-block;border-radius:2px;"></span>Barra = concluído</span>
-  <span style="display:flex;align-items:center;gap:5px;"><span style="width:20px;height:3px;background:linear-gradient(90deg,#0225EB,#8957E5);display:inline-block;border-radius:2px;"></span>Carry-over para a S20</span>
+  <span style="display:flex;align-items:center;gap:5px;"><span style="width:20px;height:3px;background:linear-gradient(90deg,#0225EB,#8957E5);display:inline-block;border-radius:2px;"></span>Carry-over para a S21</span>
   <span style="display:flex;align-items:center;gap:5px;"><span style="width:20px;height:3px;background:repeating-linear-gradient(90deg,#8B949E 0 5px,transparent 5px 9px);display:inline-block;"></span>Sem previsão de entrega no Jira</span>
 </div>
 <div class="gantt-wrap" id="gantt-wrap"><div id="gantt-container"></div></div>
@@ -370,22 +370,12 @@ body{background:var(--bg);color:var(--text);font-family:var(--font);font-size:14
   <div class="kpi"><div class="kpi-val" id="sd-pend">—</div><div class="kpi-label">Pendentes</div></div>
 </div>
 
-<!-- Marco SLA -->
-<div class="sla-marco" style="margin:0 24px 16px;background:rgba(2,37,235,.12);border:1px solid rgba(2,37,235,.35);border-left:3px solid var(--blue);border-radius:8px;padding:12px 16px;display:flex;align-items:flex-start;gap:12px;">
-  <div style="font-size:21px;flex-shrink:0;margin-top:1px;">🏁</div>
-  <div>
-    <div style="font-size:12px;font-weight:700;color:var(--cyan);text-transform:uppercase;letter-spacing:.8px;margin-bottom:4px;">SLA — leitura real por trilha (campo do JSM)</div>
-    <div style="font-size:12px;color:#C0C8D4;line-height:1.55;">Agora o cumprimento de SLA é lido direto dos campos oficiais do JSM (<span style="font-family:var(--mono);font-size:11px;color:var(--cyan);">customfield_10577</span> e <span style="font-family:var(--mono);font-size:11px;color:var(--cyan);">customfield_10610</span>), apurado em horário comercial. <strong style="color:var(--text);">Não é mais cálculo manual.</strong> Metas por trilha, na régua global: Solicitação de TI e Reportar incidente 4h/24h, Comunicação Digital 4h/56h, Desligamento e Integração 4h/80h. Na S19 os seis estouros de resolução estão todos na trilha <strong style="color:var(--text);">Solicitação de TI</strong> — a de meta mais curta (24h) e a de maior volume. Três já foram concluídos fora da meta (ajuste da proposta PGAFI, DOCs&nbsp;|&nbsp;Fenas e a tag @consultoria no Slack) e três seguem abertos com a meta vencida (perfis do PIPEDRIVE, reajuste do seguro de vida e a lentidão de notebook). As demais trilhas fecharam sem nenhum estouro. O status Bloqueado já operou no período, pausando o SLA quando a dependência é de terceiros — é o caso do site Lift Learning.</div>
-  </div>
-</div>
-
 <div id="sdesk-trilhas" style="padding:0 24px 4px;">
-  <div style="font-size:13px;font-weight:600;color:var(--cyan);text-transform:uppercase;letter-spacing:.8px;margin-bottom:10px;">SLA por trilha — cumprimento real (lido do JSM, horário comercial)</div>
+  <div style="font-size:15.6px;font-weight:600;color:var(--cyan);text-transform:uppercase;letter-spacing:.8px;margin-bottom:10px;">SLA por trilha — cumprimento real (lido do JSM, horário comercial)</div>
   <div id="sdesk-trilha-cards" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:10px;"></div>
-  <div id="sdesk-trilha-total" style="font-size:11px;color:var(--muted);margin-top:10px;font-style:italic;"></div>
+  <div id="sdesk-trilha-total" style="font-size:13.2px;color:var(--muted);margin-top:10px;font-style:italic;"></div>
 </div>
 </div>
-<div style="margin:0 24px 16px;background:#161B22;border:1px solid #2A3140;border-left:3px solid #8B94A7;border-radius:8px;padding:12px 14px;font-size:11.5px;color:#AEB8CC;line-height:1.55;"><b style="color:#D3DBEA;">Régua de apuração.</b> Base: coorte da sprint — os <b style="color:#D3DBEA;">28 chamados abertos entre 14/09 e 28/09</b>, e não os resolvidos na janela. Cada chamado recebe um veredito na régua global do JSM: <b style="color:#D3DBEA;">no prazo</b> (concluído dentro da meta), <b style="color:#D3DBEA;">estouro</b> (meta vencida, esteja concluído ou ainda aberto) ou <b style="color:#D3DBEA;">em curso</b> (aberto e ainda dentro da meta). O índice de resolução divide pelos chamados <b style="color:#D3DBEA;">com veredito</b> — no prazo + estouro —, então os 5 em curso ficam declarados à parte e nunca diluídos no denominador. Trilha = <i>request type</i> do JSM, não o componente. Incidentes têm régua própria mais rígida no JSM, mas a decisão vigente é medir todos pela régua global. Cores dos cartões: verde a partir de 85%, âmbar entre 60% e 84%, vermelho abaixo de 60% — limiar provisório, enquanto a revisão das metas de SLA não fecha. Mesma régua usada nas sprints anteriores e no panorama mensal. Apurado em 28/09/2026: reler o Jira depois muda os números, porque chamados seguem fechando.</div>
 <div id="sdesk-areas" style="padding:0 24px 24px;display:flex;flex-direction:column;gap:14px;"></div>
 </div>
 
@@ -409,67 +399,120 @@ body{background:var(--bg);color:var(--text);font-family:var(--font);font-size:14
 
 <div class="footer">
   <span>SBS Quadra 02, Bloco A, Ed. Casa de São Paulo, 7º andar — Brasília/DF</span>
-  <span>Fenasbac TI · Sprint S19 · fechamento em 28/09/2026 · SLA apurado em 28/09/2026 · Jira + Slack + Gmail</span>
+  <span>Fenasbac TI · Sprint S20 · fechamento em 13/10/2026 · Jira + Slack + Gmail · SLA desta rodada simplificado (resolvido=no prazo)</span>
 </div>
 
 <script>
-// created e due vem do Jira (created / duedate), lidos em 28/09/2026.
+// created e due vem do Jira (created / duedate), lidos em 13/10/2026.
 // Quando o Jira nao tem duedate: concluida usa a data real de resolucao;
 // aberta recebe semPrev:true e a barra vai ate o fim da sprint, tracejada.
 const ISSUES=[
-  {key:"ANALYTICS-1",project:"ANALYTICS",status:"Pendente",assignee:"Tech Lead",summary:"Métricas e Analytics do Funil (IO + Fenasbac.com.br)",created:"2026-09-14",due:"2026-10-09"},
-  {key:"ANALYTICS-10",project:"ANALYTICS",status:"Conclu\u00eddo",assignee:"Conteúdo",summary:"Entender como capturar dados (Analytics) da área logada do Fenasbac.com.br",created:"2026-09-15",due:"2026-09-25"},
-  {key:"ANALYTICS-7",project:"ANALYTICS",status:"Pendente",assignee:"Tech Lead",summary:"Criar o protótipo do Dashboard unificado de métricas (IO + Fenasbac.com.br)",created:"2026-09-14",due:"2026-10-09"},
-  {key:"CERTI-14",project:"CERTI",status:"Pendente",assignee:"Desenvolvimento",summary:"Handover entre áreas",created:"2026-09-14",due:"2026-10-09"},
-  {key:"CONECTA-85",project:"CONECTA",status:"Conclu\u00eddo",assignee:"Desenvolvimento",summary:"[Dashboard] Aumentar a granularidade das informações exibidas",created:"2026-08-17",due:"2026-09-18"},
-  {key:"CONECTA-88",project:"CONECTA",status:"Conclu\u00eddo",assignee:"Desenvolvimento",summary:"[Dashboard] Exportação de dados (CSV/Excel) por perfil, com governança",created:"2026-09-09",due:"2026-09-14"},
-  {key:"CONECTA-90",project:"CONECTA",status:"Conclu\u00eddo",assignee:"Infra / Suporte N1",summary:"[ASBAC Brasília] Análise e auditoria dos 45 usuários pendentes de aprovação manual",created:"2026-09-14",due:"2026-09-25"},
-  {key:"CONECTA-91",project:"CONECTA",status:"Conclu\u00eddo",assignee:"Desenvolvimento",summary:"Liberar permissão de ponto focal para o Tadeu",created:"2026-09-15",due:"2026-09-16"},
-  {key:"FENASBR-252",project:"FENASBR",status:"Conclu\u00eddo",assignee:"Conteúdo",summary:"[MOBILE] Grid de selos/ícones — \"Eu sou parte desta história\"",created:"2026-07-21",due:"2026-09-28"},
-  {key:"FENASBR-255",project:"FENASBR",status:"Conclu\u00eddo",assignee:"Conteúdo",summary:"[MOBILE] Bloco de vídeo — \"A tela que conta a nossa história\"",created:"2026-07-21",due:"2026-09-28"},
-  {key:"FENASHUB-52",project:"FENASHUB",status:"Conclu\u00eddo",assignee:"Desenvolvimento",summary:"Estudo do comportamento de filtros do Airtable para replicação",created:"2026-09-14",due:"2026-09-25"},
-  {key:"FENASHUB-53",project:"FENASHUB",status:"Conclu\u00eddo",assignee:"Desenvolvimento",summary:"[Formulário] Adicionar seleção de vínculo institucional (Servidor Fenasbac / Servidor Asbac)",created:"2026-09-23",due:"2026-10-02"},
-  {key:"FIA-21",project:"FIA",status:"Pendente",assignee:"Coordenação",summary:"[Alinhamento] Definir escopo da PoC da startup com o Rodrigoh",created:"2026-09-14",due:"2026-09-28",semPrev:true},
-  {key:"FSYNC-28",project:"FSYNC",status:"Pendente",assignee:"Desenvolvimento",summary:"Mapear ajuste de escopo",created:"2026-09-14",due:"2026-10-02"},
-  {key:"PROC-213",project:"PROC",status:"Em andamento",assignee:"Coordenação",summary:"Criar o fluxo de implementação do gerenciador de senhas nas demais diretorias - Nordpass",created:"2026-05-22",due:"2026-10-09"},
-  {key:"PROC-263",project:"PROC",status:"Conclu\u00eddo",assignee:"Coordenação",summary:"[Onda 1 - Financeiro] Definir participantes e ordem das áreas",created:"2026-07-01",due:"2026-08-20"},
-  {key:"PROC-264",project:"PROC",status:"Conclu\u00eddo",assignee:"Coordenação",summary:"[Onda 1 - Financeiro] Validar e ativar licenças NordPass",created:"2026-07-01",due:"2026-08-21"},
-  {key:"PROC-265",project:"PROC",status:"Pendente",assignee:"Infra / Suporte N1",summary:"[Onda 1 - Financeiro] Preparar cofres e grupos compartilhados",created:"2026-07-01",due:"2026-09-29"},
-  {key:"PROC-266",project:"PROC",status:"Conclu\u00eddo",assignee:"Coordenação",summary:"[Onda 1 - Financeiro] Organizar permissões (menor privilégio)",created:"2026-07-01",due:"2026-09-16"},
-  {key:"PROC-267",project:"PROC",status:"Pendente",assignee:"Infra / Suporte N1",summary:"[Onda 1 - Financeiro] Enviar convites aos participantes",created:"2026-07-01",due:"2026-09-29"},
-  {key:"PROC-268",project:"PROC",status:"Pendente",assignee:"Infra / Suporte N1",summary:"[Onda 1 - Financeiro] Onboarding e ativação de MFA dos usuários",created:"2026-07-01",due:"2026-09-29"},
-  {key:"PROC-269",project:"PROC",status:"Pendente",assignee:"Infra / Suporte N1",summary:"[Onda 1 - Financeiro] Migrar senhas para os cofres",created:"2026-07-01",due:"2026-09-29"},
-  {key:"PROC-270",project:"PROC",status:"Pendente",assignee:"Infra / Suporte N1",summary:"[Onda 1 - Financeiro] Treinamento rápido de utilização",created:"2026-07-01",due:"2026-09-29"},
-  {key:"PROC-271",project:"PROC",status:"Pendente",assignee:"Coordenação",summary:"[Onda 1 - Financeiro] Suporte assistido (primeiros dias)",created:"2026-07-01",due:"2026-09-28",semPrev:true},
-  {key:"PROC-272",project:"PROC",status:"Pendente",assignee:"Coordenação",summary:"[Onda 1 - Financeiro] Encerrar onda e registrar pendências",created:"2026-07-01",due:"2026-10-15"},
-  {key:"PROC-335",project:"PROC",status:"Conclu\u00eddo",assignee:"Coordenação",summary:"Validar V1 do Termo de Adesão junto à Diretoria",created:"2026-08-17",due:"2026-10-02"},
-  {key:"PROC-344",project:"PROC",status:"Em andamento",assignee:"Coordenação",summary:"Estruturar modelo de report mensal estratégico para a Diretoria (protótipo)",created:"2026-09-01",due:"2026-10-09"},
-  {key:"PROC-346",project:"PROC",status:"Conclu\u00eddo",assignee:"Coordenação",summary:"Diretrizes e Matriz de Responsabilidades sobre Plataformas e Ferramentas",created:"2026-09-14",due:"2026-09-18"},
-  {key:"PROC-347",project:"PROC",status:"Em andamento",assignee:"Coordenação",summary:"Disponibilizar o modelo de perguntas do FenasHub às áreas (canal de coordenação)",created:"2026-09-15",due:"2026-09-29"},
-  {key:"PROC-348",project:"PROC",status:"Conclu\u00eddo",assignee:"Desenvolvimento",summary:"Confirma a frequência de atualização em lote da base de contatos",created:"2026-09-15",due:"2026-09-24"},
-  {key:"PROC-349",project:"PROC",status:"Conclu\u00eddo",assignee:"Coordenação",summary:"Incluir a Pâmela nas reuniões de sincronia e retomar o contato",created:"2026-09-15",due:"2026-09-15"},
-  {key:"PROC-350",project:"PROC",status:"Pendente",assignee:"Coordenação",summary:"Elaborar a proposta do encontrão (encontro presencial da equipe) para o Rodrigo",created:"2026-09-15",due:"2026-10-02"},
-  {key:"PROC-351",project:"PROC",status:"Em andamento",assignee:"Coordenação",summary:"Iniciar os testes de integração do Jira com o Git",created:"2026-09-15",due:"2026-10-09"},
-  {key:"PROC-352",project:"PROC",status:"Pendente",assignee:"Coordenação",summary:"Organizar a higienização do Drive de Tecnologia",created:"2026-09-15",due:"2026-10-16"},
+  {key:"PROC-351",project:"PROC",status:"Em andamento",assignee:"Coordenação",summary:"Iniciar os testes de integração do Jira com o Git",created:"2026-09-15",due:"2026-10-23"},
+  {key:"PORTAL-4",project:"PORTAL",status:"Em andamento",assignee:"Infra / Suporte N1",summary:"Intranet - Implementação e Validação do Redesign em Ambiente de Staging (Pré-Produção)",created:"2026-08-26",due:"2026-10-16"},
+  {key:"ETI-15",project:"ETI",status:"Em andamento",assignee:"Coordenação",summary:"[ETI] P08 · Dashboards operacionais (indicadores Jira)",created:"2026-06-24",due:"2026-10-16"},
+  {key:"ETI-14",project:"ETI",status:"Em andamento",assignee:"Coordenação",summary:"[ETI] P09 · Ciclos formais de report",created:"2026-06-24",due:"2026-10-16"},
+  {key:"ENG-40",project:"ENG",status:"Em andamento",assignee:"Conteúdo",summary:"Criar identidade de elementos para as aplicações internas Fenasbac",created:"2026-09-15",due:"2026-10-26"},
+  {key:"CONECTA-104",project:"CONECTA",status:"Em andamento",assignee:"Infra / Suporte N1",summary:"Averiguar validação de e-mail/CPF já cadastrado no fluxo de cadastro",created:"2026-10-07",due:"2026-10-16"},
+  {key:"TECH-151",project:"TECH",status:"Pendente",assignee:"Infra / Suporte N1",summary:"Aquisição e Instalacao de Nobreaks para a Infraestrutura",created:"2026-10-07",due:"2026-10-09",semPrev:true},
+  {key:"PROC-366",project:"PROC",status:"Pendente",assignee:"Coordenação",summary:"Validar com a equipe técnica as funcionalidades do FenasHub levantadas pelas áreas",created:"2026-10-05",due:"2026-10-23"},
+  {key:"PROC-363",project:"PROC",status:"Pendente",assignee:"Coordenação",summary:"9. Documentar o padrão de status na Base de Conhecimento",created:"2026-09-22",due:"2026-10-09",semPrev:true},
+  {key:"PROC-362",project:"PROC",status:"Pendente",assignee:"Coordenação",summary:"8. Definir condição de permissão na transição para Concluído",created:"2026-09-22",due:"2026-10-09",semPrev:true},
+  {key:"PROC-361",project:"PROC",status:"Pendente",assignee:"Coordenação",summary:"7. Propagar o scheme para os demais projetos de software",created:"2026-09-22",due:"2026-10-09",semPrev:true},
+  {key:"PROC-360",project:"PROC",status:"Pendente",assignee:"Coordenação",summary:"6. Piloto em FENASHUB e FENASBR e medição de uma sprint",created:"2026-09-22",due:"2026-10-09",semPrev:true},
+  {key:"PROC-359",project:"PROC",status:"Pendente",assignee:"Coordenação",summary:"5. Normalizar FIA, ANALYTICS e o status \"Aguardando Cliente\"",created:"2026-09-22",due:"2026-10-09",semPrev:true},
+  {key:"PROC-358",project:"PROC",status:"Pendente",assignee:"Coordenação",summary:"4. Aplicar o scheme nos 14 projetos sem card aberto",created:"2026-09-22",due:"2026-10-09",semPrev:true},
+  {key:"PROC-357",project:"PROC",status:"Pendente",assignee:"Coordenação",summary:"3. Criar o workflow e o scheme compartilhado dos projetos de software",created:"2026-09-22",due:"2026-10-09",semPrev:true},
+  {key:"PROC-356",project:"PROC",status:"Pendente",assignee:"Coordenação",summary:"2. Levantar filtros, dashboards e automações que citam nomes de status",created:"2026-09-22",due:"2026-10-09",semPrev:true},
+  {key:"PROC-355",project:"PROC",status:"Pendente",assignee:"Coordenação",summary:"1. Criar os status \"Aguardando área\" e \"Em homologação\"",created:"2026-09-22",due:"2026-10-09",semPrev:true},
   {key:"PROC-354",project:"PROC",status:"Pendente",assignee:"Coordenação",summary:"Padronizar status e workflow dos boards Jira do site fenasbac-tech",created:"2026-09-22",due:"2026-10-02"},
-  {key:"PROC-355",project:"PROC",status:"Pendente",assignee:"Coordenação",summary:"1. Criar os status \"Aguardando área\" e \"Em homologação\"",created:"2026-09-22",due:"2026-09-28",semPrev:true},
-  {key:"PROC-356",project:"PROC",status:"Pendente",assignee:"Coordenação",summary:"2. Levantar filtros, dashboards e automações que citam nomes de status",created:"2026-09-22",due:"2026-09-28",semPrev:true},
-  {key:"PROC-357",project:"PROC",status:"Pendente",assignee:"Coordenação",summary:"3. Criar o workflow e o scheme compartilhado dos projetos de software",created:"2026-09-22",due:"2026-09-28",semPrev:true},
-  {key:"PROC-358",project:"PROC",status:"Pendente",assignee:"Coordenação",summary:"4. Aplicar o scheme nos 14 projetos sem card aberto",created:"2026-09-22",due:"2026-09-28",semPrev:true},
-  {key:"PROC-359",project:"PROC",status:"Pendente",assignee:"Coordenação",summary:"5. Normalizar FIA, ANALYTICS e o status \"Aguardando Cliente\"",created:"2026-09-22",due:"2026-09-28",semPrev:true},
-  {key:"PROC-360",project:"PROC",status:"Pendente",assignee:"Coordenação",summary:"6. Piloto em FENASHUB e FENASBR e medição de uma sprint",created:"2026-09-22",due:"2026-09-28",semPrev:true},
-  {key:"PROC-361",project:"PROC",status:"Pendente",assignee:"Coordenação",summary:"7. Propagar o scheme para os demais projetos de software",created:"2026-09-22",due:"2026-09-28",semPrev:true},
-  {key:"PROC-362",project:"PROC",status:"Pendente",assignee:"Coordenação",summary:"8. Definir condição de permissão na transição para Concluído",created:"2026-09-22",due:"2026-09-28",semPrev:true},
-  {key:"PROC-363",project:"PROC",status:"Pendente",assignee:"Coordenação",summary:"9. Documentar o padrão de status na Base de Conhecimento",created:"2026-09-22",due:"2026-09-28",semPrev:true},
-  {key:"SISFENAS-35",project:"SISFENAS",status:"Conclu\u00eddo",assignee:"Desenvolvimento",summary:"[Dashboard] Aumentar a granularidade das informações exibidas",created:"2026-08-17",due:"2026-09-18"},
-  {key:"SRR-9",project:"SRR",status:"Conclu\u00eddo",assignee:"Conteúdo",summary:"Handover da gestão de conteúdo para Comunicação",created:"2026-07-19",due:"2026-09-28"},
-  {key:"TECH-127",project:"TECH",status:"Conclu\u00eddo",assignee:"Infra / Suporte N1",summary:"VPN e VNC — Inovação Aberta",created:"2026-08-20",due:"2026-09-25"},
-  {key:"TECH-132",project:"TECH",status:"Conclu\u00eddo",assignee:"Infra / Suporte N1",summary:"VPN e VNC — Parcerias Estratégicas e Negócios",created:"2026-08-20",due:"2026-09-25"},
-  {key:"TECH-133",project:"TECH",status:"Conclu\u00eddo",assignee:"Infra / Suporte N1",summary:"VPN e VNC — Consultoria e Gestão",created:"2026-08-20",due:"2026-09-25"},
-  {key:"TECH-134",project:"TECH",status:"Conclu\u00eddo",assignee:"Infra / Suporte N1",summary:"Montar suporte para TV",created:"2026-09-15",due:"2026-09-16"},
+  {key:"PROC-352",project:"PROC",status:"Pendente",assignee:"Coordenação",summary:"Organizar a higienização do Drive de Tecnologia",created:"2026-09-15",due:"2026-10-16"},
+  {key:"PROC-317",project:"PROC",status:"Pendente",assignee:"Coordenação",summary:"Apresentar proposta para a Diretoria - Política de acesso FenasHub",created:"2026-08-03",due:"2026-11-12"},
+  {key:"PORTAL-18",project:"PORTAL",status:"Pendente",assignee:"Infra / Suporte N1",summary:"Configurar e aplicar a integração com Kuma para monitoramento de status em tempo real",created:"2026-09-24",due:"2026-10-16"},
+  {key:"PORTAL-6",project:"PORTAL",status:"Pendente",assignee:"Infra / Suporte N1",summary:"Publicação do Redesign em Produção (Deploy) e Plano de Comunicação",created:"2026-08-26",due:"2026-10-16"},
+  {key:"ETI-13",project:"ETI",status:"Pendente",assignee:"Coordenação",summary:"[ETI] P12 · Triagem/deflexão de chamados com IA",created:"2026-06-24",due:"2026-10-16"},
+  {key:"ETI-11",project:"ETI",status:"Pendente",assignee:"Coordenação",summary:"[ETI] P10 · Report Executivo quinzenal automatizado",created:"2026-06-24",due:"2026-10-16"},
+  {key:"ETI-10",project:"ETI",status:"Pendente",assignee:"Coordenação",summary:"[ETI] P11 · Definição e formalização de indicadores",created:"2026-06-24",due:"2026-10-16"},
+  {key:"CONECTA-84",project:"CONECTA",status:"Pendente",assignee:"Desenvolvimento",summary:"Preparar a ativação das regionais no Conecta (perfis Validação e Gestão)",created:"2026-08-07",due:"2026-10-09",semPrev:true},
+  {key:"TECH-143",project:"TECH",status:"Concluído",assignee:"Coordenação",summary:"Configurar softwares e acessos — André Lin",created:"2026-09-28",due:"2026-10-09"},
+  {key:"TECH-142",project:"TECH",status:"Concluído",assignee:"Coordenação",summary:"Adicionar aos canais do Slack — André Lin",created:"2026-09-28",due:"2026-10-09"},
+  {key:"TECH-141",project:"TECH",status:"Concluído",assignee:"Coordenação",summary:"Criar contas e e-mail corporativo — André Lin",created:"2026-09-28",due:"2026-10-09"},
+  {key:"TECH-139",project:"TECH",status:"Concluído",assignee:"Infra / Suporte N1",summary:"Cotar os equipamentos — André Lin",created:"2026-09-28",due:"2026-10-09"},
+  {key:"TECH-137",project:"TECH",status:"Concluído",assignee:"Infra / Suporte N1",summary:"Realizar cotação e compra de Nobreak",created:"2026-09-25",due:"2026-10-09"},
+  {key:"TECH-124",project:"TECH",status:"Concluído",assignee:"Infra / Suporte N1",summary:"VPN e VNC — Comunicação",created:"2026-08-20",due:"2026-10-13"},
+  {key:"TECH-123",project:"TECH",status:"Concluído",assignee:"Infra / Suporte N1",summary:"VPN e VNC — Tecnologia",created:"2026-08-20",due:"2026-10-07"},
+  {key:"STRAPI-38",project:"STRAPI",status:"Concluído",assignee:"Conteúdo",summary:"Desenhar Strapi Programas",created:"2026-07-17",due:"2026-09-28"},
+  {key:"STRAPI-23",project:"STRAPI",status:"Concluído",assignee:"Conteúdo",summary:"[Nexus][Strapi] Estruturação de conteúdo e integração",created:"2026-05-03",due:"2026-10-09"},
+  {key:"PROC-367",project:"PROC",status:"Concluído",assignee:"Coordenação",summary:"[Handover] Transferência de conhecimento e operacionalização da aplicação de Certificados com as áreas",created:"2026-10-07",due:"2026-10-13"},
+  {key:"PROC-365",project:"PROC",status:"Concluído",assignee:"Coordenação",summary:"Consolidar o input das áreas e atualizar a Política de Governança do FenasHub (v1.1)",created:"2026-10-05",due:"2026-10-12"},
+  {key:"PROC-364",project:"PROC",status:"Concluído",assignee:"Coordenação",summary:"Corrigir a concessão automática de assentos pagos no Atlassian (domínio aprovado)",created:"2026-09-24",due:"2026-09-28"},
+  {key:"PROC-353",project:"PROC",status:"Concluído",assignee:"Coordenação",summary:"Criar guia de uso do Slack como canvas do workspace (#fenasbac)",created:"2026-09-17",due:"2026-10-02"},
+  {key:"PROC-350",project:"PROC",status:"Concluído",assignee:"Coordenação",summary:"Elaborar a proposta do encontrão (encontro presencial da equipe) para o Rodrigo",created:"2026-09-15",due:"2026-10-02"},
+  {key:"PROC-347",project:"PROC",status:"Concluído",assignee:"Coordenação",summary:"Disponibilizar o modelo de perguntas do FenasHub às áreas (canal de coordenação)",created:"2026-09-15",due:"2026-09-29"},
+  {key:"PROC-344",project:"PROC",status:"Concluído",assignee:"Coordenação",summary:"Estruturar modelo de report mensal estratégico para a Diretoria (protótipo)",created:"2026-09-01",due:"2026-10-09"},
+  {key:"PROC-272",project:"PROC",status:"Concluído",assignee:"Coordenação",summary:"[Onda 1 - Financeiro] Encerrar onda e registrar pendências",created:"2026-07-01",due:"2026-10-15"},
+  {key:"PROC-271",project:"PROC",status:"Concluído",assignee:"Coordenação",summary:"[Onda 1 - Financeiro] Suporte assistido (primeiros dias)",created:"2026-07-01",due:"2026-10-14"},
+  {key:"PROC-270",project:"PROC",status:"Concluído",assignee:"Infra / Suporte N1",summary:"[Onda 1 - Financeiro] Treinamento rápido de utilização",created:"2026-07-01",due:"2026-10-02"},
+  {key:"PROC-269",project:"PROC",status:"Concluído",assignee:"Infra / Suporte N1",summary:"[Onda 1 - Financeiro] Migrar senhas para os cofres",created:"2026-07-01",due:"2026-10-02"},
+  {key:"PROC-268",project:"PROC",status:"Concluído",assignee:"Infra / Suporte N1",summary:"[Onda 1 - Financeiro] Onboarding e ativação de MFA dos usuários",created:"2026-07-01",due:"2026-09-29"},
+  {key:"PROC-267",project:"PROC",status:"Concluído",assignee:"Infra / Suporte N1",summary:"[Onda 1 - Financeiro] Enviar convites aos participantes",created:"2026-07-01",due:"2026-09-30"},
+  {key:"PROC-266",project:"PROC",status:"Concluído",assignee:"Coordenação",summary:"[Onda 1 - Financeiro] Organizar permissões (menor privilégio)",created:"2026-07-01",due:"2026-09-30"},
+  {key:"PROC-265",project:"PROC",status:"Concluído",assignee:"Infra / Suporte N1",summary:"[Onda 1 - Financeiro] Preparar cofres e grupos compartilhados",created:"2026-07-01",due:"2026-10-02"},
+  {key:"PROC-264",project:"PROC",status:"Concluído",assignee:"Coordenação",summary:"[Onda 1 - Financeiro] Validar e ativar licenças NordPass",created:"2026-07-01",due:"2026-08-21"},
+  {key:"PROC-263",project:"PROC",status:"Concluído",assignee:"Coordenação",summary:"[Onda 1 - Financeiro] Definir participantes e ordem das áreas",created:"2026-07-01",due:"2026-08-20"},
+  {key:"PROC-213",project:"PROC",status:"Concluído",assignee:"Coordenação",summary:"Criar o fluxo de implementação do gerenciador de senhas nas demais diretorias - Nordpass",created:"2026-05-22",due:"2026-10-09"},
+  {key:"PORTAL-17",project:"PORTAL",status:"Concluído",assignee:"Infra / Suporte N1",summary:"Configurar e aplicar a integração com Fenasbac AUTH para controle de acesso",created:"2026-09-24",due:"2026-10-08"},
+  {key:"PORTAL-16",project:"PORTAL",status:"Concluído",assignee:"Infra / Suporte N1",summary:"Validar com a Maysa a correção dos dados de colaboradores (mural e organograma)",created:"2026-08-31",due:"2026-09-25"},
+  {key:"PORTAL-15",project:"PORTAL",status:"Concluído",assignee:"Infra / Suporte N1",summary:"Busca rápida (Ctrl+K / lupa): pessoas, sites, documentos e atalhos",created:"2026-08-31",due:"2026-09-25"},
+  {key:"PORTAL-14",project:"PORTAL",status:"Concluído",assignee:"Infra / Suporte N1",summary:"Calendário com aniversários",created:"2026-08-31",due:"2026-09-25"},
+  {key:"PORTAL-13",project:"PORTAL",status:"Concluído",assignee:"Infra / Suporte N1",summary:"Área do colaborador vinda do banco via departmentId + tabela Department",created:"2026-08-31",due:"2026-09-25"},
+  {key:"PORTAL-12",project:"PORTAL",status:"Concluído",assignee:"Infra / Suporte N1",summary:"Equipe aberta: mural + organograma por área",created:"2026-08-31",due:"2026-09-25"},
+  {key:"PORTAL-11",project:"PORTAL",status:"Concluído",assignee:"Infra / Suporte N1",summary:"Aviso de VPN em sites e links que exigem conexão (SISFenasbac e PGAFI)",created:"2026-08-31",due:"2026-09-25"},
+  {key:"PORTAL-10",project:"PORTAL",status:"Concluído",assignee:"Infra / Suporte N1",summary:"Central de acesso a todos os sites da Fenasbac",created:"2026-08-31",due:"2026-09-25"},
+  {key:"PORTAL-9",project:"PORTAL",status:"Concluído",assignee:"Infra / Suporte N1",summary:"SISFenasbac em atalho único, com escolha entre produção e homologação",created:"2026-08-31",due:"2026-09-25"},
+  {key:"PORTAL-8",project:"PORTAL",status:"Concluído",assignee:"Infra / Suporte N1",summary:"Configurar e aplicar o novo layout/tema no ambiente de testes",created:"2026-08-31",due:"2026-09-25"},
+  {key:"FSYNC-64",project:"FSYNC",status:"Concluído",assignee:"Desenvolvimento",summary:"3.9 Rotas com o nome do módulo (alinhar com o time)",created:"2026-10-08",due:"2026-10-30"},
+  {key:"FSYNC-56",project:"FSYNC",status:"Concluído",assignee:"Desenvolvimento",summary:"5.4 Upload e limite de corpo no Fastify",created:"2026-10-05",due:"2026-10-30"},
+  {key:"FSYNC-55",project:"FSYNC",status:"Concluído",assignee:"Desenvolvimento",summary:"5.3 Módulo sisfenasbac",created:"2026-10-05",due:"2026-10-30"},
+  {key:"FSYNC-54",project:"FSYNC",status:"Concluído",assignee:"Desenvolvimento",summary:"5.2 Dependências do SIS",created:"2026-10-05",due:"2026-10-30"},
+  {key:"FSYNC-53",project:"FSYNC",status:"Concluído",assignee:"Desenvolvimento",summary:"5.1 Schema do SIS unificado",created:"2026-10-05",due:"2026-10-30"},
+  {key:"FSYNC-51",project:"FSYNC",status:"Concluído",assignee:"Desenvolvimento",summary:"4.1 Conecta lendo o contrato único",created:"2026-10-05",due:"2026-10-30"},
+  {key:"FSYNC-48",project:"FSYNC",status:"Concluído",assignee:"Desenvolvimento",summary:"3.6 Testes de contrato do hub",created:"2026-10-05",due:"2026-10-30"},
+  {key:"FSYNC-47",project:"FSYNC",status:"Concluído",assignee:"Desenvolvimento",summary:"3.5 Módulos e repositórios",created:"2026-10-05",due:"2026-10-30"},
+  {key:"FSYNC-46",project:"FSYNC",status:"Concluído",assignee:"Desenvolvimento",summary:"3.4 Busca de pessoas corrigida",created:"2026-10-05",due:"2026-10-30"},
+  {key:"FSYNC-45",project:"FSYNC",status:"Concluído",assignee:"Desenvolvimento",summary:"3.3 Contrato único implementado",created:"2026-10-05",due:"2026-10-30"},
+  {key:"FSYNC-44",project:"FSYNC",status:"Concluído",assignee:"Desenvolvimento",summary:"3.2 DTOs corrigidos e validação global",created:"2026-10-05",due:"2026-10-30"},
+  {key:"FSYNC-43",project:"FSYNC",status:"Concluído",assignee:"Desenvolvimento",summary:"3.1 Guard do fenasbac-auth global",created:"2026-10-05",due:"2026-10-30"},
+  {key:"FSYNC-42",project:"FSYNC",status:"Concluído",assignee:"Desenvolvimento",summary:"2.5 @RawResponse no lugar da checagem por URL",created:"2026-10-05",due:"2026-10-30"},
+  {key:"FSYNC-41",project:"FSYNC",status:"Concluído",assignee:"Desenvolvimento",summary:"2.4 Streaming sem depender do Express",created:"2026-10-05",due:"2026-10-30"},
+  {key:"FSYNC-40",project:"FSYNC",status:"Concluído",assignee:"Desenvolvimento",summary:"2.3 ParseIntPipe nos ids",created:"2026-10-05",due:"2026-10-30"},
+  {key:"FSYNC-38",project:"FSYNC",status:"Concluído",assignee:"Desenvolvimento",summary:"2.1 Paginação no banco na listagem de associados",created:"2026-10-05",due:"2026-10-30"},
+  {key:"FSYNC-37",project:"FSYNC",status:"Concluído",assignee:"Desenvolvimento",summary:"1.1 Segredos do SIS no Infisical da fenasync",created:"2026-10-05",due:"2026-10-30"},
+  {key:"FSYNC-29",project:"FSYNC",status:"Concluído",assignee:"Desenvolvimento",summary:"Garantir padrão de rotas e módulos",created:"2026-09-28",due:"2026-10-09"},
+  {key:"FSYNC-28",project:"FSYNC",status:"Concluído",assignee:"Desenvolvimento",summary:"Mapear ajuste de escopo",created:"2026-09-14",due:"2026-10-02"},
+  {key:"FENASBR-258",project:"FENASBR",status:"Concluído",assignee:"Infra / Suporte N1",summary:"Publicação do Estatuto e Regimento Interno no Portal Fenasbac",created:"2026-10-07",due:"2026-10-07"},
+  {key:"CONECTA-102",project:"CONECTA",status:"Concluído",assignee:"Coordenação",summary:"Termo de Adesão, Regional Belém",created:"2026-09-30",due:"2026-10-09"},
+  {key:"CONECTA-101",project:"CONECTA",status:"Concluído",assignee:"Coordenação",summary:"Termo de Adesão, Regional Fortaleza",created:"2026-09-30",due:"2026-10-09"},
+  {key:"CONECTA-99",project:"CONECTA",status:"Concluído",assignee:"Coordenação",summary:"Termo de Adesão, Regional Salvador",created:"2026-09-30",due:"2026-10-09"},
+  {key:"CONECTA-98",project:"CONECTA",status:"Concluído",assignee:"Coordenação",summary:"Termo de Adesão, Regional Porto Alegre",created:"2026-09-30",due:"2026-10-09"},
+  {key:"CONECTA-96",project:"CONECTA",status:"Concluído",assignee:"Coordenação",summary:"Termo de Adesão, Regional Belo Horizonte",created:"2026-09-30",due:"2026-10-09"},
+  {key:"CONECTA-95",project:"CONECTA",status:"Concluído",assignee:"Coordenação",summary:"Termo de Adesão, Regional Rio de Janeiro",created:"2026-09-30",due:"2026-10-09"},
+  {key:"CONECTA-92",project:"CONECTA",status:"Concluído",assignee:"Coordenação",summary:"Enviar o Termo de Adesão aos diretores executivos das regionais",created:"2026-09-29",due:"2026-10-09"},
+  {key:"CONECTA-89",project:"CONECTA",status:"Concluído",assignee:"Coordenação",summary:"Levantar e alinhar melhorias do dashboard do Conecta por perfil",created:"2026-09-09",due:"2026-09-30"},
+  {key:"CONECTA-83",project:"CONECTA",status:"Concluído",assignee:"Coordenação",summary:"Formalizar o Termo de Adesão das regionais ao Conecta",created:"2026-08-14",due:"2026-10-02"},
+  {key:"CONECTA-80",project:"CONECTA",status:"Concluído",assignee:"Infra / Suporte N1",summary:"Testar permissões de acesso",created:"2026-08-03",due:"2026-10-16"},
+  {key:"CERTI-14",project:"CERTI",status:"Concluído",assignee:"Desenvolvimento",summary:"Handover entre áreas",created:"2026-09-14",due:"2026-10-13"},
+  {key:"ANALYTICS-7",project:"ANALYTICS",status:"Concluído",assignee:"Tech Lead",summary:"Criar o protótipo do Dashboard unificado de métricas (IO + Fenasbac.com.br)",created:"2026-09-14",due:"2026-10-23"},
+  {key:"ANALYTICS-11",project:"ANALYTICS",status:"Em andamento",assignee:"Conteúdo",summary:"Configurar e validar Google Analytics (GA4) / Tag Manager na área logada do  site Fenasbac.br",created:"2026-09-28",due:"2026-10-16"},
+  {key:"CVM-21",project:"CVM",status:"Pendente",assignee:"Conteúdo",summary:"Nova versão do Site Sandbox",created:"2026-10-05",due:"2026-10-16"},
+  {key:"CVM-13",project:"CVM",status:"Pendente",assignee:"Conteúdo",summary:"Nova versão do Site Nexus CVM",created:"2026-10-05",due:"2026-10-16"},
+  {key:"CONECTA-100",project:"CONECTA",status:"Bloqueado",assignee:"Coordenação",summary:"Termo de Adesão, Regional Recife",created:"2026-09-30",due:"2026-10-09"},
+  {key:"CONECTA-97",project:"CONECTA",status:"Bloqueado",assignee:"Coordenação",summary:"Termo de Adesão, Regional Curitiba",created:"2026-09-30",due:"2026-10-09"},
+  {key:"CONECTA-94",project:"CONECTA",status:"Bloqueado",assignee:"Coordenação",summary:"Termo de Adesão, Regional São Paulo",created:"2026-09-30",due:"2026-10-09"},
+  {key:"CONECTA-93",project:"CONECTA",status:"Bloqueado",assignee:"Coordenação",summary:"Termo de Adesão, Regional Brasília",created:"2026-09-30",due:"2026-10-09"},
 ];
 
 const PROJ_META={
+  "CVM":{name:"Site Nexus CVM",color:"#FF8C00",cat:"Conteúdo / Sites"},
   "CERTI":{name:"Certificados",color:"#00C7FF",cat:"Produtos"},
   "ANALYTICS":{name:"Analytics",color:"#D29922",cat:"Produtos"},
   "FSYNC":{name:"FenaSync",color:"#00B3D6",cat:"Produtos"},
@@ -492,42 +535,35 @@ const PROJ_META={
   "SYNCOOP":{name:"Syncoop",color:"#2EA043",cat:"Conteúdo / Sites"},
   "PORTAL":{name:"Portal TI",color:"#7C5CFC",cat:"Operacional / Interno"},
 };
-const PROJ_ORDER=["PROC","CONECTA","TECH","FENASHUB","FENASBR","ANALYTICS","SISFENAS","SRR","FIA","FSYNC","CERTI"];
+const PROJ_ORDER=["PROC","FSYNC","CONECTA","PORTAL","TECH","ETI","ANALYTICS","CVM","STRAPI","CERTI","ENG","FENASBR","FENASHUB","SISFENAS","SRR","FIA","DOCS","GEP","SYNCOOP","FAUTH"];
 const CATS=["Operacional / Interno","Produtos","Conteúdo / Sites"];
 
 // sla / sla1a = veredito de cada chamado na regua global do JSM, lido de
-// customfield_10610 (resolucao) e customfield_10577 (1a resposta) em 28/09/2026:
+// customfield_10610 (resolucao) e customfield_10577 (1a resposta) em 13/10/2026:
 // 'no prazo' | 'estouro' (meta vencida, concluido ou nao) | 'em curso'.
 // trilha = request type do JSM. Alimenta todos os KPIs de SLA do painel SDesk.
 const SDESK_ISSUES=[
-  {key:"SDESK-313",status:"Pendente",area:"Comunicação / Sites",trilha:"Solicitação de TI",sla:"estouro",sla1a:"no prazo",summary:"Configuração de perfis PIPEDRIVE"},
-  {key:"SDESK-314",status:"Concluído",area:"Comunicação / Sites",trilha:"Comunicação Digital",sla:"no prazo",sla1a:"no prazo",summary:"Google Tag Manager site Impact e Nexus"},
-  {key:"SDESK-315",status:"Concluído",area:"Comunicação / Sites",trilha:"Comunicação Digital",sla:"no prazo",sla1a:"no prazo",summary:"Alteração Site RR"},
-  {key:"SDESK-316",status:"Bloqueado",area:"Seguro",trilha:"Solicitação de TI",sla:"estouro",sla1a:"no prazo",summary:"Reajuste Anual Seguro de Vida"},
-  {key:"SDESK-317",status:"Concluído",area:"Comunicação / Sites",trilha:"Comunicação Digital",sla:"no prazo",sla1a:"no prazo",summary:"Revisão do Strapi"},
-  {key:"SDESK-318",status:"Concluído",area:"TI Interno / Infra",trilha:"Desligamento",sla:"no prazo",sla1a:"no prazo",summary:"Desligamento de colaborador (confidencial)"},
-  {key:"SDESK-319",status:"Concluído",area:"Comunicação / Sites",trilha:"Comunicação Digital",sla:"no prazo",sla1a:"no prazo",summary:"Acesso ao Strapi para editar conteúdos"},
-  {key:"SDESK-324",status:"Concluído",area:"Inovação",trilha:"Solicitação de TI",sla:"no prazo",sla1a:"no prazo",summary:"Criação de Canais no Slack - Next Batch #9"},
-  {key:"SDESK-325",status:"Concluído",area:"Inovação",trilha:"Solicitação de TI",sla:"no prazo",sla1a:"estouro",summary:"Liberação de Acesso - Slack Ripple"},
-  {key:"SDESK-326",status:"Concluído",area:"Inovação",trilha:"Solicitação de TI",sla:"no prazo",sla1a:"no prazo",summary:"Liberação de Acessos Airtable - Andressa"},
-  {key:"SDESK-327",status:"Pendente",area:"TI Interno / Infra",trilha:"Solicitação de TI",sla:"estouro",sla1a:"no prazo",summary:"Lentidão de notebook"},
-  {key:"SDESK-328",status:"Concluído",area:"Financeiro",trilha:"Solicitação de TI",sla:"estouro",sla1a:"no prazo",summary:"Ajuste - Proposta PGAFI"},
-  {key:"SDESK-329",status:"Concluído",area:"Inovação",trilha:"Solicitação de TI",sla:"no prazo",sla1a:"no prazo",summary:"Liberação de pastas do Drive - Next Batch #9"},
-  {key:"SDESK-330",status:"Concluído",area:"TI Interno / Infra",trilha:"Reportar incidente",sla:"no prazo",sla1a:"no prazo",summary:"Impressora desconfigurada"},
-  {key:"SDESK-331",status:"Concluído",area:"Comunicação / Sites",trilha:"Solicitação de TI",sla:"estouro",sla1a:"no prazo",summary:"DOCs | Fenas"},
-  {key:"SDESK-332",status:"Concluído",area:"TI Interno / Infra",trilha:"Solicitação de TI",sla:"no prazo",sla1a:"no prazo",summary:"Assistência com máquina"},
-  {key:"SDESK-333",status:"Pendente",area:"Comunicação / Sites",trilha:"Comunicação Digital",sla:"em curso",sla1a:"no prazo",summary:"TILT no Novo Strapi"},
-  {key:"SDESK-334",status:"Concluído",area:"Consultoria / GEP",trilha:"Solicitação de TI",sla:"estouro",sla1a:"no prazo",summary:"Atualizar tag @consultoria Slack"},
-  {key:"SDESK-335",status:"Concluído",area:"Comunicação / Sites",trilha:"Solicitação de TI",sla:"no prazo",sla1a:"no prazo",summary:"Inconsistências no cadastro p/ acesso ao site"},
-  {key:"SDESK-336",status:"Bloqueado",area:"Comunicação / Sites",trilha:"Comunicação Digital",sla:"em curso",sla1a:"no prazo",summary:"Implementação do Site Lift Learning"},
-  {key:"SDESK-337",status:"Concluído",area:"Consultoria / GEP",trilha:"Comunicação Digital",sla:"no prazo",sla1a:"no prazo",summary:"Atualização do site GEP - ciclo 2026/2027"},
-  {key:"SDESK-338",status:"Concluído",area:"TI Interno / Infra",trilha:"Solicitação de TI",sla:"no prazo",sla1a:"no prazo",summary:"Verificar telefone da sala"},
-  {key:"SDESK-339",status:"Concluído",area:"Inovação",trilha:"Solicitação de TI",sla:"no prazo",sla1a:"no prazo",summary:"Ajuste no canal do Slack - Fenynx"},
-  {key:"SDESK-340",status:"Pendente",area:"Inovação",trilha:"Comunicação Digital",sla:"em curso",sla1a:"estouro",summary:"Revisão de dados do dashboard da inovação"},
-  {key:"SDESK-341",status:"Concluído",area:"Inovação",trilha:"Solicitação de TI",sla:"no prazo",sla1a:"estouro",summary:"Atualização Startups Selecionadas Batch #9"},
-  {key:"SDESK-342",status:"Em andamento",area:"Consultoria / GEP",trilha:"Reportar incidente",sla:"em curso",sla1a:"no prazo",summary:"Divergência no sistema GEP"},
-  {key:"SDESK-343",status:"Pendente",area:"Inovação",trilha:"Integração",sla:"em curso",sla1a:"no prazo",summary:"Onboarding novo colaborador (André Lin)"},
-  {key:"SDESK-344",status:"Concluído",area:"Financeiro",trilha:"Reportar incidente",sla:"no prazo",sla1a:"no prazo",summary:"Sistema antigo (PGAFI) fora do ar"},
+  {key:"SDESK-344",status:"Concluído",area:"PGAFI/Financeiro",trilha:"Reportar incidente",sla:"no prazo",sla1a:"no prazo",summary:"Sistema antigo (PGAFI) fora do ar"},
+  {key:"SDESK-346",status:"Concluído",area:"TI Interno / Infra",trilha:"Solicitação de TI",sla:"no prazo",sla1a:"no prazo",summary:"Compartilhamento de pasta SCANNER"},
+  {key:"SDESK-347",status:"Concluído",area:"Comunicação / Sites",trilha:"Solicitação de TI",sla:"no prazo",sla1a:"no prazo",summary:"Padronizar arte do Diálogo com Propósito no site do GEP"},
+  {key:"SDESK-348",status:"Concluído",area:"TI Interno / Infra",trilha:"Solicitação de TI",sla:"no prazo",sla1a:"no prazo",summary:"Ajuste do fluxo de chamada"},
+  {key:"SDESK-349",status:"Pendente",area:"SISFenasbac",trilha:"Solicitação de TI",sla:"estouro",sla1a:"no prazo",summary:"Registros de exclusão - SISfenasbac"},
+  {key:"SDESK-350",status:"Concluído",area:"GEP",trilha:"Solicitação de TI",sla:"no prazo",sla1a:"no prazo",summary:"Acesso às transcrições de entrevistas (Teams)"},
+  {key:"SDESK-351",status:"Concluído",area:"Comunicação / Sites",trilha:"Solicitação de TI",sla:"no prazo",sla1a:"no prazo",summary:"Direcionamento de links - Site Next"},
+  {key:"SDESK-352",status:"Concluído",area:"Comunicação / Sites",trilha:"Comunicação Digital",sla:"no prazo",sla1a:"no prazo",summary:"UTM e formulários no site Next"},
+  {key:"SDESK-353",status:"Concluído",area:"PGAFI/Financeiro",trilha:"Reportar incidente",sla:"no prazo",sla1a:"no prazo",summary:"Atualização do saldo devedor - PGAFI"},
+  {key:"SDESK-354",status:"Concluído",area:"Financeiro",trilha:"Reportar incidente",sla:"no prazo",sla1a:"no prazo",summary:"Estorno de fechamento setembro/2026"},
+  {key:"SDESK-355",status:"Concluído",area:"GEP",trilha:"Reportar incidente",sla:"no prazo",sla1a:"no prazo",summary:"Dados ausentes no RECIP"},
+  {key:"SDESK-356",status:"Em andamento",area:"TI Interno / Infra",trilha:"Reportar incidente",sla:"estouro",sla1a:"no prazo",summary:"Wi-Fi segue sumindo"},
+  {key:"SDESK-357",status:"Concluído",area:"TI Interno / Infra",trilha:"Reportar incidente",sla:"estouro",sla1a:"no prazo",summary:"Máquina muito devagar/travando (cancelado)"},
+  {key:"SDESK-358",status:"Concluído",area:"GEP",trilha:"Solicitação de TI",sla:"no prazo",sla1a:"no prazo",summary:"Inserção do Diálogo #5 no site de GEP"},
+  {key:"SDESK-359",status:"Concluído",area:"Inovação",trilha:"Solicitação de TI",sla:"estouro",sla1a:"no prazo",summary:"Inclusão de membro no canal da QSentinel"},
+  {key:"SDESK-360",status:"Concluído",area:"Marketing",trilha:"Comunicação Digital",sla:"no prazo",sla1a:"no prazo",summary:"Liberação de acesso adm no pipeline do Slack"},
+  {key:"SDESK-361",status:"Bloqueado",area:"TI Interno / Infra",trilha:"Solicitação de TI",sla:"em curso",sla1a:"no prazo",summary:"Celulares Equipe São Paulo"},
+  {key:"SDESK-362",status:"Bloqueado",area:"TI Interno / Infra",trilha:"Solicitação de TI",sla:"em curso",sla1a:"no prazo",summary:"Solicitação de Equipamentos - Teclado"},
+  {key:"SDESK-363",status:"Pendente",area:"TI Interno / Infra",trilha:"Solicitação de TI",sla:"estouro",sla1a:"no prazo",summary:"Criar ramal e instalar telefone na Secretaria"},
+  {key:"SDESK-364",status:"Concluído",area:"GEP",trilha:"Solicitação de TI",sla:"no prazo",sla1a:"no prazo",summary:"Dificuldade para preparar AMs e APs"},
+  {key:"SDESK-365",status:"Pendente",area:"Certificados",trilha:"Solicitação de TI",sla:"em curso",sla1a:"no prazo",summary:"Emissão automática de certificado de conclusão"},
 ];
 
 // metas da regua global do JSM (goalDuration de customfield_10577/10610)
@@ -582,11 +618,11 @@ function buildProjects(){
         <div class="proj-key" style="color:${meta.color}">${key}</div>
         <div class="proj-name">${meta.name}</div>
         <div style="display:flex;flex-wrap:wrap;gap:4px;margin-top:8px;">
-          ${st.done?`<span style="background:rgba(46,160,67,.15);padding:2px 7px;border-radius:10px;font-size:11px;font-weight:600;color:#2EA043;">${st.done} ✓</span>`:''}
-          ${st.prog?`<span style="background:rgba(2,37,235,.15);padding:2px 7px;border-radius:10px;font-size:11px;font-weight:600;color:#6699FF;">${st.prog} ↻</span>`:''}
-          ${st.pend?`<span style="background:rgba(72,72,88,.25);padding:2px 7px;border-radius:10px;font-size:11px;font-weight:600;color:#8B949E;">${st.pend} ⏸</span>`:''}
+          ${st.done?`<span style="background:rgba(46,160,67,.15);padding:2px 7px;border-radius:10px;font-size:13.2px;font-weight:600;color:#2EA043;">${st.done} ✓</span>`:''}
+          ${st.prog?`<span style="background:rgba(2,37,235,.15);padding:2px 7px;border-radius:10px;font-size:13.2px;font-weight:600;color:#6699FF;">${st.prog} ↻</span>`:''}
+          ${st.pend?`<span style="background:rgba(72,72,88,.25);padding:2px 7px;border-radius:10px;font-size:13.2px;font-weight:600;color:#8B949E;">${st.pend} ⏸</span>`:''}
         </div>
-        <div style="font-size:10px;color:#484F58;margin-top:4px;">${st.total} issues · ${taxa}%</div>`;
+        <div style="font-size:12px;color:#484F58;margin-top:4px;">${st.total} issues · ${taxa}%</div>`;
       card.onclick=()=>openPanel(key);
       grid.appendChild(card);
     });
@@ -621,7 +657,7 @@ function buildTeam(){
         <div class="mstat"><div class="mstat-val" style="color:${taxa>=60?'#2EA043':taxa>=30?'#D29922':'#F85149'}">${taxa}%</div><div class="mstat-label">Taxa</div></div>
       </div>
       <div class="m-bar-wrap"><div class="m-bar-track"><div class="m-bar-fill" style="width:${taxa}%;background:${taxa>=60?'#2EA043':taxa>=30?'#D29922':'#F85149'}"></div></div></div>
-      <div class="member-issues">${issues.map(i=>`<div class="m-issue">
+      <div class="member-issues">${(m.id==='Tech Lead'?'<div class="m-issue"><div class="m-sum" style="color:#AEB8CC;white-space:normal;line-height:1.5">Atua&ccedil;&atilde;o na S20: arquitetura da migra&ccedil;&atilde;o para a fenasync (monolito modular, guard global, contrato &uacute;nico), valida&ccedil;&atilde;o do Kuma para liberar a intranet, apoio na instala&ccedil;&atilde;o dos nobreaks e no alinhamento com a Comunica&ccedil;&atilde;o. Revis&atilde;o e dire&ccedil;&atilde;o t&eacute;cnica, n&atilde;o medida por cards atribu&iacute;dos.</div></div>':'')+issues.map(i=>`<div class="m-issue">
         <div class="m-dot" style="background:${dotColor(i.status)}"></div>
         <div class="m-key">${i.key}</div>
         <div class="m-sum" title="${i.summary}">${i.summary}</div>
@@ -635,9 +671,9 @@ function buildTeam(){
 // SDESK_ISSUES. Antes eram HTML fixo, e foi assim que os numeros da S18
 // sobreviveram a virada de sprint.
 const TRILHA_NOTA={
-  "Solicitação de TI":"A maior trilha da sprint e a única com estouro. Meta de 24h, a mais curta: três chamados fecharam fora dela e três seguem abertos com a meta já vencida.",
-  "Comunicação Digital":"Nenhum estouro. Os três em curso — TILT no Strapi, site Lift Learning e a revisão do dashboard da inovação — ainda correm dentro da meta folgada de 56h.",
-  "Reportar incidente":"Volume baixo e sem estouro. A divergência do sistema GEP segue em andamento, dentro da meta.",
+  "Solicitação de TI":"A maior trilha da sprint e a que concentra os estouros, na meta mais curta (24h): SDESK-359 fechou fora do prazo, e SDESK-349 e SDESK-363 seguem abertos com a meta já vencida. Os três em curso são pedidos de equipamento, dois deles bloqueados por aquisição.",
+  "Comunicação Digital":"Duas solicitações no período, ambas resolvidas dentro da meta folgada de 56h — as UTMs e formulários do site Next e o acesso administrativo ao pipeline do Slack. Sem estouro e sem chamado em aberto.",
+  "Reportar incidente":"Volume baixo, mas dois estouros na meta de 24h: o Wi-Fi que segue sumindo (SDESK-356), ainda em andamento, e a máquina lenta (SDESK-357), encerrada como cancelada depois do prazo. Os quatro incidentes de sistema — PGAFI, RECIP e o estorno do fechamento — foram resolvidos dentro da meta.",
   "Desligamento":"Trilha de chamado único no período, concluída dentro da meta de 80h.",
   "Integração":"Só o onboarding do novo colaborador (início em 05/10), aberto e ainda dentro da meta de 80h.",
 };
@@ -658,13 +694,13 @@ function buildTrilhas(){
       .concat(ec?[ec+' em curso']:[])
       .concat(p?['1ª resposta '+p.pct+'%']:[]).join(' · ');
     return '<div style="background:var(--bg2);border:1px solid var(--bord);border-left:3px solid '+cor+';border-radius:8px;padding:12px 14px;">'
-      +'<div style="font-size:13px;font-weight:700;color:var(--text);">'+t
-      +' <span style="font-size:10px;color:var(--muted);font-weight:400;">meta '+(TRILHA_META[t]||'—')+'</span></div>'
-      +'<div style="font-size:23px;font-weight:700;font-family:var(--mono);color:'+cor+';margin-top:4px;">'
-      +(r?r.pct+'%':'—')+'<span style="font-size:12px;color:var(--muted);font-family:var(--font);font-weight:400;"> '
+      +'<div style="font-size:15.6px;font-weight:700;color:var(--text);">'+t
+      +' <span style="font-size:12px;color:var(--muted);font-weight:400;">meta '+(TRILHA_META[t]||'—')+'</span></div>'
+      +'<div style="font-size:27.6px;font-weight:700;font-family:var(--mono);color:'+cor+';margin-top:4px;">'
+      +(r?r.pct+'%':'—')+'<span style="font-size:14.4px;color:var(--muted);font-family:var(--font);font-weight:400;"> '
       +(r?'resolução no prazo':'sem chamado com veredito')+'</span></div>'
-      +'<div style="font-size:11px;color:var(--muted);margin-top:3px;">'+detalhe+'</div>'
-      +(TRILHA_NOTA[t]?'<div style="font-size:11px;color:#C0C8D4;margin-top:6px;line-height:1.4;">'+TRILHA_NOTA[t]+'</div>':'')
+      +'<div style="font-size:13.2px;color:var(--muted);margin-top:3px;">'+detalhe+'</div>'
+      +(TRILHA_NOTA[t]?'<div style="font-size:13.2px;color:#C0C8D4;margin-top:6px;line-height:1.4;">'+TRILHA_NOTA[t]+'</div>':'')
       +'</div>';
   }).join('');
 
@@ -705,12 +741,12 @@ function buildSdesk(){
     hdr.style.cssText='padding:10px 14px;display:flex;align-items:center;gap:10px;border-bottom:1px solid var(--bord);cursor:pointer;';
     hdr.innerHTML=`
       <div style="width:8px;height:8px;border-radius:50%;background:${barColor};flex-shrink:0;"></div>
-      <div style="font-size:12px;font-weight:700;color:var(--text);flex:1;">${area.id}</div>
-      <div style="font-size:11px;color:${barColor};font-weight:700;font-family:var(--mono);">${area.meta}</div>
+      <div style="font-size:14.4px;font-weight:700;color:var(--text);flex:1;">${area.id}</div>
+      <div style="font-size:13.2px;color:${barColor};font-weight:700;font-family:var(--mono);">${area.meta}</div>
       <div style="width:80px;height:5px;background:var(--bg3);border-radius:3px;overflow:hidden;flex-shrink:0;">
         <div style="height:100%;width:${pct}%;background:${barColor};border-radius:3px;"></div>
       </div>
-      <span style="font-size:10px;color:var(--muted);margin-left:4px;" class="area-toggle">▼</span>`;
+      <span style="font-size:12px;color:var(--muted);margin-left:4px;" class="area-toggle">▼</span>`;
 
     // body
     const body=document.createElement('div');
@@ -719,7 +755,7 @@ function buildSdesk(){
     function issueRow(i){
       // o veredito vale tambem para chamado aberto: estouro em aberto continua estouro
       const selo={'estouro':['#F85149','#fff','estouro ⚠'],'no prazo':['#2EA043','#fff','no prazo'],'em curso':['#30363D','#C0C8D4','em curso']}[i.sla];
-      const sla=selo?`<span style="background:${selo[0]};color:${selo[1]};font-size:9px;padding:1px 5px;border-radius:8px;font-weight:700;margin-left:3px;">${selo[2]}</span>`:'';
+      const sla=selo?`<span style="background:${selo[0]};color:${selo[1]};font-size:10.8px;padding:1px 5px;border-radius:8px;font-weight:700;margin-left:3px;">${selo[2]}</span>`:'';
       const dot=isDone(i.status)?'#2EA043':i.status==='Em andamento'?'#0225EB':'#484F58';
       return`<div class="dp-issue" style="opacity:${isDone(i.status)?1:.65};">
         <div class="dp-dot" style="background:${dot}"></div>
@@ -731,13 +767,13 @@ function buildSdesk(){
     // colunas: concluídos | pendentes
     const colDone=document.createElement('div');
     if(done.length){
-      colDone.innerHTML=`<div style="font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.6px;padding:4px 6px 6px;border-bottom:1px solid var(--bord);margin-bottom:4px;">✅ ${done.length} resolvidos</div>`+done.map(issueRow).join('');
+      colDone.innerHTML=`<div style="font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:.6px;padding:4px 6px 6px;border-bottom:1px solid var(--bord);margin-bottom:4px;">✅ ${done.length} resolvidos</div>`+done.map(issueRow).join('');
     }
     const colOpen=document.createElement('div');
     if(open.length){
-      colOpen.innerHTML=`<div style="font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.6px;padding:4px 6px 6px;border-bottom:1px solid var(--bord);margin-bottom:4px;">⏳ ${open.length} pendentes</div>`+open.map(issueRow).join('');
+      colOpen.innerHTML=`<div style="font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:.6px;padding:4px 6px 6px;border-bottom:1px solid var(--bord);margin-bottom:4px;">⏳ ${open.length} pendentes</div>`+open.map(issueRow).join('');
     } else {
-      colOpen.innerHTML='<div style="font-size:11px;color:var(--gray);font-style:italic;padding:8px 6px;">Sem pendências</div>';
+      colOpen.innerHTML='<div style="font-size:13.2px;color:var(--gray);font-style:italic;padding:8px 6px;">Sem pendências</div>';
     }
 
     body.appendChild(colDone);
@@ -785,7 +821,7 @@ function closePanel(){document.getElementById('detail-panel')?.classList.remove(
 // TOOLTIP
 let _tt=null;
 function getTT(){if(!_tt)_tt=document.getElementById('g-tooltip');return _tt;}
-function showTT(e,issue){const t=getTT();if(!t)return;t.innerHTML=`<div style="font-family:var(--mono);font-size:10px;color:#8B949E;margin-bottom:3px">${issue.key}</div><div style="font-size:12px;font-weight:600;margin-bottom:4px;line-height:1.3">${issue.summary}</div><div style="color:#8B949E">${issue.status} · ${issue.assignee}</div>`;t.style.display='block';posTT(e);}
+function showTT(e,issue){const t=getTT();if(!t)return;t.innerHTML=`<div style="font-family:var(--mono);font-size:12px;color:#8B949E;margin-bottom:3px">${issue.key}</div><div style="font-size:14.4px;font-weight:600;margin-bottom:4px;line-height:1.3">${issue.summary}</div><div style="color:#8B949E">${issue.status} · ${issue.assignee}</div>`;t.style.display='block';posTT(e);}
 function posTT(e){const t=getTT();if(!t)return;const x=e.clientX+14,y=e.clientY+14,w=t.offsetWidth||200,h=t.offsetHeight||60;t.style.left=(x+w>window.innerWidth?x-w-28:x)+'px';t.style.top=(y+h>window.innerHeight?y-h-28:y)+'px';}
 function hideTT(){const t=getTT();if(t)t.style.display='none';}
 
@@ -797,9 +833,10 @@ const SPRINT_HISTORY=[
   {id:"S16",periodo:"04/08–14/08",issues:62,done:24,projetos:11,sdesk:23,sdeskDone:13,sdeskEstouro:2,porProjeto:{"SISFENAS":[0,1],"ENG":[1,13],"FENASHUB":[1,1],"CONECTA":[1,2],"GEP":[1,2],"PORTAL":[0,1],"PROC":[3,16],"ETI":[5,7],"SRR":[0,1],"STRAPI":[1,6],"TECH":[11,12]}},
   {id:"S17",periodo:"17/08–31/08",issues:88,done:37,projetos:13,sdesk:19,sdeskDone:13,sdeskEstouro:3,porProjeto:{"CERTI":[11,11],"DOCS":[0,6],"ENG":[1,11],"FENASBR":[0,1],"FENASHUB":[5,17],"FIA":[5,5],"GEP":[0,2],"PORTAL":[1,1],"PROC":[6,22],"SISFENAS":[0,1],"SRR":[0,1],"STRAPI":[0,1],"TECH":[8,9]}},
   {id:"S18",periodo:"31/08–14/09",issues:66,done:35,projetos:13,sdesk:22,sdeskDone:17,sdeskEstouro:6,porProjeto:{"CONECTA":[1,1],"DOCS":[5,5],"ENG":[0,1],"ETI":[0,5],"FENASBR":[12,12],"FENASHUB":[0,1],"FIA":[1,9],"PORTAL":[1,1],"PROC":[9,21],"SISFENAS":[0,1],"SRR":[0,1],"STRAPI":[0,2],"TECH":[6,6]}},
+  {id:"S19",periodo:"14/09–28/09",issues:50,done:22,projetos:11,sdesk:28,sdeskDone:20,sdeskEstouro:6,porProjeto:{"PROC":[7,20],"CONECTA":[4,5],"TECH":[4,5],"FENASHUB":[2,3],"FENASBR":[2,2],"ANALYTICS":[0,2],"FIA":[0,1],"ETI":[0,1],"STRAPI":[1,2],"SISFENAS":[1,1],"CERTI":[0,1]}},
 ];
-const SPRINT_ATUAL={id:"S19",periodo:"14/09–28/09"};
-const SPRINT_NOVA={id:"S20",periodo:"28/09–12/10"};
+const SPRINT_ATUAL={id:"S20",periodo:"28/09–09/10"};
+const SPRINT_NOVA={id:"S21",periodo:"13/10–24/10"};
 
 // [concluídas, total] por frente
 function porProjetoDe(lista){
@@ -963,13 +1000,13 @@ function buildEvolucao(){
   // deixa explicito quais sprints entram na comparacao, em vez de so 'a anterior'
   const cmp=document.getElementById('evo-comparacao');
   if(cmp) cmp.innerHTML='<div style="background:var(--bg2);border:1px solid var(--bord);border-left:3px solid var(--cyan);border-radius:8px;padding:10px 14px;display:flex;align-items:center;gap:10px;flex-wrap:wrap;">'
-    +'<span style="font-size:11px;font-weight:700;color:var(--cyan);text-transform:uppercase;letter-spacing:.8px;">Comparando</span>'
-    +'<span style="font-family:var(--mono);font-size:15px;font-weight:700;color:var(--text);">'+prev.id+'</span>'
-    +'<span style="font-size:11px;color:var(--muted);">'+prev.periodo+'</span>'
-    +'<span style="color:var(--cyan);font-size:15px;font-weight:700;">→</span>'
-    +'<span style="font-family:var(--mono);font-size:15px;font-weight:700;color:var(--text);">'+cur.id+'</span>'
-    +'<span style="font-size:11px;color:var(--muted);">'+cur.periodo+'</span>'
-    +'<span style="margin-left:auto;font-size:11px;color:var(--muted);">série completa: '+SPRINTS.map(sp=>sp.id).join(' · ')+'</span>'
+    +'<span style="font-size:13.2px;font-weight:700;color:var(--cyan);text-transform:uppercase;letter-spacing:.8px;">Comparando</span>'
+    +'<span style="font-family:var(--mono);font-size:18px;font-weight:700;color:var(--text);">'+prev.id+'</span>'
+    +'<span style="font-size:13.2px;color:var(--muted);">'+prev.periodo+'</span>'
+    +'<span style="color:var(--cyan);font-size:18px;font-weight:700;">→</span>'
+    +'<span style="font-family:var(--mono);font-size:18px;font-weight:700;color:var(--text);">'+cur.id+'</span>'
+    +'<span style="font-size:13.2px;color:var(--muted);">'+cur.periodo+'</span>'
+    +'<span style="margin-left:auto;font-size:13.2px;color:var(--muted);">série completa: '+SPRINTS.map(sp=>sp.id).join(' · ')+'</span>'
     +'</div>';
 
   // --- stat tiles: valor da sprint fechada + delta vs anterior + sparkline ---
@@ -999,7 +1036,7 @@ function buildEvolucao(){
   const frentes=[...new Set([...Object.keys(pa),...Object.keys(pb)])].map(f=>{
     const a=pa[f],b=pb[f];
     return {f,a,b,d:(b?b[0]:0)-(a?a[0]:0),tag:!a?'nova':(!b?'encerrada':'')};
-  }).sort((x,y)=>y.d-x.d||x.f.localeCompare(y.f));
+  }).filter(r=>r.tag!=='encerrada' && !(r.d===0 && r.f!=='ETI')).sort((x,y)=>y.d-x.d||x.f.localeCompare(y.f));
   const maxAbs=Math.max(1,...frentes.map(r=>Math.abs(r.d)));
   db.innerHTML='<div class="evo-card-title">Entregas por frente · '+prev.id+' → '+cur.id+'</div>'
     +'<div class="evo-card-sub">Variação no número de issues concluídas por frente. Escolhi entregas em vez de taxa porque metade das frentes tem 1 ou 2 issues na sprint, e ali uma única issue já vira 50 ou 100 pontos de variação. A taxa aparece ao lado de cada barra: uma frente pode entregar mais e mesmo assim ver a taxa cair, quando o escopo cresce mais rápido que a entrega.</div>'
@@ -1042,10 +1079,10 @@ function buildEvolucao(){
     +ord.map(([p,n])=>{
       const cor=PROJ_META[p]?.color||'#8B949E';
       return '<div style="display:flex;align-items:center;gap:8px;margin-bottom:7px;">'
-        +'<div style="width:75px;font-size:11px;font-weight:600;color:'+cor+';text-align:right;flex-shrink:0;">'+p+'</div>'
+        +'<div style="width:75px;font-size:13.2px;font-weight:600;color:'+cor+';text-align:right;flex-shrink:0;">'+p+'</div>'
         +'<div style="flex:1;background:var(--bg3);border-radius:3px;height:16px;overflow:hidden;">'
         +'<div style="height:100%;width:'+Math.round(n/maxN*100)+'%;background:'+EVO_ACCENT+';opacity:.55;border-radius:3px;"></div></div>'
-        +'<div style="font-size:11px;color:var(--muted);width:24px;text-align:right;flex-shrink:0;font-variant-numeric:tabular-nums;">'+n+'</div></div>';
+        +'<div style="font-size:13.2px;color:var(--muted);width:24px;text-align:right;flex-shrink:0;font-variant-numeric:tabular-nums;">'+n+'</div></div>';
     }).join('')
     +'<div class="evo-obs">'+leituraCargaProxima(sel,cur,SPRINTS)+'</div>';
 }
@@ -1083,20 +1120,20 @@ function slaCor(pct){return pct>=85?'#2EA043':pct>=60?'#D29922':'#F85149';}
 // GANTT
 // parse 'YYYY-MM-DD' no fuso local (evita o deslocamento de 1 dia do parse UTC)
 function pd(s){const[y,m,d]=String(s).split('-').map(Number);return new Date(y,m-1,d);}
-const SPRINT_START=pd('2026-09-14'),SPRINT_END=pd('2026-09-28');   // S19 (sprint fechada)
-const S18_START=pd('2026-08-31'),S18_END=pd('2026-09-14');         // S18 (sprint anterior)
-const TODAY=pd('2026-09-28'),DAY_W=22;                             // data de fechamento/apuracao
+const SPRINT_START=pd('2026-09-28'),SPRINT_END=pd('2026-10-09');   // S20 (sprint fechada)
+const S18_START=pd('2026-09-14'),S18_END=pd('2026-09-28');         // S19 (sprint anterior)
+const TODAY=pd('2026-10-13'),DAY_W=22;                             // data de fechamento/apuracao
 function addDays(d,n){const r=new Date(d);r.setDate(r.getDate()+n);return r;}
 function diffDays(a,b){return Math.round((b-a)/86400000);}
 function pad2(n){return String(n).padStart(2,'0');}
 function dateStr(d){return d.getFullYear()+'-'+pad2(d.getMonth()+1)+'-'+pad2(d.getDate());}
-// a janela precisa cobrir a S18, a S19 inteira e o vencimento mais distante do
+// a janela precisa cobrir a S19, a S20 inteira e o vencimento mais distante do
 // board — senao as barras de outubro vazam para fora do container.
 const VIEW_START=addDays(S18_START,-3);
 const MAX_DUE=ISSUES.reduce((m,i)=>{const d=pd(i.due);return d>m?d:m;},SPRINT_END);
 const VIEW_END=addDays(MAX_DUE>addDays(SPRINT_END,11)?MAX_DUE:addDays(SPRINT_END,11),2);
 // mesma condicao da barra em gradiente do Gantt: aberta no fechamento e com
-// entrega prevista depois de 28/09.
+// entrega prevista depois de 09/10.
 function entregaAlemDoFim(i){
   return !isDone(i.status)&&pd(i.due)>SPRINT_END;
 }
@@ -1165,7 +1202,7 @@ function buildGantt(){
     const grpLbl=document.createElement('div');grpLbl.className='grp-lbl';
     grpLbl.innerHTML=`<span class="expand-icon" id="exp-${proj}">▶</span>
       <span class="grp-name" style="color:${meta.color}">${proj}</span>
-      <span style="font-size:10px;color:#8B949E;">${meta.name||''}</span>
+      <span style="font-size:12px;color:#8B949E;">${meta.name||''}</span>
       <div class="grp-badges">
         <span class="gbadge" style="background:#2EA04330;color:#2EA043">${st.done}✓</span>
         ${st.prog?`<span class="gbadge" style="background:#0225EB30;color:#6699FF">${st.prog}↻</span>`:''}
@@ -1252,7 +1289,7 @@ function buildGantt(){
   if(leg)[[nDone,'#2EA043',labels[0]],[nProg,'#0225EB',labels[1]],[nPend,'#484F58',labels[2]]].forEach(([n,col,lbl])=>{
     if(!n)return;
     const pctN=Math.round(n/total*100);
-    leg.innerHTML+=`<div style="display:flex;align-items:center;gap:8px;font-size:13px;">
+    leg.innerHTML+=`<div style="display:flex;align-items:center;gap:8px;font-size:15.6px;">
       <div style="width:12px;height:12px;border-radius:2px;background:${col};flex-shrink:0;"></div>
       ${lbl}: <strong style="color:#E6EDF3;margin-left:4px;">${n}</strong>
       <span style="color:var(--muted);">(${pctN}%)</span></div>`;
@@ -1269,11 +1306,11 @@ function buildGantt(){
     const barColor=pct>=60?'#2EA043':pct>=30?'#D29922':'#F85149';
     const row=document.createElement('div');
     row.style.cssText='display:flex;align-items:center;gap:8px;margin-bottom:7px;';
-    row.innerHTML=`<div style="width:75px;font-size:11px;font-weight:600;color:${color};text-align:right;flex-shrink:0;">${proj}</div>
+    row.innerHTML=`<div style="width:75px;font-size:13.2px;font-weight:600;color:${color};text-align:right;flex-shrink:0;">${proj}</div>
       <div style="flex:1;background:var(--bg3);border-radius:3px;height:18px;overflow:hidden;">
-        <div style="height:100%;width:${pct}%;background:${barColor};border-radius:3px;display:flex;align-items:center;padding:0 6px;font-size:10px;font-weight:700;color:#fff;min-width:20px;">${pct}%</div>
+        <div style="height:100%;width:${pct}%;background:${barColor};border-radius:3px;display:flex;align-items:center;padding:0 6px;font-size:12px;font-weight:700;color:#fff;min-width:20px;">${pct}%</div>
       </div>
-      <div style="font-size:11px;color:var(--muted);flex-shrink:0;width:36px;text-align:right;">${d.done}/${d.total}</div>`;
+      <div style="font-size:13.2px;color:var(--muted);flex-shrink:0;width:36px;text-align:right;">${d.done}/${d.total}</div>`;
     tc.appendChild(row);
   });
 })();
