@@ -68,6 +68,7 @@ body{background:var(--bg);color:var(--text);font-family:var(--font);font-size:16
 .dp-kpi{background:#21262D;border-radius:6px;padding:8px 10px;}
 .dp-kpi-val{font-size:25.2px;font-weight:700;font-family:var(--mono);}
 .dp-kpi-label{font-size:12px;color:#8B949E;text-transform:uppercase;letter-spacing:.4px;margin-top:1px;}
+.dp-nota{background:var(--bg2);border-left:3px solid var(--cyan);border-radius:6px;padding:10px 12px;margin-bottom:14px;font-size:13.2px;line-height:1.55;color:#C0C8D4;}
 .dp-sec{margin-bottom:12px;}
 .dp-sec-title{font-size:12px;font-weight:600;color:#8B949E;text-transform:uppercase;letter-spacing:.8px;margin-bottom:6px;padding-bottom:4px;border-bottom:1px solid #30363D;}
 
@@ -389,6 +390,7 @@ body{background:var(--bg);color:var(--text);font-family:var(--font);font-size:16
   </div>
   <div class="dp-body">
     <div class="dp-kpis" id="dp-kpis"></div>
+    <div class="dp-nota" id="dp-proj-nota" style="display:none;"></div>
     <div class="dp-sec" id="dp-done-sec"><div class="dp-sec-title">✅ Concluídos</div><div id="dp-done-list"></div></div>
     <div class="dp-sec" id="dp-open-sec"><div class="dp-sec-title">⏳ Carry-over / Em andamento</div><div id="dp-open-list"></div></div>
   </div>
@@ -600,6 +602,12 @@ const PROJ_META={
   "FENASIO":{name:"Clube F / Inovação",color:"#00C7FF",cat:"Produtos"},
   "LIFT":{name:"Ecossistema Lift",color:"#FF8C00",cat:"Conteúdo / Sites"},
   "NEWCON":{name:"Newcon",color:"#2EA043",cat:"Produtos"},
+};
+const PROJ_NOTA={
+  "QSENTINEL":"Prova de conceito de IA com governança, ainda em definição — por isso 0 entregas sem significar frente parada. O escopo fechado na S21 é o analista do programa de aceleração como curador: a ferramenta pré-processa e recomenda listas curtas, e o analista valida, corrige e devolve a correção para virar memória institucional. A régua de governança já classifica os dados em quatro níveis (público, interno, sensível e estratégico); critérios de avaliação, gravações de entrevista e julgamentos internos sobre empresas ficam fora e não saem para o fornecedor. Seguem em aberto, para validação do Sponsor: quem faz o segundo olhar que aprova o que vira memória, se o consentimento assinado cobre enviar dado a fornecedor externo de IA, e a revisão do gabarito de pontuação. Os 11 cards da S22 são a preparação dos dados e do middleware.",
+  "CONECTA":"A taxa não mede o avanço da frente: as 9 issues em aberto são a integração da base da ASBAC Brasília, que ficou pronta do lado da TI e depende do WBC criar a rota de atualização. A carga inicial tem corte em 01/11, data que cai no domingo, com feriado em 02/11.",
+  "PROC":"Frente de coordenação e governança: 29 issues, 14 delas as subtarefas da padronização de status e workflow dos boards (PROC-354), que seguem pendentes. O bloco concluído na sprint é a reversão das avaliações Premium da Atlassian e a formalização dos requisitos da API ao WBC.",
+  "FENASIO":"Card único aberto na sprint — edição de dependentes no front do Clube F —, ligado à mesma frente de integração do Conecta.",
 };
 const PROJ_ORDER=["PROC","FSYNC","CONECTA","PORTAL","TECH","ANALYTICS","CVM","STRAPI","CERTI","ENG","FENASBR","QSENTINEL","FENASIO","LIFT","ETI","FENASHUB","SISFENAS","SRR","FIA","DOCS","GEP","SYNCOOP","FAUTH"];
 const CATS=["Operacional / Interno","Produtos","Conteúdo / Sites"];
@@ -878,6 +886,8 @@ function openPanel(proj){
   document.getElementById('dp-proj-name').textContent=proj+' — '+(meta.name||'');
   document.getElementById('dp-proj-name').style.color=meta.color||'#02FFFF';
   document.getElementById('dp-proj-sub').textContent=st.total+' issues';
+  const nota=document.getElementById('dp-proj-nota');
+  if(nota){nota.innerHTML=PROJ_NOTA[proj]||'';nota.style.display=PROJ_NOTA[proj]?'block':'none';}
   document.getElementById('dp-kpis').innerHTML=`
     <div class="dp-kpi"><div class="dp-kpi-val" style="color:#2EA043">${done.length}</div><div class="dp-kpi-label">Concluídos</div></div>
     <div class="dp-kpi"><div class="dp-kpi-val" style="color:#484F58">${open.length}</div><div class="dp-kpi-label">Carry-over</div></div>`;
