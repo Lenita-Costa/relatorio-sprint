@@ -260,7 +260,7 @@ body{background:var(--bg);color:var(--text);font-family:var(--font);font-size:16
   <div>
     <div class="hdr-brand">Fenasbac TI</div>
     <div class="hdr-title">Dashboard · Sprint S20</div>
-    <div class="hdr-sub">fenasbac-tech.atlassian.net · S20 encerrada: 28/09–09/10/2026 &nbsp;·&nbsp; S21 em andamento: 13/10–24/10/2026</div>
+    <div class="hdr-sub">fenasbac-tech.atlassian.net · S20 encerrada: 28/09–12/10/2026 &nbsp;·&nbsp; S21 em andamento: 13/10–26/10/2026</div>
   </div>
   <div class="hdr-badge" id="hdr-badge">—</div>
 </div>
@@ -334,20 +334,20 @@ body{background:var(--bg);color:var(--text);font-family:var(--font);font-size:16
   <div class="kpi"><div class="kpi-val">14/09</div><div class="kpi-label">Início S19</div></div>
   <div class="kpi"><div class="kpi-val">28/09</div><div class="kpi-label">Fim S19</div></div>
   <div class="kpi warn"><div class="kpi-val">28/09</div><div class="kpi-label">Início S20</div></div>
-  <div class="kpi warn"><div class="kpi-val">09/10</div><div class="kpi-label">Fim S20</div></div>
+  <div class="kpi warn"><div class="kpi-val">12/10</div><div class="kpi-label">Fim S20</div></div>
   <div class="kpi"><div class="kpi-val" id="kpi-s20-count">–</div><div class="kpi-label">Atravessam p/ a S21</div></div>
 </div>
 <div class="toolbar">
   <button class="fbtn active" onclick="setF('all',this)">Todos</button>
   <button class="fbtn" onclick="setF('done',this)">✓ Concluídos</button>
   <button class="fbtn" onclick="setF('carry',this)">→ Não concluídos</button>
-  <button class="fbtn" onclick="setF('alem',this)" title="Isola as barras em gradiente: issues abertas no fechamento cuja entrega prevista cai depois de 09/10. É um recorte do Gantt, mais estreito que o total de abertas — para o total, use “Não concluídos”.">⇢ Entrega além de 09/10</button>
+  <button class="fbtn" onclick="setF('alem',this)" title="Isola as barras em gradiente: issues abertas no fechamento cuja entrega prevista cai depois de 12/10. É um recorte do Gantt, mais estreito que o total de abertas — para o total, use “Não concluídos”.">⇢ Entrega além de 12/10</button>
   <button class="fbtn" onclick="expandAll()">⊞ Expandir</button>
   <button class="fbtn" onclick="collapseAll()">⊟ Recolher</button>
   <button class="today-btn" onclick="scrollToToday()">📍 Hoje</button>
 </div>
 <div class="gantt-legend" style="display:flex;gap:16px;padding:0 24px 8px;font-size:13.2px;color:var(--muted);align-items:center;flex-wrap:wrap;">
-  <span style="display:flex;align-items:center;gap:5px;"><span style="width:20px;height:3px;background:rgba(2,37,235,.4);display:inline-block;border-radius:2px;"></span>Sprint S20 (28/09–09/10)</span>
+  <span style="display:flex;align-items:center;gap:5px;"><span style="width:20px;height:3px;background:rgba(2,37,235,.4);display:inline-block;border-radius:2px;"></span>Sprint S20 (28/09–12/10)</span>
   <span style="display:flex;align-items:center;gap:5px;"><span style="width:2px;height:12px;background:#F85149;opacity:.7;display:inline-block;"></span>Hoje</span>
   <span style="display:flex;align-items:center;gap:5px;"><span style="width:2px;height:12px;background:#8957E5;opacity:.6;display:inline-block;"></span>Fim S20</span>
   <span style="display:flex;align-items:center;gap:5px;"><span style="width:20px;height:3px;background:rgba(137,87,229,.35);display:inline-block;border-radius:2px;"></span>Sprint S19 (14/09–28/09)</span>
@@ -413,17 +413,17 @@ const ISSUES=[
   {key:"ETI-14",project:"ETI",status:"Em andamento",assignee:"Coordenação",summary:"[ETI] P09 · Ciclos formais de report",created:"2026-06-24",due:"2026-10-16"},
   {key:"ENG-40",project:"ENG",status:"Em andamento",assignee:"Conteúdo",summary:"Criar identidade de elementos para as aplicações internas Fenasbac",created:"2026-09-15",due:"2026-10-26"},
   {key:"CONECTA-104",project:"CONECTA",status:"Em andamento",assignee:"Infra / Suporte N1",summary:"Averiguar validação de e-mail/CPF já cadastrado no fluxo de cadastro",created:"2026-10-07",due:"2026-10-16"},
-  {key:"TECH-151",project:"TECH",status:"Pendente",assignee:"Infra / Suporte N1",summary:"Aquisição e Instalacao de Nobreaks para a Infraestrutura",created:"2026-10-07",due:"2026-10-09",semPrev:true},
+  {key:"TECH-151",project:"TECH",status:"Pendente",assignee:"Infra / Suporte N1",summary:"Aquisição e Instalacao de Nobreaks para a Infraestrutura",created:"2026-10-07",due:"2026-10-12",semPrev:true},
   {key:"PROC-366",project:"PROC",status:"Pendente",assignee:"Coordenação",summary:"Validar com a equipe técnica as funcionalidades do FenasHub levantadas pelas áreas",created:"2026-10-05",due:"2026-10-23"},
-  {key:"PROC-363",project:"PROC",status:"Pendente",assignee:"Coordenação",summary:"9. Documentar o padrão de status na Base de Conhecimento",created:"2026-09-22",due:"2026-10-09",semPrev:true},
-  {key:"PROC-362",project:"PROC",status:"Pendente",assignee:"Coordenação",summary:"8. Definir condição de permissão na transição para Concluído",created:"2026-09-22",due:"2026-10-09",semPrev:true},
-  {key:"PROC-361",project:"PROC",status:"Pendente",assignee:"Coordenação",summary:"7. Propagar o scheme para os demais projetos de software",created:"2026-09-22",due:"2026-10-09",semPrev:true},
-  {key:"PROC-360",project:"PROC",status:"Pendente",assignee:"Coordenação",summary:"6. Piloto em FENASHUB e FENASBR e medição de uma sprint",created:"2026-09-22",due:"2026-10-09",semPrev:true},
-  {key:"PROC-359",project:"PROC",status:"Pendente",assignee:"Coordenação",summary:"5. Normalizar FIA, ANALYTICS e o status \"Aguardando Cliente\"",created:"2026-09-22",due:"2026-10-09",semPrev:true},
-  {key:"PROC-358",project:"PROC",status:"Pendente",assignee:"Coordenação",summary:"4. Aplicar o scheme nos 14 projetos sem card aberto",created:"2026-09-22",due:"2026-10-09",semPrev:true},
-  {key:"PROC-357",project:"PROC",status:"Pendente",assignee:"Coordenação",summary:"3. Criar o workflow e o scheme compartilhado dos projetos de software",created:"2026-09-22",due:"2026-10-09",semPrev:true},
-  {key:"PROC-356",project:"PROC",status:"Pendente",assignee:"Coordenação",summary:"2. Levantar filtros, dashboards e automações que citam nomes de status",created:"2026-09-22",due:"2026-10-09",semPrev:true},
-  {key:"PROC-355",project:"PROC",status:"Pendente",assignee:"Coordenação",summary:"1. Criar os status \"Aguardando área\" e \"Em homologação\"",created:"2026-09-22",due:"2026-10-09",semPrev:true},
+  {key:"PROC-363",project:"PROC",status:"Pendente",assignee:"Coordenação",summary:"9. Documentar o padrão de status na Base de Conhecimento",created:"2026-09-22",due:"2026-10-12",semPrev:true},
+  {key:"PROC-362",project:"PROC",status:"Pendente",assignee:"Coordenação",summary:"8. Definir condição de permissão na transição para Concluído",created:"2026-09-22",due:"2026-10-12",semPrev:true},
+  {key:"PROC-361",project:"PROC",status:"Pendente",assignee:"Coordenação",summary:"7. Propagar o scheme para os demais projetos de software",created:"2026-09-22",due:"2026-10-12",semPrev:true},
+  {key:"PROC-360",project:"PROC",status:"Pendente",assignee:"Coordenação",summary:"6. Piloto em FENASHUB e FENASBR e medição de uma sprint",created:"2026-09-22",due:"2026-10-12",semPrev:true},
+  {key:"PROC-359",project:"PROC",status:"Pendente",assignee:"Coordenação",summary:"5. Normalizar FIA, ANALYTICS e o status \"Aguardando Cliente\"",created:"2026-09-22",due:"2026-10-12",semPrev:true},
+  {key:"PROC-358",project:"PROC",status:"Pendente",assignee:"Coordenação",summary:"4. Aplicar o scheme nos 14 projetos sem card aberto",created:"2026-09-22",due:"2026-10-12",semPrev:true},
+  {key:"PROC-357",project:"PROC",status:"Pendente",assignee:"Coordenação",summary:"3. Criar o workflow e o scheme compartilhado dos projetos de software",created:"2026-09-22",due:"2026-10-12",semPrev:true},
+  {key:"PROC-356",project:"PROC",status:"Pendente",assignee:"Coordenação",summary:"2. Levantar filtros, dashboards e automações que citam nomes de status",created:"2026-09-22",due:"2026-10-12",semPrev:true},
+  {key:"PROC-355",project:"PROC",status:"Pendente",assignee:"Coordenação",summary:"1. Criar os status \"Aguardando área\" e \"Em homologação\"",created:"2026-09-22",due:"2026-10-12",semPrev:true},
   {key:"PROC-354",project:"PROC",status:"Pendente",assignee:"Coordenação",summary:"Padronizar status e workflow dos boards Jira do site fenasbac-tech",created:"2026-09-22",due:"2026-10-02"},
   {key:"PROC-352",project:"PROC",status:"Pendente",assignee:"Coordenação",summary:"Organizar a higienização do Drive de Tecnologia",created:"2026-09-15",due:"2026-10-16"},
   {key:"PROC-317",project:"PROC",status:"Pendente",assignee:"Coordenação",summary:"Apresentar proposta para a Diretoria - Política de acesso FenasHub",created:"2026-08-03",due:"2026-11-12"},
@@ -432,7 +432,7 @@ const ISSUES=[
   {key:"ETI-13",project:"ETI",status:"Pendente",assignee:"Coordenação",summary:"[ETI] P12 · Triagem/deflexão de chamados com IA",created:"2026-06-24",due:"2026-10-16"},
   {key:"ETI-11",project:"ETI",status:"Pendente",assignee:"Coordenação",summary:"[ETI] P10 · Report Executivo quinzenal automatizado",created:"2026-06-24",due:"2026-10-16"},
   {key:"ETI-10",project:"ETI",status:"Pendente",assignee:"Coordenação",summary:"[ETI] P11 · Definição e formalização de indicadores",created:"2026-06-24",due:"2026-10-16"},
-  {key:"CONECTA-84",project:"CONECTA",status:"Pendente",assignee:"Desenvolvimento",summary:"Preparar a ativação das regionais no Conecta (perfis Validação e Gestão)",created:"2026-08-07",due:"2026-10-09",semPrev:true},
+  {key:"CONECTA-84",project:"CONECTA",status:"Pendente",assignee:"Desenvolvimento",summary:"Preparar a ativação das regionais no Conecta (perfis Validação e Gestão)",created:"2026-08-07",due:"2026-10-12",semPrev:true},
   {key:"TECH-143",project:"TECH",status:"Concluído",assignee:"Coordenação",summary:"Configurar softwares e acessos — André Lin",created:"2026-09-28",due:"2026-10-09"},
   {key:"TECH-142",project:"TECH",status:"Concluído",assignee:"Coordenação",summary:"Adicionar aos canais do Slack — André Lin",created:"2026-09-28",due:"2026-10-09"},
   {key:"TECH-141",project:"TECH",status:"Concluído",assignee:"Coordenação",summary:"Criar contas e e-mail corporativo — André Lin",created:"2026-09-28",due:"2026-10-09"},
@@ -829,14 +829,14 @@ function hideTT(){const t=getTT();if(t)t.style.display='none';}
 // Sprints encerradas: agregados extraídos dos dashboards das próprias sprints
 // (dashboard-s15/s16). A sprint corrente é calculada de ISSUES/SDESK_ISSUES.
 const SPRINT_HISTORY=[
-  {id:"S15",periodo:"21/07–01/08",issues:61,done:52,projetos:12,sdesk:30,sdeskDone:22,sdeskEstouro:2,porProjeto:{"SISFENAS":[1,1],"FAUTH":[1,1],"CONECTA":[4,4],"GEP":[6,7],"PORTAL":[0,1],"PROC":[15,20],"ETI":[4,4],"FENASBR":[0,1],"SRR":[1,2],"SYNCOOP":[1,1],"STRAPI":[8,8],"TECH":[11,11]}},
-  {id:"S16",periodo:"04/08–14/08",issues:62,done:24,projetos:11,sdesk:23,sdeskDone:13,sdeskEstouro:2,porProjeto:{"SISFENAS":[0,1],"ENG":[1,13],"FENASHUB":[1,1],"CONECTA":[1,2],"GEP":[1,2],"PORTAL":[0,1],"PROC":[3,16],"ETI":[5,7],"SRR":[0,1],"STRAPI":[1,6],"TECH":[11,12]}},
+  {id:"S15",periodo:"20/07–31/07",issues:61,done:52,projetos:12,sdesk:30,sdeskDone:22,sdeskEstouro:2,porProjeto:{"SISFENAS":[1,1],"FAUTH":[1,1],"CONECTA":[4,4],"GEP":[6,7],"PORTAL":[0,1],"PROC":[15,20],"ETI":[4,4],"FENASBR":[0,1],"SRR":[1,2],"SYNCOOP":[1,1],"STRAPI":[8,8],"TECH":[11,11]}},
+  {id:"S16",periodo:"03/08–14/08",issues:62,done:24,projetos:11,sdesk:23,sdeskDone:13,sdeskEstouro:2,porProjeto:{"SISFENAS":[0,1],"ENG":[1,13],"FENASHUB":[1,1],"CONECTA":[1,2],"GEP":[1,2],"PORTAL":[0,1],"PROC":[3,16],"ETI":[5,7],"SRR":[0,1],"STRAPI":[1,6],"TECH":[11,12]}},
   {id:"S17",periodo:"17/08–31/08",issues:88,done:37,projetos:13,sdesk:19,sdeskDone:13,sdeskEstouro:3,porProjeto:{"CERTI":[11,11],"DOCS":[0,6],"ENG":[1,11],"FENASBR":[0,1],"FENASHUB":[5,17],"FIA":[5,5],"GEP":[0,2],"PORTAL":[1,1],"PROC":[6,22],"SISFENAS":[0,1],"SRR":[0,1],"STRAPI":[0,1],"TECH":[8,9]}},
   {id:"S18",periodo:"31/08–14/09",issues:66,done:35,projetos:13,sdesk:22,sdeskDone:17,sdeskEstouro:6,porProjeto:{"CONECTA":[1,1],"DOCS":[5,5],"ENG":[0,1],"ETI":[0,5],"FENASBR":[12,12],"FENASHUB":[0,1],"FIA":[1,9],"PORTAL":[1,1],"PROC":[9,21],"SISFENAS":[0,1],"SRR":[0,1],"STRAPI":[0,2],"TECH":[6,6]}},
   {id:"S19",periodo:"14/09–28/09",issues:50,done:22,projetos:11,sdesk:28,sdeskDone:20,sdeskEstouro:6,porProjeto:{"PROC":[7,20],"CONECTA":[4,5],"TECH":[4,5],"FENASHUB":[2,3],"FENASBR":[2,2],"ANALYTICS":[0,2],"FIA":[0,1],"ETI":[0,1],"STRAPI":[1,2],"SISFENAS":[1,1],"CERTI":[0,1]}},
 ];
-const SPRINT_ATUAL={id:"S20",periodo:"28/09–09/10"};
-const SPRINT_NOVA={id:"S21",periodo:"13/10–24/10"};
+const SPRINT_ATUAL={id:"S20",periodo:"28/09–12/10"};
+const SPRINT_NOVA={id:"S21",periodo:"13/10–26/10"};
 
 // [concluídas, total] por frente
 function porProjetoDe(lista){
@@ -1120,7 +1120,7 @@ function slaCor(pct){return pct>=85?'#2EA043':pct>=60?'#D29922':'#F85149';}
 // GANTT
 // parse 'YYYY-MM-DD' no fuso local (evita o deslocamento de 1 dia do parse UTC)
 function pd(s){const[y,m,d]=String(s).split('-').map(Number);return new Date(y,m-1,d);}
-const SPRINT_START=pd('2026-09-28'),SPRINT_END=pd('2026-10-09');   // S20 (sprint fechada)
+const SPRINT_START=pd('2026-09-28'),SPRINT_END=pd('2026-10-12');   // S20 (sprint fechada)
 const S18_START=pd('2026-09-14'),S18_END=pd('2026-09-28');         // S19 (sprint anterior)
 const TODAY=pd('2026-10-13'),DAY_W=22;                             // data de fechamento/apuracao
 function addDays(d,n){const r=new Date(d);r.setDate(r.getDate()+n);return r;}
@@ -1133,7 +1133,7 @@ const VIEW_START=addDays(S18_START,-3);
 const MAX_DUE=ISSUES.reduce((m,i)=>{const d=pd(i.due);return d>m?d:m;},SPRINT_END);
 const VIEW_END=addDays(MAX_DUE>addDays(SPRINT_END,11)?MAX_DUE:addDays(SPRINT_END,11),2);
 // mesma condicao da barra em gradiente do Gantt: aberta no fechamento e com
-// entrega prevista depois de 09/10.
+// entrega prevista depois de 12/10.
 function entregaAlemDoFim(i){
   return !isDone(i.status)&&pd(i.due)>SPRINT_END;
 }

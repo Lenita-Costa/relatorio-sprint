@@ -261,7 +261,7 @@ body{background:var(--bg);color:var(--text);font-family:var(--font);font-size:16
   <div>
     <div class="hdr-brand">Fenasbac TI</div>
     <div class="hdr-title">Dashboard · Sprint S21</div>
-    <div class="hdr-sub">fenasbac-tech.atlassian.net · S21 encerrada: 13/10–26/10/2026 &nbsp;·&nbsp; S22 em andamento: 26/10–08/11/2026</div>
+    <div class="hdr-sub">fenasbac-tech.atlassian.net · S21 encerrada: 13/10–26/10/2026 &nbsp;·&nbsp; S22 em andamento: 26/10–09/11/2026</div>
   </div>
   <div style="display:flex;flex-direction:column;align-items:flex-end;gap:5px;"><div class="hdr-badge" id="hdr-badge">—</div><div class="hdr-badge" style="border-color:var(--cyan);color:var(--cyan);">entregas na base A</div></div>
 </div>
@@ -912,8 +912,11 @@ function posTT(e){const t=getTT();if(!t)return;const x=e.clientX+14,y=e.clientY+
 function hideTT(){const t=getTT();if(t)t.style.display='none';}
 
 // ===================== EVOLUÇÃO ENTRE SPRINTS =====================
-// Sprints encerradas: agregados extraídos dos dashboards das próprias sprints
-// (dashboard-s15/s16). A sprint corrente é calculada de ISSUES/SDESK_ISSUES.
+// Sprints encerradas: agregados extraidos dos dashboards das proprias sprints
+// (dashboard-s15/s16). A sprint corrente e calculada de ISSUES/SDESK_ISSUES.
+// Periodos conferidos no objeto Sprint do Jira (customfield_10020) em 27/10/2026:
+// S15 20/07-31/07 | S16 03/08-14/08 | S17 17/08-31/08 | S18 31/08-14/09
+// S19 14/09-28/09 | S20 28/09-12/10 | S21 13/10-26/10 | S22 26/10-09/11
 // ===================== DE ONDE VEM CADA NUMERO =====================
 // Contar "entregas" tem mais de uma resposta certa, e e dai que vem a
 // divergencia entre este painel e o relatorio executivo. Cada linha abaixo e
@@ -954,15 +957,17 @@ const BASES=[
 const BASE_RELATORIO={s20:"51",s21:"20"};
 
 const SPRINT_HISTORY=[
-  {id:"S15",periodo:"21/07–01/08",issues:61,done:52,projetos:12,sdesk:30,sdeskDone:22,sdeskEstouro:2,porProjeto:{"SISFENAS":[1,1],"FAUTH":[1,1],"CONECTA":[4,4],"GEP":[6,7],"PORTAL":[0,1],"PROC":[15,20],"ETI":[4,4],"FENASBR":[0,1],"SRR":[1,2],"SYNCOOP":[1,1],"STRAPI":[8,8],"TECH":[11,11]}},
-  {id:"S16",periodo:"04/08–14/08",issues:62,done:24,projetos:11,sdesk:23,sdeskDone:13,sdeskEstouro:2,porProjeto:{"SISFENAS":[0,1],"ENG":[1,13],"FENASHUB":[1,1],"CONECTA":[1,2],"GEP":[1,2],"PORTAL":[0,1],"PROC":[3,16],"ETI":[5,7],"SRR":[0,1],"STRAPI":[1,6],"TECH":[11,12]}},
+  {id:"S15",periodo:"20/07–31/07",issues:61,done:52,projetos:12,sdesk:30,sdeskDone:22,sdeskEstouro:2,porProjeto:{"SISFENAS":[1,1],"FAUTH":[1,1],"CONECTA":[4,4],"GEP":[6,7],"PORTAL":[0,1],"PROC":[15,20],"ETI":[4,4],"FENASBR":[0,1],"SRR":[1,2],"SYNCOOP":[1,1],"STRAPI":[8,8],"TECH":[11,11]}},
+  {id:"S16",periodo:"03/08–14/08",issues:62,done:24,projetos:11,sdesk:23,sdeskDone:13,sdeskEstouro:2,porProjeto:{"SISFENAS":[0,1],"ENG":[1,13],"FENASHUB":[1,1],"CONECTA":[1,2],"GEP":[1,2],"PORTAL":[0,1],"PROC":[3,16],"ETI":[5,7],"SRR":[0,1],"STRAPI":[1,6],"TECH":[11,12]}},
   {id:"S17",periodo:"17/08–31/08",issues:88,done:37,projetos:13,sdesk:19,sdeskDone:13,sdeskEstouro:3,porProjeto:{"CERTI":[11,11],"DOCS":[0,6],"ENG":[1,11],"FENASBR":[0,1],"FENASHUB":[5,17],"FIA":[5,5],"GEP":[0,2],"PORTAL":[1,1],"PROC":[6,22],"SISFENAS":[0,1],"SRR":[0,1],"STRAPI":[0,1],"TECH":[8,9]}},
   {id:"S18",periodo:"31/08–14/09",issues:66,done:35,projetos:13,sdesk:22,sdeskDone:17,sdeskEstouro:6,porProjeto:{"CONECTA":[1,1],"DOCS":[5,5],"ENG":[0,1],"ETI":[0,5],"FENASBR":[12,12],"FENASHUB":[0,1],"FIA":[1,9],"PORTAL":[1,1],"PROC":[9,21],"SISFENAS":[0,1],"SRR":[0,1],"STRAPI":[0,2],"TECH":[6,6]}},
   {id:"S19",periodo:"14/09–28/09",issues:50,done:22,projetos:11,sdesk:28,sdeskDone:20,sdeskEstouro:6,porProjeto:{"PROC":[7,20],"CONECTA":[4,5],"TECH":[4,5],"FENASHUB":[2,3],"FENASBR":[2,2],"ANALYTICS":[0,2],"FIA":[0,1],"ETI":[0,1],"STRAPI":[1,2],"SISFENAS":[1,1],"CERTI":[0,1]}},
   {id:"S20",periodo:"28/09–12/10",issues:102,done:69,projetos:12,sdesk:21,sdeskDone:15,sdeskEstouro:5,porProjeto:{"PROC":[18,32],"PORTAL":[10,13],"ETI":[0,5],"ENG":[0,1],"CONECTA":[10,16],"TECH":[7,8],"STRAPI":[2,2],"FSYNC":[19,19],"FENASBR":[1,1],"CERTI":[1,1],"ANALYTICS":[1,2],"CVM":[0,2]}},
 ];
 const SPRINT_ATUAL={id:"S21",periodo:"13/10–26/10"};
-const SPRINT_NOVA={id:"S22",periodo:"26/10–08/11"};
+// O objeto Sprint do Jira fecha a S22 em 09/11 (endDate 09/11T20:05Z).
+// O relatorio executivo da S21 publicou 08/11; aqui vale a data do Jira.
+const SPRINT_NOVA={id:"S22",periodo:"26/10–09/11"};
 
 // [concluídas, total] por frente
 function porProjetoDe(lista){
