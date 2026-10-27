@@ -263,7 +263,7 @@ body{background:var(--bg);color:var(--text);font-family:var(--font);font-size:16
     <div class="hdr-title">Dashboard · Sprint S21</div>
     <div class="hdr-sub">fenasbac-tech.atlassian.net · S21 encerrada: 13/10–26/10/2026 &nbsp;·&nbsp; S22 em andamento: 26/10–08/11/2026</div>
   </div>
-  <div class="hdr-badge" id="hdr-badge">—</div>
+  <div style="display:flex;flex-direction:column;align-items:flex-end;gap:5px;"><div class="hdr-badge" id="hdr-badge">—</div><div class="hdr-badge" style="border-color:var(--cyan);color:var(--cyan);">entregas na base A</div></div>
 </div>
 
 <div class="tabs">
@@ -277,11 +277,12 @@ body{background:var(--bg);color:var(--text);font-family:var(--font);font-size:16
 <!-- PROJETOS -->
 <div class="panel active" id="panel-projetos">
 <div class="kpi-strip">
-  <div class="kpi ok"><div class="kpi-val" id="kpi-done">—</div><div class="kpi-label">Concluídos S21</div></div>
+  <div class="kpi ok"><div class="kpi-val" id="kpi-done">—</div><div class="kpi-label">Concluídos S21 · base A</div></div>
   <div class="kpi warn"><div class="kpi-val" id="kpi-taxa">—</div><div class="kpi-label">Taxa geral</div></div>
-  <div class="kpi warn"><div class="kpi-val" id="kpi-carry">—</div><div class="kpi-label">Carry-over S21</div></div>
+  <div class="kpi warn"><div class="kpi-val" id="kpi-carry">—</div><div class="kpi-label">Carry-over S21 · base A</div></div>
   <div class="kpi ok"><div class="kpi-val" id="kpi-projs">—</div><div class="kpi-label">Projetos</div></div>
 </div>
+<div id="bases-box" style="padding:0 24px 16px;"></div>
 <div class="grid-2" style="padding:0 24px 16px;">
   <div style="background:var(--bg2);border:1px solid var(--bord);border-radius:8px;padding:16px;">
     <div style="font-size:15.6px;font-weight:600;color:var(--cyan);text-transform:uppercase;letter-spacing:.8px;margin-bottom:14px;">Distribuição de Status S21</div>
@@ -307,7 +308,7 @@ body{background:var(--bg);color:var(--text);font-family:var(--font);font-size:16
   <div>
     <h4>O que esta aba mostra</h4>
     <p>Compara a <strong style="color:var(--text);">sprint que acabou de fechar</strong> com a <strong style="color:var(--text);">anterior</strong>, para responder se o time evoluiu — e antecipa a carga que atravessa para a <strong style="color:var(--text);">sprint que inicia</strong>. Os cartões no topo trazem cada indicador com a variação em relação à sprint passada e a tendência das últimas três. O gráfico por frente mostra onde as entregas cresceram ou caíram. O último bloco é o que já entra na sprint nova.</p>
-    <p>Os números da sprint fechada são calculados dos dados desta própria página; os das sprints anteriores vêm dos dashboards daquelas sprints.</p>
+    <p>Os números da sprint fechada são calculados dos dados desta própria página; os das sprints anteriores vêm dos dashboards daquelas sprints. A série S15→S21 é comparável porque todas usam a mesma contagem — a <strong style="color:var(--cyan);">base A</strong>, o escopo do objeto Sprint, detalhada no quadro “De onde vem cada número” na aba Projetos. Um número desta aba só conversa com outro artefato se os dois declararem a mesma base.</p>
   </div>
 </div>
 <div id="evo-comparacao" style="margin:0 24px 14px;"></div>
@@ -333,7 +334,7 @@ body{background:var(--bg);color:var(--text);font-family:var(--font);font-size:16
 <div class="kpi-strip" style="padding-bottom:8px;">
   <div class="kpi ok"><div class="kpi-val" id="kpi-gantt-done">—</div><div class="kpi-label">Concluídos</div></div>
   <div class="kpi"><div class="kpi-val">28/09</div><div class="kpi-label">Início S20</div></div>
-  <div class="kpi"><div class="kpi-val">09/10</div><div class="kpi-label">Fim S20</div></div>
+  <div class="kpi"><div class="kpi-val">12/10</div><div class="kpi-label">Fim S20</div></div>
   <div class="kpi warn"><div class="kpi-val">13/10</div><div class="kpi-label">Início S21</div></div>
   <div class="kpi warn"><div class="kpi-val">26/10</div><div class="kpi-label">Fim S21</div></div>
   <div class="kpi"><div class="kpi-val" id="kpi-s20-count">–</div><div class="kpi-label">Atravessam p/ a S22</div></div>
@@ -351,7 +352,7 @@ body{background:var(--bg);color:var(--text);font-family:var(--font);font-size:16
   <span style="display:flex;align-items:center;gap:5px;"><span style="width:20px;height:3px;background:rgba(2,37,235,.4);display:inline-block;border-radius:2px;"></span>Sprint S21 (13/10–26/10)</span>
   <span style="display:flex;align-items:center;gap:5px;"><span style="width:2px;height:12px;background:#F85149;opacity:.7;display:inline-block;"></span>Hoje</span>
   <span style="display:flex;align-items:center;gap:5px;"><span style="width:2px;height:12px;background:#8957E5;opacity:.6;display:inline-block;"></span>Fim S21</span>
-  <span style="display:flex;align-items:center;gap:5px;"><span style="width:20px;height:3px;background:rgba(137,87,229,.35);display:inline-block;border-radius:2px;"></span>Sprint S20 (28/09–09/10)</span>
+  <span style="display:flex;align-items:center;gap:5px;"><span style="width:20px;height:3px;background:rgba(137,87,229,.35);display:inline-block;border-radius:2px;"></span>Sprint S20 (28/09–12/10)</span>
   <span style="display:flex;align-items:center;gap:5px;"><span style="width:2px;height:12px;background:#02FFFF;opacity:.55;display:inline-block;"></span>Fim S20</span>
   <span style="display:flex;align-items:center;gap:5px;"><span style="width:20px;height:3px;background:#2EA043;opacity:.5;display:inline-block;border-radius:2px;"></span>Barra = concluído</span>
   <span style="display:flex;align-items:center;gap:5px;"><span style="width:20px;height:3px;background:linear-gradient(90deg,#0225EB,#8957E5);display:inline-block;border-radius:2px;"></span>Carry-over para a S22</span>
@@ -400,7 +401,7 @@ body{background:var(--bg);color:var(--text);font-family:var(--font);font-size:16
 
 <div class="footer">
   <span>SBS Quadra 02, Bloco A, Ed. Casa de São Paulo, 7º andar — Brasília/DF</span>
-  <span>Fenasbac TI · Sprint S21 · fechamento em 27/10/2026 · Jira (objeto Sprint) + JSM · SLA lido da régua global do JSM</span>
+  <span>Fenasbac TI · Sprint S21 · fechamento em 27/10/2026 · entregas na base A (escopo do objeto Sprint) · SLA na régua global do JSM · apurado em 27/10/2026</span>
 </div>
 
 <script>
@@ -913,13 +914,52 @@ function hideTT(){const t=getTT();if(t)t.style.display='none';}
 // ===================== EVOLUÇÃO ENTRE SPRINTS =====================
 // Sprints encerradas: agregados extraídos dos dashboards das próprias sprints
 // (dashboard-s15/s16). A sprint corrente é calculada de ISSUES/SDESK_ISSUES.
+// ===================== DE ONDE VEM CADA NUMERO =====================
+// Contar "entregas" tem mais de uma resposta certa, e e dai que vem a
+// divergencia entre este painel e o relatorio executivo. Cada linha abaixo e
+// uma definicao fechada, com o JQL que a reproduz no Jira. Conferido em
+// 27/10/2026 — os numeros mudam se o Jira for relido depois, porque card segue
+// fechando.
+const BASE_OFICIAL='A';
+const BASES=[
+  {id:"A",nome:"Escopo do objeto Sprint",
+   oque:"Todas as issues do Sprint do Jira, contadas pelo status do board no fechamento. Inclui épicos e subtarefas.",
+   s20:"69 de 102",s21:"25 de 55",
+   jql:"sprint in (S21)",
+   onde:"Este painel inteiro — KPIs, Projetos, Time, Gantt e Evolução."},
+  {id:"B",nome:"Entregas na janela, todos os boards",
+   oque:"Tudo que foi resolvido entre as datas da sprint, em qualquer board, sem os épicos.",
+   s20:"86",s21:"56",
+   jql:'resolutiondate >= "2026-10-13" AND resolutiondate < "2026-10-27" AND issuetype != Epic'},
+  {id:"C",nome:"… sem o Service Desk",
+   oque:"O mesmo que B, tirando os chamados de suporte — que são demanda recebida, não entrega planejada.",
+   s20:"65",s21:"34",
+   jql:'… AND project != SDESK'},
+  {id:"D",nome:"… sem as subtarefas",
+   oque:"O mesmo que C, contando só itens de primeiro nível. É a leitura mais próxima de \'entregas\' no sentido corrente.",
+   s20:"48",s21:"25",
+   jql:'… AND issuetype not in (Epic, subTaskIssueTypes())'},
+  {id:"E",nome:"Entregas na janela, só do objeto Sprint",
+   oque:"Cruza as duas ideias: estava na sprint e foi resolvido dentro da janela, sem épicos.",
+   s20:"50",s21:"24",
+   jql:'sprint in (S21) AND resolutiondate >= "2026-10-13" AND resolutiondate < "2026-10-27" AND issuetype != Epic'},
+  {id:"F",nome:"… sem as subtarefas",
+   oque:"O mesmo que E, só itens de primeiro nível. É a definição mais restritiva.",
+   s20:"36",s21:"18",
+   jql:'… AND issuetype not in (Epic, subTaskIssueTypes())'},
+];
+// O relatorio executivo da S21 publicou 51 e 20. Sao numeros conferidos a mao,
+// proximos de E e de F, e nao saem de um JQL unico — e exatamente essa a
+// divergencia a resolver. A partir da S22 os dois artefatos declaram a base.
+const BASE_RELATORIO={s20:"51",s21:"20"};
+
 const SPRINT_HISTORY=[
   {id:"S15",periodo:"21/07–01/08",issues:61,done:52,projetos:12,sdesk:30,sdeskDone:22,sdeskEstouro:2,porProjeto:{"SISFENAS":[1,1],"FAUTH":[1,1],"CONECTA":[4,4],"GEP":[6,7],"PORTAL":[0,1],"PROC":[15,20],"ETI":[4,4],"FENASBR":[0,1],"SRR":[1,2],"SYNCOOP":[1,1],"STRAPI":[8,8],"TECH":[11,11]}},
   {id:"S16",periodo:"04/08–14/08",issues:62,done:24,projetos:11,sdesk:23,sdeskDone:13,sdeskEstouro:2,porProjeto:{"SISFENAS":[0,1],"ENG":[1,13],"FENASHUB":[1,1],"CONECTA":[1,2],"GEP":[1,2],"PORTAL":[0,1],"PROC":[3,16],"ETI":[5,7],"SRR":[0,1],"STRAPI":[1,6],"TECH":[11,12]}},
   {id:"S17",periodo:"17/08–31/08",issues:88,done:37,projetos:13,sdesk:19,sdeskDone:13,sdeskEstouro:3,porProjeto:{"CERTI":[11,11],"DOCS":[0,6],"ENG":[1,11],"FENASBR":[0,1],"FENASHUB":[5,17],"FIA":[5,5],"GEP":[0,2],"PORTAL":[1,1],"PROC":[6,22],"SISFENAS":[0,1],"SRR":[0,1],"STRAPI":[0,1],"TECH":[8,9]}},
   {id:"S18",periodo:"31/08–14/09",issues:66,done:35,projetos:13,sdesk:22,sdeskDone:17,sdeskEstouro:6,porProjeto:{"CONECTA":[1,1],"DOCS":[5,5],"ENG":[0,1],"ETI":[0,5],"FENASBR":[12,12],"FENASHUB":[0,1],"FIA":[1,9],"PORTAL":[1,1],"PROC":[9,21],"SISFENAS":[0,1],"SRR":[0,1],"STRAPI":[0,2],"TECH":[6,6]}},
   {id:"S19",periodo:"14/09–28/09",issues:50,done:22,projetos:11,sdesk:28,sdeskDone:20,sdeskEstouro:6,porProjeto:{"PROC":[7,20],"CONECTA":[4,5],"TECH":[4,5],"FENASHUB":[2,3],"FENASBR":[2,2],"ANALYTICS":[0,2],"FIA":[0,1],"ETI":[0,1],"STRAPI":[1,2],"SISFENAS":[1,1],"CERTI":[0,1]}},
-  {id:"S20",periodo:"28/09–09/10",issues:102,done:69,projetos:12,sdesk:21,sdeskDone:15,sdeskEstouro:5,porProjeto:{"PROC":[18,32],"PORTAL":[10,13],"ETI":[0,5],"ENG":[0,1],"CONECTA":[10,16],"TECH":[7,8],"STRAPI":[2,2],"FSYNC":[19,19],"FENASBR":[1,1],"CERTI":[1,1],"ANALYTICS":[1,2],"CVM":[0,2]}},
+  {id:"S20",periodo:"28/09–12/10",issues:102,done:69,projetos:12,sdesk:21,sdeskDone:15,sdeskEstouro:5,porProjeto:{"PROC":[18,32],"PORTAL":[10,13],"ETI":[0,5],"ENG":[0,1],"CONECTA":[10,16],"TECH":[7,8],"STRAPI":[2,2],"FSYNC":[19,19],"FENASBR":[1,1],"CERTI":[1,1],"ANALYTICS":[1,2],"CVM":[0,2]}},
 ];
 const SPRINT_ATUAL={id:"S21",periodo:"13/10–26/10"};
 const SPRINT_NOVA={id:"S22",periodo:"26/10–08/11"};
@@ -1186,6 +1226,52 @@ function buildEvolucao(){
     +'<div class="evo-obs">'+leituraCargaProxima(sel,cur,SPRINTS)+'</div>';
 }
 
+// Render do quadro de bases. Tudo sai de BASES — numero digitado no HTML foi o
+// que produziu a divergencia que este quadro existe para fechar.
+function buildBases(){
+  const box=document.getElementById('bases-box');if(!box)return;
+  const of=BASES.find(b=>b.id===BASE_OFICIAL);
+  box.innerHTML='<div style="background:var(--bg2);border:1px solid var(--bord);border-left:3px solid var(--cyan);border-radius:8px;padding:16px 18px;">'
+    +'<div style="font-size:15.6px;font-weight:600;color:var(--cyan);text-transform:uppercase;letter-spacing:.8px;">De onde vem cada número</div>'
+    +'<div style="font-size:14.4px;color:#C0C8D4;line-height:1.6;margin-top:8px;">'
+    +'"Entregas" tem mais de uma definição legítima, e é daí que vêm números diferentes para a mesma sprint. '
+    +'Este painel usa uma só, declarada abaixo como <b style="color:var(--cyan)">base '+of.id+'</b>: <b>'+of.nome.toLowerCase()+'</b>. '
+    +'As outras linhas são as demais leituras possíveis, cada uma com o JQL que a reproduz no Jira — '
+    +'dá para colar na busca e conferir item a item.</div>'
+    +'<div style="overflow-x:auto;margin-top:14px;"><table style="width:100%;border-collapse:collapse;font-size:13.2px;min-width:720px;">'
+    +'<thead><tr style="color:var(--muted);text-align:left;">'
+    +'<th style="padding:7px 10px;font-weight:600;border-bottom:1px solid var(--bord);">Base</th>'
+    +'<th style="padding:7px 10px;font-weight:600;border-bottom:1px solid var(--bord);">O que conta</th>'
+    +'<th style="padding:7px 10px;font-weight:600;border-bottom:1px solid var(--bord);text-align:right;white-space:nowrap;">S20</th>'
+    +'<th style="padding:7px 10px;font-weight:600;border-bottom:1px solid var(--bord);text-align:right;white-space:nowrap;">S21</th></tr></thead><tbody>'
+    +BASES.map(b=>{
+      const ofc=b.id===BASE_OFICIAL;
+      const bg=ofc?'background:rgba(2,255,255,.06);':'';
+      return '<tr style="'+bg+'vertical-align:top;">'
+        +'<td style="padding:9px 10px;border-bottom:1px solid var(--bord);white-space:nowrap;">'
+          +'<b style="font-family:var(--mono);color:'+(ofc?'var(--cyan)':'var(--text)')+'">'+b.id+'</b> '
+          +'<span style="color:'+(ofc?'var(--text)':'#C0C8D4')+';font-weight:'+(ofc?'700':'400')+'">'+b.nome+'</span>'
+          +(ofc?'<div style="font-size:12px;color:var(--cyan);margin-top:2px;">base deste painel</div>':'')
+          +'</td>'
+        +'<td style="padding:9px 10px;border-bottom:1px solid var(--bord);color:#AEB8CC;line-height:1.5;">'+b.oque
+          +'<div style="font-family:var(--mono);font-size:12px;color:var(--muted);background:var(--bg3);border-radius:4px;padding:4px 7px;margin-top:5px;word-break:break-word;">'+b.jql.replace(/</g,'&lt;')+'</div></td>'
+        +'<td style="padding:9px 10px;border-bottom:1px solid var(--bord);text-align:right;font-family:var(--mono);color:var(--muted);white-space:nowrap;">'+b.s20+'</td>'
+        +'<td style="padding:9px 10px;border-bottom:1px solid var(--bord);text-align:right;font-family:var(--mono);font-weight:700;color:'+(ofc?'var(--cyan)':'#C0C8D4')+';white-space:nowrap;">'+b.s21+'</td></tr>';
+    }).join('')
+    +'<tr style="vertical-align:top;"><td style="padding:9px 10px;white-space:nowrap;color:#C0C8D4;">Relatório executivo</td>'
+    +'<td style="padding:9px 10px;color:#AEB8CC;line-height:1.5;">Itens concluídos na janela, sem épicos, conferidos à mão. Fica entre as bases E e F e não sai de um JQL único — é a divergência que este quadro existe para fechar. A partir da S22 o relatório declara a base que usa.</td>'
+    +'<td style="padding:9px 10px;text-align:right;font-family:var(--mono);color:var(--muted);">'+BASE_RELATORIO.s20+'</td>'
+    +'<td style="padding:9px 10px;text-align:right;font-family:var(--mono);color:#C0C8D4;">'+BASE_RELATORIO.s21+'</td></tr>'
+    +'</tbody></table></div>'
+    +'<div style="font-size:13.2px;color:#C0C8D4;line-height:1.6;margin-top:12px;border-left:2px solid var(--cyan);padding-left:10px;">'
+    +'→ As bases não se contradizem: medem coisas diferentes. A <b>A</b> responde "quanto do que foi planejado para a sprint saiu"; '
+    +'a <b>B</b> a <b>D</b> respondem "quanto o time entregou no período, olhando todos os boards"; a <b>E</b> e a <b>F</b> cruzam as duas. '
+    +'A diferença entre a <b>D</b> (25) e a <b>F</b> (18) é trabalho entregue na janela que não estava vinculado ao objeto Sprint — '
+    +'na S21 foram 10 itens, em CERTI, CONECTA, ETI e TECH.</div>'
+    +'<div style="font-size:12px;color:var(--muted);margin-top:8px;font-style:italic;">Apurado em 27/10/2026. Reler o Jira depois muda os números, porque card segue fechando.</div>'
+    +'</div>';
+}
+
 // ===== KPIs derivados dos dados (nada de número fixo no HTML) =====
 // Veredito de SLA de cada chamado vem do JSM (customfield_10577 = 1a resposta,
 // customfield_10610 = resolucao, ambos na regua global) e esta gravado em
@@ -1220,7 +1306,7 @@ function slaCor(pct){return pct>=85?'#2EA043':pct>=60?'#D29922':'#F85149';}
 // parse 'YYYY-MM-DD' no fuso local (evita o deslocamento de 1 dia do parse UTC)
 function pd(s){const[y,m,d]=String(s).split('-').map(Number);return new Date(y,m-1,d);}
 const SPRINT_START=pd('2026-10-13'),SPRINT_END=pd('2026-10-26');   // S21 (sprint fechada)
-const S18_START=pd('2026-09-28'),S18_END=pd('2026-10-09');         // S20 (sprint anterior)
+const S18_START=pd('2026-09-28'),S18_END=pd('2026-10-12');         // S20 (sprint anterior)
 const TODAY=pd('2026-10-27'),DAY_W=22;                             // data de fechamento/apuracao
 function addDays(d,n){const r=new Date(d);r.setDate(r.getDate()+n);return r;}
 function diffDays(a,b){return Math.round((b-a)/86400000);}
@@ -1432,6 +1518,7 @@ function buildGantt(){
 })();
 (function(){const e=document.getElementById('kpi-s20-count');if(e)e.textContent=ISSUES.filter(i=>!isDone(i.status)).length;})();
 (function(){
+  buildBases();
   const a=document.getElementById('desc-status');if(a)a.innerHTML=descricaoStatus();
   const b=document.getElementById('desc-taxa');if(b)b.innerHTML=descricaoProjetos();
 })();
