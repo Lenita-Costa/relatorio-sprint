@@ -68,6 +68,27 @@ body{background:var(--bg);color:var(--text);font-family:var(--font);font-size:16
 .dp-kpi{background:#21262D;border-radius:6px;padding:8px 10px;}
 .dp-kpi-val{font-size:25.2px;font-weight:700;font-family:var(--mono);}
 .dp-kpi-label{font-size:12px;color:#8B949E;text-transform:uppercase;letter-spacing:.4px;margin-top:1px;}
+.rs-sec{margin-top:18px;}
+.rs-h{font-size:15.6px;font-weight:600;color:var(--cyan);text-transform:uppercase;letter-spacing:.8px;margin-bottom:10px;}
+.rs-lead{background:var(--bg2);border:1px solid var(--bord);border-left:3px solid var(--cyan);border-radius:8px;padding:18px 20px;}
+.rs-lead p{font-size:19.2px;line-height:1.55;color:var(--text);margin:0;font-weight:600;}
+.rs-sub{display:flex;gap:14px;flex-wrap:wrap;margin-top:14px;}
+.rs-sub div{flex:1;min-width:260px;font-size:14.4px;line-height:1.55;color:#C0C8D4;}
+.rs-sub b{display:block;font-size:12px;text-transform:uppercase;letter-spacing:.6px;margin-bottom:3px;}
+.rs-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:12px;}
+.rs-card{background:var(--bg2);border:1px solid var(--bord);border-radius:8px;padding:14px 16px;}
+.rs-card h5{margin:0 0 6px;font-size:15.6px;color:var(--text);font-weight:700;}
+.rs-card p{margin:0;font-size:13.8px;line-height:1.55;color:#AEB8CC;}
+.rs-risk{background:var(--bg2);border:1px solid var(--bord);border-left:3px solid var(--yellow);border-radius:8px;padding:14px 16px;margin-bottom:10px;}
+.rs-risk h5{margin:0 0 8px;font-size:15.6px;color:var(--yellow);font-weight:700;}
+.rs-risk .rs-row{display:flex;gap:14px;flex-wrap:wrap;}
+.rs-risk .rs-row div{flex:1;min-width:240px;font-size:13.8px;line-height:1.55;color:#AEB8CC;}
+.rs-risk .rs-row b{display:block;font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:.6px;margin-bottom:3px;}
+.rs-next{background:var(--bg2);border:1px solid var(--bord);border-radius:8px;padding:14px 18px;}
+.rs-next li{font-size:14.4px;line-height:1.7;color:#C0C8D4;margin-bottom:3px;}
+.rs-next b{color:var(--text);}
+.rs-foot{font-size:13.2px;color:var(--muted);margin-top:16px;font-style:italic;}
+@media(max-width:700px){.rs-lead p{font-size:16.8px;}}
 .dp-nota{background:var(--bg2);border-left:3px solid var(--cyan);border-radius:6px;padding:10px 12px;margin-bottom:14px;font-size:13.2px;line-height:1.55;color:#C0C8D4;}
 .dp-sec{margin-bottom:12px;}
 .dp-sec-title{font-size:12px;font-weight:600;color:#8B949E;text-transform:uppercase;letter-spacing:.8px;margin-bottom:6px;padding-bottom:4px;border-bottom:1px solid #30363D;}
@@ -267,15 +288,22 @@ body{background:var(--bg);color:var(--text);font-family:var(--font);font-size:16
 </div>
 
 <div class="tabs">
-  <div class="tab active" onclick="showTab('projetos')">🗂 Projetos</div>
+  <div class="tab active" onclick="showTab('resumo')">⭐ Resumo</div>
+  <div class="tab" onclick="showTab('projetos')">🗂 Projetos</div>
   <div class="tab" onclick="showTab('evolucao')">📈 Evolução</div>
   <div class="tab" onclick="showTab('time')">👥 Time</div>
   <div class="tab" onclick="showTab('gantt')">📅 Gantt</div>
   <div class="tab" onclick="showTab('sdesk')">🎫 SDesk</div>
 </div>
 
+<!-- RESUMO EXECUTIVO -->
+<div class="panel active" id="panel-resumo">
+<div class="kpi-strip" id="resumo-kpis"></div>
+<div id="resumo-view" style="padding:0 24px 24px;"></div>
+</div>
+
 <!-- PROJETOS -->
-<div class="panel active" id="panel-projetos">
+<div class="panel" id="panel-projetos">
 <div class="kpi-strip">
   <div class="kpi ok"><div class="kpi-val" id="kpi-done">—</div><div class="kpi-label">Concluídos S21 · base A</div></div>
   <div class="kpi warn"><div class="kpi-val" id="kpi-taxa">—</div><div class="kpi-label">Taxa geral</div></div>
@@ -604,9 +632,42 @@ const PROJ_META={
   "LIFT":{name:"Ecossistema Lift",color:"#FF8C00",cat:"Conteúdo / Sites"},
   "NEWCON":{name:"Newcon",color:"#2EA043",cat:"Produtos"},
 };
+// ===================== RESUMO EXECUTIVO =====================
+// Narrativa do "Relatorio Executivo — Projetos e Sistemas · TI" da S21, versao
+// revisada pelo Tech Lead em 26/10/2026. Prosa — nao se recalcula do Jira;
+// reescrever a cada virada a partir do relatorio aprovado.
+const RESUMO={
+  frase:"A S21 tirou do papel a integração da base da ASBAC Brasília: avaliamos a sincronização automática com o sistema do fornecedor, devolvemos os ajustes necessários e já sabemos exatamente o que falta para ela funcionar de ponta a ponta.",
+  avancou:"A página dos 60 anos entrou no ar e a emissão de Certificados passou a ser feita pelas próprias áreas, sem depender da TI.",
+  atencao:"A integração só fecha quando o fornecedor criar a rota que atualiza cadastros. É condição, não há alternativa.",
+  destaques:[
+    {t:"Integração da base da ASBAC Brasília",d:"Primeiro caso de integração automática da base de uma regional: em vez de atualizar associados na mão, o nosso sistema passa a conversar direto com o da ASBAC Brasília. Endpoint avaliado e ajustes formalizados ao fornecedor."},
+    {t:"Certificados operados pelas áreas",d:"Repasse concluído entre 13 e 22/10, com guia, tutorial e gravação entregues e termo de entrega assinado (ENT-TI-05). Remove uma dependência da TI."},
+    {t:"Página dos 60 anos no ar",d:"Publicada em 20/10 em fenasbac.com.br/historia, com a trajetória, a galeria das regionais e os depoimentos em vídeo."},
+  ],
+  radar:[
+    {t:"Sites de Inovação Aberta travados em validação",
+     i:"Nexus, Leap e Sandbox estão desenvolvidos, com conteúdo pronto, enviados à Comunicação em 23/10. A área devolveu nova rodada de ajustes em 26/10.",
+     a:"Prazo replanejado para 28/10. A TI publica assim que houver o aceite."},
+    {t:"Página dos 60 anos: ajustes de conteúdo pendentes",
+     i:"A experiência ainda não é a final.",
+     a:"No backlog priorizado, aguardando a lista da Comunicação — nada recebido até aqui."},
+  ],
+  proxima:[
+    "<b>Integração da ASBAC Brasília</b> — destravar a rota de atualização com o fornecedor; carga e corte da base em data a definir.",
+    "<b>Fenasync</b> — retomar a unificação do SisFenasbac numa base única: rotas de unificação, reforço de segurança e migração da API.",
+    "<b>Ecossistema Lift</b> — iniciar o desenvolvimento do Lift Lab, Lift PAI e Lift Data.",
+    "<b>Sites de Inovação Aberta</b> — publicar Nexus, Leap e Sandbox assim que as áreas fecharem a validação.",
+    "<b>Cofre de senhas</b> — retomar a expansão para o Consórcio, adiada na sprint passada.",
+    "<b>QSentinel</b> — fechar escopo, indicadores e preparação dos dados da PoC.",
+    "<b>PE 2027</b> — sessão com o time em 05/11; conselho em 19/11.",
+  ],
+  sdesk:"Suporte quase todo reativo e resolvido rápido, a maioria no mesmo dia ou no dia seguinte. A camada de IA do Jira já sugere soluções durante o preenchimento e evita a abertura de parte dos chamados; os dados dessa triagem ainda estão sendo acumulados. A operação está estável e não é mais gargalo.",
+};
+
 const PROJ_NOTA={
   "QSENTINEL":"Prova de conceito de IA com governança, ainda em definição — por isso 0 entregas sem significar frente parada. O escopo fechado na S21 é o analista do programa de aceleração como curador: a ferramenta pré-processa e recomenda listas curtas, e o analista valida, corrige e devolve a correção para virar memória institucional. A régua de governança já classifica os dados em quatro níveis (público, interno, sensível e estratégico); critérios de avaliação, gravações de entrevista e julgamentos internos sobre empresas ficam fora e não saem para o fornecedor. Seguem em aberto, para validação do Sponsor: quem faz o segundo olhar que aprova o que vira memória, se o consentimento assinado cobre enviar dado a fornecedor externo de IA, e a revisão do gabarito de pontuação. Os 11 cards da S22 são a preparação dos dados e do middleware.",
-  "CONECTA":"A taxa não mede o avanço da frente: as 9 issues em aberto são a integração da base da ASBAC Brasília, que ficou pronta do lado da TI e depende do WBC criar a rota de atualização. A carga inicial tem corte em 01/11, data que cai no domingo, com feriado em 02/11.",
+  "CONECTA":"A taxa não mede o avanço da frente: as 9 issues em aberto são a integração da base da ASBAC Brasília, que ficou pronta do lado da TI e depende do fornecedor criar a rota que atualiza cadastros. A data de corte da carga inicial deixou de ser 01/11 e passa a ser definida quando a integração estiver pronta — os títulos dos cards CONECTA-114 e PROC-374 ainda citam 01/11 e precisam ser renomeados no Jira.",
   "PROC":"Frente de coordenação e governança: 29 issues, 14 delas as subtarefas da padronização de status e workflow dos boards (PROC-354), que seguem pendentes. O bloco concluído na sprint é a reversão das avaliações Premium da Atlassian e a formalização dos requisitos da API ao WBC.",
   "FENASIO":"Card único aberto na sprint — edição de dependentes no front do Clube F —, ligado à mesma frente de integração do Conecta.",
 };
@@ -656,7 +717,7 @@ function isProg(s){return s==='Em andamento'||s==='Fazendo'||s==='Aguardando Cli
 function dotColor(s){return STATUS_COLOR[s]||STATUS_COLOR.default;}
 
 function showTab(t){
-  ['projetos','evolucao','time','gantt','sdesk'].forEach((id,i)=>{
+  ['resumo','projetos','evolucao','time','gantt','sdesk'].forEach((id,i)=>{
     document.querySelectorAll('.tab')[i].classList.toggle('active',id===t);
     document.getElementById('panel-'+id).classList.toggle('active',id===t);
   });
@@ -1231,18 +1292,60 @@ function buildEvolucao(){
     +'<div class="evo-obs">'+leituraCargaProxima(sel,cur,SPRINTS)+'</div>';
 }
 
+function buildResumo(){
+  const host=document.getElementById('resumo-view');if(!host)return;
+  const done=ISSUES.filter(i=>isDone(i.status)).length;
+  const r=slaIndice(SDESK_ISSUES,'sla');
+  const kpis=[
+    {v:done+' de '+ISSUES.length,l:'Itens da sprint concluídos',c:'ok'},
+    {v:SDESK_ISSUES.length,l:'Chamados de suporte',c:''},
+    {v:(r?r.pct+'%':'—'),l:'SLA de resolução',c:r&&r.pct>=85?'ok':'warn'},
+    {v:RESUMO.radar.length,l:'Frentes no seu radar',c:'warn'},
+  ];
+  const ks=document.getElementById('resumo-kpis');
+  if(ks)ks.innerHTML=kpis.map(k=>'<div class="kpi '+k.c+'"><div class="kpi-val">'+k.v+'</div><div class="kpi-label">'+k.l+'</div></div>').join('');
+
+  host.innerHTML=
+    '<div class="rs-lead"><p>'+RESUMO.frase+'</p><div class="rs-sub">'
+      +'<div><b style="color:#2EA043">O que mais avançou</b>'+RESUMO.avancou+'</div>'
+      +'<div><b style="color:var(--yellow)">Ponto de atenção</b>'+RESUMO.atencao+'</div>'
+    +'</div></div>'
+
+    +'<div class="rs-sec"><div class="rs-h">Precisa do seu radar</div>'
+      +RESUMO.radar.map(x=>'<div class="rs-risk"><h5>'+x.t+'</h5><div class="rs-row">'
+        +'<div><b>Impacto</b>'+x.i+'</div><div><b>Decisão / ação</b>'+x.a+'</div></div></div>').join('')
+    +'</div>'
+
+    +'<div class="rs-sec"><div class="rs-h">O que andou nesta sprint</div><div class="rs-grid">'
+      +RESUMO.destaques.map(x=>'<div class="rs-card"><h5>'+x.t+'</h5><p>'+x.d+'</p></div>').join('')
+    +'</div></div>'
+
+    +'<div class="rs-sec"><div class="rs-h">O que entra na '+SPRINT_NOVA.id+' · '+SPRINT_NOVA.periodo+'</div>'
+      +'<div class="rs-next"><ul style="margin:0;padding-left:18px;">'
+      +RESUMO.proxima.map(x=>'<li>'+x+'</li>').join('')+'</ul></div></div>'
+
+    +'<div class="rs-sec"><div class="rs-h">Service Desk</div><div class="rs-card"><p>'+RESUMO.sdesk
+      +' Na S21 foram <b style="color:var(--text)">'+SDESK_ISSUES.length+' chamados</b>, com '
+      +(r?r.pct+'% das resoluções dentro do SLA':'—')+' e 100% das primeiras respostas.</p></div></div>'
+
+    +'<div class="rs-foot">Esta aba é o resumo. As abas ao lado abrem o detalhe: entregas por frente, evolução entre sprints, '
+      +'distribuição por pessoa, cronograma e os chamados um a um. Entregas contadas na base A — '
+      +'escopo do objeto Sprint; as demais contagens estão no quadro “De onde vem cada número”, na aba Projetos.</div>';
+}
+
 // Render do quadro de bases. Tudo sai de BASES — numero digitado no HTML foi o
 // que produziu a divergencia que este quadro existe para fechar.
 function buildBases(){
   const box=document.getElementById('bases-box');if(!box)return;
   const of=BASES.find(b=>b.id===BASE_OFICIAL);
-  box.innerHTML='<div style="background:var(--bg2);border:1px solid var(--bord);border-left:3px solid var(--cyan);border-radius:8px;padding:16px 18px;">'
-    +'<div style="font-size:15.6px;font-weight:600;color:var(--cyan);text-transform:uppercase;letter-spacing:.8px;">De onde vem cada número</div>'
-    +'<div style="font-size:14.4px;color:#C0C8D4;line-height:1.6;margin-top:8px;">'
+  box.innerHTML='<details style="background:var(--bg2);border:1px solid var(--bord);border-left:3px solid var(--cyan);border-radius:8px;padding:12px 18px;">'
+    +'<summary style="cursor:pointer;list-style:none;font-size:14.4px;color:#C0C8D4;line-height:1.6;">'
+    +'<span style="font-weight:600;color:var(--cyan);text-transform:uppercase;letter-spacing:.8px;font-size:13.2px;">De onde vem cada número</span><br>'
+    +'As entregas deste painel são contadas na <b style="color:var(--cyan)">base '+of.id+'</b> — <b>'+of.nome.toLowerCase()+'</b>. '
+    +'<span style="color:var(--muted);">Abrir para ver as 6 definições possíveis, o JQL de cada uma e por que o relatório executivo chega a outro número. ▾</span></summary>'
+    +'<div style="font-size:14.4px;color:#C0C8D4;line-height:1.6;margin-top:12px;">'
     +'"Entregas" tem mais de uma definição legítima, e é daí que vêm números diferentes para a mesma sprint. '
-    +'Este painel usa uma só, declarada abaixo como <b style="color:var(--cyan)">base '+of.id+'</b>: <b>'+of.nome.toLowerCase()+'</b>. '
-    +'As outras linhas são as demais leituras possíveis, cada uma com o JQL que a reproduz no Jira — '
-    +'dá para colar na busca e conferir item a item.</div>'
+    +'Cada linha abaixo é uma definição fechada, com o JQL que a reproduz no Jira — dá para colar na busca e conferir item a item.</div>'
     +'<div style="overflow-x:auto;margin-top:14px;"><table style="width:100%;border-collapse:collapse;font-size:13.2px;min-width:720px;">'
     +'<thead><tr style="color:var(--muted);text-align:left;">'
     +'<th style="padding:7px 10px;font-weight:600;border-bottom:1px solid var(--bord);">Base</th>'
@@ -1274,7 +1377,7 @@ function buildBases(){
     +'A diferença entre a <b>D</b> (25) e a <b>F</b> (18) é trabalho entregue na janela que não estava vinculado ao objeto Sprint — '
     +'na S21 foram 10 itens, em CERTI, CONECTA, ETI e TECH.</div>'
     +'<div style="font-size:12px;color:var(--muted);margin-top:8px;font-style:italic;">Apurado em 27/10/2026. Reler o Jira depois muda os números, porque card segue fechando.</div>'
-    +'</div>';
+    +'</details>';
 }
 
 // ===== KPIs derivados dos dados (nada de número fixo no HTML) =====
@@ -1523,6 +1626,7 @@ function buildGantt(){
 })();
 (function(){const e=document.getElementById('kpi-s20-count');if(e)e.textContent=ISSUES.filter(i=>!isDone(i.status)).length;})();
 (function(){
+  buildResumo();
   buildBases();
   const a=document.getElementById('desc-status');if(a)a.innerHTML=descricaoStatus();
   const b=document.getElementById('desc-taxa');if(b)b.innerHTML=descricaoProjetos();
