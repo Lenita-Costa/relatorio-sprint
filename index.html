@@ -682,7 +682,7 @@ const RESUMO={
 const PROJ_NOTA={
   "QSENTINEL":"Prova de conceito de IA com governança, ainda em definição — por isso 0 entregas sem significar frente parada. O escopo fechado na S21 é o analista do programa de aceleração como curador: a ferramenta pré-processa e recomenda listas curtas, e o analista valida, corrige e devolve a correção para virar memória institucional. A régua de governança já classifica os dados em quatro níveis (público, interno, sensível e estratégico); critérios de avaliação, gravações de entrevista e julgamentos internos sobre empresas ficam fora e não saem para o fornecedor. Seguem em aberto, para validação do Sponsor: quem faz o segundo olhar que aprova o que vira memória, se o consentimento assinado cobre enviar dado a fornecedor externo de IA, e a revisão do gabarito de pontuação. Os 11 cards da S22 são a preparação dos dados e do middleware.",
   "CONECTA":"A taxa não mede o avanço da frente: as 9 issues em aberto são a integração da base da ASBAC Brasília, que ficou pronta do lado da TI e depende do fornecedor criar a rota que atualiza cadastros. A data de corte da carga inicial deixou de ser 01/11 e passa a ser definida quando a integração estiver pronta — os títulos dos cards CONECTA-114 e PROC-374 ainda citam 01/11 e precisam ser renomeados no Jira.",
-  "PROC":"Frente de coordenação e governança: 29 issues, 14 delas as subtarefas da padronização de status e workflow dos boards (PROC-354), que seguem pendentes. O bloco concluído na sprint é a reversão das avaliações Premium da Atlassian e a formalização dos requisitos da API ao WBC.",
+  "PROC":"Frente de coordenação e governança: 29 issues, 14 delas as subtarefas da padronização de status e workflow dos boards (PROC-354), que seguem pendentes. O bloco concluído na sprint é a reversão das avaliações Premium da Atlassian e a formalização dos requisitos da API ao WBC. A reversão aparece como 7 linhas — a tarefa PROC-375 e as 6 subtarefas em que ela foi quebrada —, porque no Jira subtarefa é item próprio e a contagem da sprint conta item, não esforço.",
   "FENASIO":"Card único aberto na sprint — edição de dependentes no front do Clube F —, ligado à mesma frente de integração do Conecta.",
 };
 const PROJ_ORDER=["PROC","FSYNC","CONECTA","PORTAL","TECH","ANALYTICS","CVM","STRAPI","CERTI","ENG","FENASBR","QSENTINEL","FENASIO","LIFT","ETI","FENASHUB","SISFENAS","SRR","FIA","DOCS","GEP","SYNCOOP","FAUTH"];
@@ -1138,10 +1138,10 @@ const BASES=[
    s20:"36",s21:"18",
    jql:'… AND issuetype not in (Epic, subTaskIssueTypes())'},
 ];
-// O relatorio executivo da S21 publicou 51 e 20. Sao numeros conferidos a mao,
-// proximos de E e de F, e nao saem de um JQL unico — e exatamente essa a
-// divergencia a resolver. A partir da S22 os dois artefatos declaram a base.
-const BASE_RELATORIO={s20:"51",s21:"20"};
+// O relatorio executivo da S21 passou a usar a base A (decisao de 27/10/2026),
+// com a S20 recontada na mesma base para a comparacao nao misturar criterios.
+// Antes trazia 51 e 20, conferidos a mao e proximos de E e de F.
+const BASE_RELATORIO={s20:"69",s21:"25",alinhado:true};
 
 const SPRINT_HISTORY=[
   {id:"S15",periodo:"20/07–31/07",issues:61,done:52,projetos:12,sdesk:30,sdeskDone:22,sdeskEstouro:2,porProjeto:{"SISFENAS":[1,1],"FAUTH":[1,1],"CONECTA":[4,4],"GEP":[6,7],"PORTAL":[0,1],"PROC":[15,20],"ETI":[4,4],"FENASBR":[0,1],"SRR":[1,2],"SYNCOOP":[1,1],"STRAPI":[8,8],"TECH":[11,11]}},
@@ -1489,7 +1489,7 @@ function buildBases(){
     +'<summary style="cursor:pointer;list-style:none;font-size:14.4px;color:#C0C8D4;line-height:1.6;">'
     +'<span style="font-weight:600;color:var(--cyan);text-transform:uppercase;letter-spacing:.8px;font-size:13.2px;">De onde vem cada número</span><br>'
     +'As entregas deste painel são contadas na <b style="color:var(--cyan)">base '+of.id+'</b> — <b>'+of.nome.toLowerCase()+'</b>. '
-    +'<span style="color:var(--muted);">Abrir para ver as 6 definições possíveis, o JQL de cada uma e por que o relatório executivo chega a outro número. ▾</span></summary>'
+    +'<span style="color:var(--muted);">O relatório executivo usa a mesma base. Abrir para ver as 6 definições possíveis e o JQL que reproduz cada uma no Jira. ▾</span></summary>'
     +'<div style="font-size:14.4px;color:#C0C8D4;line-height:1.6;margin-top:12px;">'
     +'"Entregas" tem mais de uma definição legítima, e é daí que vêm números diferentes para a mesma sprint. '
     +'Cada linha abaixo é uma definição fechada, com o JQL que a reproduz no Jira — dá para colar na busca e conferir item a item.</div>'
@@ -1513,16 +1513,17 @@ function buildBases(){
         +'<td style="padding:9px 10px;border-bottom:1px solid var(--bord);text-align:right;font-family:var(--mono);color:var(--muted);white-space:nowrap;">'+b.s20+'</td>'
         +'<td style="padding:9px 10px;border-bottom:1px solid var(--bord);text-align:right;font-family:var(--mono);font-weight:700;color:'+(ofc?'var(--cyan)':'#C0C8D4')+';white-space:nowrap;">'+b.s21+'</td></tr>';
     }).join('')
-    +'<tr style="vertical-align:top;"><td style="padding:9px 10px;white-space:nowrap;color:#C0C8D4;">Relatório executivo</td>'
-    +'<td style="padding:9px 10px;color:#AEB8CC;line-height:1.5;">Itens concluídos na janela, sem épicos, conferidos à mão. Fica entre as bases E e F e não sai de um JQL único — é a divergência que este quadro existe para fechar. A partir da S22 o relatório declara a base que usa.</td>'
+    +'<tr style="vertical-align:top;background:rgba(2,255,255,.06);"><td style="padding:9px 10px;white-space:nowrap;color:var(--text);font-weight:700;">Relatório executivo</td>'
+    +'<td style="padding:9px 10px;color:#AEB8CC;line-height:1.5;">Desde a S21 usa a <b style="color:var(--cyan)">mesma base '+BASE_OFICIAL+'</b> deste painel, com a S20 recontada no mesmo critério para a comparação entre sprints não misturar réguas. Antes trazia 51 e 20, conferidos à mão — e era essa a origem dos números divergentes.</td>'
     +'<td style="padding:9px 10px;text-align:right;font-family:var(--mono);color:var(--muted);">'+BASE_RELATORIO.s20+'</td>'
-    +'<td style="padding:9px 10px;text-align:right;font-family:var(--mono);color:#C0C8D4;">'+BASE_RELATORIO.s21+'</td></tr>'
+    +'<td style="padding:9px 10px;text-align:right;font-family:var(--mono);font-weight:700;color:var(--cyan);">'+BASE_RELATORIO.s21+'</td></tr>'
     +'</tbody></table></div>'
     +'<div style="font-size:13.2px;color:#C0C8D4;line-height:1.6;margin-top:12px;border-left:2px solid var(--cyan);padding-left:10px;">'
     +'→ As bases não se contradizem: medem coisas diferentes. A <b>A</b> responde "quanto do que foi planejado para a sprint saiu"; '
     +'a <b>B</b> a <b>D</b> respondem "quanto o time entregou no período, olhando todos os boards"; a <b>E</b> e a <b>F</b> cruzam as duas. '
-    +'A diferença entre a <b>D</b> (25) e a <b>F</b> (18) é trabalho entregue na janela que não estava vinculado ao objeto Sprint — '
-    +'na S21 foram 10 itens, em CERTI, CONECTA, ETI e TECH.</div>'
+    +'A diferença entre a <b>D</b> (25) e a <b>F</b> (18) são os <b>7 itens</b> entregues na janela sem vínculo com o objeto Sprint: '
+    +'CERTI-14, CONECTA-80, CONECTA-83, ETI-11, ETI-14, ETI-15 e TECH-124. '
+    +'(Houve mais 3 entregas fora da sprint — CONECTA-14, -15 e -104 —, mas são subtarefas e nenhuma das duas bases conta subtarefa.)</div>'
     +'<div style="font-size:12px;color:var(--muted);margin-top:8px;font-style:italic;">Apurado em 27/10/2026. Reler o Jira depois muda os números, porque card segue fechando.</div>'
     +'</details>';
 }
