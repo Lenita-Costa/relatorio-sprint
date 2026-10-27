@@ -43,6 +43,10 @@ body{background:var(--bg);color:var(--text);font-family:var(--font);font-size:16
 .proj-card:hover{border-color:var(--blue);background:#1a2030;}
 .pchip{padding:2px 7px;border-radius:10px;font-size:13.2px;font-weight:600;cursor:pointer;border:1px solid transparent;transition:border-color .12s,filter .12s;}
 .pchip:hover{border-color:currentColor;filter:brightness(1.25);}
+.kpi.kclick{cursor:pointer;transition:border-color .15s,background .15s;}
+.kpi.kclick:hover{border-color:var(--cyan);background:#1a2030;}
+.kpi-hint{font-size:11.5px;color:var(--muted);margin-top:4px;opacity:.75;}
+.kpi.kclick:hover .kpi-hint{color:var(--cyan);opacity:1;}
 .dp-filt{display:flex;gap:5px;flex-wrap:wrap;margin-bottom:12px;}
 .dp-fbtn{background:#21262D;border:1px solid #30363D;color:#8B949E;border-radius:13px;padding:3px 11px;font-size:12.6px;cursor:pointer;font-family:inherit;}
 .dp-fbtn:hover{color:#E6EDF3;border-color:#484F58;}
@@ -1026,30 +1030,46 @@ function buildSdesk(){
 
 // DETAIL PANEL
 function openPanel(proj,foco){
-  const panel=document.getElementById('detail-panel');if(!panel)return;
   const st=projStats[proj];if(!st)return;
   const meta=PROJ_META[proj]||{name:proj,color:'#8B949E'};
-  const done=st.issues.filter(i=>isDone(i.status));
-  const prog=st.issues.filter(i=>!isDone(i.status)&&isProg(i.status));
-  const pend=st.issues.filter(i=>!isDone(i.status)&&!isProg(i.status));
+  abrirPainel({titulo:proj+' — '+(meta.name||''),cor:meta.color||'#02FFFF',
+    sub:st.total+' issues',nota:PROJ_NOTA[proj]||'',issues:st.issues,foco:foco,
+    porFrente:false});
+}
+// a sprint inteira no mesmo painel: e o que os numeros do Resumo abrem
+function openPanelSprint(foco){
+  abrirPainel({titulo:'Sprint '+SPRINT_ATUAL.id,cor:'#02FFFF',
+    sub:ISSUES.length+' issues no escopo da sprint · '+SPRINT_ATUAL.periodo,
+    nota:'Todo o escopo da '+SPRINT_ATUAL.id+', somando as '+new Set(ISSUES.map(i=>i.project)).size
+      +' frentes. Cada linha traz a frente à esquerda. Para ver uma frente isolada, clique no cartão dela na aba Projetos.',
+    issues:ISSUES,foco:foco,porFrente:true});
+}
+function abrirPainel(o){
+  const panel=document.getElementById('detail-panel');if(!panel)return;
+  const done=o.issues.filter(i=>isDone(i.status));
+  const prog=o.issues.filter(i=>!isDone(i.status)&&isProg(i.status));
+  const pend=o.issues.filter(i=>!isDone(i.status)&&!isProg(i.status));
   const open=prog.concat(pend);
-  document.getElementById('dp-proj-name').textContent=proj+' — '+(meta.name||'');
-  document.getElementById('dp-proj-name').style.color=meta.color||'#02FFFF';
-  document.getElementById('dp-proj-sub').textContent=st.total+' issues';
+  const st={issues:o.issues,total:o.issues.length};
+  const foco=o.foco;
+  document.getElementById('dp-proj-name').textContent=o.titulo;
+  document.getElementById('dp-proj-name').style.color=o.cor;
+  document.getElementById('dp-proj-sub').textContent=o.sub;
   const nota=document.getElementById('dp-proj-nota');
-  if(nota){nota.innerHTML=PROJ_NOTA[proj]||'';nota.style.display=PROJ_NOTA[proj]?'block':'none';}
+  if(nota){nota.innerHTML=o.nota||'';nota.style.display=o.nota?'block':'none';}
   document.getElementById('dp-kpis').innerHTML=`
     <div class="dp-kpi"><div class="dp-kpi-val" style="color:#2EA043">${done.length}</div><div class="dp-kpi-label">Concluídos</div></div>
     <div class="dp-kpi"><div class="dp-kpi-val" style="color:#484F58">${open.length}</div><div class="dp-kpi-label">Carry-over</div></div>`;
 
   // filtro: 'all' | 'done' | 'prog' | 'pend'
   const grupos=[['all','Todos',st.issues.length],['done','Concluídos',done.length],
+                ['open','Carry-over',open.length],
                 ['prog','Em andamento',prog.length],['pend','Atravessam',pend.length]];
   const ft=document.getElementById('dp-filt');
   function aplica(f){
     rl('dp-done-list','dp-done-sec',(f==='all'||f==='done')?done:[]);
-    rl('dp-prog-list','dp-prog-sec',(f==='all'||f==='prog')?prog:[]);
-    rl('dp-pend-list','dp-pend-sec',(f==='all'||f==='pend')?pend:[]);
+    rl('dp-prog-list','dp-prog-sec',(f==='all'||f==='prog'||f==='open')?prog:[]);
+    rl('dp-pend-list','dp-pend-sec',(f==='all'||f==='pend'||f==='open')?pend:[]);
     if(ft)ft.querySelectorAll('.dp-fbtn').forEach(b=>b.classList.toggle('on',b.dataset.f===f));
   }
   if(ft){
@@ -1061,7 +1081,10 @@ function openPanel(proj,foco){
     const sec=document.getElementById(sid);const el=document.getElementById(cid);if(!sec||!el)return;
     if(!list.length){sec.style.display='none';el.innerHTML='';return;}
     sec.style.display='block';
-    el.innerHTML=list.map(i=>`<div class="dp-issue"><div class="dp-dot" style="background:${dotColor(i.status)}"></div><div class="dp-key">${i.key}</div><div class="dp-sum">${i.summary}</div></div>`).join('');
+    el.innerHTML=list.map(i=>{
+      const pf=o.porFrente?`<span style="color:${(PROJ_META[i.project]||{}).color||'#8B949E'};font-weight:600;">${i.project}</span> `:'';
+      return `<div class="dp-issue"><div class="dp-dot" style="background:${dotColor(i.status)}"></div><div class="dp-key">${i.key}</div><div class="dp-sum">${pf}${i.summary}</div></div>`;
+    }).join('');
   }
   aplica(foco&&grupos.some(g=>g[0]===foco&&g[2])?foco:'all');
   panel.classList.add('open');
@@ -1410,14 +1433,24 @@ function buildResumo(){
   const host=document.getElementById('resumo-view');if(!host)return;
   const done=ISSUES.filter(i=>isDone(i.status)).length;
   const r=slaIndice(SDESK_ISSUES,'sla');
+  const carry=ISSUES.length-done;
   const kpis=[
-    {v:done+' de '+ISSUES.length,l:'Itens da sprint concluídos',c:'ok'},
-    {v:SDESK_ISSUES.length,l:'Chamados de suporte',c:''},
-    {v:(r?r.pct+'%':'—'),l:'SLA de resolução',c:r&&r.pct>=85?'ok':'warn'},
-    {v:RESUMO.radar.length,l:'Frentes no seu radar',c:'warn'},
+    {v:done+' de '+ISSUES.length,l:'Itens da sprint concluídos',c:'ok',
+     h:'ver a lista',go:()=>openPanelSprint('done')},
+    {v:carry,l:'Atravessam para a '+SPRINT_NOVA.id,c:'warn',
+     h:'ver o que ficou',go:()=>openPanelSprint('open')},
+    {v:SDESK_ISSUES.length,l:'Chamados de suporte',c:'',
+     h:'abrir o Service Desk',go:()=>showTab('sdesk')},
+    {v:RESUMO.radar.length,l:'Frentes no seu radar',c:'warn',
+     h:'ir para os pontos de atenção',go:()=>{const e=document.getElementById('rs-radar');if(e)e.scrollIntoView({behavior:'smooth',block:'center'});}},
   ];
   const ks=document.getElementById('resumo-kpis');
-  if(ks)ks.innerHTML=kpis.map(k=>'<div class="kpi '+k.c+'"><div class="kpi-val">'+k.v+'</div><div class="kpi-label">'+k.l+'</div></div>').join('');
+  if(ks){
+    ks.innerHTML=kpis.map((k,i)=>'<div class="kpi kclick '+k.c+'" data-i="'+i+'" title="'+k.h+'">'
+      +'<div class="kpi-val">'+k.v+'</div><div class="kpi-label">'+k.l+'</div>'
+      +'<div class="kpi-hint">'+k.h+' →</div></div>').join('');
+    ks.querySelectorAll('.kclick').forEach(el=>el.onclick=()=>kpis[el.dataset.i].go());
+  }
 
   host.innerHTML=
     '<div class="rs-lead"><p>'+RESUMO.frase+'</p><div class="rs-sub">'
@@ -1425,7 +1458,7 @@ function buildResumo(){
       +'<div><b style="color:var(--yellow)">Ponto de atenção</b>'+RESUMO.atencao+'</div>'
     +'</div></div>'
 
-    +'<div class="rs-sec"><div class="rs-h">Precisa do seu radar</div>'
+    +'<div class="rs-sec" id="rs-radar"><div class="rs-h">Precisa do seu radar</div>'
       +RESUMO.radar.map(x=>'<div class="rs-risk"><h5>'+x.t+'</h5><div class="rs-row">'
         +'<div><b>Impacto</b>'+x.i+'</div><div><b>Decisão / ação</b>'+x.a+'</div></div></div>').join('')
     +'</div>'
@@ -1727,6 +1760,13 @@ function buildGantt(){
   el('kpi-taxa',pct+'%');
   el('kpi-carry',nCarry);
   el('kpi-projs',nProjs);
+  // mesmos cliques da aba Resumo, para o numero nao mudar de comportamento
+  [['kpi-done','done','ver a lista'],['kpi-carry','open','ver o que ficou']].forEach(([id,f,hint])=>{
+    const c=document.getElementById(id);if(!c||!c.closest('.kpi'))return;
+    const box=c.closest('.kpi');box.classList.add('kclick');box.title=hint;
+    box.insertAdjacentHTML('beforeend','<div class="kpi-hint">'+hint+' →</div>');
+    box.onclick=()=>openPanelSprint(f);
+  });
   // colorir taxa
   const kt=document.getElementById('kpi-taxa');
   if(kt)kt.closest('.kpi').className='kpi '+(pct>=80?'ok':pct>=50?'warn':'danger');
