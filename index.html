@@ -41,6 +41,12 @@ body{background:var(--bg);color:var(--text);font-family:var(--font);font-size:16
 .proj-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:10px;}
 .proj-card{background:var(--bg2);border:1px solid var(--bord);border-radius:8px;padding:12px;cursor:pointer;transition:border-color .15s,background .15s;position:relative;overflow:hidden;}
 .proj-card:hover{border-color:var(--blue);background:#1a2030;}
+.pchip{padding:2px 7px;border-radius:10px;font-size:13.2px;font-weight:600;cursor:pointer;border:1px solid transparent;transition:border-color .12s,filter .12s;}
+.pchip:hover{border-color:currentColor;filter:brightness(1.25);}
+.dp-filt{display:flex;gap:5px;flex-wrap:wrap;margin-bottom:12px;}
+.dp-fbtn{background:#21262D;border:1px solid #30363D;color:#8B949E;border-radius:13px;padding:3px 11px;font-size:12.6px;cursor:pointer;font-family:inherit;}
+.dp-fbtn:hover{color:#E6EDF3;border-color:#484F58;}
+.dp-fbtn.on{background:rgba(2,255,255,.12);border-color:var(--cyan);color:var(--cyan);font-weight:600;}
 .proj-key{font-size:13.2px;font-weight:700;letter-spacing:.5px;}
 .proj-name{font-size:14.4px;color:var(--muted);margin-top:1px;margin-bottom:8px;}
 .no-issues{font-size:13.2px;color:var(--gray);font-style:italic;}
@@ -391,21 +397,22 @@ body{background:var(--bg);color:var(--text);font-family:var(--font);font-size:16
 
 <!-- SDESK -->
 <div class="panel" id="panel-sdesk">
-<div class="kpi-strip">
-  <div class="kpi"><div class="kpi-val" id="sd-total">—</div><div class="kpi-label">Chamados</div></div>
-  <div class="kpi warn"><div class="kpi-val" id="sd-sla-res">—</div><div class="kpi-label">SLA Resolução</div></div>
-  <div class="kpi ok"><div class="kpi-val" id="sd-sla-1a">—</div><div class="kpi-label">SLA 1ª Resposta</div></div>
-  <div class="kpi"><div class="kpi-val" id="sd-noprazo">—</div><div class="kpi-label">Dentro do prazo</div></div>
-  <div class="kpi warn"><div class="kpi-val" id="sd-estouro">—</div><div class="kpi-label">Estouraram</div></div>
-  <div class="kpi"><div class="kpi-val" id="sd-pend">—</div><div class="kpi-label">Pendentes</div></div>
-</div>
-
-<div id="sdesk-trilhas" style="padding:0 24px 4px;">
-  <div style="font-size:15.6px;font-weight:600;color:var(--cyan);text-transform:uppercase;letter-spacing:.8px;margin-bottom:10px;">SLA por trilha — cumprimento real (lido do JSM, horário comercial)</div>
-  <div id="sdesk-trilha-cards" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:10px;"></div>
+<div class="kpi-strip" id="sd-kpis"></div>
+<div id="sdesk-topo" style="padding:0 24px 16px;"></div>
+<div id="sdesk-cortes" style="padding:0 24px 16px;"></div>
+<div id="sdesk-trilhas" style="padding:0 24px 16px;">
+  <div style="font-size:15.6px;font-weight:600;color:var(--cyan);text-transform:uppercase;letter-spacing:.8px;margin-bottom:10px;">Cumprimento de SLA por tipo de chamado</div>
+  <div id="sdesk-trilha-cards" style="display:flex;flex-direction:column;gap:7px;"></div>
   <div id="sdesk-trilha-total" style="font-size:13.2px;color:var(--muted);margin-top:10px;font-style:italic;"></div>
 </div>
-<div id="sdesk-areas" style="padding:0 24px 24px;display:flex;flex-direction:column;gap:14px;"></div>
+<div style="padding:0 24px 24px;">
+  <details style="background:var(--bg2);border:1px solid var(--bord);border-radius:8px;padding:12px 18px;">
+    <summary style="cursor:pointer;list-style:none;font-size:13.8px;color:#C0C8D4;">
+      <span style="font-weight:600;color:var(--cyan);text-transform:uppercase;letter-spacing:.8px;font-size:13.2px;">Os chamados um a um</span>
+      <span style="color:var(--muted);"> — abrir a lista completa por área ▾</span></summary>
+    <div id="sdesk-areas" style="display:flex;flex-direction:column;gap:14px;margin-top:14px;"></div>
+  </details>
+</div>
 </div>
 
 <!-- DETAIL PANEL -->
@@ -420,8 +427,10 @@ body{background:var(--bg);color:var(--text);font-family:var(--font);font-size:16
   <div class="dp-body">
     <div class="dp-kpis" id="dp-kpis"></div>
     <div class="dp-nota" id="dp-proj-nota" style="display:none;"></div>
+    <div class="dp-filt" id="dp-filt"></div>
     <div class="dp-sec" id="dp-done-sec"><div class="dp-sec-title">✅ Concluídos</div><div id="dp-done-list"></div></div>
-    <div class="dp-sec" id="dp-open-sec"><div class="dp-sec-title">⏳ Carry-over / Em andamento</div><div id="dp-open-list"></div></div>
+    <div class="dp-sec" id="dp-prog-sec"><div class="dp-sec-title">↻ Em andamento</div><div id="dp-prog-list"></div></div>
+    <div class="dp-sec" id="dp-pend-sec"><div class="dp-sec-title">⏸ Atravessam para a próxima sprint</div><div id="dp-pend-list"></div></div>
   </div>
 </div>
 
@@ -662,6 +671,7 @@ const RESUMO={
     "<b>QSentinel</b> — fechar escopo, indicadores e preparação dos dados da PoC.",
     "<b>PE 2027</b> — sessão com o time em 05/11; conselho em 19/11.",
   ],
+  contexto:"Na S21 o time priorizou a integração da ASBAC Brasília — um projeto grande, ainda em andamento — e adiou de propósito a unificação da base (Fenasync), que retoma na S22. Menos itens, porém maiores.",
   sdesk:"Suporte quase todo reativo e resolvido rápido, a maioria no mesmo dia ou no dia seguinte. A camada de IA do Jira já sugere soluções durante o preenchimento e evita a abertura de parte dos chamados; os dados dessa triagem ainda estão sendo acumulados. A operação está estável e não é mais gargalo.",
 };
 
@@ -679,26 +689,26 @@ const CATS=["Operacional / Interno","Produtos","Conteúdo / Sites"];
 // 'no prazo' | 'estouro' (meta vencida, concluido ou nao) | 'em curso'.
 // trilha = request type do JSM. Alimenta todos os KPIs de SLA do painel SDesk.
 const SDESK_ISSUES=[
-  {key:"SDESK-366",status:"Concluído",area:"Comunicação / Sites",trilha:"Solicitação de TI",sla:"estouro",sla1a:"no prazo",summary:"Datas de publicação - Blog"},
-  {key:"SDESK-367",status:"Concluído",area:"Clube F / Conecta",trilha:"Solicitação de TI",sla:"estouro",sla1a:"no prazo",summary:"Erros - Cadastros Clube F"},
-  {key:"SDESK-368",status:"Concluído",area:"TI Interno / Infra",trilha:"Solicitação de TI",sla:"no prazo",sla1a:"no prazo",summary:"Todas as impressões que estou mandando estão ficando pendente"},
-  {key:"SDESK-369",status:"Concluído",area:"Comunicação / Sites",trilha:"Solicitação de TI",sla:"no prazo",sla1a:"no prazo",summary:"Comunicado de reajuste ano 2026"},
-  {key:"SDESK-370",status:"Concluído",area:"SISFenasbac",trilha:"Solicitação de TI",sla:"no prazo",sla1a:"no prazo",summary:"Novas ocorrências no arquivo enviado à seguradora no dia 9/10"},
-  {key:"SDESK-371",status:"Em andamento",area:"SISFenasbac",trilha:"Solicitação de TI",sla:"estouro",sla1a:"no prazo",summary:"Código de verificação - SISfenasbac"},
-  {key:"SDESK-372",status:"Concluído",area:"Comunicação / Sites",trilha:"Solicitação de TI",sla:"no prazo",sla1a:"no prazo",summary:"Libera Cadastro - Site FENASBAC"},
-  {key:"SDESK-373",status:"Concluído",area:"TI Interno / Infra",trilha:"Solicitação de TI",sla:"no prazo",sla1a:"no prazo",summary:"Apoio devido reuniões Fenasbac com as Asbacs"},
-  {key:"SDESK-374",status:"Concluído",area:"TI Interno / Infra",trilha:"Solicitação de TI",sla:"no prazo",sla1a:"no prazo",summary:"Apoio Técnico Notebook Dell"},
-  {key:"SDESK-375",status:"Concluído",area:"Comunicação / Sites",trilha:"Solicitação de TI",sla:"no prazo",sla1a:"no prazo",summary:"Banner - Site"},
-  {key:"SDESK-376",status:"Concluído",area:"TI Interno / Infra",trilha:"Solicitação de TI",sla:"estouro",sla1a:"no prazo",summary:"Troca de teclado e mouse"},
-  {key:"SDESK-377",status:"Concluída",area:"Comunicação / Sites",trilha:"Reportar incidente",sla:"no prazo",sla1a:"no prazo",summary:"Problemas com área de homologação Site"},
-  {key:"SDESK-378",status:"Concluído",area:"TI Interno / Infra",trilha:"Solicitação de TI",sla:"no prazo",sla1a:"no prazo",summary:"Liberar acesso"},
-  {key:"SDESK-379",status:"Concluída",area:"TI Interno / Infra",trilha:"Reportar incidente",sla:"no prazo",sla1a:"no prazo",summary:"Senha Scanner"},
-  {key:"SDESK-380",status:"Pendente",area:"Marketing",trilha:"Solicitação – Comunicação Digital",sla:"em curso",sla1a:"no prazo",summary:"Lista de leads limpos de contatos: Asbacs + Fenasbac"},
-  {key:"SDESK-381",status:"Concluído",area:"TI Interno / Infra",trilha:"Solicitação de TI",sla:"no prazo",sla1a:"no prazo",summary:"Adicionar contato no Slack"},
-  {key:"SDESK-382",status:"Concluída",area:"Comunicação / Sites",trilha:"Reportar incidente",sla:"no prazo",sla1a:"no prazo",summary:"Strapi não atualizando conteúdo em EN e ES"},
-  {key:"SDESK-383",status:"Concluído",area:"Certificados",trilha:"Solicitação de TI",sla:"no prazo",sla1a:"no prazo",summary:"Substituição de e-mail de usuário na DB para emissão de certificado"},
-  {key:"SDESK-384",status:"Pendente",area:"SISFenasbac",trilha:"Reportar incidente",sla:"em curso",sla1a:"no prazo",summary:"Problema ao redefinir senha"},
-  {key:"SDESK-385",status:"Concluído",area:"TI Interno / Infra",trilha:"Solicitação de TI",sla:"no prazo",sla1a:"no prazo",summary:"Solicitação de webcam para notebook"},
+  {key:"SDESK-366",status:"Concluído",area:"Comunicação / Sites",trilha:"Solicitação de TI",sla:"estouro",sla1a:"no prazo",summary:"Datas de publicação - Blog",aberto:"2026-10-13",resolvido:"2026-10-21"},
+  {key:"SDESK-367",status:"Concluído",area:"Clube F / Conecta",trilha:"Solicitação de TI",sla:"estouro",sla1a:"no prazo",summary:"Erros - Cadastros Clube F",aberto:"2026-10-13",resolvido:"2026-10-20"},
+  {key:"SDESK-368",status:"Concluído",area:"TI Interno / Infra",trilha:"Solicitação de TI",sla:"no prazo",sla1a:"no prazo",summary:"Todas as impressões que estou mandando estão ficando pendente",aberto:"2026-10-13",resolvido:"2026-10-13"},
+  {key:"SDESK-369",status:"Concluído",area:"Comunicação / Sites",trilha:"Solicitação de TI",sla:"no prazo",sla1a:"no prazo",summary:"Comunicado de reajuste ano 2026",aberto:"2026-10-13",resolvido:"2026-10-14"},
+  {key:"SDESK-370",status:"Concluído",area:"SISFenasbac",trilha:"Solicitação de TI",sla:"no prazo",sla1a:"no prazo",summary:"Novas ocorrências no arquivo enviado à seguradora no dia 9/10",aberto:"2026-10-14",resolvido:"2026-10-15"},
+  {key:"SDESK-371",status:"Em andamento",area:"SISFenasbac",trilha:"Solicitação de TI",sla:"estouro",sla1a:"no prazo",summary:"Código de verificação - SISfenasbac",aberto:"2026-10-15",resolvido:""},
+  {key:"SDESK-372",status:"Concluído",area:"Comunicação / Sites",trilha:"Solicitação de TI",sla:"no prazo",sla1a:"no prazo",summary:"Libera Cadastro - Site FENASBAC",aberto:"2026-10-15",resolvido:"2026-10-15"},
+  {key:"SDESK-373",status:"Concluído",area:"TI Interno / Infra",trilha:"Solicitação de TI",sla:"no prazo",sla1a:"no prazo",summary:"Apoio devido reuniões Fenasbac com as Asbacs",aberto:"2026-10-15",resolvido:"2026-10-19"},
+  {key:"SDESK-374",status:"Concluído",area:"TI Interno / Infra",trilha:"Solicitação de TI",sla:"no prazo",sla1a:"no prazo",summary:"Apoio Técnico Notebook Dell",aberto:"2026-10-16",resolvido:"2026-10-26"},
+  {key:"SDESK-375",status:"Concluído",area:"Comunicação / Sites",trilha:"Solicitação de TI",sla:"no prazo",sla1a:"no prazo",summary:"Banner - Site",aberto:"2026-10-16",resolvido:"2026-10-19"},
+  {key:"SDESK-376",status:"Concluído",area:"TI Interno / Infra",trilha:"Solicitação de TI",sla:"estouro",sla1a:"no prazo",summary:"Troca de teclado e mouse",aberto:"2026-10-20",resolvido:"2026-10-23"},
+  {key:"SDESK-377",status:"Concluída",area:"Comunicação / Sites",trilha:"Reportar incidente",sla:"no prazo",sla1a:"no prazo",summary:"Problemas com área de homologação Site",aberto:"2026-10-20",resolvido:"2026-10-20"},
+  {key:"SDESK-378",status:"Concluído",area:"TI Interno / Infra",trilha:"Solicitação de TI",sla:"no prazo",sla1a:"no prazo",summary:"Liberar acesso",aberto:"2026-10-21",resolvido:"2026-10-21"},
+  {key:"SDESK-379",status:"Concluída",area:"TI Interno / Infra",trilha:"Reportar incidente",sla:"no prazo",sla1a:"no prazo",summary:"Senha Scanner",aberto:"2026-10-21",resolvido:"2026-10-21"},
+  {key:"SDESK-380",status:"Pendente",area:"Marketing",trilha:"Solicitação – Comunicação Digital",sla:"em curso",sla1a:"no prazo",summary:"Lista de leads limpos de contatos: Asbacs + Fenasbac",aberto:"2026-10-21",resolvido:""},
+  {key:"SDESK-381",status:"Concluído",area:"TI Interno / Infra",trilha:"Solicitação de TI",sla:"no prazo",sla1a:"no prazo",summary:"Adicionar contato no Slack",aberto:"2026-10-22",resolvido:"2026-10-26"},
+  {key:"SDESK-382",status:"Concluída",area:"Comunicação / Sites",trilha:"Reportar incidente",sla:"no prazo",sla1a:"no prazo",summary:"Strapi não atualizando conteúdo em EN e ES",aberto:"2026-10-22",resolvido:"2026-10-22"},
+  {key:"SDESK-383",status:"Concluído",area:"Certificados",trilha:"Solicitação de TI",sla:"no prazo",sla1a:"no prazo",summary:"Substituição de e-mail de usuário na DB para emissão de certificado",aberto:"2026-10-22",resolvido:"2026-10-26"},
+  {key:"SDESK-384",status:"Pendente",area:"SISFenasbac",trilha:"Reportar incidente",sla:"em curso",sla1a:"no prazo",summary:"Problema ao redefinir senha",aberto:"2026-10-22",resolvido:""},
+  {key:"SDESK-385",status:"Concluído",area:"TI Interno / Infra",trilha:"Solicitação de TI",sla:"no prazo",sla1a:"no prazo",summary:"Solicitação de webcam para notebook",aberto:"2026-10-26",resolvido:"2026-10-26"},
 ];
 
 // metas da regua global do JSM (goalDuration de customfield_10577/10610)
@@ -754,12 +764,16 @@ function buildProjects(){
         <div class="proj-key" style="color:${meta.color}">${key}</div>
         <div class="proj-name">${meta.name}</div>
         <div style="display:flex;flex-wrap:wrap;gap:4px;margin-top:8px;">
-          ${st.done?`<span style="background:rgba(46,160,67,.15);padding:2px 7px;border-radius:10px;font-size:13.2px;font-weight:600;color:#2EA043;">${st.done} ✓</span>`:''}
-          ${st.prog?`<span style="background:rgba(2,37,235,.15);padding:2px 7px;border-radius:10px;font-size:13.2px;font-weight:600;color:#6699FF;">${st.prog} ↻</span>`:''}
-          ${st.pend?`<span style="background:rgba(72,72,88,.25);padding:2px 7px;border-radius:10px;font-size:13.2px;font-weight:600;color:#8B949E;">${st.pend} ⏸</span>`:''}
+          ${st.done?`<span class="pchip" data-f="done" title="Ver os ${st.done} concluídos" style="background:rgba(46,160,67,.15);color:#2EA043;">${st.done} ✓</span>`:''}
+          ${st.prog?`<span class="pchip" data-f="prog" title="Ver os ${st.prog} em andamento" style="background:rgba(2,37,235,.15);color:#6699FF;">${st.prog} ↻</span>`:''}
+          ${st.pend?`<span class="pchip" data-f="pend" title="Ver os ${st.pend} que atravessam para a ${SPRINT_NOVA.id}" style="background:rgba(72,72,88,.25);color:#8B949E;">${st.pend} ⏸</span>`:''}
         </div>
         <div style="font-size:12px;color:#484F58;margin-top:4px;">${st.total} issues · ${taxa}%</div>`;
+      // o cartao inteiro abre tudo; cada numero abre so o seu grupo
       card.onclick=()=>openPanel(key);
+      card.querySelectorAll('.pchip').forEach(ch=>{
+        ch.onclick=e=>{e.stopPropagation();openPanel(key,ch.dataset.f);};
+      });
       grid.appendChild(card);
     });
     grp.appendChild(grid);view.appendChild(grp);
@@ -838,14 +852,16 @@ function buildTrilhas(){
       .concat(r&&r.es?[r.es+(r.es>1?' estouros':' estouro')]:[])
       .concat(ec?[ec+' em curso']:[])
       .concat(p?['1ª resposta '+p.pct+'%']:[]).join(' · ');
-    return '<div style="background:var(--bg2);border:1px solid var(--bord);border-left:3px solid '+cor+';border-radius:8px;padding:12px 14px;">'
-      +'<div style="font-size:15.6px;font-weight:700;color:var(--text);">'+t
+    // uma linha por tipo: nome, barra, indice e o detalhe. A prosa de cada
+    // trilha vira o title — informacao de apoio, nao bloco de leitura.
+    return '<div title="'+(TRILHA_NOTA[t]||'').replace(/"/g,'&quot;')+'" style="background:var(--bg2);border:1px solid var(--bord);border-left:3px solid '+cor+';border-radius:6px;padding:9px 13px;display:flex;align-items:center;gap:12px;flex-wrap:wrap;">'
+      +'<div style="font-size:14.4px;font-weight:700;color:var(--text);min-width:180px;flex:1;">'+t
       +' <span style="font-size:12px;color:var(--muted);font-weight:400;">meta '+(TRILHA_META[t]||'—')+'</span></div>'
-      +'<div style="font-size:27.6px;font-weight:700;font-family:var(--mono);color:'+cor+';margin-top:4px;">'
-      +(r?r.pct+'%':'—')+'<span style="font-size:14.4px;color:var(--muted);font-family:var(--font);font-weight:400;"> '
-      +(r?'resolução no prazo':'sem chamado com veredito')+'</span></div>'
-      +'<div style="font-size:13.2px;color:var(--muted);margin-top:3px;">'+detalhe+'</div>'
-      +(TRILHA_NOTA[t]?'<div style="font-size:13.2px;color:#C0C8D4;margin-top:6px;line-height:1.4;">'+TRILHA_NOTA[t]+'</div>':'')
+      +'<div style="width:90px;height:6px;background:var(--bg3);border-radius:3px;overflow:hidden;flex-shrink:0;">'
+      +'<div style="height:100%;width:'+(r?r.pct:0)+'%;background:'+cor+';border-radius:3px;"></div></div>'
+      +'<div style="font-family:var(--mono);font-weight:700;font-size:18px;color:'+cor+';width:52px;text-align:right;flex-shrink:0;">'
+      +(r?r.pct+'%':'—')+'</div>'
+      +'<div style="font-size:12.6px;color:var(--muted);min-width:230px;flex:1;text-align:right;">'+detalhe+'</div>'
       +'</div>';
   }).join('');
 
@@ -859,8 +875,78 @@ function buildTrilhas(){
   }
 }
 
-// SDESK
+// SDESK — a aba responde, nesta ordem: o suporte e gargalo? de onde vem a
+// demanda? que tipo de demanda e? quanto tempo leva? Os chamados um a um ficam
+// recolhidos no fim, para consulta.
+function diasAte(i){
+  if(!i.resolvido)return null;
+  return Math.round((pd(i.resolvido)-pd(i.aberto))/86400000);
+}
+function buildSdeskTopo(){
+  const n=SDESK_ISSUES.length;
+  const r=slaIndice(SDESK_ISSUES,'sla'), p=slaIndice(SDESK_ISSUES,'sla1a');
+  const abertos=SDESK_ISSUES.filter(i=>!isDone(i.status));
+  const res=SDESK_ISSUES.map(diasAte).filter(d=>d!==null).sort((a,b)=>a-b);
+  const mediana=res.length?res[Math.floor(res.length/2)]:null;
+  const ateUmDia=res.filter(d=>d<=1).length;
+  const prev=SPRINT_HISTORY[SPRINT_HISTORY.length-1];
+  const dVol=n-(prev?prev.sdesk:n);
+
+  const ks=document.getElementById('sd-kpis');
+  if(ks)ks.innerHTML=[
+    {v:n,l:'Chamados recebidos',s:(dVol===0?'estável vs '+prev.id:(dVol>0?'+':'')+dVol+' vs '+prev.id),c:''},
+    {v:Math.round(ateUmDia/res.length*100)+'%',l:'Resolvidos em até 1 dia',s:ateUmDia+' de '+res.length+' · mediana '+mediana+'d',c:'ok'},
+    {v:(r?r.pct+'%':'—'),l:'Dentro do SLA',s:r.np+' no prazo · '+r.es+' estouro'+(r.es>1?'s':''),c:r.pct>=85?'ok':'warn'},
+    {v:abertos.length,l:'Ainda em aberto',s:'de '+n+' recebidos',c:abertos.length?'warn':'ok'},
+  ].map(k=>'<div class="kpi '+k.c+'"><div class="kpi-val">'+k.v+'</div><div class="kpi-label">'+k.l
+    +'</div><div style="font-size:12px;color:var(--muted);margin-top:3px;">'+k.s+'</div></div>').join('');
+
+  const topo=document.getElementById('sdesk-topo');
+  const inc=SDESK_ISSUES.filter(i=>i.trilha==='Reportar incidente').length;
+  if(topo)topo.innerHTML='<div style="background:var(--bg2);border:1px solid var(--bord);border-left:3px solid var(--cyan);border-radius:8px;padding:16px 18px;">'
+    +'<div style="font-size:15.6px;font-weight:600;color:var(--cyan);text-transform:uppercase;letter-spacing:.8px;margin-bottom:8px;">O suporte é gargalo?</div>'
+    +'<div style="font-size:15.6px;line-height:1.6;color:#C0C8D4;">'+RESUMO.sdesk+'</div>'
+    +'<div style="font-size:15.6px;line-height:1.6;color:#C0C8D4;margin-top:8px;">'
+    +'Nesta sprint foram <b style="color:var(--text)">'+n+' chamados</b> ('+(dVol===0?'mesmo volume da ':(dVol>0?'contra ':'contra ')+prev.sdesk+' na ')+prev.id+'), '
+    +'<b style="color:var(--text)">'+ateUmDia+' deles</b> resolvidos no mesmo dia ou no dia seguinte, e a metade mais lenta levou '+mediana+' dia'+(mediana===1?'':'s')+' ou menos. '
+    +'<b style="color:var(--text)">'+inc+'</b> foram incidentes — o resto é pedido planejável.</div>'
+    +'<div style="font-size:13.2px;color:#C0C8D4;margin-top:10px;border-left:2px solid var(--cyan);padding-left:10px;line-height:1.6;">'
+    +'→ O volume não cresce e a fila não acumula: o suporte não disputa capacidade com os projetos. '
+    +'O que vale acompanhar é a <b>recorrência</b> — chamado que volta pela mesma causa — e o efeito da triagem por IA sobre as aberturas.</div>'
+    +'</div>';
+}
+function buildSdeskCortes(){
+  const box=document.getElementById('sdesk-cortes');if(!box)return;
+  const n=SDESK_ISSUES.length;
+  const barras=(titulo,sub,pares,cor)=>{
+    const max=Math.max.apply(null,pares.map(x=>x[1]));
+    return '<div style="background:var(--bg2);border:1px solid var(--bord);border-radius:8px;padding:16px;">'
+      +'<div style="font-size:15.6px;font-weight:600;color:var(--cyan);text-transform:uppercase;letter-spacing:.8px;">'+titulo+'</div>'
+      +'<div style="font-size:13.2px;color:var(--muted);margin:5px 0 12px;">'+sub+'</div>'
+      +pares.map(([lbl,v])=>'<div style="display:flex;align-items:center;gap:9px;margin-bottom:7px;">'
+        +'<div style="width:112px;font-size:12.6px;line-height:1.3;color:#C0C8D4;text-align:right;flex-shrink:0;">'+lbl+'</div>'
+        +'<div style="flex:1;background:var(--bg3);border-radius:3px;height:16px;overflow:hidden;">'
+        +'<div style="height:100%;width:'+Math.round(v/max*100)+'%;background:'+cor+';opacity:.7;border-radius:3px;"></div></div>'
+        +'<div style="width:62px;text-align:right;font-size:13.2px;color:var(--muted);font-variant-numeric:tabular-nums;flex-shrink:0;white-space:nowrap;">'
+        +v+' <span style="color:#484F58;">'+Math.round(v/n*100)+'%</span></div></div>').join('')
+      +'</div>';
+  };
+  const porArea=[...new Set(SDESK_ISSUES.map(i=>i.area))]
+    .map(a=>[a,SDESK_ISSUES.filter(i=>i.area===a).length]).sort((x,y)=>y[1]-x[1]);
+  const porTipo=[...new Set(SDESK_ISSUES.map(i=>i.trilha))]
+    .map(t=>[t.replace('Solicitação – ','').replace('Reportar incidente','Incidente'),SDESK_ISSUES.filter(i=>i.trilha===t).length])
+    .sort((x,y)=>y[1]-x[1]);
+  const faixas=[['No mesmo dia',0,0],['1 a 2 dias',1,2],['3 a 5 dias',3,5],['Mais de 5 dias',6,999]]
+    .map(([l,a,b])=>[l,SDESK_ISSUES.map(diasAte).filter(d=>d!==null&&d>=a&&d<=b).length]).filter(x=>x[1]);
+  box.innerHTML='<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(310px,1fr));gap:14px;">'
+    +barras('De onde vem a demanda','Área que abriu o chamado. Concentração mostra onde vale atacar a causa.',porArea,'#02FFFF')
+    +barras('Que tipo de demanda','Incidente é falha que já parou alguém; solicitação é pedido planejável.',porTipo,'#8957E5')
+    +barras('Quanto tempo até resolver','Dias corridos entre abertura e resolução, dos '+SDESK_ISSUES.filter(i=>i.resolvido).length+' já fechados.',faixas,'#2EA043')
+    +'</div>';
+}
 function buildSdesk(){
+  buildSdeskTopo();
+  buildSdeskCortes();
   buildTrilhas();
   const container=document.getElementById('sdesk-areas');
   if(!container)return;
@@ -939,12 +1025,14 @@ function buildSdesk(){
 }
 
 // DETAIL PANEL
-function openPanel(proj){
+function openPanel(proj,foco){
   const panel=document.getElementById('detail-panel');if(!panel)return;
   const st=projStats[proj];if(!st)return;
   const meta=PROJ_META[proj]||{name:proj,color:'#8B949E'};
   const done=st.issues.filter(i=>isDone(i.status));
-  const open=st.issues.filter(i=>!isDone(i.status));
+  const prog=st.issues.filter(i=>!isDone(i.status)&&isProg(i.status));
+  const pend=st.issues.filter(i=>!isDone(i.status)&&!isProg(i.status));
+  const open=prog.concat(pend);
   document.getElementById('dp-proj-name').textContent=proj+' — '+(meta.name||'');
   document.getElementById('dp-proj-name').style.color=meta.color||'#02FFFF';
   document.getElementById('dp-proj-sub').textContent=st.total+' issues';
@@ -953,14 +1041,29 @@ function openPanel(proj){
   document.getElementById('dp-kpis').innerHTML=`
     <div class="dp-kpi"><div class="dp-kpi-val" style="color:#2EA043">${done.length}</div><div class="dp-kpi-label">Concluídos</div></div>
     <div class="dp-kpi"><div class="dp-kpi-val" style="color:#484F58">${open.length}</div><div class="dp-kpi-label">Carry-over</div></div>`;
+
+  // filtro: 'all' | 'done' | 'prog' | 'pend'
+  const grupos=[['all','Todos',st.issues.length],['done','Concluídos',done.length],
+                ['prog','Em andamento',prog.length],['pend','Atravessam',pend.length]];
+  const ft=document.getElementById('dp-filt');
+  function aplica(f){
+    rl('dp-done-list','dp-done-sec',(f==='all'||f==='done')?done:[]);
+    rl('dp-prog-list','dp-prog-sec',(f==='all'||f==='prog')?prog:[]);
+    rl('dp-pend-list','dp-pend-sec',(f==='all'||f==='pend')?pend:[]);
+    if(ft)ft.querySelectorAll('.dp-fbtn').forEach(b=>b.classList.toggle('on',b.dataset.f===f));
+  }
+  if(ft){
+    ft.innerHTML=grupos.filter(g=>g[2]||g[0]==='all')
+      .map(g=>'<button class="dp-fbtn" data-f="'+g[0]+'">'+g[1]+' <b>'+g[2]+'</b></button>').join('');
+    ft.querySelectorAll('.dp-fbtn').forEach(b=>b.onclick=()=>aplica(b.dataset.f));
+  }
   function rl(cid,sid,list){
     const sec=document.getElementById(sid);const el=document.getElementById(cid);if(!sec||!el)return;
-    if(!list.length){sec.style.display='none';return;}
+    if(!list.length){sec.style.display='none';el.innerHTML='';return;}
     sec.style.display='block';
     el.innerHTML=list.map(i=>`<div class="dp-issue"><div class="dp-dot" style="background:${dotColor(i.status)}"></div><div class="dp-key">${i.key}</div><div class="dp-sum">${i.summary}</div></div>`).join('');
   }
-  rl('dp-done-list','dp-done-sec',done);
-  rl('dp-open-list','dp-open-sec',open);
+  aplica(foco&&grupos.some(g=>g[0]===foco&&g[2])?foco:'all');
   panel.classList.add('open');
 }
 function closePanel(){document.getElementById('detail-panel')?.classList.remove('open');}
@@ -1047,8 +1150,11 @@ const SPRINTS=[...SPRINT_HISTORY,sprintCorrente()];
 
 // direcao: 'bom' = subir é bom, 'ruim' = subir é ruim, 'neutro' = sem juízo de valor
 const EVO_METRICS=[
-  {label:"Taxa de conclusão",get:s=>Math.round(s.done/s.issues*100),suf:"%",dsuf:" pontos",dir:"bom"},
-  {label:"Entregas",         get:s=>s.done,                                        dir:"bom"},
+  {label:"Taxa de conclusão",get:s=>Math.round(s.done/s.issues*100),suf:"%",dsuf:" pontos",dir:"neutro"},
+  // 'neutro': itens fechados nao sao comparaveis entre sprints de tamanho de
+  // tarefa diferente. Pintar a queda de vermelho afirmava um juizo que o dado
+  // nao sustenta — a variacao fica, o veredito sai.
+  {label:"Entregas",         get:s=>s.done,                                        dir:"neutro"},
   {label:"Escopo da sprint", get:s=>s.issues,                                       dir:"neutro"},
   {label:"Carry-over",       get:s=>s.issues-s.done,                                dir:"ruim"},
   {label:"SDesk resolvidos", get:s=>s.sdeskDone,                                    dir:"bom"},
@@ -1110,7 +1216,9 @@ function descricaoStatus(){
 }
 
 function descricaoProjetos(){
-  const arr=PROJ_ORDER.filter(f=>projStats[f]).map(f=>projStats[f].total);
+  const comEntrega=PROJ_ORDER.filter(f=>projStats[f]&&projStats[f].done>0);
+  const semEntrega=PROJ_ORDER.filter(f=>projStats[f]&&!projStats[f].done);
+  const arr=comEntrega.map(f=>projStats[f].total);
   const min=Math.min.apply(null,arr), max=Math.max.apply(null,arr);
   const peq=arr.filter(t=>t<=3).length;
   const a='Cada barra é a razão entre issues concluídas e issues totais daquela frente na '+SPRINT_ATUAL.id
@@ -1119,7 +1227,10 @@ function descricaoProjetos(){
   const b='As '+arr.length+' frentes têm escopos de tamanhos bem diferentes — de <b>'+min+'</b> a <b>'+max+'</b> issues'
     +(peq?', e <b>'+peq+'</b> delas têm até 3 issues':'')+'. '
     +'Em frentes pequenas a porcentagem anda em saltos grandes: com 2 issues, cada uma vale 50 pontos percentuais, '
-    +'então 0% ou 100% ali dizem pouco.';
+    +'então 100% ali diz pouco.'
+    +(semEntrega.length?' Só aparecem as frentes que entregaram algo no período; '
+      +lista(semEntrega)+(semEntrega.length>1?' estão':' está')+' na sprint sem item fechado e '
+      +(semEntrega.length>1?'seguem':'segue')+' nos cartões abaixo e no Gantt.':'');
   return descBox([a,b],'→ As barras não são comparáveis entre si sem olhar o volume ao lado: '
     +'a porcentagem responde "quanto do escopo desta frente foi fechado", e não "qual frente rendeu mais".');
 }
@@ -1135,7 +1246,9 @@ function leituraIndicadores(cur,prev,serie){
   const carry=s=>s.issues-s.done, cPct=Math.round(carry(cur)/cur.issues*100);
   let seq=0;for(let i=serie.length-1;i>0;i--){if(carry(serie[i])>carry(serie[i-1]))seq++;else break;}
   const ritmo = dEsc<0
-    ? 'O escopo encolheu <b>'+Math.abs(pEsc)+'%</b> ('+prev.issues+' → '+cur.issues+') e as entregas '+(dEnt>=0?'cresceram':'caíram')+' <b>'+Math.abs(pEnt)+'%</b> ('+prev.done+' → '+cur.done+'): a taxa '+(dTx>=0?'subiu':'caiu')+' '+Math.abs(dTx)+' pontos percentuais.'
+    ? 'O escopo da sprint encolheu de <b>'+prev.issues+'</b> para <b>'+cur.issues+'</b> itens, e os itens fechados foram de '+prev.done+' para <b>'+cur.done+'</b>. '
+      +'<b>Contagem de itens não mede produção</b>: uma sprint de poucas entregas grandes e uma de muitas tarefas curtas rendem números opostos para o mesmo esforço. '
+      +(RESUMO&&RESUMO.contexto?RESUMO.contexto:'')
     : pEnt>=pEsc
     ? 'As entregas cresceram <b>'+pEnt+'%</b> ('+prev.done+' → '+cur.done+') contra <b>'+pEsc+'%</b> de crescimento do escopo ('+prev.issues+' → '+cur.issues+'): o time acompanhou o aumento e ganhou '+Math.abs(dTx)+' pontos percentuais de taxa.'
     : 'O escopo cresceu <b>'+pEsc+'%</b> ('+prev.issues+' → '+cur.issues+') contra <b>'+pEnt+'%</b> de crescimento das entregas ('+prev.done+' → '+cur.done+'), e a taxa '+(dTx>=0?'subiu':'caiu')+' '+Math.abs(dTx)+' pontos percentuais.';
@@ -1144,8 +1257,8 @@ function leituraIndicadores(cur,prev,serie){
     : 'O carry-over ficou em <b>'+carry(cur)+'</b> ('+cPct+'% do escopo da '+cur.id+'), contra '+carry(prev)+' na '+prev.id+'.';
   const hist = seq>=2 ? ' Ele sobe há '+seq+' sprints seguidas ('+serie.map(carry).join(' → ')+').' : '';
   const acao = dEsc>dEnt
-    ? '→ Melhorar a taxa não está reduzindo a fila. Enquanto o escopo entrar mais rápido do que a capacidade de fechar, o acumulado cresce mesmo com o time indo melhor — a alavanca da '+SPRINT_NOVA.id+' é limitar a entrada, não cobrar mais rendimento.'
-    : '→ A fila parou de crescer. Vale manter o teto de escopo que produziu esse resultado.';
+    ? '→ Enquanto o escopo entrar mais rápido do que a capacidade de fechar, o acumulado cresce — a alavanca da '+SPRINT_NOVA.id+' é limitar a entrada, não cobrar mais rendimento.'
+    : '→ A fila parou de crescer. O indicador a acompanhar entre sprints é o carry-over, não a contagem de itens fechados.';
   return obsBox('Leitura',[ritmo,fila+hist],acao);
 }
 
@@ -1239,10 +1352,11 @@ function buildEvolucao(){
   const maxAbs=Math.max(1,...frentes.map(r=>Math.abs(r.d)));
   db.innerHTML='<div class="evo-card-title">Entregas por frente · '+prev.id+' → '+cur.id+'</div>'
     +'<div class="evo-card-sub">Variação no número de issues concluídas por frente. Escolhi entregas em vez de taxa porque metade das frentes tem 1 ou 2 issues na sprint, e ali uma única issue já vira 50 ou 100 pontos de variação. A taxa aparece ao lado de cada barra: uma frente pode entregar mais e mesmo assim ver a taxa cair, quando o escopo cresce mais rápido que a entrega.</div>'
-    +'<div class="evo-legend"><span><i style="background:'+EVO_ACCENT+'"></i>entregou mais que na '+prev.id+'</span>'
-    +'<span><i style="background:#F85149"></i>entregou menos</span></div>'
+    +'<div class="evo-legend"><span><i style="background:'+EVO_ACCENT+'"></i>mais itens fechados que na '+prev.id+'</span>'
+    +'<span><i style="background:#8957E5"></i>menos itens fechados</span>'
+    +'<span style="color:var(--muted)">variação de contagem, não de esforço</span></div>'
     +frentes.map(r=>{
-      const cor=r.d>0?EVO_ACCENT:r.d<0?'#F85149':'#484F58';
+      const cor=r.d>0?EVO_ACCENT:r.d<0?'#8957E5':'#484F58';
       const w=Math.abs(r.d)/maxAbs*50;
       const barra=r.d===0
         ? '<div class="dv-bar" style="left:calc(50% - 1.5px);width:3px;background:#484F58;"></div>'
@@ -1397,17 +1511,8 @@ function slaCor(pct){return pct>=85?'#2EA043':pct>=60?'#D29922':'#F85149';}
   set('kpi-time-done',done);
   set('kpi-time-membros',MEMBERS.filter(m=>ISSUES.some(i=>i.assignee===m.id)).length);
   set('kpi-gantt-done',done);
-  const sdDone=SDESK_ISSUES.filter(i=>isDone(i.status)).length;
-  const res=slaIndice(SDESK_ISSUES,'sla'), pri=slaIndice(SDESK_ISSUES,'sla1a');
-  set('sd-total',SDESK_ISSUES.length);
-  set('sd-sla-res',res.pct+'%');          // no prazo / (no prazo + estouro)
-  set('sd-sla-1a',pri.pct+'%');
-  set('sd-noprazo',res.np);
-  set('sd-estouro',res.es);               // inclui os abertos que ja estouraram
-  set('sd-pend',SDESK_ISSUES.length-sdDone);
-  // a cor do cartao de resolucao segue a mesma faixa dos cartoes de trilha
-  const cRes=document.getElementById('sd-sla-res');
-  if(cRes&&cRes.parentElement){cRes.parentElement.className='kpi';cRes.style.color=slaCor(res.pct);}
+  // os KPIs do SDesk agora sao montados em buildSdeskTopo(), com o contexto
+  // de cada numero embaixo — nao ha mais id fixo para preencher aqui.
 })();
 
 // GANTT
@@ -1592,7 +1697,9 @@ function buildGantt(){
 // TAXA POR PROJETO
 (function(){
   const tc=document.getElementById('taxa-chart');if(!tc)return;
-  PROJ_ORDER.filter(p=>projStats[p]).forEach(proj=>{
+  // Frente que nao entregou nada no periodo nao entra: uma barra de 0% nao e
+  // uma entrega, e so ocupa espaco. Elas seguem nos cartoes e no Gantt.
+  PROJ_ORDER.filter(p=>projStats[p]&&projStats[p].done>0).forEach(proj=>{
     const d=projStats[proj];
     const pct=Math.round(d.done/d.total*100);
     const color=PROJ_META[proj]?.color||'#484F58';
