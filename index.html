@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Dashboard Sprint S21 — Fenasbac TI</title>
+<title>Dashboard Sprint S22 — Fenasbac TI</title>
 <link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@300;400;600;700&family=IBM+Plex+Mono:wght@400&display=swap" rel="stylesheet">
 <style>
 :root{
@@ -291,8 +291,8 @@ body{background:var(--bg);color:var(--text);font-family:var(--font);font-size:16
 <div class="hdr">
   <div>
     <div class="hdr-brand">Fenasbac TI</div>
-    <div class="hdr-title">Dashboard · Sprint S21</div>
-    <div class="hdr-sub">fenasbac-tech.atlassian.net · S21 encerrada: 13/10–26/10/2026 &nbsp;·&nbsp; S22 em andamento: 26/10–09/11/2026</div>
+    <div class="hdr-title">Dashboard · Sprint S22</div>
+    <div class="hdr-sub">fenasbac-tech.atlassian.net · S22 encerrada: 26/10–08/11/2026 &nbsp;·&nbsp; S23 em andamento: 09/11–23/11/2026</div>
   </div>
   <div style="display:flex;flex-direction:column;align-items:flex-end;gap:5px;"><div class="hdr-badge" id="hdr-badge">—</div><div class="hdr-badge" style="border-color:var(--cyan);color:var(--cyan);">entregas na base A</div></div>
 </div>
@@ -315,15 +315,15 @@ body{background:var(--bg);color:var(--text);font-family:var(--font);font-size:16
 <!-- PROJETOS -->
 <div class="panel" id="panel-projetos">
 <div class="kpi-strip">
-  <div class="kpi ok"><div class="kpi-val" id="kpi-done">—</div><div class="kpi-label">Concluídos S21 · base A</div></div>
+  <div class="kpi ok"><div class="kpi-val" id="kpi-done">—</div><div class="kpi-label">Concluídos S22 · base A</div></div>
   <div class="kpi warn"><div class="kpi-val" id="kpi-taxa">—</div><div class="kpi-label">Taxa geral</div></div>
-  <div class="kpi warn"><div class="kpi-val" id="kpi-carry">—</div><div class="kpi-label">Carry-over S21 · base A</div></div>
+  <div class="kpi warn"><div class="kpi-val" id="kpi-carry">—</div><div class="kpi-label">Carry-over S22 · base A</div></div>
   <div class="kpi ok"><div class="kpi-val" id="kpi-projs">—</div><div class="kpi-label">Projetos</div></div>
 </div>
 <div id="bases-box" style="padding:0 24px 16px;"></div>
 <div class="grid-2" style="padding:0 24px 16px;">
   <div style="background:var(--bg2);border:1px solid var(--bord);border-radius:8px;padding:16px;">
-    <div style="font-size:15.6px;font-weight:600;color:var(--cyan);text-transform:uppercase;letter-spacing:.8px;margin-bottom:14px;">Distribuição de Status S21</div>
+    <div style="font-size:15.6px;font-weight:600;color:var(--cyan);text-transform:uppercase;letter-spacing:.8px;margin-bottom:14px;">Distribuição de Status S22</div>
     <div style="display:flex;align-items:center;gap:24px;justify-content:center;">
       <canvas id="donut" width="150" height="150"></canvas>
       <div id="donut-legend" style="display:flex;flex-direction:column;gap:10px;"></div>
@@ -346,7 +346,7 @@ body{background:var(--bg);color:var(--text);font-family:var(--font);font-size:16
   <div>
     <h4>O que esta aba mostra</h4>
     <p>Compara a <strong style="color:var(--text);">sprint que acabou de fechar</strong> com a <strong style="color:var(--text);">anterior</strong>, para responder se o time evoluiu — e antecipa a carga que atravessa para a <strong style="color:var(--text);">sprint que inicia</strong>. Os cartões no topo trazem cada indicador com a variação em relação à sprint passada e a tendência das últimas três. O gráfico por frente mostra onde as entregas cresceram ou caíram. O último bloco é o que já entra na sprint nova.</p>
-    <p>Os números da sprint fechada são calculados dos dados desta própria página; os das sprints anteriores vêm dos dashboards daquelas sprints. A série S15→S21 é comparável porque todas usam a mesma contagem — a <strong style="color:var(--cyan);">base A</strong>, o escopo do objeto Sprint, detalhada no quadro “De onde vem cada número” na aba Projetos. Um número desta aba só conversa com outro artefato se os dois declararem a mesma base.</p>
+    <p>Os números da sprint fechada são calculados dos dados desta própria página; os das sprints anteriores vêm dos dashboards daquelas sprints. A série S15→S22 é comparável porque todas usam a mesma contagem — a <strong style="color:var(--cyan);">base A</strong>, o escopo do objeto Sprint, detalhada no quadro “De onde vem cada número” na aba Projetos. Um número desta aba só conversa com outro artefato se os dois declararem a mesma base.</p>
   </div>
 </div>
 <div id="evo-comparacao" style="margin:0 24px 14px;"></div>
@@ -371,11 +371,11 @@ body{background:var(--bg);color:var(--text);font-family:var(--font);font-size:16
 <div class="panel" id="panel-gantt">
 <div class="kpi-strip" style="padding-bottom:8px;">
   <div class="kpi ok"><div class="kpi-val" id="kpi-gantt-done">—</div><div class="kpi-label">Concluídos</div></div>
-  <div class="kpi"><div class="kpi-val">28/09</div><div class="kpi-label">Início S20</div></div>
-  <div class="kpi"><div class="kpi-val">12/10</div><div class="kpi-label">Fim S20</div></div>
+  <div class="kpi"><div class="kpi-val">26/10</div><div class="kpi-label">Início S22</div></div>
+  <div class="kpi"><div class="kpi-val">08/11</div><div class="kpi-label">Fim S22</div></div>
   <div class="kpi warn"><div class="kpi-val">13/10</div><div class="kpi-label">Início S21</div></div>
   <div class="kpi warn"><div class="kpi-val">26/10</div><div class="kpi-label">Fim S21</div></div>
-  <div class="kpi"><div class="kpi-val" id="kpi-s20-count">–</div><div class="kpi-label">Atravessam p/ a S22</div></div>
+  <div class="kpi"><div class="kpi-val" id="kpi-s20-count">–</div><div class="kpi-label">Atravessam p/ a S23</div></div>
 </div>
 <div class="toolbar">
   <button class="fbtn active" onclick="setF('all',this)">Todos</button>
@@ -387,13 +387,13 @@ body{background:var(--bg);color:var(--text);font-family:var(--font);font-size:16
   <button class="today-btn" onclick="scrollToToday()">📍 Hoje</button>
 </div>
 <div class="gantt-legend" style="display:flex;gap:16px;padding:0 24px 8px;font-size:13.2px;color:var(--muted);align-items:center;flex-wrap:wrap;">
-  <span style="display:flex;align-items:center;gap:5px;"><span style="width:20px;height:3px;background:rgba(2,37,235,.4);display:inline-block;border-radius:2px;"></span>Sprint S21 (13/10–26/10)</span>
+  <span style="display:flex;align-items:center;gap:5px;"><span style="width:20px;height:3px;background:rgba(2,37,235,.4);display:inline-block;border-radius:2px;"></span>Sprint S22 (26/10–08/11)</span>
   <span style="display:flex;align-items:center;gap:5px;"><span style="width:2px;height:12px;background:#F85149;opacity:.7;display:inline-block;"></span>Hoje</span>
-  <span style="display:flex;align-items:center;gap:5px;"><span style="width:2px;height:12px;background:#8957E5;opacity:.6;display:inline-block;"></span>Fim S21</span>
-  <span style="display:flex;align-items:center;gap:5px;"><span style="width:20px;height:3px;background:rgba(137,87,229,.35);display:inline-block;border-radius:2px;"></span>Sprint S20 (28/09–12/10)</span>
-  <span style="display:flex;align-items:center;gap:5px;"><span style="width:2px;height:12px;background:#02FFFF;opacity:.55;display:inline-block;"></span>Fim S20</span>
+  <span style="display:flex;align-items:center;gap:5px;"><span style="width:2px;height:12px;background:#8957E5;opacity:.6;display:inline-block;"></span>Fim S22</span>
+  <span style="display:flex;align-items:center;gap:5px;"><span style="width:20px;height:3px;background:rgba(137,87,229,.35);display:inline-block;border-radius:2px;"></span>Sprint S21 (13/10–26/10)</span>
+  <span style="display:flex;align-items:center;gap:5px;"><span style="width:2px;height:12px;background:#02FFFF;opacity:.55;display:inline-block;"></span>Fim S21</span>
   <span style="display:flex;align-items:center;gap:5px;"><span style="width:20px;height:3px;background:#2EA043;opacity:.5;display:inline-block;border-radius:2px;"></span>Barra = concluído</span>
-  <span style="display:flex;align-items:center;gap:5px;"><span style="width:20px;height:3px;background:linear-gradient(90deg,#0225EB,#8957E5);display:inline-block;border-radius:2px;"></span>Carry-over para a S22</span>
+  <span style="display:flex;align-items:center;gap:5px;"><span style="width:20px;height:3px;background:linear-gradient(90deg,#0225EB,#8957E5);display:inline-block;border-radius:2px;"></span>Carry-over para a S23</span>
   <span style="display:flex;align-items:center;gap:5px;"><span style="width:20px;height:3px;background:repeating-linear-gradient(90deg,#8B949E 0 5px,transparent 5px 9px);display:inline-block;"></span>Sem previsão de entrega no Jira</span>
 </div>
 <div class="gantt-wrap" id="gantt-wrap"><div id="gantt-container"></div></div>
@@ -442,7 +442,7 @@ body{background:var(--bg);color:var(--text);font-family:var(--font);font-size:16
 
 <div class="footer">
   <span>SBS Quadra 02, Bloco A, Ed. Casa de São Paulo, 7º andar — Brasília/DF</span>
-  <span>Fenasbac TI · Sprint S21 · fechamento em 27/10/2026 · entregas na base A (escopo do objeto Sprint) · SLA na régua global do JSM · apurado em 27/10/2026</span>
+  <span>Fenasbac TI · Sprint S22 · fechamento em 09/11/2026 · entregas na base A (escopo do objeto Sprint) · SLA na régua global do JSM · apurado em 27/10/2026</span>
 </div>
 
 <script>
@@ -452,172 +452,164 @@ body{background:var(--bg);color:var(--text);font-family:var(--font);font-size:16
 // dueOrig = duedate morto no Jira, anterior a janela: a barra usaria uma data
 // de fevereiro e sumiria do Gantt, entao vale a data real de entrega.
 const ISSUES=[
-  {key:"ANALYTICS-11",project:"ANALYTICS",status:"Itens concluídos",assignee:"Conteúdo",summary:"Configurar e validar Google Analytics (GA4) / Tag Manager na área logada do  site Fenasbac.br",created:"2026-09-28",due:"2026-10-16"},
-  {key:"CERTI-15",project:"CERTI",status:"Concluído",assignee:"Desenvolvimento",summary:"Criar guia (Tutorial) de preenchimento",created:"2026-10-13",due:"2026-10-15"},
-  {key:"CERTI-16",project:"CERTI",status:"Concluído",assignee:"Coordenação",summary:"Enviar e-mail de handover com guia, gravação e janela para sugestão de melhoria",created:"2026-10-13",due:"2026-10-16"},
-  {key:"ENG-14",project:"ENG",status:"Concluído",assignee:"Tech Lead",summary:"Migrar todos os repositórios para o GitHub corporativo",created:"2026-08-03",due:"2026-10-23"},
-  {key:"CONECTA-82",project:"CONECTA",status:"Concluído",assignee:"Coordenação",summary:"Consolidar e confirmar os pontos focais das regionais",created:"2026-08-07",due:"2026-10-23"},
-  {key:"CONECTA-103",project:"CONECTA",status:"Em andamento",assignee:"Desenvolvimento",summary:"Atualizar a base de associados da ASBAC Salvador no Conecta",created:"2026-10-05",due:"2026-10-27"},
-  {key:"CONECTA-105",project:"CONECTA",status:"Concluído",assignee:"Coordenação",summary:"Levantar assinaturas do termo de adesão Conecta e confirmar pontos focais",created:"2026-10-08",due:"2026-10-30"},
-  {key:"CONECTA-107",project:"CONECTA",status:"Concluído",assignee:"Desenvolvimento",summary:"Corrigir criação de associado por perfil",created:"2026-10-13",due:"2026-10-23"},
-  {key:"CONECTA-108",project:"CONECTA",status:"Concluído",assignee:"Desenvolvimento",summary:"Corrigir importação de planilha por perfil",created:"2026-10-13",due:"2026-10-23"},
-  {key:"CONECTA-109",project:"CONECTA",status:"Concluído",assignee:"Desenvolvimento",summary:"Habilitar seleção da regional de destino",created:"2026-10-13",due:"2026-10-23"},
-  {key:"CONECTA-110",project:"CONECTA",status:"Em andamento",assignee:"Infra / Suporte N1",summary:"Retestar os três perfis e fechar o CONECTA-79",created:"2026-10-13",due:"2026-10-28"},
-  {key:"CONECTA-112",project:"CONECTA",status:"Tarefas pendentes",assignee:"Desenvolvimento",summary:"Integração de dados ASBAC Brasília (consumo da API WBC)",created:"2026-10-13",due:"2026-10-30"},
-  {key:"CONECTA-113",project:"CONECTA",status:"Tarefas pendentes",assignee:"Desenvolvimento",summary:"Consumir o endpoint do WBC (sincronização por período e tipo)",created:"2026-10-13",due:"2026-10-30"},
-  {key:"CONECTA-114",project:"CONECTA",status:"Tarefas pendentes",assignee:"Desenvolvimento",summary:"Carga inicial dos associados ativos e dependentes (corte 01/11)",created:"2026-10-13",due:"2026-10-30"},
-  {key:"CONECTA-115",project:"CONECTA",status:"Tarefas pendentes",assignee:"Desenvolvimento",summary:"Inativar associados desligados (tipo D) no Clube F",created:"2026-10-13",due:"2026-10-30"},
-  {key:"CONECTA-116",project:"CONECTA",status:"Tarefas pendentes",assignee:"Desenvolvimento",summary:"Validação manual de dependentes sem dados completos",created:"2026-10-13",due:"2026-10-30"},
-  {key:"CONECTA-117",project:"CONECTA",status:"Tarefas pendentes",assignee:"Desenvolvimento",summary:"Excluir não sócios (praticantes sem vínculo) do Clube F",created:"2026-10-13",due:"2026-10-30"},
-  {key:"CONECTA-118",project:"CONECTA",status:"Concluído",assignee:"Desenvolvimento",summary:"Testar e validar a API de integração do WBC (inclusões e cancelamentos por período)",created:"2026-10-20",due:"2026-10-23"},
-  {key:"CONECTA-121",project:"CONECTA",status:"Tarefas pendentes",assignee:"Infra / Suporte N1",summary:"Criar o Guia do Ponto Focal do Conecta (material de consulta para o treinamento)",created:"2026-10-23",due:"2026-11-07"},
-  {key:"CONECTA-122",project:"CONECTA",status:"Concluído",assignee:"Coordenação",summary:"Agendar o treinamento e enviar os convites aos pontos focais das regionais",created:"2026-10-23",due:"2026-10-23"},
-  {key:"PROC-110",project:"PROC",status:"Concluído",assignee:"Coordenação",summary:"Responder Asbac Brasilia",created:"2026-10-13",due:"2026-10-13",dueOrig:"2026-02-25"},
-  {key:"PROC-317",project:"PROC",status:"Tarefas pendentes",assignee:"Coordenação",summary:"Apresentar proposta para a Diretoria - Política de acesso FenasHub",created:"2026-08-03",due:"2026-11-12"},
-  {key:"PROC-351",project:"PROC",status:"Em andamento",assignee:"Coordenação",summary:"Iniciar os testes de integração do Jira com o Git",created:"2026-09-15",due:"2026-10-30"},
-  {key:"PROC-352",project:"PROC",status:"Tarefas pendentes",assignee:"Coordenação",summary:"Organizar a higienização do Drive de Tecnologia",created:"2026-09-15",due:"2026-10-30"},
-  {key:"PROC-354",project:"PROC",status:"Tarefas pendentes",assignee:"Coordenação",summary:"Padronizar status e workflow dos boards Jira do site fenasbac-tech",created:"2026-09-22",due:"2026-10-30"},
-  {key:"PROC-355",project:"PROC",status:"Tarefas pendentes",assignee:"Coordenação",summary:"1. Criar os status \"Aguardando área\" e \"Em homologação\"",created:"2026-09-22",due:"2026-10-26",semPrev:true},
-  {key:"PROC-356",project:"PROC",status:"Tarefas pendentes",assignee:"Coordenação",summary:"2. Levantar filtros, dashboards e automações que citam nomes de status",created:"2026-09-22",due:"2026-10-26",semPrev:true},
-  {key:"PROC-357",project:"PROC",status:"Tarefas pendentes",assignee:"Coordenação",summary:"3. Criar o workflow e o scheme compartilhado dos projetos de software",created:"2026-09-22",due:"2026-10-26",semPrev:true},
-  {key:"PROC-358",project:"PROC",status:"Tarefas pendentes",assignee:"Coordenação",summary:"4. Aplicar o scheme nos 14 projetos sem card aberto",created:"2026-09-22",due:"2026-10-26",semPrev:true},
-  {key:"PROC-359",project:"PROC",status:"Tarefas pendentes",assignee:"Coordenação",summary:"5. Normalizar FIA, ANALYTICS e o status \"Aguardando Cliente\"",created:"2026-09-22",due:"2026-10-26",semPrev:true},
-  {key:"PROC-360",project:"PROC",status:"Tarefas pendentes",assignee:"Coordenação",summary:"6. Piloto em FENASHUB e FENASBR e medição de uma sprint",created:"2026-09-22",due:"2026-10-26",semPrev:true},
-  {key:"PROC-361",project:"PROC",status:"Tarefas pendentes",assignee:"Coordenação",summary:"7. Propagar o scheme para os demais projetos de software",created:"2026-09-22",due:"2026-10-26",semPrev:true},
-  {key:"PROC-362",project:"PROC",status:"Tarefas pendentes",assignee:"Coordenação",summary:"8. Definir condição de permissão na transição para Concluído",created:"2026-09-22",due:"2026-10-26",semPrev:true},
-  {key:"PROC-363",project:"PROC",status:"Tarefas pendentes",assignee:"Coordenação",summary:"9. Documentar o padrão de status na Base de Conhecimento",created:"2026-09-22",due:"2026-10-26",semPrev:true},
-  {key:"PROC-367",project:"PROC",status:"Concluído",assignee:"Coordenação",summary:"[Handover] Transferência de conhecimento e operacionalização da aplicação de Certificados com as áreas",created:"2026-10-07",due:"2026-10-13"},
-  {key:"PROC-368",project:"PROC",status:"Tarefas pendentes",assignee:"Coordenação",summary:"NordPass: encerrar e documentar a Onda 1 Financeiro",created:"2026-10-13",due:"2026-10-26",semPrev:true},
-  {key:"PROC-369",project:"PROC",status:"Tarefas pendentes",assignee:"Coordenação",summary:"NordPass: Onda 2 Consórcio (convite, cofre e treinamento)",created:"2026-10-13",due:"2026-10-26",semPrev:true},
-  {key:"PROC-370",project:"PROC",status:"Concluído",assignee:"Coordenação",summary:"Ajustar a proposta do Encontrão antes de apresentar ao Rodrigo",created:"2026-10-13",due:"2026-10-23"},
-  {key:"PROC-372",project:"PROC",status:"Concluído",assignee:"Coordenação",summary:"Formalizar por e-mail os requisitos da API ao WBC",created:"2026-10-13",due:"2026-10-23"},
-  {key:"PROC-373",project:"PROC",status:"Aguardando Cliente",assignee:"Coordenação",summary:"Cobrar o desenvolvimento do endpoint pelo WBC",created:"2026-10-13",due:"2026-10-26",semPrev:true},
-  {key:"PROC-374",project:"PROC",status:"Aguardando Cliente",assignee:"Coordenação",summary:"Acompanhar a carga inicial do WBC e a data de corte (01/11)",created:"2026-10-13",due:"2026-10-26",semPrev:true},
-  {key:"PROC-375",project:"PROC",status:"Concluído",assignee:"Coordenação",summary:"Reversão das avaliações Premium Atlassian — decisão de não converter (prazo 12/11/2026)",created:"2026-10-13",due:"2026-10-23"},
-  {key:"PROC-376",project:"PROC",status:"Concluído",assignee:"Coordenação",summary:"Printar tela de licenças por produto antes de cancelar",created:"2026-10-13",due:"2026-10-13"},
-  {key:"PROC-377",project:"PROC",status:"Concluído",assignee:"Coordenação",summary:"Cancelar as 3 avaliações Premium em admin.atlassian.com/billing",created:"2026-10-13",due:"2026-10-16"},
-  {key:"PROC-378",project:"PROC",status:"Concluído",assignee:"Coordenação",summary:"Esclarecer com a Atlassian a sobreposição Teamwork Collection x assinaturas separadas",created:"2026-10-13",due:"2026-10-13"},
-  {key:"PROC-379",project:"PROC",status:"Concluído",assignee:"Coordenação",summary:"Definir contato de cobrança Atlassian e rotina de visibilidade de fatura",created:"2026-10-13",due:"2026-10-23"},
-  {key:"PROC-381",project:"PROC",status:"Concluído",assignee:"Coordenação",summary:"PRIORIDADE — Identificar a assinatura de USD 343,80/mês (78% do gasto Atlassian)",created:"2026-10-13",due:"2026-10-16"},
-  {key:"PROC-382",project:"PROC",status:"Concluído",assignee:"Coordenação",summary:"Avaliar downgrade do SDesk de Service Collection Premium para Standard",created:"2026-10-13",due:"2026-10-23"},
-  {key:"PROC-385",project:"PROC",status:"Em andamento",assignee:"Coordenação",summary:"Organização do Planejamento Estratégico 2027 da TI",created:"2026-10-14",due:"2026-10-26",semPrev:true},
-  {key:"QSENTINEL-2",project:"QSENTINEL",status:"Fazendo",assignee:"Coordenação",summary:"Escopo e KPIs",created:"2026-09-24",due:"2026-10-30"},
-  {key:"QSENTINEL-6",project:"QSENTINEL",status:"A fazer",assignee:"Coordenação",summary:"Definir KPIs e critério de sucesso da PoC",created:"2026-10-26",due:"2026-10-30"},
-  {key:"FENASBR-241",project:"FENASBR",status:"Concluído",assignee:"Conteúdo",summary:"[60 Anos] Galeria de vídeos depoimentos – Eu sou parte desta história",created:"2026-06-30",due:"2026-10-16"},
-  {key:"FENASBR-243",project:"FENASBR",status:"Concluído",assignee:"Conteúdo",summary:"[60 Anos] Carrossel de memórias históricas",created:"2026-06-30",due:"2026-10-16"},
-  {key:"FENASBR-254",project:"FENASBR",status:"Concluído",assignee:"Conteúdo",summary:"[MOBILE] Galeria de memórias — \"Memórias que merecem ser vistas\"",created:"2026-07-21",due:"2026-10-16"},
-  {key:"FENASIO-10",project:"FENASIO",status:"Tarefas pendentes",assignee:"Desenvolvimento",summary:"Edição de dependentes no front do Clube F (preenchimento de e-mail por CPF)",created:"2026-10-22",due:"2026-10-30"},
+  {key:"ANALYTICS-12",project:"ANALYTICS",status:"Itens Pendentes",assignee:"Tech Lead",summary:"Revisar dados de acordo com o chamado Sdesk 340",created:"2026-10-26",due:"2026-11-20"},
+  {key:"FSYNC-63",project:"FSYNC",status:"Tarefas pendentes",assignee:"Desenvolvimento",summary:"6.4 Desligar a API antiga",created:"2026-10-05",due:"2026-11-13"},
+  {key:"FSYNC-62",project:"FSYNC",status:"Tarefas pendentes",assignee:"Desenvolvimento",summary:"6.3 Observação com plano de volta",created:"2026-10-05",due:"2026-11-13"},
+  {key:"FSYNC-61",project:"FSYNC",status:"Tarefas pendentes",assignee:"Desenvolvimento",summary:"6.2 Virada em produção",created:"2026-10-05",due:"2026-11-13"},
+  {key:"FSYNC-60",project:"FSYNC",status:"Tarefas pendentes",assignee:"Desenvolvimento",summary:"6.1 Homologação",created:"2026-10-05",due:"2026-11-13"},
+  {key:"FSYNC-59",project:"FSYNC",status:"Tarefas pendentes",assignee:"Desenvolvimento",summary:"5.7 Testes de contrato do site e do conecta",created:"2026-10-05",due:"2026-11-13"},
+  {key:"FSYNC-58",project:"FSYNC",status:"Tarefas pendentes",assignee:"Desenvolvimento",summary:"5.6 Escrita no SIS por um caminho só",created:"2026-10-05",due:"2026-11-13"},
+  {key:"FSYNC-57",project:"FSYNC",status:"Tarefas pendentes",assignee:"Desenvolvimento",summary:"5.5 Guard e validação nas rotas do SIS",created:"2026-10-05",due:"2026-11-13"},
+  {key:"FSYNC-52",project:"FSYNC",status:"Tarefas pendentes",assignee:"Desenvolvimento",summary:"4.2 Site sem chamadas a rotas inexistentes",created:"2026-10-05",due:"2026-11-13"},
+  {key:"FSYNC-50",project:"FSYNC",status:"Tarefas pendentes",assignee:"Desenvolvimento",summary:"3.8 Rodar a carga inicial em produção",created:"2026-10-05",due:"2026-11-13"},
+  {key:"FSYNC-49",project:"FSYNC",status:"Tarefas pendentes",assignee:"Desenvolvimento",summary:"3.7 Carga em lote pronta para produção",created:"2026-10-05",due:"2026-11-13"},
+  {key:"FSYNC-39",project:"FSYNC",status:"Tarefas pendentes",assignee:"Desenvolvimento",summary:"2.2 Índices de busca no banco do SIS",created:"2026-10-05",due:"2026-11-13"},
+  {key:"FSYNC-30",project:"FSYNC",status:"Tarefas pendentes",assignee:"Desenvolvimento",summary:"Criação e edição de rotas para o funcionamento dos filtros",created:"2026-09-28",due:"2026-11-08",semPrev:true},
+  {key:"CONECTA-114",project:"CONECTA",status:"DEPENDÊNCIA EXTERNA",assignee:"Desenvolvimento",summary:"Carga inicial dos associados ativos e dependentes (corte 01/11)",created:"2026-10-13",due:"2026-11-13"},
+  {key:"CONECTA-119",project:"CONECTA",status:"Concluído",assignee:"Desenvolvimento",summary:"Preparar o consumo da API do WBC (inclusões e desativações) e o vínculo dependente-titular",created:"2026-10-22",due:"2026-11-13"},
+  {key:"CONECTA-117",project:"CONECTA",status:"Concluído",assignee:"Desenvolvimento",summary:"Excluir não sócios (praticantes sem vínculo) do Clube F",created:"2026-10-13",due:"2026-11-06"},
+  {key:"CONECTA-116",project:"CONECTA",status:"Concluído",assignee:"Desenvolvimento",summary:"Validação manual de dependentes sem dados completos",created:"2026-10-13",due:"2026-11-06"},
+  {key:"CONECTA-115",project:"CONECTA",status:"Concluído",assignee:"Desenvolvimento",summary:"Inativar associados desligados (tipo D) no Clube F",created:"2026-10-13",due:"2026-11-06"},
+  {key:"CONECTA-113",project:"CONECTA",status:"Concluído",assignee:"Desenvolvimento",summary:"Consumir o endpoint do WBC (sincronização por período e tipo)",created:"2026-10-13",due:"2026-11-06"},
+  {key:"CONECTA-110",project:"CONECTA",status:"Concluído",assignee:"Infra / Suporte N1",summary:"Retestar os três perfis e fechar o CONECTA-79",created:"2026-10-13",due:"2026-11-09"},
+  {key:"CONECTA-103",project:"CONECTA",status:"Concluído",assignee:"Desenvolvimento",summary:"Atualizar a base de associados da ASBAC Salvador no Conecta",created:"2026-10-05",due:"2026-11-06"},
+  {key:"CONECTA-121",project:"CONECTA",status:"Em andamento",assignee:"Infra / Suporte N1",summary:"Criar o Guia do Ponto Focal do Conecta",created:"2026-10-23",due:"2026-11-10"},
+  {key:"PORTAL-20",project:"PORTAL",status:"Concluído",assignee:"Infra / Suporte N1",summary:"Implementar Fenasbac AUTH para bloquear o site inteiro, não só diretórios",created:"2026-10-25",due:"2026-11-08"},
+  {key:"PORTAL-17",project:"PORTAL",status:"Concluído (ciclo anterior)",assignee:"Infra / Suporte N1",summary:"Configurar e aplicar a integração com Fenasbac AUTH para controle de acesso",created:"2026-09-24",due:"2026-10-08"},
+  {key:"PORTAL-16",project:"PORTAL",status:"Concluído (ciclo anterior)",assignee:"Infra / Suporte N1",summary:"Validar com a Maysa a correção dos dados de colaboradores (mural e organograma)",created:"2026-08-31",due:"2026-09-25"},
+  {key:"PORTAL-15",project:"PORTAL",status:"Concluído (ciclo anterior)",assignee:"Infra / Suporte N1",summary:"Busca rápida (Ctrl+K / lupa): pessoas, sites, documentos e atalhos",created:"2026-08-31",due:"2026-09-25"},
+  {key:"PORTAL-14",project:"PORTAL",status:"Concluído (ciclo anterior)",assignee:"Infra / Suporte N1",summary:"Calendário com aniversários",created:"2026-08-31",due:"2026-09-25"},
+  {key:"PORTAL-13",project:"PORTAL",status:"Concluído (ciclo anterior)",assignee:"Infra / Suporte N1",summary:"Área do colaborador vinda do banco via departmentId + tabela Department",created:"2026-08-31",due:"2026-09-25"},
+  {key:"PORTAL-12",project:"PORTAL",status:"Concluído (ciclo anterior)",assignee:"Infra / Suporte N1",summary:"Equipe aberta: mural + organograma por área",created:"2026-08-31",due:"2026-09-25"},
+  {key:"PORTAL-11",project:"PORTAL",status:"Concluído (ciclo anterior)",assignee:"Infra / Suporte N1",summary:"Aviso de VPN em sites e links que exigem conexão (SISFenasbac e PGAFI)",created:"2026-08-31",due:"2026-09-25"},
+  {key:"PORTAL-10",project:"PORTAL",status:"Concluído (ciclo anterior)",assignee:"Infra / Suporte N1",summary:"Central de acesso a todos os sites da Fenasbac",created:"2026-08-31",due:"2026-09-25"},
+  {key:"PORTAL-9",project:"PORTAL",status:"Concluído (ciclo anterior)",assignee:"Infra / Suporte N1",summary:"SISFenasbac em atalho único, com escolha entre produção e homologação",created:"2026-08-31",due:"2026-09-25"},
+  {key:"PORTAL-8",project:"PORTAL",status:"Concluído (ciclo anterior)",assignee:"Infra / Suporte N1",summary:"Configurar e aplicar o novo layout/tema no ambiente de testes",created:"2026-08-31",due:"2026-09-25"},
+  {key:"PORTAL-19",project:"PORTAL",status:"Em andamento",assignee:"Infra / Suporte N1",summary:"Agenda no calendário com os eventos da federação para os colaboradores",created:"2026-10-22",due:"2026-11-11"},
+  {key:"PORTAL-18",project:"PORTAL",status:"Tarefas pendentes",assignee:"Infra / Suporte N1",summary:"Integração com Kuma para monitoramento de status em tempo real",created:"2026-09-24",due:"2026-11-13"},
+  {key:"PORTAL-6",project:"PORTAL",status:"Tarefas pendentes",assignee:"Infra / Suporte N1",summary:"Publicação do Redesign em Produção (Deploy) e Plano de Comunicação",created:"2026-08-26",due:"2026-11-13"},
+  {key:"PORTAL-4",project:"PORTAL",status:"Em andamento",assignee:"Infra / Suporte N1",summary:"Intranet - Implementação e Validação do Redesign em Staging (Pré-Produção)",created:"2026-08-26",due:"2026-11-13"},
+  {key:"TECH-144",project:"TECH",status:"Concluído",assignee:"Infra / Suporte N1",summary:"Realizar o onboarding inicial de TI — André Lin",created:"2026-09-28",due:"2026-11-05"},
+  {key:"TECH-140",project:"TECH",status:"Concluído",assignee:"Infra / Suporte N1",summary:"Preparar e enviar os equipamentos — André Lin (SP)",created:"2026-09-28",due:"2026-11-06"},
+  {key:"TECH-126",project:"TECH",status:"Concluído",assignee:"Infra / Suporte N1",summary:"VPN e VNC — Inovação",created:"2026-08-20",due:"2026-11-06"},
+  {key:"TECH-158",project:"TECH",status:"Tarefas pendentes",assignee:"Infra / Suporte N1",summary:"Configurar rotina de saldo devedor no Railway - PGAFI",created:"2026-11-06",due:"2026-11-13"},
+  {key:"TECH-157",project:"TECH",status:"Em andamento",assignee:"Infra / Suporte N1",summary:"Providenciar devolução da máquina da Ana Flávia",created:"2026-10-26",due:"2026-11-13"},
+  {key:"TECH-156",project:"TECH",status:"Tarefas pendentes",assignee:"Infra / Suporte N1",summary:"Levantar as máquinas antigas substituídas para reporte ao Rodrigoh",created:"2026-10-22",due:"2026-11-13"},
+  {key:"TECH-154",project:"TECH",status:"Tarefas pendentes",assignee:"Coordenação",summary:"Enviar lista de máquinas para aprovação do Rodrigo",created:"2026-10-13",due:"2026-11-13"},
+  {key:"TECH-153",project:"TECH",status:"Em andamento",assignee:"Infra / Suporte N1",summary:"Instalar e configurar Nobreaks nos andares 2º, 5º e 7º",created:"2026-10-07",due:"2026-11-13"},
+  {key:"TECH-136",project:"TECH",status:"Em andamento",assignee:"Infra / Suporte N1",summary:"Realizar cotação e troca de máquina (Paulo Stein)",created:"2026-09-24",due:"2026-11-13"},
+  {key:"TECH-135",project:"TECH",status:"Em andamento",assignee:"Infra / Suporte N1",summary:"Cotação de upgrade de RAM (equipamentos com até 8GB)",created:"2026-09-22",due:"2026-11-10"},
+  {key:"TECH-131",project:"TECH",status:"Em andamento",assignee:"Infra / Suporte N1",summary:"VPN e VNC — Diretoria",created:"2026-08-20",due:"2026-11-10"},
+  {key:"CVM-27",project:"CVM",status:"Concluído",assignee:"Conteúdo",summary:"Rodapé",created:"2026-10-05",due:"2026-10-28"},
+  {key:"CVM-26",project:"CVM",status:"Concluído",assignee:"Conteúdo",summary:"Conteúdo e programação",created:"2026-10-05",due:"2026-10-28"},
+  {key:"CVM-25",project:"CVM",status:"Concluído",assignee:"Conteúdo",summary:"Bloco de números",created:"2026-10-05",due:"2026-10-28"},
+  {key:"CVM-24",project:"CVM",status:"Concluído",assignee:"Conteúdo",summary:"Pré-inscrição e vagas",created:"2026-10-05",due:"2026-10-28"},
+  {key:"CVM-23",project:"CVM",status:"Concluído",assignee:"Conteúdo",summary:"Hero e manifesto",created:"2026-10-05",due:"2026-10-28"},
+  {key:"CVM-22",project:"CVM",status:"Concluído",assignee:"Conteúdo",summary:"Header e navegação",created:"2026-10-05",due:"2026-10-28"},
+  {key:"CVM-20",project:"CVM",status:"Concluído",assignee:"Conteúdo",summary:"Rodapé (TILT)",created:"2026-10-05",due:"2026-10-28"},
+  {key:"CVM-19",project:"CVM",status:"Concluído",assignee:"Conteúdo",summary:"Pré-inscrição e vagas (TILT)",created:"2026-10-05",due:"2026-10-28"},
+  {key:"CVM-18",project:"CVM",status:"Concluído",assignee:"Conteúdo",summary:"Manifesto TILT",created:"2026-10-05",due:"2026-10-28"},
+  {key:"CVM-17",project:"CVM",status:"Concluído",assignee:"Conteúdo",summary:"Conteúdo e programação (TILT)",created:"2026-10-05",due:"2026-10-28"},
+  {key:"CVM-16",project:"CVM",status:"Concluído",assignee:"Conteúdo",summary:"Bloco de números (TILT)",created:"2026-10-05",due:"2026-10-28"},
+  {key:"CVM-15",project:"CVM",status:"Concluído",assignee:"Conteúdo",summary:"Hero (TILT)",created:"2026-10-05",due:"2026-10-28"},
+  {key:"CVM-14",project:"CVM",status:"Concluído",assignee:"Conteúdo",summary:"Header e navegação (TILT)",created:"2026-10-05",due:"2026-10-28"},
+  {key:"STRAPI-25",project:"STRAPI",status:"Tarefas pendentes",assignee:"Conteúdo",summary:"[Lift][Strapi] Estruturação de conteúdo e integração com CMS",created:"2026-05-03",due:"2026-11-23"},
+  {key:"LIFT-30",project:"LIFT",status:"Tarefas pendentes",assignee:"Conteúdo",summary:"Lift Data — Seção principal / hero",created:"2026-10-26",due:"2026-11-23"},
+  {key:"LIFT-29",project:"LIFT",status:"Tarefas pendentes",assignee:"Conteúdo",summary:"Lift Data — Cabeçalho e menu",created:"2026-10-26",due:"2026-11-23"},
+  {key:"LIFT-28",project:"LIFT",status:"Tarefas pendentes",assignee:"Conteúdo",summary:"Lift Lab — Responsividade e validação final",created:"2026-10-26",due:"2026-11-23"},
+  {key:"LIFT-27",project:"LIFT",status:"Tarefas pendentes",assignee:"Conteúdo",summary:"Lift Lab — Rodapé",created:"2026-10-26",due:"2026-11-23"},
+  {key:"LIFT-26",project:"LIFT",status:"Tarefas pendentes",assignee:"Conteúdo",summary:"Lift Lab — Seções de conteúdo",created:"2026-10-26",due:"2026-11-23"},
+  {key:"LIFT-25",project:"LIFT",status:"Tarefas pendentes",assignee:"Conteúdo",summary:"Lift Lab — Seção principal / hero",created:"2026-10-26",due:"2026-11-23"},
+  {key:"LIFT-24",project:"LIFT",status:"Tarefas pendentes",assignee:"Conteúdo",summary:"Lift Lab — Cabeçalho e menu",created:"2026-10-26",due:"2026-11-23"},
+  {key:"LIFT-23",project:"LIFT",status:"Tarefas pendentes",assignee:"Conteúdo",summary:"Lift PAI — Responsividade e validação final",created:"2026-10-26",due:"2026-11-23"},
+  {key:"LIFT-22",project:"LIFT",status:"Tarefas pendentes",assignee:"Conteúdo",summary:"Lift PAI — Rodapé",created:"2026-10-26",due:"2026-11-23"},
+  {key:"LIFT-21",project:"LIFT",status:"Tarefas pendentes",assignee:"Conteúdo",summary:"Lift PAI — Seções de conteúdo",created:"2026-10-26",due:"2026-11-23"},
+  {key:"LIFT-20",project:"LIFT",status:"Tarefas pendentes",assignee:"Conteúdo",summary:"Lift PAI — Seção principal / hero",created:"2026-10-26",due:"2026-11-23"},
+  {key:"LIFT-19",project:"LIFT",status:"Tarefas pendentes",assignee:"Conteúdo",summary:"Lift PAI — Cabeçalho e menu",created:"2026-10-26",due:"2026-11-23"},
+  {key:"LIFT-13",project:"LIFT",status:"Tarefas pendentes",assignee:"Conteúdo",summary:"Iniciar desenvolvimento da nova versão",created:"2026-10-13",due:"2026-11-08",semPrev:true},
+  {key:"FENASIO-10",project:"FENASIO",status:"Tarefas pendentes",assignee:"Desenvolvimento",summary:"Edição de dependentes no front do Clube F (e-mail por CPF)",created:"2026-10-22",due:"2026-11-13"},
+  {key:"ETI-26",project:"ETI",status:"Em andamento",assignee:"Coordenação",summary:"[ETI] P20 · Projeção segmentada da TI para o planejamento estratégico",created:"2026-09-29",due:"2026-11-08",semPrev:true},
+  {key:"QSENTINEL-2",project:"QSENTINEL",status:"Fazendo",assignee:"Coordenação",summary:"Escopo e KPIs",created:"2026-09-24",due:"2026-11-27"},
+  {key:"QSENTINEL-3",project:"QSENTINEL",status:"A fazer",assignee:"Tech Lead",summary:"Desenvolvimento e Validação",created:"2026-09-24",due:"2026-12-18"},
+  {key:"QSENTINEL-6",project:"QSENTINEL",status:"A fazer",assignee:"Coordenação",summary:"Definir KPIs e critério de sucesso da PoC",created:"2026-10-26",due:"2026-11-27"},
+  {key:"QSENTINEL-7",project:"QSENTINEL",status:"A fazer",assignee:"Coordenação",summary:"Classificar os dados sensíveis",created:"2026-10-26",due:"2026-11-27"},
+  {key:"QSENTINEL-8",project:"QSENTINEL",status:"A fazer",assignee:"Coordenação",summary:"Estruturar governança e camadas de risco",created:"2026-10-26",due:"2026-11-13"},
+  {key:"QSENTINEL-9",project:"QSENTINEL",status:"A fazer",assignee:"Coordenação",summary:"Definir processo do analista e curadoria",created:"2026-10-26",due:"2026-11-27"},
+  {key:"QSENTINEL-10",project:"QSENTINEL",status:"A fazer",assignee:"Tech Lead",summary:"Construir camada de orquestração (middleware) do Airtable",created:"2026-10-26",due:"2026-11-20"},
+  {key:"QSENTINEL-12",project:"QSENTINEL",status:"A fazer",assignee:"Tech Lead",summary:"Definir estratégia de extração do Airtable",created:"2026-10-26",due:"2026-11-20"},
+  {key:"QSENTINEL-13",project:"QSENTINEL",status:"A fazer",assignee:"Coordenação",summary:"Montar dataset em dois grupos (calibração e controle)",created:"2026-10-26",due:"2026-11-27"},
+  {key:"QSENTINEL-14",project:"QSENTINEL",status:"A fazer",assignee:"Coordenação",summary:"Criar documento de governança de usuários e acessos",created:"2026-10-26",due:"2026-11-08",semPrev:true},
+  {key:"QSENTINEL-15",project:"QSENTINEL",status:"A fazer",assignee:"Coordenação",summary:"Definir processo de validação e aprovação do analista",created:"2026-10-26",due:"2026-11-08",semPrev:true},
+  {key:"PROC-374",project:"PROC",status:"Aguardando Cliente",assignee:"Coordenação",summary:"Acompanhar a carga inicial do WBC e a data de corte",created:"2026-10-13",due:"2026-11-08",semPrev:true},
+  {key:"PROC-373",project:"PROC",status:"Aguardando Cliente",assignee:"Coordenação",summary:"Cobrar o desenvolvimento do endpoint pelo WBC",created:"2026-10-13",due:"2026-11-08",semPrev:true},
+  {key:"PROC-385",project:"PROC",status:"Em andamento",assignee:"Coordenação",summary:"Organização do Planejamento Estratégico 2027 da TI",created:"2026-10-14",due:"2026-11-08",semPrev:true},
+  {key:"PROC-369",project:"PROC",status:"Em andamento",assignee:"Coordenação",summary:"NordPass: Onda 2 Consórcio (convite, cofre e treinamento)",created:"2026-10-13",due:"2026-11-08",semPrev:true},
+  {key:"PROC-368",project:"PROC",status:"Tarefas pendentes",assignee:"Coordenação",summary:"NordPass: encerrar e documentar a Onda 1 Financeiro",created:"2026-10-13",due:"2026-11-08",semPrev:true},
+  {key:"PROC-391",project:"PROC",status:"Tarefas pendentes",assignee:"Coordenação",summary:"Entregar o relatório de conclusão das frentes de TI do Programa 60 Anos",created:"2026-11-04",due:"2026-11-10"},
+  {key:"PROC-416",project:"PROC",status:"Tarefas pendentes",assignee:"Coordenação",summary:"Revisar o Offboarding dentro de Onboarding – Regras",created:"2026-11-04",due:"2026-11-11"},
+  {key:"PROC-410",project:"PROC",status:"Tarefas pendentes",assignee:"Coordenação",summary:"Marcar o BYOD no inventário (Jira Assets)",created:"2026-11-04",due:"2026-11-08",semPrev:true},
+  {key:"PROC-409",project:"PROC",status:"Tarefas pendentes",assignee:"Coordenação",summary:"Definir o chamado de adesão ao BYOD para quem já trabalha",created:"2026-11-04",due:"2026-11-08",semPrev:true},
+  {key:"PROC-405",project:"PROC",status:"Tarefas pendentes",assignee:"Coordenação",summary:"Revisar e aceitar as sugestões do Claude in Chrome nos 10 documentos",created:"2026-11-04",due:"2026-11-12"},
+  {key:"PROC-393",project:"PROC",status:"Em andamento",assignee:"Coordenação",summary:"Formalizar a Política de Equipamento Próprio (GOV-TI-10) e o Termo BYOD",created:"2026-11-04",due:"2026-11-08",semPrev:true},
+  {key:"PROC-394",project:"PROC",status:"Em andamento",assignee:"Coordenação",summary:"Atualizar a biblioteca de documentos para citar o BYOD",created:"2026-11-04",due:"2026-11-11"},
+  {key:"PROC-395",project:"PROC",status:"Em andamento",assignee:"Coordenação",summary:"Incluir a opção de BYOD nos formulários do SDesk",created:"2026-11-04",due:"2026-11-11"},
+  {key:"PROC-396",project:"PROC",status:"Em andamento",assignee:"Coordenação",summary:"Validar a regra e o termo BYOD com GEP / RH e Jurídico",created:"2026-11-04",due:"2026-11-08",semPrev:true},
+  {key:"PROC-397",project:"PROC",status:"Em andamento",assignee:"Coordenação",summary:"Alinhar com o Tech Lead: criptografia fora do Windows",created:"2026-11-04",due:"2026-11-08",semPrev:true},
+  {key:"PROC-398",project:"PROC",status:"Em andamento",assignee:"Coordenação",summary:"Colher a contribuição dos líderes das áreas sobre a política",created:"2026-11-04",due:"2026-11-08",semPrev:true},
+  {key:"PROC-399",project:"PROC",status:"Em andamento",assignee:"Coordenação",summary:"Obter a aprovação da Diretoria de Inovação e Estratégia",created:"2026-11-04",due:"2026-11-08",semPrev:true},
+  {key:"PROC-400",project:"PROC",status:"Em andamento",assignee:"Coordenação",summary:"Publicar a política e o termo na base de conhecimento",created:"2026-11-04",due:"2026-11-08",semPrev:true},
+  {key:"PROC-401",project:"PROC",status:"Em andamento",assignee:"Coordenação",summary:"Confirmar os códigos GOV-TI-10 e MOD-TI-09",created:"2026-11-04",due:"2026-11-08",semPrev:true},
+  {key:"PROC-402",project:"PROC",status:"Em andamento",assignee:"Coordenação",summary:"Atualizar os modelos MOD-TI-04, 05 e 06",created:"2026-11-04",due:"2026-11-11"},
+  {key:"PROC-403",project:"PROC",status:"Em andamento",assignee:"Coordenação",summary:"Atualizar os processos PROC-TI-02, 04, 06 e 07",created:"2026-11-04",due:"2026-11-11"},
+  {key:"PROC-404",project:"PROC",status:"Em andamento",assignee:"Coordenação",summary:"Atualizar a Matriz de Responsabilidades sobre Plataformas",created:"2026-11-04",due:"2026-11-11"},
+  {key:"PROC-406",project:"PROC",status:"Em andamento",assignee:"Coordenação",summary:"Integração: criar os campos de BYOD",created:"2026-11-04",due:"2026-11-11"},
+  {key:"PROC-407",project:"PROC",status:"Em andamento",assignee:"Coordenação",summary:"Desligamento: criar o campo Computador do colaborador",created:"2026-11-04",due:"2026-11-11"},
+  {key:"PROC-408",project:"PROC",status:"Em andamento",assignee:"Coordenação",summary:"Validar a pré-visualização dos dois formulários",created:"2026-11-04",due:"2026-11-11"},
+  {key:"PROC-411",project:"PROC",status:"Em andamento",assignee:"Coordenação",summary:"Atualizar a base de conhecimento para citar o BYOD",created:"2026-11-04",due:"2026-11-08",semPrev:true},
+  {key:"PROC-412",project:"PROC",status:"Em andamento",assignee:"Coordenação",summary:"Atualizar o artigo Onboarding – Regras",created:"2026-11-04",due:"2026-11-08",semPrev:true},
+  {key:"PROC-413",project:"PROC",status:"Em andamento",assignee:"Coordenação",summary:"Atualizar o artigo Equipamentos de TI",created:"2026-11-04",due:"2026-11-08",semPrev:true},
+  {key:"PROC-414",project:"PROC",status:"Em andamento",assignee:"Coordenação",summary:"Atualizar os artigos de acesso e senhas",created:"2026-11-04",due:"2026-11-08",semPrev:true},
+  {key:"PROC-415",project:"PROC",status:"Em andamento",assignee:"Coordenação",summary:"Criar o artigo de autoatendimento sobre BYOD",created:"2026-11-04",due:"2026-11-08",semPrev:true},
+  {key:"PROC-417",project:"PROC",status:"Em andamento",assignee:"Coordenação",summary:"Atualizar o artigo Catálogo de Serviços de TI",created:"2026-11-04",due:"2026-11-08",semPrev:true},
+  {key:"PROC-418",project:"PROC",status:"Em andamento",assignee:"Coordenação",summary:"Atualizar o artigo Guia do Portal SDesk",created:"2026-11-04",due:"2026-11-08",semPrev:true},
+  {key:"PROC-419",project:"PROC",status:"Em andamento",assignee:"Coordenação",summary:"Atualizar o artigo Reportar um incidente",created:"2026-11-04",due:"2026-11-08",semPrev:true},
+  {key:"PROC-420",project:"PROC",status:"Em andamento",assignee:"Coordenação",summary:"Atualizar o artigo O que NÃO é atendido pela TI",created:"2026-11-04",due:"2026-11-08",semPrev:true},
+  {key:"PROC-421",project:"PROC",status:"Em andamento",assignee:"Coordenação",summary:"Incluir o artigo de BYOD no índice do TBDC",created:"2026-11-04",due:"2026-11-08",semPrev:true}
 ];
 
 // Sprint S22 (26/10-08/11), lida do objeto Sprint do Jira em 27/10/2026.
 // carry:true = item que ja estava na S21 e atravessou em aberto.
 const S22_ISSUES=[
-  {key:"ANALYTICS-12",project:"ANALYTICS",status:"Itens Pendentes",assignee:"Tech Lead",summary:"Revisar dados de acordo com o chamado Sdesk 340"},
-  {key:"ENG-13",project:"ENG",status:"Tarefas pendentes",assignee:"Tech Lead",summary:"Migrar APIs para novo Railway"},
-  {key:"ENG-15",project:"ENG",status:"Tarefas pendentes",assignee:"Tech Lead",summary:"Garantir novas URLs das APIs e bloqueios por IP (Todas APIs)"},
-  {key:"ENG-16",project:"ENG",status:"Tarefas pendentes",assignee:"Tech Lead",summary:"Criar stg para todos os projetos"},
-  {key:"ENG-20",project:"ENG",status:"Tarefas pendentes",assignee:"Tech Lead",summary:"[Uptime Kuma] Configurar monitoramento das aplicações e serviços"},
-  {key:"ENG-33",project:"ENG",status:"Concluído",assignee:"Tech Lead",summary:"Configurar monitor – Fenasbac Auth"},
-  {key:"ENG-34",project:"ENG",status:"Tarefas pendentes",assignee:"Tech Lead",summary:"Configurar monitor – SISFenasbac API"},
-  {key:"ENG-35",project:"ENG",status:"Tarefas pendentes",assignee:"Tech Lead",summary:"Configurar monitor – Fenasbac Conecta"},
-  {key:"ENG-36",project:"ENG",status:"Tarefas pendentes",assignee:"Tech Lead",summary:"Configurar monitor – Fenasbac Hub"},
-  {key:"ENG-37",project:"ENG",status:"Tarefas pendentes",assignee:"Tech Lead",summary:"Configurar monitor – FSync"},
-  {key:"ENG-38",project:"ENG",status:"Tarefas pendentes",assignee:"Tech Lead",summary:"Configurar monitor – Strapi CMS"},
-  {key:"FSYNC-30",project:"FSYNC",status:"Tarefas pendentes",assignee:"Desenvolvimento",summary:"Criação e edição de rotas para o funcionamento dos filtros"},
-  {key:"FSYNC-39",project:"FSYNC",status:"Tarefas pendentes",assignee:"Desenvolvimento",summary:"2.2 Índices de busca no banco do SIS"},
-  {key:"FSYNC-49",project:"FSYNC",status:"Tarefas pendentes",assignee:"Desenvolvimento",summary:"3.7 Carga em lote pronta para produção"},
-  {key:"FSYNC-50",project:"FSYNC",status:"Tarefas pendentes",assignee:"Desenvolvimento",summary:"3.8 Rodar a carga inicial em produção"},
-  {key:"FSYNC-52",project:"FSYNC",status:"Tarefas pendentes",assignee:"Desenvolvimento",summary:"4.2 Site sem chamadas a rotas inexistentes"},
-  {key:"FSYNC-57",project:"FSYNC",status:"Tarefas pendentes",assignee:"Desenvolvimento",summary:"5.5 Guard e validação nas rotas do SIS"},
-  {key:"FSYNC-58",project:"FSYNC",status:"Tarefas pendentes",assignee:"Desenvolvimento",summary:"5.6 Escrita no SIS por um caminho só"},
-  {key:"FSYNC-59",project:"FSYNC",status:"Tarefas pendentes",assignee:"Desenvolvimento",summary:"5.7 Testes de contrato do site e do conecta"},
-  {key:"FSYNC-60",project:"FSYNC",status:"Tarefas pendentes",assignee:"Desenvolvimento",summary:"6.1 Homologação"},
-  {key:"FSYNC-61",project:"FSYNC",status:"Tarefas pendentes",assignee:"Desenvolvimento",summary:"6.2 Virada em produção"},
-  {key:"FSYNC-62",project:"FSYNC",status:"Tarefas pendentes",assignee:"Desenvolvimento",summary:"6.3 Observação com plano de volta"},
-  {key:"FSYNC-63",project:"FSYNC",status:"Tarefas pendentes",assignee:"Desenvolvimento",summary:"6.4 Desligar a API antiga"},
-  {key:"CONECTA-103",project:"CONECTA",status:"Em andamento",assignee:"Desenvolvimento",summary:"Atualizar a base de associados da ASBAC Salvador no Conecta",carry:true},
-  {key:"CONECTA-110",project:"CONECTA",status:"Em andamento",assignee:"Infra / Suporte N1",summary:"Retestar os três perfis e fechar o CONECTA-79",carry:true},
-  {key:"CONECTA-113",project:"CONECTA",status:"Tarefas pendentes",assignee:"Desenvolvimento",summary:"Consumir o endpoint do WBC (sincronização por período e tipo)",carry:true},
-  {key:"CONECTA-114",project:"CONECTA",status:"Tarefas pendentes",assignee:"Desenvolvimento",summary:"Carga inicial dos associados ativos e dependentes (corte 01/11)",carry:true},
-  {key:"CONECTA-115",project:"CONECTA",status:"Tarefas pendentes",assignee:"Desenvolvimento",summary:"Inativar associados desligados (tipo D) no Clube F",carry:true},
-  {key:"CONECTA-116",project:"CONECTA",status:"Tarefas pendentes",assignee:"Desenvolvimento",summary:"Validação manual de dependentes sem dados completos",carry:true},
-  {key:"CONECTA-117",project:"CONECTA",status:"Tarefas pendentes",assignee:"Desenvolvimento",summary:"Excluir não sócios (praticantes sem vínculo) do Clube F",carry:true},
-  {key:"CONECTA-119",project:"CONECTA",status:"Tarefas pendentes",assignee:"Desenvolvimento",summary:"Preparar o consumo da API do WBC (inclusões e desativações) e o vínculo dependente-titular"},
-  {key:"CONECTA-121",project:"CONECTA",status:"Tarefas pendentes",assignee:"Infra / Suporte N1",summary:"Criar o Guia do Ponto Focal do Conecta (material de consulta para o treinamento)",carry:true},
-  {key:"PORTAL-4",project:"PORTAL",status:"Em andamento",assignee:"Infra / Suporte N1",summary:"Intranet - Implementação e Validação do Redesign em Ambiente de Staging (Pré-Produção)"},
-  {key:"PORTAL-6",project:"PORTAL",status:"Tarefas pendentes",assignee:"Infra / Suporte N1",summary:"Publicação do Redesign em Produção (Deploy) e Plano de Comunicação"},
-  {key:"PORTAL-8",project:"PORTAL",status:"Concluído",assignee:"Infra / Suporte N1",summary:"Configurar e aplicar o novo layout/tema no ambiente de testes"},
-  {key:"PORTAL-9",project:"PORTAL",status:"Concluído",assignee:"Infra / Suporte N1",summary:"SISFenasbac em atalho único, com escolha entre produção e homologação"},
-  {key:"PORTAL-10",project:"PORTAL",status:"Concluído",assignee:"Infra / Suporte N1",summary:"Central de acesso a todos os sites da Fenasbac"},
-  {key:"PORTAL-11",project:"PORTAL",status:"Concluído",assignee:"Infra / Suporte N1",summary:"Aviso de VPN em sites e links que exigem conexão (SISFenasbac e PGAFI)"},
-  {key:"PORTAL-12",project:"PORTAL",status:"Concluído",assignee:"Infra / Suporte N1",summary:"Equipe aberta: mural + organograma por área"},
-  {key:"PORTAL-13",project:"PORTAL",status:"Concluído",assignee:"Infra / Suporte N1",summary:"Área do colaborador vinda do banco via departmentId + tabela Department"},
-  {key:"PORTAL-14",project:"PORTAL",status:"Concluído",assignee:"Infra / Suporte N1",summary:"Calendário com aniversários"},
-  {key:"PORTAL-15",project:"PORTAL",status:"Concluído",assignee:"Infra / Suporte N1",summary:"Busca rápida (Ctrl+K / lupa): pessoas, sites, documentos e atalhos"},
-  {key:"PORTAL-16",project:"PORTAL",status:"Concluído",assignee:"Infra / Suporte N1",summary:"Validar com a Maysa a correção dos dados de colaboradores (mural e organograma)"},
-  {key:"PORTAL-17",project:"PORTAL",status:"Concluído",assignee:"Infra / Suporte N1",summary:"Configurar e aplicar a integração com Fenasbac AUTH para controle de acesso"},
-  {key:"PORTAL-18",project:"PORTAL",status:"Tarefas pendentes",assignee:"Infra / Suporte N1",summary:"Configurar e aplicar a integração com Kuma para monitoramento de status em tempo real"},
-  {key:"PORTAL-19",project:"PORTAL",status:"Tarefas pendentes",assignee:"Infra / Suporte N1",summary:"Configurar e implementar agenda no calendário para que os eventos da federação já apareçam para os colaboradores"},
-  {key:"PORTAL-20",project:"PORTAL",status:"Tarefas pendentes",assignee:"Infra / Suporte N1",summary:"Implementar Fenasbac AUTH para o bloqueio funcionar para o site inteiro e não apenas para diretórios específicos"},
-  {key:"PROC-368",project:"PROC",status:"Tarefas pendentes",assignee:"Coordenação",summary:"NordPass: encerrar e documentar a Onda 1 Financeiro",carry:true},
-  {key:"PROC-369",project:"PROC",status:"Tarefas pendentes",assignee:"Coordenação",summary:"NordPass: Onda 2 Consórcio (convite, cofre e treinamento)",carry:true},
+  {key:"CONECTA-114",project:"CONECTA",status:"DEPENDÊNCIA EXTERNA",assignee:"Desenvolvimento",summary:"Carga inicial dos associados (nova data de corte)",carry:true},
+  {key:"CONECTA-84",project:"CONECTA",status:"Em andamento",assignee:"Desenvolvimento",summary:"Preparar a ativação das regionais (perfis Validação e Gestão)"},
+  {key:"CONECTA-121",project:"CONECTA",status:"Em andamento",assignee:"Infra / Suporte N1",summary:"Criar o Guia do Ponto Focal do Conecta",carry:true},
+  {key:"CONECTA-123",project:"CONECTA",status:"Concluído",assignee:"Desenvolvimento",summary:"Restringir a exibição dos campos dos associados por regional (LGPD)"},
   {key:"PROC-373",project:"PROC",status:"Aguardando Cliente",assignee:"Coordenação",summary:"Cobrar o desenvolvimento do endpoint pelo WBC",carry:true},
-  {key:"PROC-374",project:"PROC",status:"Aguardando Cliente",assignee:"Coordenação",summary:"Acompanhar a carga inicial do WBC e a data de corte (01/11)",carry:true},
-  {key:"PROC-385",project:"PROC",status:"Em andamento",assignee:"Coordenação",summary:"Organização do Planejamento Estratégico 2027 da TI",carry:true},
-  {key:"QSENTINEL-2",project:"QSENTINEL",status:"Fazendo",assignee:"Coordenação",summary:"Escopo e KPIs",carry:true},
-  {key:"QSENTINEL-3",project:"QSENTINEL",status:"A fazer",assignee:"Coordenação",summary:"Desenvolvimento e Validação"},
-  {key:"QSENTINEL-6",project:"QSENTINEL",status:"A fazer",assignee:"Coordenação",summary:"Definir KPIs e critério de sucesso da PoC",carry:true},
-  {key:"QSENTINEL-7",project:"QSENTINEL",status:"A fazer",assignee:"Coordenação",summary:"Classificar os dados sensíveis"},
-  {key:"QSENTINEL-8",project:"QSENTINEL",status:"A fazer",assignee:"Coordenação",summary:"Estruturar governança e camadas de risco"},
-  {key:"QSENTINEL-9",project:"QSENTINEL",status:"A fazer",assignee:"Coordenação",summary:"Definir processo do analista e curadoria"},
-  {key:"QSENTINEL-10",project:"QSENTINEL",status:"A fazer",assignee:"Tech Lead",summary:"Construir camada de orquestração (middleware) do Airtable"},
-  {key:"QSENTINEL-12",project:"QSENTINEL",status:"A fazer",assignee:"Tech Lead",summary:"Definir estratégia de extração do Airtable"},
-  {key:"QSENTINEL-13",project:"QSENTINEL",status:"A fazer",assignee:"Coordenação",summary:"Montar dataset em dois grupos (calibração e controle)"},
-  {key:"QSENTINEL-14",project:"QSENTINEL",status:"A fazer",assignee:"Coordenação",summary:"Criar documento de governança de usuários e acessos"},
-  {key:"QSENTINEL-15",project:"QSENTINEL",status:"A fazer",assignee:"Coordenação",summary:"Definir processo de validação e aprovação do analista"},
-  {key:"FENASIO-10",project:"FENASIO",status:"Tarefas pendentes",assignee:"Desenvolvimento",summary:"Edição de dependentes no front do Clube F (preenchimento de e-mail por CPF)",carry:true},
-  {key:"LIFT-13",project:"LIFT",status:"Tarefas pendentes",assignee:"Conteúdo",summary:"Iniciar desenvolvimento da nova versão"},
-  {key:"LIFT-19",project:"LIFT",status:"Tarefas pendentes",assignee:"Conteúdo",summary:"Lift PAI — Cabeçalho e menu (desktop e mobile)"},
-  {key:"LIFT-20",project:"LIFT",status:"Tarefas pendentes",assignee:"Conteúdo",summary:"Lift PAI — Seção principal / hero (desktop e mobile)"},
-  {key:"LIFT-21",project:"LIFT",status:"Tarefas pendentes",assignee:"Conteúdo",summary:"Lift PAI — Seções de conteúdo (desktop e mobile)"},
-  {key:"LIFT-22",project:"LIFT",status:"Tarefas pendentes",assignee:"Conteúdo",summary:"Lift PAI — Rodapé (desktop e mobile)"},
-  {key:"LIFT-23",project:"LIFT",status:"Tarefas pendentes",assignee:"Conteúdo",summary:"Lift PAI — Responsividade e validação final (desktop e mobile)"},
-  {key:"LIFT-24",project:"LIFT",status:"Tarefas pendentes",assignee:"Conteúdo",summary:"Lift Lab — Cabeçalho e menu (desktop e mobile)"},
-  {key:"LIFT-25",project:"LIFT",status:"Tarefas pendentes",assignee:"Conteúdo",summary:"Lift Lab — Seção principal / hero (desktop e mobile)"},
-  {key:"LIFT-26",project:"LIFT",status:"Tarefas pendentes",assignee:"Conteúdo",summary:"Lift Lab — Seções de conteúdo (desktop e mobile)"},
-  {key:"LIFT-27",project:"LIFT",status:"Tarefas pendentes",assignee:"Conteúdo",summary:"Lift Lab — Rodapé (desktop e mobile)"},
-  {key:"LIFT-28",project:"LIFT",status:"Tarefas pendentes",assignee:"Conteúdo",summary:"Lift Lab — Responsividade e validação final (desktop e mobile)"},
-  {key:"LIFT-29",project:"LIFT",status:"Tarefas pendentes",assignee:"Conteúdo",summary:"Lift Data — Cabeçalho e menu (desktop e mobile)"},
-  {key:"LIFT-30",project:"LIFT",status:"Tarefas pendentes",assignee:"Conteúdo",summary:"Lift Data — Seção principal / hero (desktop e mobile)"},
-  {key:"CVM-12",project:"CVM",status:"Aguardando Cliente",assignee:"Conteúdo",summary:"Aplicar Checklist de Migração e Publicação na Nova Versão do Site Nexus"},
-  {key:"CVM-14",project:"CVM",status:"Aguardando Cliente",assignee:"Conteúdo",summary:"Header e navegação"},
-  {key:"CVM-15",project:"CVM",status:"Aguardando Cliente",assignee:"Conteúdo",summary:"Hero (TILT)"},
-  {key:"CVM-16",project:"CVM",status:"Aguardando Cliente",assignee:"Conteúdo",summary:"Bloco de números"},
-  {key:"CVM-17",project:"CVM",status:"Aguardando Cliente",assignee:"Conteúdo",summary:"Conteúdo e programação"},
-  {key:"CVM-18",project:"CVM",status:"Aguardando Cliente",assignee:"Conteúdo",summary:"Manifesto TILT"},
-  {key:"CVM-19",project:"CVM",status:"Aguardando Cliente",assignee:"Conteúdo",summary:"Pré-inscrição e vagas"},
-  {key:"CVM-20",project:"CVM",status:"Aguardando Cliente",assignee:"Conteúdo",summary:"Rodapé"},
-  {key:"CVM-22",project:"CVM",status:"Aguardando Cliente",assignee:"Conteúdo",summary:"Header e navegação"},
-  {key:"CVM-23",project:"CVM",status:"Aguardando Cliente",assignee:"Conteúdo",summary:"Hero e manifesto"},
-  {key:"CVM-24",project:"CVM",status:"Aguardando Cliente",assignee:"Conteúdo",summary:"Pré-inscrição e vagas"},
-  {key:"CVM-25",project:"CVM",status:"Aguardando Cliente",assignee:"Conteúdo",summary:"Bloco de números"},
-  {key:"CVM-26",project:"CVM",status:"Aguardando Cliente",assignee:"Conteúdo",summary:"Conteúdo e programação"},
-  {key:"CVM-27",project:"CVM",status:"Aguardando Cliente",assignee:"Conteúdo",summary:"Rodapé"},
-  {key:"CVM-28",project:"CVM",status:"Tarefas pendentes",assignee:"Conteúdo",summary:"Enviar manual do editor e os demais documentos pertinentes a entrega do site"},
-  {key:"STRAPI-25",project:"STRAPI",status:"Tarefas pendentes",assignee:"Conteúdo",summary:"[Lift][Strapi] Estruturação de conteúdo e integração com CMS"},
-  {key:"TECH-126",project:"TECH",status:"Aguardando Cliente",assignee:"Infra / Suporte N1",summary:"VPN e VNC — Inovação"},
-  {key:"TECH-131",project:"TECH",status:"Em andamento",assignee:"Infra / Suporte N1",summary:"VPN e VNC — Diretoria"},
-  {key:"TECH-135",project:"TECH",status:"Em andamento",assignee:"Infra / Suporte N1",summary:"Cotação de upgrade de RAM (equipamentos com até 8GB)"},
-  {key:"TECH-136",project:"TECH",status:"Em andamento",assignee:"Infra / Suporte N1",summary:"Realizar cotação e troca de máquina(Paulo Stein)"},
-  {key:"TECH-140",project:"TECH",status:"Em andamento",assignee:"Infra / Suporte N1",summary:"Preparar e enviar os equipamentos — André Lin (SP)"},
-  {key:"TECH-144",project:"TECH",status:"Em andamento",assignee:"Infra / Suporte N1",summary:"Realizar o onboarding inicial de TI — André Lin"},
-  {key:"TECH-153",project:"TECH",status:"Em andamento",assignee:"Infra / Suporte N1",summary:"Instalar e configurar Nobreaks nos andares 2º, 5º e 7º"},
-  {key:"TECH-154",project:"TECH",status:"Tarefas pendentes",assignee:"Coordenação",summary:"Enviar lista de máquinas para aprovação do Rodrigo"},
-  {key:"TECH-156",project:"TECH",status:"Tarefas pendentes",assignee:"Infra / Suporte N1",summary:"Levantar as máquinas antigas substituídas para reporte ao Rodrigo"},
-  {key:"TECH-157",project:"TECH",status:"Tarefas pendentes",assignee:"Infra / Suporte N1",summary:"Providenciar devolução da máquina da Ana Flávia"},
+  {key:"PROC-399",project:"PROC",status:"Em andamento",assignee:"Coordenação",summary:"BYOD: obter a aprovação da Diretoria (prazo 13/11)",carry:true},
+  {key:"PROC-396",project:"PROC",status:"Em andamento",assignee:"Coordenação",summary:"BYOD: validar a regra e o termo com RH e Jurídico",carry:true},
+  {key:"PROC-369",project:"PROC",status:"Em andamento",assignee:"Coordenação",summary:"Cofre de senhas: Onda 2 Consórcio (cofre e treinamento)",carry:true},
+  {key:"PROC-385",project:"PROC",status:"Em andamento",assignee:"Coordenação",summary:"PE 2027: incorporar os direcionamentos do NUC",carry:true},
+  {key:"ETI-28",project:"ETI",status:"Em andamento",assignee:"Coordenação",summary:"Frente de dados e integração comercial"},
+  {key:"ETI-29",project:"ETI",status:"Em andamento",assignee:"Coordenação",summary:"IA como alavanca de eficiência (diretriz 2027)"},
+  {key:"ETI-34",project:"ETI",status:"Tarefas pendentes",assignee:"Coordenação",summary:"Ratificar a governança de dados (Conecta e Hub) e LGPD"},
+  {key:"ENG-45",project:"ENG",status:"Tarefas pendentes",assignee:"Tech Lead",summary:"Análise de proposta de upgrade de máquinas para o Rodrigo"},
+  {key:"ENG-20",project:"ENG",status:"Tarefas pendentes",assignee:"Tech Lead",summary:"Monitoramento das aplicações (Uptime Kuma)"},
+  {key:"ENG-16",project:"ENG",status:"Tarefas pendentes",assignee:"Tech Lead",summary:"Criar staging para todos os projetos"},
+  {key:"ENG-13",project:"ENG",status:"Tarefas pendentes",assignee:"Tech Lead",summary:"Migrar APIs para o novo Railway"},
+  {key:"ENG-15",project:"ENG",status:"Tarefas pendentes",assignee:"Tech Lead",summary:"Novas URLs das APIs e bloqueios por IP"},
+  {key:"PORTAL-6",project:"PORTAL",status:"Tarefas pendentes",assignee:"Infra / Suporte N1",summary:"Publicar a Intranet em produção",carry:true},
+  {key:"ANALYTICS-12",project:"ANALYTICS",status:"Itens Pendentes",assignee:"Tech Lead",summary:"Definir com a Inovação os dados do painel da área logada",carry:true},
+  {key:"CERTI-17",project:"CERTI",status:"Em andamento",assignee:"Desenvolvimento",summary:"Avaliar as sugestões de refinamento de Certificados (Marketing)"},
+  {key:"FENASBR-331",project:"FENASBR",status:"Tarefas pendentes",assignee:"Desenvolvimento",summary:"Ativar redirects 301 do site v1 para o v2"},
+  {key:"FENASBR-330",project:"FENASBR",status:"Tarefas pendentes",assignee:"Desenvolvimento",summary:"Desativar o site v1 após confirmar o v2"},
+  {key:"FSYNC-60",project:"FSYNC",status:"Tarefas pendentes",assignee:"Desenvolvimento",summary:"Fenasync: homologação e virada em produção",carry:true},
+  {key:"QSENTINEL-6",project:"QSENTINEL",status:"A fazer",assignee:"Coordenação",summary:"Fechar escopo, indicadores e dataset da PoC",carry:true}
 ];
 
 const PROJ_META={
+  "CVM":{name:"Sites TILT / Nexus",color:"#FF8C00",cat:"Conteúdo / Sites"},
+  "ANALYTICS":{name:"Analytics",color:"#2EA043",cat:"Operacional / Interno"},
+  "CERTI":{name:"Certificados",color:"#00C7FF",cat:"Produtos"},
   "CVM":{name:"Site Nexus CVM",color:"#FF8C00",cat:"Conteúdo / Sites"},
   "CERTI":{name:"Certificados",color:"#00C7FF",cat:"Produtos"},
   "ANALYTICS":{name:"Analytics",color:"#D29922",cat:"Produtos"},
@@ -650,40 +642,59 @@ const PROJ_META={
 // revisada pelo Tech Lead em 26/10/2026. Prosa — nao se recalcula do Jira;
 // reescrever a cada virada a partir do relatorio aprovado.
 const RESUMO={
-  frase:"A S21 tirou do papel a integração da base da ASBAC Brasília: avaliamos a sincronização automática com o sistema do fornecedor, devolvemos os ajustes necessários e já sabemos exatamente o que falta para ela funcionar de ponta a ponta.",
-  avancou:"A página dos 60 anos entrou no ar e a emissão de Certificados passou a ser feita pelas próprias áreas, sem depender da TI.",
-  atencao:"A integração só fecha quando o fornecedor criar a rota que atualiza cadastros. É condição, não há alternativa.",
-  destaques:[
-    {t:"Integração da base da ASBAC Brasília",d:"Primeiro caso de integração automática da base de uma regional: em vez de atualizar associados na mão, o nosso sistema passa a conversar direto com o da ASBAC Brasília. Endpoint avaliado e ajustes formalizados ao fornecedor."},
-    {t:"Certificados operados pelas áreas",d:"Repasse concluído entre 13 e 22/10, com guia, tutorial e gravação entregues e termo de entrega assinado (ENT-TI-05). Remove uma dependência da TI."},
-    {t:"Página dos 60 anos no ar",d:"Publicada em 20/10 em fenasbac.com.br/historia, com a trajetória, a galeria das regionais e os depoimentos em vídeo."},
+  "frase": "A S22 foi uma sprint de construção: a nova Intranet entrou na reta final de ajustes para a apresentação ao Rodrigoh, e finalizamos os sites do ecossistema Nexus.",
+  "avancou": "Concluímos as limpezas do Clube F e entregamos ao gestor do Programa 60 Anos o relatório de TI das frentes do programa.",
+  "atencao": "A integração com a ASBAC segue travada, porque o fornecedor não entregou a rota de atualização; e a página dos 60 anos entrou num novo desenvolvimento, ainda sem data de conteúdo.",
+  "destaques": [
+    {
+      "t": "Nova Intranet (portal interno)",
+      "d": "Redesenho com central de acesso a todos os sites, equipe com mural e organograma, calendário, busca rápida e bloqueio do site inteiro pela autenticação da Fenasbac. Não entregue: nos últimos ajustes para apresentar ao Rodrigoh ainda neste ciclo."
+    },
+    {
+      "t": "Ecossistema Nexus",
+      "d": "Finalizamos o desenvolvimento dos sites Nexus, Leap e Sandbox. Seguem em validação com o Marketing, e a publicação ainda depende do conteúdo final."
+    },
+    {
+      "t": "Integração da base da ASBAC e Clube F",
+      "d": "Limpamos a base do Clube F (desligados, não sócios, dependentes, ASBAC Salvador). O consumo da integração com o fornecedor não fechou: a rota de atualização ainda não existe, e por isso a carga e o corte de 01/11 não aconteceram."
+    }
   ],
-  radar:[
-    {t:"Sites de Inovação Aberta travados em validação",
-     i:"Nexus, Leap e Sandbox estão desenvolvidos, com conteúdo pronto, enviados à Comunicação em 23/10. A área devolveu nova rodada de ajustes em 26/10.",
-     a:"Prazo replanejado para 28/10. A TI publica assim que houver o aceite."},
-    {t:"Página dos 60 anos: ajustes de conteúdo pendentes",
-     i:"A experiência ainda não é a final.",
-     a:"No backlog priorizado, aguardando a lista da Comunicação — nada recebido até aqui."},
+  "radar": [
+    {
+      "t": "O fornecedor WBC não entregou a rota de atualização",
+      "i": "Sem ela a integração da ASBAC não fecha e a base não sincroniza.",
+      "a": "Ainda não tivemos retorno; seguimos em contato. Uma nova data de corte será definida quando a rota existir."
+    },
+    {
+      "t": "A página dos 60 anos entrou num novo desenvolvimento",
+      "i": "Layout bem diferente, é um site novo, que só começa com o conteúdo final (textos, fotos e vídeos), ainda sem data.",
+      "a": "Aguardando o conteúdo da Comunicação; homologação a partir de 16/11."
+    }
   ],
-  proxima:[
-    "<b>Integração da ASBAC Brasília</b> — destravar a rota de atualização com o fornecedor; carga e corte da base em data a definir.",
-    "<b>Fenasync</b> — retomar a unificação do SisFenasbac numa base única: rotas de unificação, reforço de segurança e migração da API.",
-    "<b>Ecossistema Lift</b> — iniciar o desenvolvimento do Lift Lab, Lift PAI e Lift Data.",
-    "<b>Sites de Inovação Aberta</b> — publicar Nexus, Leap e Sandbox assim que as áreas fecharem a validação.",
-    "<b>Cofre de senhas</b> — retomar a expansão para o Consórcio, adiada na sprint passada.",
-    "<b>QSentinel</b> — fechar escopo, indicadores e preparação dos dados da PoC.",
-    "<b>PE 2027</b> — sessão com o time em 05/11; conselho em 19/11.",
+  "proxima": [
+    "<b>Integração ASBAC</b> — destravar a rota com o fornecedor e executar a carga; ativar as regionais por perfil e criar o Guia do Ponto Focal.",
+    "<b>Intranet</b> — apresentar o portal ao Rodrigoh e, aprovada, publicar em produção.",
+    "<b>Equipamento próprio (BYOD)</b> — finalizar a política e o termo, validar com Jurídico e levar à Diretoria (prazo 13/11).",
+    "<b>Base de conhecimento</b> — concluir a reescrita dos artigos do Service Desk.",
+    "<b>Engenharia e infra</b> — monitoramento, homologação, migração das APIs e a proposta de troca de máquinas para aprovação.",
+    "<b>Página dos 60 anos</b> — iniciar a nova estrutura quando o conteúdo chegar; homologação a partir de 16/11.",
+    "<b>Nexus</b> — publicar após o aceite do Marketing.",
+    "<b>Cofre de senhas</b> — criar o cofre do Consórcio e treinar a área.",
+    "<b>QSentinel</b> — receber os dados sintéticos e o roadmap, consolidar a governança e preparar os testes de dezembro.",
+    "<b>PE 2027</b> — incorporar os direcionamentos do NUC; conselho em 19/11."
   ],
-  contexto:"Na S21 o time priorizou a integração da ASBAC Brasília — um projeto grande, ainda em andamento — e adiou de propósito a unificação da base (Fenasync), que retoma na S22. Menos itens, porém maiores.",
-  sdesk:"Suporte quase todo reativo e resolvido rápido, a maioria no mesmo dia ou no dia seguinte. A camada de IA do Jira já sugere soluções durante o preenchimento e evita a abertura de parte dos chamados; os dados dessa triagem ainda estão sendo acumulados. A operação está estável e não é mais gargalo.",
+  "contexto": "A S22 puxou muitas frentes grandes ao mesmo tempo (Intranet, Nexus, equipamento próprio e QSentinel), em sua maioria trabalho plurissemanal em andamento. Concluímos menos do que movimentamos, mas não é entrega perdida; a S23 entra com prioridade definida.",
+  "sdesk": "Suporte quase todo reativo e rápido: a primeira resposta saiu toda no prazo e a resolução cumpriu o prazo na maioria dos chamados, melhor que na S21. O piloto de autonomia começou com a Comunicação acompanhando os próprios chamados; a base de conhecimento está sendo reescrita para o autoatendimento e para incorporar a política de equipamento próprio."
 };
 
 const PROJ_NOTA={
-  "QSENTINEL":"Prova de conceito de IA com governança, ainda em definição — por isso 0 entregas sem significar frente parada. O escopo fechado na S21 é o analista do programa de aceleração como curador: a ferramenta pré-processa e recomenda listas curtas, e o analista valida, corrige e devolve a correção para virar memória institucional. A régua de governança já classifica os dados em quatro níveis (público, interno, sensível e estratégico); critérios de avaliação, gravações de entrevista e julgamentos internos sobre empresas ficam fora e não saem para o fornecedor. Seguem em aberto, para validação do Sponsor: quem faz o segundo olhar que aprova o que vira memória, se o consentimento assinado cobre enviar dado a fornecedor externo de IA, e a revisão do gabarito de pontuação. Os 11 cards da S22 são a preparação dos dados e do middleware.",
-  "CONECTA":"A taxa não mede o avanço da frente: as 9 issues em aberto são a integração da base da ASBAC Brasília, que ficou pronta do lado da TI e depende do fornecedor criar a rota que atualiza cadastros. A data de corte da carga inicial deixou de ser 01/11 e passa a ser definida quando a integração estiver pronta — os títulos dos cards CONECTA-114 e PROC-374 ainda citam 01/11 e precisam ser renomeados no Jira.",
-  "PROC":"Frente de coordenação e governança: 29 issues, 14 delas as subtarefas da padronização de status e workflow dos boards (PROC-354), que seguem pendentes. O bloco concluído na sprint é a reversão das avaliações Premium da Atlassian e a formalização dos requisitos da API ao WBC. A reversão aparece como 7 linhas — a tarefa PROC-375 e as 6 subtarefas em que ela foi quebrada —, porque no Jira subtarefa é item próprio e a contagem da sprint conta item, não esforço.",
-  "FENASIO":"Card único aberto na sprint — edição de dependentes no front do Clube F —, ligado à mesma frente de integração do Conecta.",
+  "PORTAL":"A nova Intranet avançou no redesenho e está em refinamento para apresentação ao Rodrigoh; não foi entregue nesta sprint. Dez módulos aparecem como \"Concluído (ciclo anterior)\": foram feitos em sprints passadas e seguem marcados na S22 — contam no total movimentado, não nas entregas da sprint (são higiene de board a limpar no Jira).",
+  "PROC": "Frente de coordenação e governança: a maior parte dos itens é a construção da Política de Equipamento Próprio (BYOD) — política, termo, formulários do Service Desk, biblioteca de documentos e matriz de responsabilidades. É um bloco plurissemanal, ainda não formalizado nem encaminhado para aprovação, por isso aparece com muitos itens em andamento e poucas conclusões. Inclui também a reescrita da base de conhecimento do SDesk e o NordPass.",
+  "FSYNC": "Unificação do SisFenasbac numa base única. Recomprometida para a S22, foi adiada de novo para priorizar a Intranet e o BYOD; o backlog (homologação, carga em produção, virada e desligamento da API antiga) segue para a S23.",
+  "CONECTA": "As limpezas do Clube F foram concluídas (desligados, não sócios, dependentes, ASBAC Salvador). O que não fechou é o consumo da integração com o fornecedor: a rota de atualização ainda não existe, e por isso a carga e o corte de 01/11 não aconteceram — uma nova data será definida quando a rota existir.",
+  "CVM": "Sites do ecossistema (Nexus/TILT): o desenvolvimento foi finalizado — 13 componentes entre hero, header, conteúdo, pré-inscrição, números e rodapé. Seguem em validação com o Marketing antes da publicação.",
+  "QSENTINEL": "Prova de conceito de IA com governança: escopo em fechamento e arquitetura definida. Estrutura criada para usar dados sintéticos na homologação inicial, com o primeiro caso de uso previsto para dezembro. Os cards são a preparação dos dados e do middleware.",
+  "LIFT": "Os três sites (Lift Lab, Lift PAI e Lift Data) foram abertos no board, mas o desenvolvimento não começou nesta sprint — a prioridade foi o ecossistema Nexus."
 };
 const PROJ_ORDER=["PROC","FSYNC","CONECTA","PORTAL","TECH","ANALYTICS","CVM","STRAPI","CERTI","ENG","FENASBR","QSENTINEL","FENASIO","LIFT","ETI","FENASHUB","SISFENAS","SRR","FIA","DOCS","GEP","SYNCOOP","FAUTH"];
 const CATS=["Operacional / Interno","Produtos","Conteúdo / Sites"];
@@ -693,26 +704,25 @@ const CATS=["Operacional / Interno","Produtos","Conteúdo / Sites"];
 // 'no prazo' | 'estouro' (meta vencida, concluido ou nao) | 'em curso'.
 // trilha = request type do JSM. Alimenta todos os KPIs de SLA do painel SDesk.
 const SDESK_ISSUES=[
-  {key:"SDESK-366",status:"Concluído",area:"Comunicação / Sites",trilha:"Solicitação de TI",sla:"estouro",sla1a:"no prazo",summary:"Datas de publicação - Blog",aberto:"2026-10-13",resolvido:"2026-10-21"},
-  {key:"SDESK-367",status:"Concluído",area:"Clube F / Conecta",trilha:"Solicitação de TI",sla:"estouro",sla1a:"no prazo",summary:"Erros - Cadastros Clube F",aberto:"2026-10-13",resolvido:"2026-10-20"},
-  {key:"SDESK-368",status:"Concluído",area:"TI Interno / Infra",trilha:"Solicitação de TI",sla:"no prazo",sla1a:"no prazo",summary:"Todas as impressões que estou mandando estão ficando pendente",aberto:"2026-10-13",resolvido:"2026-10-13"},
-  {key:"SDESK-369",status:"Concluído",area:"Comunicação / Sites",trilha:"Solicitação de TI",sla:"no prazo",sla1a:"no prazo",summary:"Comunicado de reajuste ano 2026",aberto:"2026-10-13",resolvido:"2026-10-14"},
-  {key:"SDESK-370",status:"Concluído",area:"SISFenasbac",trilha:"Solicitação de TI",sla:"no prazo",sla1a:"no prazo",summary:"Novas ocorrências no arquivo enviado à seguradora no dia 9/10",aberto:"2026-10-14",resolvido:"2026-10-15"},
-  {key:"SDESK-371",status:"Em andamento",area:"SISFenasbac",trilha:"Solicitação de TI",sla:"estouro",sla1a:"no prazo",summary:"Código de verificação - SISfenasbac",aberto:"2026-10-15",resolvido:""},
-  {key:"SDESK-372",status:"Concluído",area:"Comunicação / Sites",trilha:"Solicitação de TI",sla:"no prazo",sla1a:"no prazo",summary:"Libera Cadastro - Site FENASBAC",aberto:"2026-10-15",resolvido:"2026-10-15"},
-  {key:"SDESK-373",status:"Concluído",area:"TI Interno / Infra",trilha:"Solicitação de TI",sla:"no prazo",sla1a:"no prazo",summary:"Apoio devido reuniões Fenasbac com as Asbacs",aberto:"2026-10-15",resolvido:"2026-10-19"},
-  {key:"SDESK-374",status:"Concluído",area:"TI Interno / Infra",trilha:"Solicitação de TI",sla:"no prazo",sla1a:"no prazo",summary:"Apoio Técnico Notebook Dell",aberto:"2026-10-16",resolvido:"2026-10-26"},
-  {key:"SDESK-375",status:"Concluído",area:"Comunicação / Sites",trilha:"Solicitação de TI",sla:"no prazo",sla1a:"no prazo",summary:"Banner - Site",aberto:"2026-10-16",resolvido:"2026-10-19"},
-  {key:"SDESK-376",status:"Concluído",area:"TI Interno / Infra",trilha:"Solicitação de TI",sla:"estouro",sla1a:"no prazo",summary:"Troca de teclado e mouse",aberto:"2026-10-20",resolvido:"2026-10-23"},
-  {key:"SDESK-377",status:"Concluída",area:"Comunicação / Sites",trilha:"Reportar incidente",sla:"no prazo",sla1a:"no prazo",summary:"Problemas com área de homologação Site",aberto:"2026-10-20",resolvido:"2026-10-20"},
-  {key:"SDESK-378",status:"Concluído",area:"TI Interno / Infra",trilha:"Solicitação de TI",sla:"no prazo",sla1a:"no prazo",summary:"Liberar acesso",aberto:"2026-10-21",resolvido:"2026-10-21"},
-  {key:"SDESK-379",status:"Concluída",area:"TI Interno / Infra",trilha:"Reportar incidente",sla:"no prazo",sla1a:"no prazo",summary:"Senha Scanner",aberto:"2026-10-21",resolvido:"2026-10-21"},
-  {key:"SDESK-380",status:"Pendente",area:"Marketing",trilha:"Solicitação – Comunicação Digital",sla:"em curso",sla1a:"no prazo",summary:"Lista de leads limpos de contatos: Asbacs + Fenasbac",aberto:"2026-10-21",resolvido:""},
-  {key:"SDESK-381",status:"Concluído",area:"TI Interno / Infra",trilha:"Solicitação de TI",sla:"no prazo",sla1a:"no prazo",summary:"Adicionar contato no Slack",aberto:"2026-10-22",resolvido:"2026-10-26"},
-  {key:"SDESK-382",status:"Concluída",area:"Comunicação / Sites",trilha:"Reportar incidente",sla:"no prazo",sla1a:"no prazo",summary:"Strapi não atualizando conteúdo em EN e ES",aberto:"2026-10-22",resolvido:"2026-10-22"},
-  {key:"SDESK-383",status:"Concluído",area:"Certificados",trilha:"Solicitação de TI",sla:"no prazo",sla1a:"no prazo",summary:"Substituição de e-mail de usuário na DB para emissão de certificado",aberto:"2026-10-22",resolvido:"2026-10-26"},
-  {key:"SDESK-384",status:"Pendente",area:"SISFenasbac",trilha:"Reportar incidente",sla:"em curso",sla1a:"no prazo",summary:"Problema ao redefinir senha",aberto:"2026-10-22",resolvido:""},
-  {key:"SDESK-385",status:"Concluído",area:"TI Interno / Infra",trilha:"Solicitação de TI",sla:"no prazo",sla1a:"no prazo",summary:"Solicitação de webcam para notebook",aberto:"2026-10-26",resolvido:"2026-10-26"},
+  {key:"SDESK-409",status:"Concluído",area:"Marketing",trilha:"Solicitação – Comunicação Digital",sla:"no prazo",sla1a:"no prazo",summary:"Liberar perfil no MailChimp para baixar listas de e-mail",aberto:"2026-11-06",resolvido:"2026-11-06"},
+  {key:"SDESK-408",status:"Concluído",area:"Comunicação / Sites",trilha:"Reportar incidente",sla:"no prazo",sla1a:"no prazo",summary:"Falha no login do novo Strapi",aberto:"2026-11-06",resolvido:"2026-11-06"},
+  {key:"SDESK-361",status:"Concluído",area:"TI Interno / Infra",trilha:"Solicitação de TI",sla:"no prazo",sla1a:"no prazo",summary:"Celulares Equipe São Paulo",aberto:"2026-10-07",resolvido:"2026-11-06"},
+  {key:"SDESK-400",status:"Concluído",area:"Comunicação / Sites",trilha:"Solicitação – Comunicação Digital",sla:"no prazo",sla1a:"no prazo",summary:"Atualização de Banner para RECIP 2026",aberto:"2026-10-29",resolvido:"2026-11-06"},
+  {key:"SDESK-343",status:"Concluído",area:"TI Interno / Infra",trilha:"Integração",sla:"no prazo",sla1a:"no prazo",summary:"Integração de novo colaborador (acessos e equipamentos)",aberto:"2026-09-25",resolvido:"2026-11-06"},
+  {key:"SDESK-278",status:"Concluído",area:"Comunicação / Sites",trilha:"Solicitação – Comunicação Digital",sla:"estouro",sla1a:"no prazo",summary:"Novos Sites Nexus",aberto:"2026-08-17",resolvido:"2026-11-06"},
+  {key:"SDESK-406",status:"Concluído",area:"Inovação / Airtable",trilha:"Solicitação de TI",sla:"no prazo",sla1a:"no prazo",summary:"Estou sem acesso ao AIRTABLE",aberto:"2026-11-04",resolvido:"2026-11-04"},
+  {key:"SDESK-404",status:"Concluído",area:"SISFenasbac",trilha:"Reportar incidente",sla:"no prazo",sla1a:"no prazo",summary:"Não consigo atualizar o saldo devedor - PGAFI",aberto:"2026-11-04",resolvido:"2026-11-04"},
+  {key:"SDESK-403",status:"Concluído",area:"SISFenasbac",trilha:"Reportar incidente",sla:"no prazo",sla1a:"no prazo",summary:"Sistema PGAFI (antigo)",aberto:"2026-11-04",resolvido:"2026-11-04"},
+  {key:"SDESK-401",status:"Concluído",area:"TI Interno / Infra",trilha:"Solicitação de TI",sla:"no prazo",sla1a:"no prazo",summary:"Auxílio em acesso na conta Adobe",aberto:"2026-11-03",resolvido:"2026-11-04"},
+  {key:"SDESK-349",status:"Concluído",area:"SISFenasbac",trilha:"Solicitação de TI",sla:"estouro",sla1a:"no prazo",summary:"Registros de exclusão - SISfenasbac",aberto:"2026-09-30",resolvido:"2026-11-03"},
+  {key:"SDESK-387",status:"Concluído",area:"Clube F / Conecta",trilha:"Solicitação – Comunicação Digital",sla:"no prazo",sla1a:"no prazo",summary:"Informações de cadastros Clube F",aberto:"2026-10-27",resolvido:"2026-10-29"},
+  {key:"SDESK-386",status:"Concluído",area:"TI Interno / Infra",trilha:"Reportar incidente",sla:"no prazo",sla1a:"no prazo",summary:"Problema com WhatsApp business corporativo",aberto:"2026-10-27",resolvido:"2026-10-29"},
+  {key:"SDESK-388",status:"Concluído",area:"Comunicação / Sites",trilha:"Solicitação – Comunicação Digital",sla:"no prazo",sla1a:"no prazo",summary:"Acréscimo de texto no site do LIFT Lab",aberto:"2026-10-27",resolvido:"2026-10-28"},
+  {key:"SDESK-384",status:"Concluído",area:"SISFenasbac",trilha:"Reportar incidente",sla:"estouro",sla1a:"no prazo",summary:"Problema ao redefinir senha",aberto:"2026-10-22",resolvido:"2026-10-28"},
+  {key:"SDESK-371",status:"Concluído",area:"SISFenasbac",trilha:"Solicitação de TI",sla:"estouro",sla1a:"no prazo",summary:"Código de verificação - SISfenasbac",aberto:"2026-10-15",resolvido:"2026-10-28"},
+  {key:"SDESK-389",status:"Concluído",area:"GEP / Inovação",trilha:"Solicitação de TI",sla:"no prazo",sla1a:"no prazo",summary:"RECIP | GEP 2026 — retorno dos status das avaliações",aberto:"2026-10-28",resolvido:"2026-10-28"},
+  {key:"SDESK-383",status:"Concluído",area:"Certificados",trilha:"Solicitação de TI",sla:"no prazo",sla1a:"no prazo",summary:"Substituição de e-mail de usuário para emissão de certificado",aberto:"2026-10-22",resolvido:"2026-10-26"},
+  {key:"SDESK-381",status:"Concluído",area:"TI Interno / Infra",trilha:"Solicitação de TI",sla:"no prazo",sla1a:"no prazo",summary:"Adicionar contato no Slack",aberto:"2026-10-22",resolvido:"2026-10-26"}
 ];
 
 // metas da regua global do JSM (goalDuration de customfield_10577/10610)
@@ -725,7 +735,7 @@ const TRILHA_META={
   "Integração":"4h / 80h",
 };
 
-const STATUS_COLOR={'Concluído':'#2EA043','Concluída':'#2EA043','Itens concluídos':'#2EA043','Em andamento':'#0225EB','Fazendo':'#0225EB','Em análise':'#D29922','Aguardando Cliente':'#D29922','Tarefas pendentes':'#484F58','Itens Pendentes':'#484F58','A fazer':'#484F58','Pendente':'#484F58','default':'#484F58'};
+const STATUS_COLOR={'Concluído (ciclo anterior)':'#1F6F43','Concluído':'#2EA043','Concluída':'#2EA043','Itens concluídos':'#2EA043','Em andamento':'#0225EB','Fazendo':'#0225EB','Em análise':'#D29922','Aguardando Cliente':'#D29922','Tarefas pendentes':'#484F58','Itens Pendentes':'#484F58','A fazer':'#484F58','Pendente':'#484F58','default':'#484F58'};
 function isDone(s){return s==='Concluído'||s==='Concluída'||s==='Itens concluídos';}
 function isProg(s){return s==='Em andamento'||s==='Fazendo'||s==='Aguardando Cliente';}
 function dotColor(s){return STATUS_COLOR[s]||STATUS_COLOR.default;}
@@ -788,9 +798,11 @@ function buildProjects(){
 // Nota por papel: contexto que os cards da sprint nao mostram. Reescrever a
 // cada virada — e prosa, nao se recalcula sozinha (ver checklist da virada).
 const MEMBER_NOTA={
-  "Tech Lead":"Atuação na S21: conclusão da migração de todos os repositórios para o GitHub corporativo (ENG-14, 22/10), implantação do monitoramento de disponibilidade das aplicações e a correção da divergência de dados do GEP (SDESK-342). Revisão e direção técnica, não medida por cards atribuídos — o grosso do trabalho de Engenharia só entra na S22.",
-  "Infra / Suporte N1":"Os dois cards acima são o que está vinculado à Sprint S21 e não representam a carga real: na mesma janela foram resolvidos 8 chamados de Service Desk (SDESK-367, 369, 372, 373, 374, 375, 376 e 379), o teste de permissões do Conecta (CONECTA-80), a validação de e-mail/CPF no cadastro (CONECTA-104) e a liberação de VPN/VNC da Comunicação (TECH-124) — todos fora do objeto Sprint. A taxa de 0% mede o vínculo no board, não a entrega.",
-  "Conteúdo":"Além dos cards da sprint, a publicação da página dos 60 anos em 20/10 e 5 chamados de Service Desk resolvidos na janela (SDESK-366, 377, 379 de apoio, 382 e 385).",
+  "Conteúdo": "Concentrou os sites do ecossistema Nexus/TILT — 13 componentes finalizados, em validação com o Marketing.",
+  "Desenvolvimento": "Conduziu o Conecta e o Clube F: limpeza da base e preparação do consumo da API do WBC. A unificação da base (Fenasync) ficou em espera.",
+  "Infra / Suporte N1": "Entregou a autenticação da Intranet, o onboarding do novo colaborador em SP e a liberação de acesso remoto, além do suporte de Service Desk — muitos itens fora do objeto Sprint.",
+  "Coordenação": "Governança: a construção da Política de Equipamento Próprio (BYOD), a reescrita da base de conhecimento, o PE 2027 e o NordPass. Frentes plurissemanais, em andamento, por isso poucas conclusões no board.",
+  "Tech Lead": "Foco no QSentinel (prova de conceito de IA): estratégia de extração e camada de orquestração dos dados. Direção técnica, pouco medida por cards fechados."
 };
 
 const MEMBERS=[
@@ -1114,47 +1126,44 @@ const BASE_OFICIAL='A';
 const BASES=[
   {id:"A",nome:"Escopo do objeto Sprint",
    oque:"Todas as issues do Sprint do Jira, contadas pelo status do board no fechamento. Inclui épicos e subtarefas.",
-   s20:"69 de 102",s21:"25 de 55",
+   s21:"25 de 55",s22:"34 de 123",
    jql:"sprint in (S21)",
    onde:"Este painel inteiro — KPIs, Projetos, Time, Gantt e Evolução."},
   {id:"B",nome:"Entregas na janela, todos os boards",
    oque:"Tudo que foi resolvido entre as datas da sprint, em qualquer board, sem os épicos.",
-   s20:"86",s21:"56",
+   s21:"56",s22:"—",
    jql:'resolutiondate >= "2026-10-13" AND resolutiondate < "2026-10-27" AND issuetype != Epic'},
   {id:"C",nome:"… sem o Service Desk",
    oque:"O mesmo que B, tirando os chamados de suporte — que são demanda recebida, não entrega planejada.",
-   s20:"65",s21:"34",
+   s21:"34",s22:"—",
    jql:'… AND project != SDESK'},
   {id:"D",nome:"… sem as subtarefas",
    oque:"O mesmo que C, contando só itens de primeiro nível. É a leitura mais próxima de \'entregas\' no sentido corrente.",
-   s20:"48",s21:"25",
+   s21:"25",s22:"—",
    jql:'… AND issuetype not in (Epic, subTaskIssueTypes())'},
   {id:"E",nome:"Entregas na janela, só do objeto Sprint",
    oque:"Cruza as duas ideias: estava na sprint e foi resolvido dentro da janela, sem épicos.",
-   s20:"50",s21:"24",
+   s21:"20",s22:"24",
    jql:'sprint in (S21) AND resolutiondate >= "2026-10-13" AND resolutiondate < "2026-10-27" AND issuetype != Epic'},
   {id:"F",nome:"… sem as subtarefas",
    oque:"O mesmo que E, só itens de primeiro nível. É a definição mais restritiva.",
-   s20:"36",s21:"18",
+   s21:"15",s22:"—",
    jql:'… AND issuetype not in (Epic, subTaskIssueTypes())'},
 ];
 // O relatorio executivo da S21 passou a usar a base A (decisao de 27/10/2026),
 // com a S20 recontada na mesma base para a comparacao nao misturar criterios.
 // Antes trazia 51 e 20, conferidos a mao e proximos de E e de F.
-const BASE_RELATORIO={s20:"69",s21:"25",alinhado:true};
+const BASE_RELATORIO={s21:"20",s22:"24",alinhado:true};
 
 const SPRINT_HISTORY=[
-  {id:"S15",periodo:"20/07–31/07",issues:61,done:52,projetos:12,sdesk:30,sdeskDone:22,sdeskEstouro:2,porProjeto:{"SISFENAS":[1,1],"FAUTH":[1,1],"CONECTA":[4,4],"GEP":[6,7],"PORTAL":[0,1],"PROC":[15,20],"ETI":[4,4],"FENASBR":[0,1],"SRR":[1,2],"SYNCOOP":[1,1],"STRAPI":[8,8],"TECH":[11,11]}},
-  {id:"S16",periodo:"03/08–14/08",issues:62,done:24,projetos:11,sdesk:23,sdeskDone:13,sdeskEstouro:2,porProjeto:{"SISFENAS":[0,1],"ENG":[1,13],"FENASHUB":[1,1],"CONECTA":[1,2],"GEP":[1,2],"PORTAL":[0,1],"PROC":[3,16],"ETI":[5,7],"SRR":[0,1],"STRAPI":[1,6],"TECH":[11,12]}},
-  {id:"S17",periodo:"17/08–31/08",issues:88,done:37,projetos:13,sdesk:19,sdeskDone:13,sdeskEstouro:3,porProjeto:{"CERTI":[11,11],"DOCS":[0,6],"ENG":[1,11],"FENASBR":[0,1],"FENASHUB":[5,17],"FIA":[5,5],"GEP":[0,2],"PORTAL":[1,1],"PROC":[6,22],"SISFENAS":[0,1],"SRR":[0,1],"STRAPI":[0,1],"TECH":[8,9]}},
-  {id:"S18",periodo:"31/08–14/09",issues:66,done:35,projetos:13,sdesk:22,sdeskDone:17,sdeskEstouro:6,porProjeto:{"CONECTA":[1,1],"DOCS":[5,5],"ENG":[0,1],"ETI":[0,5],"FENASBR":[12,12],"FENASHUB":[0,1],"FIA":[1,9],"PORTAL":[1,1],"PROC":[9,21],"SISFENAS":[0,1],"SRR":[0,1],"STRAPI":[0,2],"TECH":[6,6]}},
-  {id:"S19",periodo:"14/09–28/09",issues:50,done:22,projetos:11,sdesk:28,sdeskDone:20,sdeskEstouro:6,porProjeto:{"PROC":[7,20],"CONECTA":[4,5],"TECH":[4,5],"FENASHUB":[2,3],"FENASBR":[2,2],"ANALYTICS":[0,2],"FIA":[0,1],"ETI":[0,1],"STRAPI":[1,2],"SISFENAS":[1,1],"CERTI":[0,1]}},
+  {id:"S19",periodo:"14/09–28/09",issues:50,done:22,projetos:11,sdesk:28,sdeskDone:20,sdeskEstouro:6,porProjeto:{"PROC":[7,20],"CONECTA":[4,5],"TECH":[4,5],"FENASHUB":[2,3],"FENASBR":[2,2],"ANALYTICS":[0,2],"ETI":[0,1],"STRAPI":[1,2],"SISFENAS":[1,1],"CERTI":[0,1]}},
   {id:"S20",periodo:"28/09–12/10",issues:102,done:69,projetos:12,sdesk:21,sdeskDone:15,sdeskEstouro:5,porProjeto:{"PROC":[18,32],"PORTAL":[10,13],"ETI":[0,5],"ENG":[0,1],"CONECTA":[10,16],"TECH":[7,8],"STRAPI":[2,2],"FSYNC":[19,19],"FENASBR":[1,1],"CERTI":[1,1],"ANALYTICS":[1,2],"CVM":[0,2]}},
+  {id:"S21",periodo:"13/10–26/10",issues:55,done:25,projetos:8,sdesk:20,sdeskDone:18,sdeskEstouro:5,porProjeto:{"PROC":[11,22],"CONECTA":[7,16],"FENASBR":[3,3],"CERTI":[2,2],"ENG":[1,2],"ANALYTICS":[1,1],"FENASIO":[0,1],"QSENTINEL":[0,2]}},
 ];
-const SPRINT_ATUAL={id:"S21",periodo:"13/10–26/10"};
+const SPRINT_ATUAL={id:"S22",periodo:"26/10–08/11"};
 // O objeto Sprint do Jira fecha a S22 em 09/11 (endDate 09/11T20:05Z).
 // O relatorio executivo da S21 publicou 08/11; aqui vale a data do Jira.
-const SPRINT_NOVA={id:"S22",periodo:"26/10–09/11"};
+const SPRINT_NOVA={id:"S23",periodo:"09/11–23/11"};
 
 // [concluídas, total] por frente
 function porProjetoDe(lista){
@@ -1552,9 +1561,9 @@ function slaCor(pct){return pct>=85?'#2EA043':pct>=60?'#D29922':'#F85149';}
 // GANTT
 // parse 'YYYY-MM-DD' no fuso local (evita o deslocamento de 1 dia do parse UTC)
 function pd(s){const[y,m,d]=String(s).split('-').map(Number);return new Date(y,m-1,d);}
-const SPRINT_START=pd('2026-10-13'),SPRINT_END=pd('2026-10-26');   // S21 (sprint fechada)
-const S18_START=pd('2026-09-28'),S18_END=pd('2026-10-12');         // S20 (sprint anterior)
-const TODAY=pd('2026-10-27'),DAY_W=22;                             // data de fechamento/apuracao
+const SPRINT_START=pd('2026-10-26'),SPRINT_END=pd('2026-11-08');   // S21 (sprint fechada)
+const S18_START=pd('2026-10-13'),S18_END=pd('2026-10-26');         // S20 (sprint anterior)
+const TODAY=pd('2026-11-09'),DAY_W=22;                             // data de fechamento/apuracao
 function addDays(d,n){const r=new Date(d);r.setDate(r.getDate()+n);return r;}
 function diffDays(a,b){return Math.round((b-a)/86400000);}
 function pad2(n){return String(n).padStart(2,'0');}
